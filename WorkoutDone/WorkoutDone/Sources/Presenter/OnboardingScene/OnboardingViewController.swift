@@ -36,9 +36,12 @@ class OnboardingViewController : UIViewController {
     private let pageControl = UIPageControl().then {
         $0.numberOfPages = 3
         $0.currentPage = 0
+
+        $0.setCurrentPageIndicatorImage(UIImage(named: "currentPage"), forPage: $0.currentPage)
+        $0.preferredIndicatorImage = UIImage(named: "page")
+        
         $0.pageIndicatorTintColor = .colorD6C8FF
         $0.currentPageIndicatorTintColor = .color7442FF
-        $0.transform = CGAffineTransform(scaleX: 1, y: 1)
     }
     
     // MARK: - LIFECYCLE
@@ -89,12 +92,10 @@ extension OnboardingViewController : UICollectionViewDelegate, UICollectionViewD
         return CGSize(width: collectionView.bounds.width, height: collectionView.bounds.height)
     }
     
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let width = scrollView.bounds.size.width
-        let x = scrollView.contentOffset.x + (width / 2)
-        let nextPage = Int(x/width)
-        pageControl.currentPage = nextPage
-    }
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        let page = Int(targetContentOffset.pointee.x / view.frame.width)
+        self.pageControl.currentPage = page
+        pageControl.setCurrentPageIndicatorImage(UIImage(named: "currentPage"), forPage: page)
+      }
 }
-
 
