@@ -39,7 +39,7 @@ class OnboardingCell : UICollectionViewCell {
             $0.centerX.equalToSuperview()
             $0.top.equalToSuperview()
             $0.width.equalTo(contentView.frame.width)
-            $0.height.equalTo(486)
+            $0.height.equalTo(contentView.frame.width * 486 / 390)
         }
         
         onboardingText.snp.makeConstraints() {

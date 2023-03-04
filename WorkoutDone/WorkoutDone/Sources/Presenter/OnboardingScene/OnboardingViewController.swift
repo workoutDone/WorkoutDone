@@ -75,7 +75,7 @@ class OnboardingViewController : UIViewController {
     func setLayout() {
         collectionView.snp.makeConstraints {
             $0.top.left.right.equalTo(view.safeAreaLayoutGuide)
-            $0.height.equalTo(554)
+            $0.height.equalTo(view.frame.width * 554 / 390)
         }
         
         pageControl.snp.makeConstraints {
@@ -85,6 +85,7 @@ class OnboardingViewController : UIViewController {
         
         nextButton.snp.makeConstraints {
             $0.top.equalTo(pageControl.snp.bottom).offset(52)
+            //$0.bottom.equalTo(view.safeAreaLayoutGuide).offset(-29)
             $0.leading.equalToSuperview().offset(24)
             $0.trailing.equalToSuperview().offset(-24)
             $0.height.equalTo(65)
@@ -93,10 +94,13 @@ class OnboardingViewController : UIViewController {
     
     @objc func nextButtonTapped(sender: UIButton!) {
         if currentPage < numberOfPages - 1 {
-            
             currentPage += 1
             let indexPath = IndexPath(item: currentPage, section: 0)
             collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+        } else if currentPage == numberOfPages - 1 {
+            let homeVC = HomeViewController()
+            homeVC.modalPresentationStyle = .fullScreen
+            self.present(homeVC, animated: false)
         }
     }
 }
