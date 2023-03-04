@@ -14,9 +14,10 @@ struct Onboarding {
     var text: String
 }
 
-class OnboardingViewController : UIViewController {
+class OnboardingViewController : BaseViewController {
     // MARK: - PROPERTIES
     let numberOfPages = 3
+    var currentPage = 0
     let onboardingInfo = [
         Onboarding(image: "onboarding1", text: "onboarding1"),
         Onboarding(image: "onboarding2", text: "onboarding2"),
@@ -29,46 +30,81 @@ class OnboardingViewController : UIViewController {
         layout.minimumLineSpacing = 0
 
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.register(OnboardingCell.self, forCellWithReuseIdentifier: "OnboardingCell")
+        collectionView.isPagingEnabled = true
+        collectionView.showsHorizontalScrollIndicator = false
         
         return collectionView
     }()
     
-    private let pageControl = UIPageControl().then {
-        $0.numberOfPages = 3
-        $0.currentPage = 0
+    private lazy var pageControl = UIPageControl().then {
+        $0.numberOfPages = numberOfPages
+        $0.currentPage = currentPage
+
+        $0.setCurrentPageIndicatorImage(UIImage(named: "currentPage"), forPage: currentPage)
+        $0.preferredIndicatorImage = UIImage(named: "page")
+        
         $0.pageIndicatorTintColor = .colorD6C8FF
         $0.currentPageIndicatorTintColor = .color7442FF
-        $0.transform = CGAffineTransform(scaleX: 1, y: 1)
+    }
+    
+    private let nextButton = GradientButton(colors: [UIColor.color8E36FF.cgColor, UIColor.color7442FF.cgColor]).then {
+        $0.setTitle("다음으로", for: .normal)
+        $0.titleLabel?.font = .pretendard(.bold, size: 18)
     }
     
     // MARK: - LIFECYCLE
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
         
-        view.addSubview(collectionView)
-        view.addSubview(pageControl)
-        
-        collectionView.delegate = self
-        collectionView.dataSource = self
+        [collectionView, pageControl, nextButton].forEach {
+            view.addSubview($0)
+        }
         
         setLayout()
-        
-        collectionView.register(OnboardingCell.self, forCellWithReuseIdentifier: "OnboardingCell")
-        collectionView.isPagingEnabled = true
-        collectionView.showsHorizontalScrollIndicator = false
+        setDelegateDataSource()
+        setAction()
     }
     
     // MARK: - ACTIONS
     func setLayout() {
         collectionView.snp.makeConstraints {
             $0.top.left.right.equalTo(view.safeAreaLayoutGuide)
-            $0.height.equalTo(554)
+            $0.height.equalTo(view.frame.width * 554 / 390)
         }
         
         pageControl.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.top.equalTo(collectionView.snp.bottom).offset(58)
+        }
+        
+        nextButton.snp.makeConstraints {
+            $0.top.equalTo(pageControl.snp.bottom).offset(52)
+            //$0.bottom.equalTo(view.safeAreaLayoutGuide).offset(-29)
+            $0.leading.equalToSuperview().offset(24)
+            $0.trailing.equalToSuperview().offset(-24)
+            $0.height.equalTo(65)
+        }
+    }
+    
+    func setDelegateDataSource() {
+        collectionView.delegate = self
+        collectionView.dataSource = self
+    }
+    
+    func setAction() {
+        nextButton.addTarget(self, action: #selector(nextButtonTapped), for: .touchUpInside)
+    }
+    
+    @objc func nextButtonTapped(sender: UIButton!) {
+        if currentPage < numberOfPages - 1 {
+            currentPage += 1
+            let indexPath = IndexPath(item: currentPage, section: 0)
+            collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+        } else if currentPage == numberOfPages - 1 {
+            let homeVC = HomeViewController()
+            homeVC.modalPresentationStyle = .fullScreen
+            self.present(homeVC, animated: false)
         }
     }
 }
@@ -90,11 +126,9 @@ extension OnboardingViewController : UICollectionViewDelegate, UICollectionViewD
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let width = scrollView.bounds.size.width
-        let x = scrollView.contentOffset.x + (width / 2)
-        let nextPage = Int(x/width)
-        pageControl.currentPage = nextPage
+        currentPage = Int(scrollView.contentOffset.x / scrollView.frame.width)
+        self.pageControl.currentPage = currentPage
+        pageControl.setCurrentPageIndicatorImage(UIImage(named: "currentPage"), forPage: currentPage)
     }
 }
-
 
