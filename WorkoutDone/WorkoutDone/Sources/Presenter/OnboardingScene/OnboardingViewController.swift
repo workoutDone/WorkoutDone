@@ -45,11 +45,9 @@ class OnboardingViewController : UIViewController {
         $0.currentPageIndicatorTintColor = .color7442FF
     }
     
-    private let nextButton = UIButton().then {
+    private let nextButton = GradientButton(colors: [UIColor.color8E36FF.cgColor, UIColor.color7442FF.cgColor]).then {
         $0.setTitle("다음으로", for: .normal)
         $0.titleLabel?.font = .pretendard(.bold, size: 18)
-        $0.backgroundColor = .color7442FF
-        $0.layer.cornerRadius = 12
     }
     
     // MARK: - LIFECYCLE
@@ -100,7 +98,6 @@ class OnboardingViewController : UIViewController {
             let indexPath = IndexPath(item: currentPage, section: 0)
             collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
         }
-                
     }
 }
 
@@ -127,3 +124,29 @@ extension OnboardingViewController : UICollectionViewDelegate, UICollectionViewD
     }
 }
 
+
+class GradientButton: UIButton {
+    let gradient = CAGradientLayer()
+    
+    init(colors: [CGColor]) {
+        super.init(frame: .zero)
+        
+        gradient.frame = bounds
+        gradient.colors = colors
+        gradient.locations = [0.0 , 1.0]
+        gradient.startPoint = CGPoint(x: 0.25, y: 0.5)
+        gradient.endPoint = CGPoint(x: 0.75, y: 0.5)
+        
+        gradient.cornerRadius = 12
+        
+        layer.addSublayer(gradient)
+    }
+    required init?(coder: NSCoder) {
+        fatalError()
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        gradient.frame = bounds
+    }
+}
