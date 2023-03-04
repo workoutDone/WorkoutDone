@@ -23,8 +23,10 @@ class OnboardingCell : UICollectionViewCell {
     // MARK: - LIFECYCLE
     override init(frame: CGRect) {
         super.init(frame: frame)
-        addSubview(onboardingImage)
-        addSubview(onboardingText)
+        
+        [onboardingImage, onboardingText].forEach {
+            contentView.addSubview($0)
+        }
         
         setLayout()
     }

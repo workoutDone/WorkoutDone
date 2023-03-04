@@ -14,7 +14,7 @@ struct Onboarding {
     var text: String
 }
 
-class OnboardingViewController : UIViewController {
+class OnboardingViewController : BaseViewController {
     // MARK: - PROPERTIES
     let numberOfPages = 3
     var currentPage = 0
@@ -30,6 +30,9 @@ class OnboardingViewController : UIViewController {
         layout.minimumLineSpacing = 0
 
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.register(OnboardingCell.self, forCellWithReuseIdentifier: "OnboardingCell")
+        collectionView.isPagingEnabled = true
+        collectionView.showsHorizontalScrollIndicator = false
         
         return collectionView
     }()
@@ -53,22 +56,14 @@ class OnboardingViewController : UIViewController {
     // MARK: - LIFECYCLE
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
         
-        view.addSubview(collectionView)
-        view.addSubview(pageControl)
-        view.addSubview(nextButton)
-        
-        collectionView.delegate = self
-        collectionView.dataSource = self
+        [collectionView, pageControl, nextButton].forEach {
+            view.addSubview($0)
+        }
         
         setLayout()
-        
-        collectionView.register(OnboardingCell.self, forCellWithReuseIdentifier: "OnboardingCell")
-        collectionView.isPagingEnabled = true
-        collectionView.showsHorizontalScrollIndicator = false
-        
-        nextButton.addTarget(self, action: #selector(nextButtonTapped), for: .touchUpInside)
+        setDelegateDataSource()
+        setAction()
     }
     
     // MARK: - ACTIONS
@@ -90,6 +85,15 @@ class OnboardingViewController : UIViewController {
             $0.trailing.equalToSuperview().offset(-24)
             $0.height.equalTo(65)
         }
+    }
+    
+    func setDelegateDataSource() {
+        collectionView.delegate = self
+        collectionView.dataSource = self
+    }
+    
+    func setAction() {
+        nextButton.addTarget(self, action: #selector(nextButtonTapped), for: .touchUpInside)
     }
     
     @objc func nextButtonTapped(sender: UIButton!) {
@@ -128,29 +132,3 @@ extension OnboardingViewController : UICollectionViewDelegate, UICollectionViewD
     }
 }
 
-
-class GradientButton: UIButton {
-    let gradient = CAGradientLayer()
-    
-    init(colors: [CGColor]) {
-        super.init(frame: .zero)
-        
-        gradient.frame = bounds
-        gradient.colors = colors
-        gradient.locations = [0.0 , 1.0]
-        gradient.startPoint = CGPoint(x: 0.25, y: 0.5)
-        gradient.endPoint = CGPoint(x: 0.75, y: 0.5)
-        
-        gradient.cornerRadius = 12
-        
-        layer.addSublayer(gradient)
-    }
-    required init?(coder: NSCoder) {
-        fatalError()
-    }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        gradient.frame = bounds
-    }
-}

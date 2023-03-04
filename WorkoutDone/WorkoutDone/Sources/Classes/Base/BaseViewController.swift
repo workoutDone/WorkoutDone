@@ -16,6 +16,9 @@ class BaseViewController : UIViewController {
     // MARK: - LIFECYCLE
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        view.backgroundColor = .white
+        
         setupLayout()
         setupConstraints()
         setupBinding()
