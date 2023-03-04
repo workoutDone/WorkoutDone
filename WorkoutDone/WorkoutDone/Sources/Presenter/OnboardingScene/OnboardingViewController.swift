@@ -17,6 +17,7 @@ struct Onboarding {
 class OnboardingViewController : UIViewController {
     // MARK: - PROPERTIES
     let numberOfPages = 3
+    var currentPage = 0
     let onboardingInfo = [
         Onboarding(image: "onboarding1", text: "onboarding1"),
         Onboarding(image: "onboarding2", text: "onboarding2"),
@@ -33,15 +34,22 @@ class OnboardingViewController : UIViewController {
         return collectionView
     }()
     
-    private let pageControl = UIPageControl().then {
-        $0.numberOfPages = 3
-        $0.currentPage = 0
+    private lazy var pageControl = UIPageControl().then {
+        $0.numberOfPages = numberOfPages
+        $0.currentPage = currentPage
 
-        $0.setCurrentPageIndicatorImage(UIImage(named: "currentPage"), forPage: $0.currentPage)
+        $0.setCurrentPageIndicatorImage(UIImage(named: "currentPage"), forPage: currentPage)
         $0.preferredIndicatorImage = UIImage(named: "page")
         
         $0.pageIndicatorTintColor = .colorD6C8FF
         $0.currentPageIndicatorTintColor = .color7442FF
+    }
+    
+    private let nextButton = UIButton().then {
+        $0.setTitle("다음으로", for: .normal)
+        $0.titleLabel?.font = .pretendard(.bold, size: 18)
+        $0.backgroundColor = .color7442FF
+        $0.layer.cornerRadius = 12
     }
     
     // MARK: - LIFECYCLE
@@ -51,6 +59,7 @@ class OnboardingViewController : UIViewController {
         
         view.addSubview(collectionView)
         view.addSubview(pageControl)
+        view.addSubview(nextButton)
         
         collectionView.delegate = self
         collectionView.dataSource = self
@@ -60,6 +69,8 @@ class OnboardingViewController : UIViewController {
         collectionView.register(OnboardingCell.self, forCellWithReuseIdentifier: "OnboardingCell")
         collectionView.isPagingEnabled = true
         collectionView.showsHorizontalScrollIndicator = false
+        
+        nextButton.addTarget(self, action: #selector(nextButtonTapped), for: .touchUpInside)
     }
     
     // MARK: - ACTIONS
@@ -73,6 +84,23 @@ class OnboardingViewController : UIViewController {
             $0.centerX.equalToSuperview()
             $0.top.equalTo(collectionView.snp.bottom).offset(58)
         }
+        
+        nextButton.snp.makeConstraints {
+            $0.top.equalTo(pageControl.snp.bottom).offset(52)
+            $0.leading.equalToSuperview().offset(24)
+            $0.trailing.equalToSuperview().offset(-24)
+            $0.height.equalTo(65)
+        }
+    }
+    
+    @objc func nextButtonTapped(sender: UIButton!) {
+        if currentPage < numberOfPages - 1 {
+            
+            currentPage += 1
+            let indexPath = IndexPath(item: currentPage, section: 0)
+            collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+        }
+                
     }
 }
 
@@ -92,10 +120,10 @@ extension OnboardingViewController : UICollectionViewDelegate, UICollectionViewD
         return CGSize(width: collectionView.bounds.width, height: collectionView.bounds.height)
     }
     
-    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        let page = Int(targetContentOffset.pointee.x / view.frame.width)
-        self.pageControl.currentPage = page
-        pageControl.setCurrentPageIndicatorImage(UIImage(named: "currentPage"), forPage: page)
-      }
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        currentPage = Int(scrollView.contentOffset.x / scrollView.frame.width)
+        self.pageControl.currentPage = currentPage
+        pageControl.setCurrentPageIndicatorImage(UIImage(named: "currentPage"), forPage: currentPage)
+    }
 }
 
