@@ -19,9 +19,9 @@ class OnboardingViewController : BaseViewController {
     let numberOfPages = 3
     var currentPage = 0
     let onboardingInfo = [
-        Onboarding(image: "onboarding1", text: "onboarding1"),
-        Onboarding(image: "onboarding2", text: "onboarding2"),
-        Onboarding(image: "onboarding3", text: "onboarding3")
+        Onboarding(image: "onboarding1", text: "프레임을 이용해서 쉽게 오운완 사진을 찍어보세요!"),
+        Onboarding(image: "onboarding2", text: "나만의 운동 루틴을 만들고 운동 내용을 기록해보세요!"),
+        Onboarding(image: "onboarding3", text: "오운완 사진과 그래프를 통해 \n나의 변화된 모습을 실감할 수 있어요!")
     ]
     
     private let collectionView : UICollectionView = {
@@ -33,6 +33,7 @@ class OnboardingViewController : BaseViewController {
         collectionView.register(OnboardingCell.self, forCellWithReuseIdentifier: "OnboardingCell")
         collectionView.isPagingEnabled = true
         collectionView.showsHorizontalScrollIndicator = false
+        //collectionView.backgroundColor = .orange
         
         return collectionView
     }()
@@ -69,19 +70,23 @@ class OnboardingViewController : BaseViewController {
     // MARK: - ACTIONS
     func setLayout() {
         collectionView.snp.makeConstraints {
-            $0.top.left.right.equalTo(view.safeAreaLayoutGuide)
-            $0.height.equalTo(view.frame.width * 554 / 390)
+            $0.top.greaterThanOrEqualTo(view.safeAreaLayoutGuide).offset(0)
+            $0.top.lessThanOrEqualTo(view.safeAreaLayoutGuide).offset(68)
+            $0.left.right.equalTo(view.safeAreaLayoutGuide)
+            $0.height.equalTo(488)
         }
-        
+
         pageControl.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            //$0.top.equalTo(collectionView.snp.bottom).offset(58)
-            $0.top.lessThanOrEqualTo(collectionView.snp.bottom).offset(58)
-     
+            $0.top.greaterThanOrEqualTo(collectionView.snp.bottom).offset(21)
+            $0.top.lessThanOrEqualTo(collectionView.snp.bottom).offset(88)
         }
-        
+
         nextButton.snp.makeConstraints {
-            $0.bottom.equalTo(view.safeAreaLayoutGuide).offset(-29)
+            $0.top.greaterThanOrEqualTo(pageControl.snp.bottom).offset(40)
+            $0.top.lessThanOrEqualTo(pageControl.snp.bottom).offset(52)
+            $0.bottom.greaterThanOrEqualTo(view.safeAreaLayoutGuide).offset(-29)
+            $0.bottom.lessThanOrEqualTo(view.safeAreaLayoutGuide).offset(-20)
             $0.leading.equalToSuperview().offset(24)
             $0.trailing.equalToSuperview().offset(-24)
             $0.height.equalTo(65)
