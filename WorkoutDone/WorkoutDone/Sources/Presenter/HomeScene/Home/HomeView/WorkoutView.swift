@@ -33,10 +33,9 @@ class WorkoutView : BaseUIView {
 
     override func setupLayout() {
         super.setupLayout()
-        addSubview(workoutLabel)
-        addSubview(workoutRoutineBaseView)
-        addSubview(workoutRoutineChoiceButton)
-        addSubview(workoutRoutineInfoLabel)
+        [workoutLabel, workoutRoutineBaseView, workoutRoutineChoiceButton, workoutRoutineInfoLabel].forEach {
+            addSubview($0)
+        }
     }
 
     override func setupConstraints() {
