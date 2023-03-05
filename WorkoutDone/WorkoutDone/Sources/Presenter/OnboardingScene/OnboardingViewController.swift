@@ -75,12 +75,13 @@ class OnboardingViewController : BaseViewController {
         
         pageControl.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.top.equalTo(collectionView.snp.bottom).offset(58)
+            //$0.top.equalTo(collectionView.snp.bottom).offset(58)
+            $0.top.lessThanOrEqualTo(collectionView.snp.bottom).offset(58)
+     
         }
         
         nextButton.snp.makeConstraints {
-            $0.top.equalTo(pageControl.snp.bottom).offset(52)
-            //$0.bottom.equalTo(view.safeAreaLayoutGuide).offset(-29)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide).offset(-29)
             $0.leading.equalToSuperview().offset(24)
             $0.trailing.equalToSuperview().offset(-24)
             $0.height.equalTo(65)
