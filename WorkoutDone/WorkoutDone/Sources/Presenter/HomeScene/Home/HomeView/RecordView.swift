@@ -34,7 +34,7 @@ class RecordView : BaseUIView {
         $0.numberOfLines = 2
     }
     private let clickImage = UIImageView().then {
-        $0.image = UIImage(named: "")
+        $0.image = UIImage(named: "clickImage")
         $0.contentMode = .scaleAspectFill
     }
     private let clickAlertLabel = UILabel().then {
@@ -122,5 +122,47 @@ class RecordView : BaseUIView {
     }
     override func setupConstraints() {
         super.setupConstraints()
+        
+        recordLabel.snp.makeConstraints {
+            $0.top.equalToSuperview()
+            $0.leading.equalToSuperview().offset(30)
+            $0.height.equalTo(26)
+        }
+        recordView.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.leading.equalToSuperview().offset(18)
+            $0.top.equalTo(recordLabel.snp.bottom).offset(8)
+            $0.height.equalTo(445)
+        }
+        workoutImageBaseView.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.leading.equalTo(recordView.snp.leading).offset(12)
+            $0.top.equalTo(recordView.snp.top).offset(13)
+            $0.height.equalTo(318)
+        }
+        workoutNotDoneInfoLabel.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.height.equalTo(44)
+            $0.top.equalTo(workoutImageBaseView.snp.top).offset(58)
+        }
+        clickImage.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.top.equalTo(workoutNotDoneInfoLabel.snp.bottom).offset(31)
+            $0.height.width.equalTo(41)
+        }
+        clickAlertLabel.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.height.equalTo(26)
+            $0.top.equalTo(clickImage.snp.bottom).offset(7)
+        }
+        
+        ///바디 정보 입력 뷰
+//        bodyInfoView.snp.makeConstraints {
+//            $0.top.equalTo(workoutImageBaseView.snp.bottom).offset(16)
+//            $0.leading.equalTo(recordView.snp.leading).offset(11)
+//            $0.bottom.equalTo(recordView.snp.bottom).offset(-13)
+//            $0.trailing.equalTo(bodyDataEntryButton.snp.leading).offset(-18)
+//        }
+        
     }
 }

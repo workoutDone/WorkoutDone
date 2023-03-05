@@ -22,5 +22,7 @@ class TabBarController : UITabBarController {
         let appearance = UITabBarAppearance()
         appearance.configureWithOpaqueBackground()
         appearance.backgroundColor = UIColor.blue
+        
+        //Todo: - 텝바 색상, 탭바 이미지, 텍스트 정하기
     }
 }

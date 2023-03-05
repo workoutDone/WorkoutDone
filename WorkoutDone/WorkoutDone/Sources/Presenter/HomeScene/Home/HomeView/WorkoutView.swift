@@ -22,13 +22,12 @@ class WorkoutView : BaseUIView {
     }
     private let workoutRoutineInfoLabel = UILabel().then {
         $0.text = "어떤 운동을 할까?"
+        $0.textColor = .color929292
+        $0.font = .pretendard(.regular, size: 16)
     }
-    private let workoutRoutineChoiceButton = UIButton().then {
+    private let workoutRoutineChoiceButton = GradientButton(colors: [UIColor.color7442FF.cgColor, UIColor.color8E36FF.cgColor]).then {
         $0.setTitle("루틴 선택", for: .normal)
         $0.titleLabel?.font = .pretendard(.semiBold, size: 16)
-        // Todo: 그라데이션 버튼 구현하기
-//        $0.backgroundColor = .color
-        $0.layer.cornerRadius = 8
     }
 
     override func setupLayout() {

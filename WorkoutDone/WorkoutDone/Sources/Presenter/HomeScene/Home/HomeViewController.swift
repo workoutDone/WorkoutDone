@@ -48,6 +48,7 @@ class HomeViewController : BaseViewController {
         contentScrollView.translatesAutoresizingMaskIntoConstraints = false
         contentScrollView.isUserInteractionEnabled = true
         contentScrollView.isScrollEnabled = true
+        contentScrollView.isUserInteractionEnabled = true
         
         contentScrollView.snp.makeConstraints {
             $0.edges.equalTo(view.safeAreaLayoutGuide)
@@ -56,6 +57,27 @@ class HomeViewController : BaseViewController {
             $0.width.equalToSuperview()
             $0.centerX.top.bottom.equalToSuperview()
         }
+        // Todo - 캘린더 추가해야함
+        ///기록하기 view
+        recordBaseView.snp.makeConstraints {
+            $0.top.equalTo(contentView.snp.top)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(513)
+        }
+        ///운동하기 view
+        workoutBaseView.snp.makeConstraints {
+            $0.top.equalTo(recordBaseView.snp.bottom)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(146)
+        }
+        ///운동 결과
+        workoutResultBaseView.snp.makeConstraints {
+            $0.top.equalTo(workoutBaseView.snp.bottom)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(182)
+            $0.bottom.equalToSuperview()
+        }
+        
     }
     override func setupBinding() {
         super.setupBinding()
