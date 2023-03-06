@@ -13,11 +13,13 @@ class OnboardingCell : UICollectionViewCell {
     
     // MARK: - PROPERTIES
     let onboardingImage = UIImageView().then {
-        $0.contentMode = .scaleToFill
+        $0.contentMode = .scaleAspectFit
     }
     
     let onboardingText = UILabel().then {
         $0.font = .pretendard(.regular, size: 16)
+        $0.numberOfLines = 2
+        $0.textAlignment = .center
     }
     
     // MARK: - LIFECYCLE
@@ -41,12 +43,14 @@ class OnboardingCell : UICollectionViewCell {
             $0.centerX.equalToSuperview()
             $0.top.equalToSuperview()
             $0.width.equalTo(contentView.frame.width)
-            $0.height.equalTo(contentView.frame.width * 486 / 390)
+            $0.height.equalTo(418)
         }
         
         onboardingText.snp.makeConstraints() {
             $0.centerX.equalToSuperview()
-            $0.top.equalTo(onboardingImage.snp.bottom).offset(46)
+            //$0.top.greaterThanOrEqualTo(onboardingImage.snp.bottom).offset(41)
+            //$0.top.lessThanOrEqualTo(onboardingImage.snp.bottom).offset(46)
+            $0.bottom.equalToSuperview()
         }
     }
 }
