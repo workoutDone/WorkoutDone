@@ -43,6 +43,9 @@
 		9200604929B1AD7200586063 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9200604829B1AD7200586063 /* HomeViewController.swift */; };
 		9200604B29B1ADA500586063 /* BaseUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9200604A29B1ADA500586063 /* BaseUIView.swift */; };
 		920060CF29B37C9F00586063 /* GradientButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 920060CE29B37C9F00586063 /* GradientButton.swift */; };
+		A59ACB7829B46DEB0084C73E /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59ACB7729B46DEB0084C73E /* TabBarController.swift */; };
+		A59ACB7A29B4BC740084C73E /* RoutineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59ACB7929B4BC740084C73E /* RoutineViewController.swift */; };
+		A59ACB7E29B4BCF70084C73E /* MyRecordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59ACB7D29B4BCF70084C73E /* MyRecordViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -95,6 +98,9 @@
 		9200604829B1AD7200586063 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		9200604A29B1ADA500586063 /* BaseUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseUIView.swift; sourceTree = "<group>"; };
 		920060CE29B37C9F00586063 /* GradientButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientButton.swift; sourceTree = "<group>"; };
+		A59ACB7729B46DEB0084C73E /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		A59ACB7929B4BC740084C73E /* RoutineViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineViewController.swift; sourceTree = "<group>"; };
+		A59ACB7D29B4BCF70084C73E /* MyRecordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyRecordViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -249,6 +255,7 @@
 		9200601F29B1A75B00586063 /* RoutineScene */ = {
 			isa = PBXGroup;
 			children = (
+				A59ACB7B29B4BC8A0084C73E /* Routine */,
 			);
 			path = RoutineScene;
 			sourceTree = "<group>";
@@ -256,6 +263,7 @@
 		9200602029B1A76B00586063 /* MyRecordScene */ = {
 			isa = PBXGroup;
 			children = (
+				A59ACB7C29B4BCDE0084C73E /* MyRecord */,
 			);
 			path = MyRecordScene;
 			sourceTree = "<group>";
@@ -270,6 +278,7 @@
 		9200602229B1A7AE00586063 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				A59ACB7629B46DB90084C73E /* TabBar */,
 				920060CC29B37C4C00586063 /* Base */,
 				920060CD29B37C5C00586063 /* UIComponent */,
 			);
@@ -326,6 +335,30 @@
 				920060CE29B37C9F00586063 /* GradientButton.swift */,
 			);
 			path = UIComponent;
+			sourceTree = "<group>";
+		};
+		A59ACB7629B46DB90084C73E /* TabBar */ = {
+			isa = PBXGroup;
+			children = (
+				A59ACB7729B46DEB0084C73E /* TabBarController.swift */,
+			);
+			path = TabBar;
+			sourceTree = "<group>";
+		};
+		A59ACB7B29B4BC8A0084C73E /* Routine */ = {
+			isa = PBXGroup;
+			children = (
+				A59ACB7929B4BC740084C73E /* RoutineViewController.swift */,
+			);
+			path = Routine;
+			sourceTree = "<group>";
+		};
+		A59ACB7C29B4BCDE0084C73E /* MyRecord */ = {
+			isa = PBXGroup;
+			children = (
+				A59ACB7D29B4BCF70084C73E /* MyRecordViewController.swift */,
+			);
+			path = MyRecord;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -487,6 +520,7 @@
 				9200602429B1A7CC00586063 /* BaseViewController.swift in Sources */,
 				9200604729B1ACF400586063 /* WorkoutResultView.swift in Sources */,
 				9200604329B1ACBF00586063 /* RecordView.swift in Sources */,
+				A59ACB7829B46DEB0084C73E /* TabBarController.swift in Sources */,
 				9200602729B1A7F400586063 /* UIColor.swift in Sources */,
 				9200602D29B1A91600586063 /* OnboardingCell.swift in Sources */,
 				9200604B29B1ADA500586063 /* BaseUIView.swift in Sources */,
@@ -494,6 +528,8 @@
 				920060CF29B37C9F00586063 /* GradientButton.swift in Sources */,
 				92005FCA29B1A49400586063 /* ViewController.swift in Sources */,
 				9200602A29B1A81100586063 /* UIFont.swift in Sources */,
+				A59ACB7A29B4BC740084C73E /* RoutineViewController.swift in Sources */,
+				A59ACB7E29B4BCF70084C73E /* MyRecordViewController.swift in Sources */,
 				92005FC629B1A49400586063 /* AppDelegate.swift in Sources */,
 				92005FC829B1A49400586063 /* SceneDelegate.swift in Sources */,
 				9200601D29B1A74300586063 /* OnboardingViewController.swift in Sources */,
