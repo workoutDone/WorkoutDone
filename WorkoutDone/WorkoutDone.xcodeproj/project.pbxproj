@@ -43,6 +43,7 @@
 		9200604929B1AD7200586063 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9200604829B1AD7200586063 /* HomeViewController.swift */; };
 		9200604B29B1ADA500586063 /* BaseUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9200604A29B1ADA500586063 /* BaseUIView.swift */; };
 		920060CF29B37C9F00586063 /* GradientButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 920060CE29B37C9F00586063 /* GradientButton.swift */; };
+		A576693B29B6EB4900673DFE /* ImageSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A576693A29B6EB4900673DFE /* ImageSelectionViewController.swift */; };
 		A59ACB7829B46DEB0084C73E /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59ACB7729B46DEB0084C73E /* TabBarController.swift */; };
 		A59ACB7A29B4BC740084C73E /* RoutineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59ACB7929B4BC740084C73E /* RoutineViewController.swift */; };
 		A59ACB7E29B4BCF70084C73E /* MyRecordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59ACB7D29B4BCF70084C73E /* MyRecordViewController.swift */; };
@@ -98,6 +99,7 @@
 		9200604829B1AD7200586063 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		9200604A29B1ADA500586063 /* BaseUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseUIView.swift; sourceTree = "<group>"; };
 		920060CE29B37C9F00586063 /* GradientButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientButton.swift; sourceTree = "<group>"; };
+		A576693A29B6EB4900673DFE /* ImageSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSelectionViewController.swift; sourceTree = "<group>"; };
 		A59ACB7729B46DEB0084C73E /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		A59ACB7929B4BC740084C73E /* RoutineViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineViewController.swift; sourceTree = "<group>"; };
 		A59ACB7D29B4BCF70084C73E /* MyRecordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyRecordViewController.swift; sourceTree = "<group>"; };
@@ -248,6 +250,7 @@
 			isa = PBXGroup;
 			children = (
 				9200604029B1AA4900586063 /* Home */,
+				A576693929B6E98100673DFE /* ImageSelection */,
 			);
 			path = HomeScene;
 			sourceTree = "<group>";
@@ -304,8 +307,8 @@
 		9200604029B1AA4900586063 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				9200604129B1AC8900586063 /* HomeView */,
 				9200604829B1AD7200586063 /* HomeViewController.swift */,
+				9200604129B1AC8900586063 /* HomeView */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -335,6 +338,14 @@
 				920060CE29B37C9F00586063 /* GradientButton.swift */,
 			);
 			path = UIComponent;
+			sourceTree = "<group>";
+		};
+		A576693929B6E98100673DFE /* ImageSelection */ = {
+			isa = PBXGroup;
+			children = (
+				A576693A29B6EB4900673DFE /* ImageSelectionViewController.swift */,
+			);
+			path = ImageSelection;
 			sourceTree = "<group>";
 		};
 		A59ACB7629B46DB90084C73E /* TabBar */ = {
@@ -530,6 +541,7 @@
 				9200602A29B1A81100586063 /* UIFont.swift in Sources */,
 				A59ACB7A29B4BC740084C73E /* RoutineViewController.swift in Sources */,
 				A59ACB7E29B4BCF70084C73E /* MyRecordViewController.swift in Sources */,
+				A576693B29B6EB4900673DFE /* ImageSelectionViewController.swift in Sources */,
 				92005FC629B1A49400586063 /* AppDelegate.swift in Sources */,
 				92005FC829B1A49400586063 /* SceneDelegate.swift in Sources */,
 				9200601D29B1A74300586063 /* OnboardingViewController.swift in Sources */,
