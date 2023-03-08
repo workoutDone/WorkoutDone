@@ -16,11 +16,11 @@ struct Onboarding {
 
 class OnboardingViewController : BaseViewController {
     // MARK: - PROPERTIES
-    let numberOfPages = 3
-    var currentPage = 0
+    let numberOfPages: Int = 3
+    var currentPage: Int = 0
     let onboardingInfo = [
         Onboarding(image: "onboarding1", text: "프레임을 이용해서 쉽게 오운완 사진을 찍어보세요!"),
-        Onboarding(image: "onboarding2", text: "나만의 운동 루틴을 만들고 운동 내용을 기록해보세요!"),
+        Onboarding(image: "onboarding2", text: "운동 내용을 기록해보세요!"),
         Onboarding(image: "onboarding3", text: "오운완 사진과 그래프를 통해 \n나의 변화된 모습을 실감할 수 있어요!")
     ]
     
@@ -33,7 +33,6 @@ class OnboardingViewController : BaseViewController {
         collectionView.register(OnboardingCell.self, forCellWithReuseIdentifier: "OnboardingCell")
         collectionView.isPagingEnabled = true
         collectionView.showsHorizontalScrollIndicator = false
-        //collectionView.backgroundColor = .orange
         
         return collectionView
     }()

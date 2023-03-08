@@ -48,8 +48,6 @@ class OnboardingCell : UICollectionViewCell {
         
         onboardingText.snp.makeConstraints() {
             $0.centerX.equalToSuperview()
-            //$0.top.greaterThanOrEqualTo(onboardingImage.snp.bottom).offset(41)
-            //$0.top.lessThanOrEqualTo(onboardingImage.snp.bottom).offset(46)
             $0.bottom.equalToSuperview()
         }
     }
