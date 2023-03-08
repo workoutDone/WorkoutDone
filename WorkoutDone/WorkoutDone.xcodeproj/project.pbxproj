@@ -49,6 +49,7 @@
 		A59ACB7829B46DEB0084C73E /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59ACB7729B46DEB0084C73E /* TabBarController.swift */; };
 		A59ACB7A29B4BC740084C73E /* RoutineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59ACB7929B4BC740084C73E /* RoutineViewController.swift */; };
 		A59ACB7E29B4BCF70084C73E /* MyRecordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59ACB7D29B4BCF70084C73E /* MyRecordViewController.swift */; };
+		A59ACBC029B6E2310084C73E /* DeviceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59ACBBF29B6E2310084C73E /* DeviceManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -107,6 +108,7 @@
 		A59ACB7729B46DEB0084C73E /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		A59ACB7929B4BC740084C73E /* RoutineViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineViewController.swift; sourceTree = "<group>"; };
 		A59ACB7D29B4BCF70084C73E /* MyRecordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyRecordViewController.swift; sourceTree = "<group>"; };
+		A59ACBBF29B6E2310084C73E /* DeviceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -284,6 +286,7 @@
 		9200602229B1A7AE00586063 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				A59ACBBE29B6E2220084C73E /* Manager */,
 				A59ACB7629B46DB90084C73E /* TabBar */,
 				920060CC29B37C4C00586063 /* Base */,
 				920060CD29B37C5C00586063 /* UIComponent */,
@@ -368,6 +371,14 @@
 				A59ACB7D29B4BCF70084C73E /* MyRecordViewController.swift */,
 			);
 			path = MyRecord;
+			sourceTree = "<group>";
+		};
+		A59ACBBE29B6E2220084C73E /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				A59ACBBF29B6E2310084C73E /* DeviceManager.swift */,
+			);
+			path = Manager;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -533,6 +544,7 @@
 				9200602729B1A7F400586063 /* UIColor.swift in Sources */,
 				9200602D29B1A91600586063 /* OnboardingCell.swift in Sources */,
 				9200604B29B1ADA500586063 /* BaseUIView.swift in Sources */,
+				A59ACBC029B6E2310084C73E /* DeviceManager.swift in Sources */,
 				9200604529B1ACD900586063 /* WorkoutView.swift in Sources */,
 				920060CF29B37C9F00586063 /* GradientButton.swift in Sources */,
 				92005FCA29B1A49400586063 /* ViewController.swift in Sources */,
