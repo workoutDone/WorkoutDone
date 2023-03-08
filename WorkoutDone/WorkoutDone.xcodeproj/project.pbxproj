@@ -44,9 +44,13 @@
 		9200604B29B1ADA500586063 /* BaseUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9200604A29B1ADA500586063 /* BaseUIView.swift */; };
 		920060CF29B37C9F00586063 /* GradientButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 920060CE29B37C9F00586063 /* GradientButton.swift */; };
 		A576693B29B6EB4900673DFE /* ImageSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A576693A29B6EB4900673DFE /* ImageSelectionViewController.swift */; };
+		920060E029B63C0D00586063 /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 920060DF29B63C0C00586063 /* TestViewController.swift */; };
+		920060E229B63C1500586063 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 920060E129B63C1500586063 /* CalendarView.swift */; };
+		920060E429B71D7400586063 /* CalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 920060E329B71D7400586063 /* CalendarCell.swift */; };
 		A59ACB7829B46DEB0084C73E /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59ACB7729B46DEB0084C73E /* TabBarController.swift */; };
 		A59ACB7A29B4BC740084C73E /* RoutineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59ACB7929B4BC740084C73E /* RoutineViewController.swift */; };
 		A59ACB7E29B4BCF70084C73E /* MyRecordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59ACB7D29B4BCF70084C73E /* MyRecordViewController.swift */; };
+		A59ACBC029B6E2310084C73E /* DeviceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59ACBBF29B6E2310084C73E /* DeviceManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -100,9 +104,13 @@
 		9200604A29B1ADA500586063 /* BaseUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseUIView.swift; sourceTree = "<group>"; };
 		920060CE29B37C9F00586063 /* GradientButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientButton.swift; sourceTree = "<group>"; };
 		A576693A29B6EB4900673DFE /* ImageSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSelectionViewController.swift; sourceTree = "<group>"; };
+		920060DF29B63C0C00586063 /* TestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
+		920060E129B63C1500586063 /* CalendarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
+		920060E329B71D7400586063 /* CalendarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CalendarCell.swift; path = WorkoutDone/Sources/Presenter/HomeScene/Home/CalendarCell.swift; sourceTree = SOURCE_ROOT; };
 		A59ACB7729B46DEB0084C73E /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		A59ACB7929B4BC740084C73E /* RoutineViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineViewController.swift; sourceTree = "<group>"; };
 		A59ACB7D29B4BCF70084C73E /* MyRecordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyRecordViewController.swift; sourceTree = "<group>"; };
+		A59ACBBF29B6E2310084C73E /* DeviceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -281,6 +289,7 @@
 		9200602229B1A7AE00586063 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				A59ACBBE29B6E2220084C73E /* Manager */,
 				A59ACB7629B46DB90084C73E /* TabBar */,
 				920060CC29B37C4C00586063 /* Base */,
 				920060CD29B37C5C00586063 /* UIComponent */,
@@ -309,6 +318,7 @@
 			children = (
 				9200604829B1AD7200586063 /* HomeViewController.swift */,
 				9200604129B1AC8900586063 /* HomeView */,
+				920060DF29B63C0C00586063 /* TestViewController.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -316,6 +326,8 @@
 		9200604129B1AC8900586063 /* HomeView */ = {
 			isa = PBXGroup;
 			children = (
+				920060E129B63C1500586063 /* CalendarView.swift */,
+				920060E329B71D7400586063 /* CalendarCell.swift */,
 				9200604229B1ACBF00586063 /* RecordView.swift */,
 				9200604429B1ACD900586063 /* WorkoutView.swift */,
 				9200604629B1ACF400586063 /* WorkoutResultView.swift */,
@@ -370,6 +382,14 @@
 				A59ACB7D29B4BCF70084C73E /* MyRecordViewController.swift */,
 			);
 			path = MyRecord;
+			sourceTree = "<group>";
+		};
+		A59ACBBE29B6E2220084C73E /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				A59ACBBF29B6E2310084C73E /* DeviceManager.swift */,
+			);
+			path = Manager;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -535,17 +555,21 @@
 				9200602729B1A7F400586063 /* UIColor.swift in Sources */,
 				9200602D29B1A91600586063 /* OnboardingCell.swift in Sources */,
 				9200604B29B1ADA500586063 /* BaseUIView.swift in Sources */,
+				A59ACBC029B6E2310084C73E /* DeviceManager.swift in Sources */,
 				9200604529B1ACD900586063 /* WorkoutView.swift in Sources */,
 				920060CF29B37C9F00586063 /* GradientButton.swift in Sources */,
 				92005FCA29B1A49400586063 /* ViewController.swift in Sources */,
 				9200602A29B1A81100586063 /* UIFont.swift in Sources */,
 				A59ACB7A29B4BC740084C73E /* RoutineViewController.swift in Sources */,
+				920060E229B63C1500586063 /* CalendarView.swift in Sources */,
 				A59ACB7E29B4BCF70084C73E /* MyRecordViewController.swift in Sources */,
 				A576693B29B6EB4900673DFE /* ImageSelectionViewController.swift in Sources */,
 				92005FC629B1A49400586063 /* AppDelegate.swift in Sources */,
 				92005FC829B1A49400586063 /* SceneDelegate.swift in Sources */,
 				9200601D29B1A74300586063 /* OnboardingViewController.swift in Sources */,
+				920060E029B63C0D00586063 /* TestViewController.swift in Sources */,
 				9200604929B1AD7200586063 /* HomeViewController.swift in Sources */,
+				920060E429B71D7400586063 /* CalendarCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
