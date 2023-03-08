@@ -43,6 +43,7 @@
 		9200604929B1AD7200586063 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9200604829B1AD7200586063 /* HomeViewController.swift */; };
 		9200604B29B1ADA500586063 /* BaseUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9200604A29B1ADA500586063 /* BaseUIView.swift */; };
 		920060CF29B37C9F00586063 /* GradientButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 920060CE29B37C9F00586063 /* GradientButton.swift */; };
+		A576693B29B6EB4900673DFE /* ImageSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A576693A29B6EB4900673DFE /* ImageSelectionViewController.swift */; };
 		920060E029B63C0D00586063 /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 920060DF29B63C0C00586063 /* TestViewController.swift */; };
 		920060E229B63C1500586063 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 920060E129B63C1500586063 /* CalendarView.swift */; };
 		920060E429B71D7400586063 /* CalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 920060E329B71D7400586063 /* CalendarCell.swift */; };
@@ -102,6 +103,7 @@
 		9200604829B1AD7200586063 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		9200604A29B1ADA500586063 /* BaseUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseUIView.swift; sourceTree = "<group>"; };
 		920060CE29B37C9F00586063 /* GradientButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientButton.swift; sourceTree = "<group>"; };
+		A576693A29B6EB4900673DFE /* ImageSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSelectionViewController.swift; sourceTree = "<group>"; };
 		920060DF29B63C0C00586063 /* TestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
 		920060E129B63C1500586063 /* CalendarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		920060E329B71D7400586063 /* CalendarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CalendarCell.swift; path = WorkoutDone/Sources/Presenter/HomeScene/Home/CalendarCell.swift; sourceTree = SOURCE_ROOT; };
@@ -256,6 +258,7 @@
 			isa = PBXGroup;
 			children = (
 				9200604029B1AA4900586063 /* Home */,
+				A576693929B6E98100673DFE /* ImageSelection */,
 			);
 			path = HomeScene;
 			sourceTree = "<group>";
@@ -313,8 +316,8 @@
 		9200604029B1AA4900586063 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				9200604129B1AC8900586063 /* HomeView */,
 				9200604829B1AD7200586063 /* HomeViewController.swift */,
+				9200604129B1AC8900586063 /* HomeView */,
 				920060DF29B63C0C00586063 /* TestViewController.swift */,
 			);
 			path = Home;
@@ -347,6 +350,14 @@
 				920060CE29B37C9F00586063 /* GradientButton.swift */,
 			);
 			path = UIComponent;
+			sourceTree = "<group>";
+		};
+		A576693929B6E98100673DFE /* ImageSelection */ = {
+			isa = PBXGroup;
+			children = (
+				A576693A29B6EB4900673DFE /* ImageSelectionViewController.swift */,
+			);
+			path = ImageSelection;
 			sourceTree = "<group>";
 		};
 		A59ACB7629B46DB90084C73E /* TabBar */ = {
@@ -552,6 +563,7 @@
 				A59ACB7A29B4BC740084C73E /* RoutineViewController.swift in Sources */,
 				920060E229B63C1500586063 /* CalendarView.swift in Sources */,
 				A59ACB7E29B4BCF70084C73E /* MyRecordViewController.swift in Sources */,
+				A576693B29B6EB4900673DFE /* ImageSelectionViewController.swift in Sources */,
 				92005FC629B1A49400586063 /* AppDelegate.swift in Sources */,
 				92005FC829B1A49400586063 /* SceneDelegate.swift in Sources */,
 				9200601D29B1A74300586063 /* OnboardingViewController.swift in Sources */,
