@@ -8,9 +8,9 @@
 import UIKit
 
 class TabBarController : UITabBarController {
-    let homeTab = HomeViewController()
-    let routineTab = RoutineViewController()
-    let myRecordTab = MyRecordViewController()
+    let homeTab = UINavigationController(rootViewController: HomeViewController())
+    let routineTab = UINavigationController(rootViewController: RoutineViewController())
+    let myRecordTab = UINavigationController(rootViewController: MyRecordViewController())
     let homeTabBarItem = UITabBarItem(title: "오늘의 운동", image: UIImage(named: ""), tag: 0)
     let routineTabBarItem = UITabBarItem(title: "운동 루틴", image: UIImage(named: ""), tag: 1)
     let myRecordTabBarItem = UITabBarItem(title: "나의 기록", image: UIImage(named: ""), tag: 2)
