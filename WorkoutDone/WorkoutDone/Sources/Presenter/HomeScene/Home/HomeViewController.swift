@@ -27,7 +27,6 @@ class HomeViewController : BaseViewController {
         $0.backgroundColor = .colorFFFFFF
     }
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -84,5 +83,13 @@ class HomeViewController : BaseViewController {
     }
     override func actions() {
         super.actions()
+        recordBaseView.workoutDoneCameraButton.addTarget(self, action: #selector(workoutDoneCameraButtonTapped), for: .touchUpInside)
+    }
+    @objc func workoutDoneCameraButtonTapped() {
+        let imageSelectionViewController = ImageSelectionViewController()
+//        imageSelectionViewController.rootView = self
+        imageSelectionViewController.modalTransitionStyle = .crossDissolve
+        imageSelectionViewController.modalPresentationStyle = .overFullScreen
+        present(imageSelectionViewController, animated: true)
     }
 }
