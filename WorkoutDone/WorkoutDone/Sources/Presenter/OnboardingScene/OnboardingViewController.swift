@@ -16,8 +16,8 @@ struct Onboarding {
 
 class OnboardingViewController : BaseViewController {
     // MARK: - PROPERTIES
-    let numberOfPages: Int = 3
-    var currentPage: Int = 0
+    let numberOfPages : Int = 3
+    var currentPage : Int = 0
     let onboardingInfo = [
         Onboarding(image: "onboarding1", text: "프레임을 이용해서 쉽게 오운완 사진을 찍어보세요!"),
         Onboarding(image: "onboarding2", text: "운동 내용을 기록해보세요!"),

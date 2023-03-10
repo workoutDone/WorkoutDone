@@ -1,5 +1,5 @@
 //
-//  CalendarCell.swift
+//  DayCell.swift
 //  WorkoutDone
 //
 //  Created by hyemi on 2023/03/07.
@@ -9,11 +9,10 @@ import UIKit
 import SnapKit
 import Then
 
-class CalendarCell: UICollectionViewCell {
+class DayCell: UICollectionViewCell {
     let dayLabel = UILabel().then {
         $0.textColor = .colorF3F3F3
         $0.font = .pretendard(.light, size: 14)
-        $0.text = "1"
     }
     
     override init(frame: CGRect) {
