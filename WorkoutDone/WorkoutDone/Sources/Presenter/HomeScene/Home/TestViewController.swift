@@ -8,11 +8,7 @@
 import UIKit
 
 class TestViewController: BaseViewController {
-    private let calendarView = CalendarView().then {
-        $0.backgroundColor = .color7442FF
-        $0.layer.cornerRadius = 15
-        $0.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
-    }
+    private let calendarView = CalendarView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,7 +21,6 @@ class TestViewController: BaseViewController {
         calendarView.snp.makeConstraints {
             $0.top.equalToSuperview()
             $0.leading.trailing.equalTo(view.safeAreaLayoutGuide)
-            $0.height.equalTo(333)
         }
     }
 }
