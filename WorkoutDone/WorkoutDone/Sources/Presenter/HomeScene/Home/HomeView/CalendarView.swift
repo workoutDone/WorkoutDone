@@ -9,6 +9,13 @@ import UIKit
 import SnapKit
 import Then
 
+struct WorkOutDone {
+    var date: Date
+    var image: String
+}
+
+var sampleData = [WorkOutDone(date: Calendar.current.date(from: DateComponents(year: 2023, month: 03, day: 15))!, image: ""), WorkOutDone(date: Calendar.current.date(from: DateComponents(year: 2023, month: 03, day: 13))!, image: ""), WorkOutDone(date: Calendar.current.date(from: DateComponents(year: 2023, month: 03, day: 10))!, image: ""), WorkOutDone(date: Calendar.current.date(from: DateComponents(year: 2023, month: 02, day: 23))!, image: ""), WorkOutDone(date: Calendar.current.date(from: DateComponents(year: 2023, month: 03, day: 1))!, image: "")]
+
 class CalendarView : BaseUIView {
     // MARK: - PROPERTIES
     var calendar = Calendar.current
@@ -80,6 +87,14 @@ class CalendarView : BaseUIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
+        self.backgroundColor = .color7442FF
+        self.layer.cornerRadius = 15
+        self.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
+        
+        self.snp.makeConstraints {
+            $0.height.equalTo(333).priority(1)
+        }
+        
         self.addSubview(previousMonthView)
         self.addSubview(currentDateLabelView)
         self.addSubview(nextMonthView)
@@ -110,13 +125,9 @@ class CalendarView : BaseUIView {
         components.day = 1
         calculateMonth()
         
-        self.backgroundColor = .color7442FF
-        self.layer.cornerRadius = 15
-        self.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
         
-        self.snp.makeConstraints {
-            $0.height.equalTo(333).priority(1)
-        }
+        
+        
     }
     
     required init?(coder: NSCoder) {
@@ -322,6 +333,7 @@ extension CalendarView: UICollectionViewDelegate, UICollectionViewDataSource, UI
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if !isShowingCalendar {
+            
             if indexPath.section ==  0 {
                 guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "DayOfTheWeekCell", for: indexPath) as? DayOfTheWeekCell else { return UICollectionViewCell() }
                 cell.dayOfTheWeekLabel.text = dayoftheweek[indexPath.row]
@@ -330,8 +342,23 @@ extension CalendarView: UICollectionViewDelegate, UICollectionViewDataSource, UI
 
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "DayCell", for: indexPath) as? DayCell else { return UICollectionViewCell() }
             cell.dayLabel.text = days[indexPath.row]
+            cell.dayLabel.font = .pretendard(.light, size: 16)
+            cell.todayImage.isHidden = true
+            cell.workOutDoneImage.isHidden = true
+            
             if !isShowingCalendar && components.month ?? 1 == calendar.component(.month, from: Date()) {
+                for data in sampleData {
+                    if Calendar.current.date(from: DateComponents(year: components.year, month: components.month, day: Int(days[indexPath.row])))! == data.date {
+                        cell.workOutDoneImage.isHidden = false
+                    }
+                }
+                
                 cell.dayLabel.textColor = .colorF3F3F3
+                
+                if days[indexPath.row] == String(calendar.component(.day, from: Date())) {
+                    cell.todayImage.isHidden = false
+                    cell.dayLabel.font = .pretendard(.bold, size: 16)
+                }
             } else {
                 if indexPath.row >= firstWeekday - 1 {
                     cell.dayLabel.textColor = .colorF3F3F3
@@ -342,12 +369,27 @@ extension CalendarView: UICollectionViewDelegate, UICollectionViewDataSource, UI
             
             return cell
         }
+        
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "DayCell", for: indexPath) as? DayCell else { return UICollectionViewCell() }
         cell.dayLabel.text = days[indexPath.row]
+        cell.dayLabel.font = .pretendard(.light, size: 14)
+        cell.todayImage.isHidden = true
+        cell.workOutDoneImage.isHidden = true
+        
         if indexPath.row >= firstWeekday - 1 && indexPath.row <= daysCountInMonth + firstWeekday - 2 {
+            for data in sampleData {
+                if Calendar.current.date(from: DateComponents(year: components.year, month: components.month, day: Int(days[indexPath.row])))! == data.date {
+                    cell.workOutDoneImage.isHidden = false
+                }
+            }
             cell.dayLabel.textColor = .colorF3F3F3
         } else {
             cell.dayLabel.textColor = .colorF3F3F303
+        }
+        
+        if components.month ?? 1 == calendar.component(.month, from: Date()) && days[indexPath.row] == String(calendar.component(.day, from: Date())) {
+            cell.todayImage.isHidden = false
+            cell.dayLabel.font = .pretendard(.bold, size: 14)
         }
         return cell
     }
