@@ -11,8 +11,8 @@ import Then
 
 class CalendarView : BaseUIView {
     // MARK: - PROPERTIES
-    var cal = Calendar.current
-    let dateFormatter = DateFormatter()
+    var calendar = Calendar.current
+    let formatter = DateFormatter()
     var components = DateComponents()
     var firstWeekday : Int = 0
     var daysCountInMonth : Int = 0
@@ -104,11 +104,11 @@ class CalendarView : BaseUIView {
         setLayout()
         setAction()
         
-        dateFormatter.dateFormat = "yyyy년 M월"
-        components.year = cal.component(.year, from: Date())
-        components.month = cal.component(.month, from: Date())
+        formatter.dateFormat = "yyyy년 M월"
+        components.year = calendar.component(.year, from: Date())
+        components.month = calendar.component(.month, from: Date())
         components.day = 1
-        calculationDate()
+        calculateMonth()
         
         self.backgroundColor = .color7442FF
         self.layer.cornerRadius = 15
@@ -200,13 +200,25 @@ class CalendarView : BaseUIView {
     
     @objc func previousMonthButtonTapped(sender: UIButton!) {
         components.month = components.month! - 1
-        calculationDate()
+       
+        if !isShowingCalendar && components.month ?? 1 == calendar.component(.month, from: Date()) {
+            calculateWeek()
+        } else {
+            calculateMonth()
+        }
+        
         collectionView.reloadData()
     }
     
     @objc func nextMonthButtonTapped(sender: UIButton!) {
         components.month = components.month! + 1
-        calculationDate()
+        
+        if !isShowingCalendar && components.month ?? 1 == calendar.component(.month, from: Date()) {
+            calculateWeek()
+        } else {
+            calculateMonth()
+        }
+        
         collectionView.reloadData()
     }
     
@@ -219,7 +231,11 @@ class CalendarView : BaseUIView {
             collectionView.snp.makeConstraints {
                 $0.top.equalTo(stackView.snp.bottom).offset(5).priority(2)
             }
-            days = ["1","2","3","4","5","6","7"]
+            if components.month ?? 1 == calendar.component(.month, from: Date()) {
+                calculateWeek()
+            } else {
+                calculateMonth()
+            }
             
         } else {
             showHideCalendarImage.image = UIImage(named: "show")
@@ -229,26 +245,27 @@ class CalendarView : BaseUIView {
             collectionView.snp.makeConstraints {
                 $0.top.equalTo(stackView.snp.bottom).offset(18).priority(2)
             }
-            calculationDate()
+            calculateMonth()
         }
        
         collectionView.reloadData()
         isShowingCalendar = !isShowingCalendar
     }
     
-    func calculationDate() {
-        self.days.removeAll()
+    func calculateMonth() {
         components.month = components.month! - 1
-        let firstDayOfPreMonth = cal.date(from: components)
-        var lastDay = cal.range(of: .day, in: .month, for: firstDayOfPreMonth!)!.count
+        let firstDayOfPreMonth = calendar.date(from: components)
+        var lastDay = calendar.range(of: .day, in: .month, for: firstDayOfPreMonth!)!.count
         
         components.month = components.month! + 1
-        let firstDayOfMonth = cal.date(from: components)
-        firstWeekday = cal.component(.weekday, from: firstDayOfMonth!)
-        daysCountInMonth = cal.range(of: .day, in: .month, for: firstDayOfMonth!)!.count
+        let firstDayOfMonth = calendar.date(from: components)
+        firstWeekday = calendar.component(.weekday, from: firstDayOfMonth!)
+        daysCountInMonth = calendar.range(of: .day, in: .month, for: firstDayOfMonth!)!.count
         weekdayAdding = 2 - firstWeekday
 
-        self.currentDateLabel.text = dateFormatter.string(from: firstDayOfMonth!)
+        currentDateLabel.text = formatter.string(from: firstDayOfMonth!)
+        
+        days.removeAll()
         
         for day in weekdayAdding...daysCountInMonth {
             if day < 1 {
@@ -263,6 +280,24 @@ class CalendarView : BaseUIView {
         while days.count % 7 != 0 {
             days.append(String(day))
             day += 1
+        }
+    }
+    
+    func calculateWeek() {
+        let startOfWeek = calendar.date(from: calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: Date()))!
+        let endOfWeek = calendar.date(byAdding: .day, value: 7, to: startOfWeek)!
+        
+        formatter.dateFormat = "dd"
+        let startDayOfWeek = (Int(formatter.string(from: startOfWeek)) ?? 0) + 1
+        let endDayOfWeek = Int(formatter.string(from: endOfWeek)) ?? 0
+        
+        formatter.dateFormat = "yyyy년 M월"
+        currentDateLabel.text = formatter.string(from: calendar.date(from: components)!)
+        
+        days.removeAll()
+        
+        for day in startDayOfWeek...endDayOfWeek {
+            days.append(String(day))
         }
     }
 }
@@ -295,6 +330,16 @@ extension CalendarView: UICollectionViewDelegate, UICollectionViewDataSource, UI
 
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "DayCell", for: indexPath) as? DayCell else { return UICollectionViewCell() }
             cell.dayLabel.text = days[indexPath.row]
+            if !isShowingCalendar && components.month ?? 1 == calendar.component(.month, from: Date()) {
+                cell.dayLabel.textColor = .colorF3F3F3
+            } else {
+                if indexPath.row >= firstWeekday - 1 {
+                    cell.dayLabel.textColor = .colorF3F3F3
+                } else {
+                    cell.dayLabel.textColor = .colorF3F3F303
+                }
+            }
+            
             return cell
         }
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "DayCell", for: indexPath) as? DayCell else { return UICollectionViewCell() }
