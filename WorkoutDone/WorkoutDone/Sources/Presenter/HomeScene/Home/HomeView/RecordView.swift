@@ -59,7 +59,7 @@ class RecordView : BaseUIView {
         $0.layer.cornerRadius = 10
         $0.backgroundColor = .colorFFFFFF
     }
-    private let bodyDataEntryButton = UIButton().then {
+    let bodyDataEntryButton = UIButton().then {
         $0.layer.cornerRadius = 10
         $0.setImage(UIImage(named: "pencil"), for: .normal)
         $0.contentMode = .scaleAspectFill

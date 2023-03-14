@@ -84,6 +84,7 @@ class HomeViewController : BaseViewController {
     override func actions() {
         super.actions()
         recordBaseView.workoutDoneCameraButton.addTarget(self, action: #selector(workoutDoneCameraButtonTapped), for: .touchUpInside)
+        recordBaseView.bodyDataEntryButton.addTarget(self, action: #selector(bodyDataEntryButtonTapped), for: .touchUpInside)
     }
     @objc func workoutDoneCameraButtonTapped() {
         let imageSelectionViewController = ImageSelectionViewController()
@@ -91,5 +92,11 @@ class HomeViewController : BaseViewController {
         imageSelectionViewController.modalTransitionStyle = .crossDissolve
         imageSelectionViewController.modalPresentationStyle = .overFullScreen
         present(imageSelectionViewController, animated: true)
+    }
+    @objc func bodyDataEntryButtonTapped() {
+        let registerMyBodyInfoViewController = RegisterMyBodyInfoViewController()
+        registerMyBodyInfoViewController.modalTransitionStyle = .crossDissolve
+        registerMyBodyInfoViewController.modalPresentationStyle = .overFullScreen
+        present(registerMyBodyInfoViewController, animated: true)
     }
 }
