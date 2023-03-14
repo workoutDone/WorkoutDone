@@ -55,6 +55,7 @@
 		A59ACB7A29B4BC740084C73E /* RoutineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59ACB7929B4BC740084C73E /* RoutineViewController.swift */; };
 		A59ACB7E29B4BCF70084C73E /* MyRecordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59ACB7D29B4BCF70084C73E /* MyRecordViewController.swift */; };
 		A59ACBC029B6E2310084C73E /* DeviceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59ACBBF29B6E2310084C73E /* DeviceManager.swift */; };
+		A59EF6E229C0B69C005DE9B5 /* WorkoutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59EF6E129C0B69C005DE9B5 /* WorkoutViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -119,6 +120,7 @@
 		A59ACB7929B4BC740084C73E /* RoutineViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineViewController.swift; sourceTree = "<group>"; };
 		A59ACB7D29B4BCF70084C73E /* MyRecordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyRecordViewController.swift; sourceTree = "<group>"; };
 		A59ACBBF29B6E2310084C73E /* DeviceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceManager.swift; sourceTree = "<group>"; };
+		A59EF6E129C0B69C005DE9B5 /* WorkoutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -266,6 +268,7 @@
 			isa = PBXGroup;
 			children = (
 				9200604029B1AA4900586063 /* Home */,
+				A59EF6E029C0B673005DE9B5 /* Workout */,
 				A576693C29BB056900673DFE /* RegisterMyBodyInfoScene */,
 				A576693929B6E98100673DFE /* ImageSelection */,
 			);
@@ -410,6 +413,14 @@
 				9264A58129B8735C0010856F /* UserDefaultsManager.swift */,
 			);
 			path = Manager;
+			sourceTree = "<group>";
+		};
+		A59EF6E029C0B673005DE9B5 /* Workout */ = {
+			isa = PBXGroup;
+			children = (
+				A59EF6E129C0B69C005DE9B5 /* WorkoutViewController.swift */,
+			);
+			path = Workout;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -580,6 +591,7 @@
 				9264A58229B8735C0010856F /* UserDefaultsManager.swift in Sources */,
 				A59ACBC029B6E2310084C73E /* DeviceManager.swift in Sources */,
 				9200604529B1ACD900586063 /* WorkoutView.swift in Sources */,
+				A59EF6E229C0B69C005DE9B5 /* WorkoutViewController.swift in Sources */,
 				920060CF29B37C9F00586063 /* GradientButton.swift in Sources */,
 				92005FCA29B1A49400586063 /* ViewController.swift in Sources */,
 				9200602A29B1A81100586063 /* UIFont.swift in Sources */,
