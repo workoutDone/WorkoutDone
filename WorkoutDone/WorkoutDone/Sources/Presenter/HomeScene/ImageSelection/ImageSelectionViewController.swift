@@ -14,7 +14,6 @@ class ImageSelectionViewController : BaseViewController {
     // MARK: - PROPERTIES
     private let cancelButton = UIButton().then {
         $0.setImage(UIImage(named: "cancelImage"), for: .normal)
-//        $0.backgroundColor = .red
     }
     private let galleryButton = UIButton().then {
         $0.setTitle("갤러리에서 가져오기", for: .normal)
