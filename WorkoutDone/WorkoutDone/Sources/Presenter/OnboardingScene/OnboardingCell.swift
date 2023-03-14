@@ -13,7 +13,7 @@ class OnboardingCell : UICollectionViewCell {
     
     // MARK: - PROPERTIES
     let onboardingImage = UIImageView().then {
-        $0.contentMode = .scaleAspectFit
+        $0.contentMode = .scaleAspectFill
     }
     
     let onboardingText = UILabel().then {
