@@ -125,6 +125,16 @@ class RegisterMyBodyInfoViewController : BaseViewController {
         $0.spacing = 47
     }
     // MARK: - LIFECYCLE
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardUp), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardDown), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
     override func setupLayout() {
         super.setupLayout()
         let blurEffect = UIBlurEffect(style: .systemUltraThinMaterialDark)
@@ -225,6 +235,22 @@ class RegisterMyBodyInfoViewController : BaseViewController {
     }
     @objc func cancelButtonTapped() {
         dismiss(animated: true)
+    }
+    @objc func keyboardUp(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            ///화면 사이즈의 중앙과 뷰의 중앙의 차이
+            let offsetValue = UIScreen.main.bounds.height / 2 - 346 / 2
+            let height = -keyboardSize.height + offsetValue
+            if height < 0 {
+                self.baseView.snp.updateConstraints { make in
+                    make.centerY.equalToSuperview().offset(height)
+                }
+                self.view.layoutIfNeeded()
+            }
+        }
+    }
+    @objc func keyboardDown() {
+        self.baseView.transform = .identity
     }
     
 }
