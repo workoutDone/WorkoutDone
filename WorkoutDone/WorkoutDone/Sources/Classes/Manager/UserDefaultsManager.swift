@@ -15,14 +15,19 @@ class UserDefaultsManager {
     
     let defaults = UserDefaults.standard
     static let shared = UserDefaultsManager()
-
+    
     var hasOnboarded: Bool {
-        return load(.hasOnboarded) as? Bool ?? false
+        if load(.hasOnboarded) == nil {
+            save(value: false, forkey: .hasOnboarded)
+            return true
+        } else {
+            return false
+        }
     }
     
-    var isMonthlyCalendar: Bool {
-        return load(.isMonthlyCalendar) as? Bool ?? false
-    }
+//    var isMonthlyCalendar: Bool {
+//        return load(.isMonthlyCalendar) as? Bool ?? false
+//    }
     
     func save( value: Any, forkey key: Key) {
         defaults.set(value, forKey: key.rawValue)
@@ -39,19 +44,21 @@ class UserDefaultsManager {
     
     func loadBool(_ key: Key) -> Bool? {
         return defaults.object(forKey: key.rawValue) as? Bool
-        
     }
     
     func remove(_ key: Key) {
         defaults.removeObject(forKey: key.rawValue)
     }
     
-    func isFirstTime(_ key: Key) -> Bool {
-        if load(.hasOnboarded) == nil {
-            save(value: false, forkey: key)
-            return true
-        } else {
-            return false
-        }
-    }
+//    func isMonthlyCalendar1() {
+//        print(<#T##items: Any...##Any#>)
+//        if (load(.isMonthlyCalendar) != nil) == true {
+//            save(value: false, forkey: .isMonthlyCalendar)
+//            print("11")
+//         
+//        } else {
+//            save(value: true, forkey: .isMonthlyCalendar)
+//            print("22")
+//        }
+//    }
 }

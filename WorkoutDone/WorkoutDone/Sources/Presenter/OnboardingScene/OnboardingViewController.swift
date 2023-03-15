@@ -56,18 +56,26 @@ class OnboardingViewController : BaseViewController {
     // MARK: - LIFECYCLE
     override func viewDidLoad() {
         super.viewDidLoad()
+    
+        setDelegateDataSource()
+    }
+    
+    // MARK: - ACTIONS
+    override func setupLayout() {
+        super.setupLayout()
         
         [collectionView, pageControl, nextButton].forEach {
             view.addSubview($0)
         }
-        
-        setLayout()
-        setDelegateDataSource()
-        setAction()
     }
     
-    // MARK: - ACTIONS
-    func setLayout() {
+    override func actions() {
+        nextButton.addTarget(self, action: #selector(nextButtonTapped), for: .touchUpInside)
+    }
+    
+    override func setupConstraints() {
+        super.setupConstraints()
+        
         collectionView.snp.makeConstraints {
             $0.top.greaterThanOrEqualTo(view.safeAreaLayoutGuide).offset(0)
             $0.top.lessThanOrEqualTo(view.safeAreaLayoutGuide).offset(68)
@@ -95,10 +103,6 @@ class OnboardingViewController : BaseViewController {
     func setDelegateDataSource() {
         collectionView.delegate = self
         collectionView.dataSource = self
-    }
-    
-    func setAction() {
-        nextButton.addTarget(self, action: #selector(nextButtonTapped), for: .touchUpInside)
     }
     
     @objc func nextButtonTapped(sender: UIButton!) {
