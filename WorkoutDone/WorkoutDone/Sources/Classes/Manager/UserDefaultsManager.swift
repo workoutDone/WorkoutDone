@@ -31,23 +31,24 @@ class UserDefaultsManager {
     func load(_ key: Key) -> Any? {
         switch key {
         case .hasOnboarded:
-            return load(key)
+            return loadBool(key)
         case .isMonthlyCalendar:
-            return load(key)
+            return loadBool(key)
         }
     }
     
     func loadBool(_ key: Key) -> Bool? {
         return defaults.object(forKey: key.rawValue) as? Bool
+        
     }
     
     func remove(_ key: Key) {
         defaults.removeObject(forKey: key.rawValue)
     }
     
-    func isFirstTime() -> Bool {
-        if defaults.object(forKey: "isFirstTime") == nil {
-            defaults.set("No", forKey: "isFirstTime")
+    func isFirstTime(_ key: Key) -> Bool {
+        if load(.hasOnboarded) == nil {
+            save(value: false, forkey: key)
             return true
         } else {
             return false

@@ -22,8 +22,8 @@ class CalendarView : BaseUIView {
     let formatter = DateFormatter()
     var components = DateComponents()
     var firstWeekday : Int = 0
-    var daysCountInMonth : Int = 0
-    var weekdayAdding : Int = 0
+    var daysCount : Int = 0
+    var previousDays : Int = 0
     var days: [String] = []
     var isShowingCalendar : Bool = true
     var dayoftheweek = ["월", "화", "수", "목", "금", "토", "일"]
@@ -83,59 +83,37 @@ class CalendarView : BaseUIView {
         $0.image = UIImage(named: "show")
     }
     
-    // MARK: - LIFECYCLE
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    override func setupLayout() {
+        super.setupLayout()
         
-        self.backgroundColor = .color7442FF
-        self.layer.cornerRadius = 15
-        self.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
-        
-        self.snp.makeConstraints {
-            $0.height.equalTo(333).priority(1)
+        [previousMonthView, currentDateLabelView, nextMonthView, collectionView, showHideCalendarButton].forEach {
+            self.addSubview($0)
         }
-        
-        self.addSubview(previousMonthView)
-        self.addSubview(currentDateLabelView)
-        self.addSubview(nextMonthView)
+
         self.addSubview(stackView)
-        self.addSubview(collectionView)
-        self.addSubview(showHideCalendarButton)
-        
-        
-        previousMonthView.addSubview(previousMonthImage)
-        previousMonthView.addSubview(previousMonthButton)
+
+        [previousMonthImage, previousMonthButton].forEach {
+            previousMonthView.addSubview($0)
+        }
         
         currentDateLabelView.addSubview(currentDateLabel)
         
-        nextMonthView.addSubview(nextMonthImage)
-        nextMonthView.addSubview(nextMonthButton)
+        [nextMonthImage, nextMonthButton].forEach {
+            nextMonthView.addSubview($0)
+        }
         
         showHideCalendarButton.addSubview(showHideCalendarImage)
         
-        collectionView.delegate = self
-        collectionView.dataSource = self
-        
-        setLayout()
+        setCalendarView()
+        setDelegateDataSource()
         setAction()
-        
-        formatter.dateFormat = "yyyy년 M월"
-        components.year = calendar.component(.year, from: Date())
-        components.month = calendar.component(.month, from: Date())
-        components.day = 1
-        calculateMonth()
-        
-        
-        
-        
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        setCurrentDate()
     }
     
     // MARK: - ACTIONS
-    func setLayout() {
+    override func setupConstraints() {
+        super.setupConstraints()
+        
         previousMonthView.snp.makeConstraints {
             $0.width.height.equalTo(26)
         }
@@ -201,6 +179,29 @@ class CalendarView : BaseUIView {
             $0.width.equalTo(35)
             $0.height.equalTo(24)
         }
+    }
+    
+    func setCalendarView() {
+        self.backgroundColor = .color7442FF
+        self.layer.cornerRadius = 15
+        self.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
+        
+        self.snp.makeConstraints {
+            $0.height.equalTo(333).priority(1)
+        }
+    }
+    
+    func setDelegateDataSource() {
+        collectionView.delegate = self
+        collectionView.dataSource = self
+    }
+    
+    func setCurrentDate() {
+        formatter.dateFormat = "yyyy년 M월"
+        components.year = calendar.component(.year, from: Date())
+        components.month = calendar.component(.month, from: Date())
+        components.day = 1
+        calculateMonth()
     }
     
     func setAction() {
@@ -271,14 +272,15 @@ class CalendarView : BaseUIView {
         components.month = components.month! + 1
         let firstDayOfMonth = calendar.date(from: components)
         firstWeekday = calendar.component(.weekday, from: firstDayOfMonth!)
-        daysCountInMonth = calendar.range(of: .day, in: .month, for: firstDayOfMonth!)!.count
-        weekdayAdding = 2 - firstWeekday
+        daysCount = calendar.range(of: .day, in: .month, for: firstDayOfMonth!)!.count
+        previousDays = 2 - firstWeekday
+        print(previousDays)
 
         currentDateLabel.text = formatter.string(from: firstDayOfMonth!)
         
         days.removeAll()
         
-        for day in weekdayAdding...daysCountInMonth {
+        for day in previousDays...daysCount {
             if day < 1 {
                 days.insert(String(lastDay), at: 0)
                 lastDay -= 1
@@ -376,7 +378,7 @@ extension CalendarView: UICollectionViewDelegate, UICollectionViewDataSource, UI
         cell.todayImage.isHidden = true
         cell.workOutDoneImage.isHidden = true
         
-        if indexPath.row >= firstWeekday - 1 && indexPath.row <= daysCountInMonth + firstWeekday - 2 {
+        if indexPath.row >= firstWeekday - 1 && indexPath.row <= daysCount + firstWeekday - 2 {
             for data in sampleData {
                 if Calendar.current.date(from: DateComponents(year: components.year, month: components.month, day: Int(days[indexPath.row])))! == data.date {
                     cell.workOutDoneImage.isHidden = false

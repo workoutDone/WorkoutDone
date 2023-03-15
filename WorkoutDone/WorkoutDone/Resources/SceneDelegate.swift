@@ -50,7 +50,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 extension SceneDelegate {
     private func setRootViewController(_ scene: UIScene) {
-        if UserDefaultsManager.shared.isFirstTime() {
+        if UserDefaultsManager.shared.isFirstTime(.hasOnboarded) {
             setRootViewController(scene, viewController: OnboardingViewController())
         } else {
             setRootViewController(scene, viewController: TabBarController())

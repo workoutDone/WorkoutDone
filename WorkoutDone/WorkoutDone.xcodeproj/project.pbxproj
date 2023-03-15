@@ -109,7 +109,7 @@
 		920060CE29B37C9F00586063 /* GradientButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientButton.swift; sourceTree = "<group>"; };
 		920060DF29B63C0C00586063 /* TestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
 		920060E129B63C1500586063 /* CalendarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
-		920060E329B71D7400586063 /* DayCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DayCell.swift; path = WorkoutDone/Sources/Presenter/HomeScene/Home/DayCell.swift; sourceTree = SOURCE_ROOT; };
+		920060E329B71D7400586063 /* DayCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DayCell.swift; path = WorkoutDone/Sources/Presenter/HomeScene/Home/HomeView/Cell/DayCell.swift; sourceTree = SOURCE_ROOT; };
 		9264A58129B8735C0010856F /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
 		9264A58329BA22FE0010856F /* DayOfTheWeekCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayOfTheWeekCell.swift; sourceTree = "<group>"; };
 		A576693A29B6EB4900673DFE /* ImageSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSelectionViewController.swift; sourceTree = "<group>"; };
@@ -336,12 +336,11 @@
 		9200604129B1AC8900586063 /* HomeView */ = {
 			isa = PBXGroup;
 			children = (
+				9264A58529C19B750010856F /* Cell */,
 				920060E129B63C1500586063 /* CalendarView.swift */,
-				920060E329B71D7400586063 /* DayCell.swift */,
 				9200604229B1ACBF00586063 /* RecordView.swift */,
 				9200604429B1ACD900586063 /* WorkoutView.swift */,
 				9200604629B1ACF400586063 /* WorkoutResultView.swift */,
-				9264A58329BA22FE0010856F /* DayOfTheWeekCell.swift */,
 			);
 			path = HomeView;
 			sourceTree = "<group>";
@@ -361,6 +360,15 @@
 				920060CE29B37C9F00586063 /* GradientButton.swift */,
 			);
 			path = UIComponent;
+			sourceTree = "<group>";
+		};
+		9264A58529C19B750010856F /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				920060E329B71D7400586063 /* DayCell.swift */,
+				9264A58329BA22FE0010856F /* DayOfTheWeekCell.swift */,
+			);
+			path = Cell;
 			sourceTree = "<group>";
 		};
 		A576693929B6E98100673DFE /* ImageSelection */ = {
