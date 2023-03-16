@@ -10,5 +10,6 @@ import UIKit
 class RoutineViewController : BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .red
     }
 }
