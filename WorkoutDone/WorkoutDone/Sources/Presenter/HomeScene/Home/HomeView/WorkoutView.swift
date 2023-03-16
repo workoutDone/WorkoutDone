@@ -25,7 +25,7 @@ class WorkoutView : BaseUIView {
         $0.textColor = .color929292
         $0.font = .pretendard(.regular, size: 16)
     }
-    private let workoutRoutineChoiceButton = GradientButton(colors: [UIColor.color7442FF.cgColor, UIColor.color8E36FF.cgColor]).then {
+    let workoutRoutineChoiceButton = GradientButton(colors: [UIColor.color7442FF.cgColor, UIColor.color8E36FF.cgColor]).then {
         $0.setTitle("루틴 선택", for: .normal)
         $0.titleLabel?.font = .pretendard(.semiBold, size: 16)
     }

@@ -10,5 +10,6 @@ import UIKit
 class MyRecordViewController : BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .blue
     }
 }
