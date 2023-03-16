@@ -25,9 +25,9 @@ class UserDefaultsManager {
         }
     }
     
-//    var isMonthlyCalendar: Bool {
-//        return load(.isMonthlyCalendar) as? Bool ?? false
-//    }
+    var isMonthlyCalendar: Bool {
+        return load(.isMonthlyCalendar) as? Bool ?? false
+    }
     
     func save( value: Any, forkey key: Key) {
         defaults.set(value, forKey: key.rawValue)
@@ -50,15 +50,13 @@ class UserDefaultsManager {
         defaults.removeObject(forKey: key.rawValue)
     }
     
-//    func isMonthlyCalendar1() {
-//        print(<#T##items: Any...##Any#>)
-//        if (load(.isMonthlyCalendar) != nil) == true {
-//            save(value: false, forkey: .isMonthlyCalendar)
-//            print("11")
-//         
-//        } else {
-//            save(value: true, forkey: .isMonthlyCalendar)
-//            print("22")
-//        }
-//    }
+    func saveCalendar() {
+        if load(.isMonthlyCalendar) == nil {
+            save(value: true, forkey: .isMonthlyCalendar)
+        } else if (load(.isMonthlyCalendar) as? Bool ?? false) == false {
+            save(value: true, forkey: .isMonthlyCalendar)
+        } else {
+            save(value: false, forkey: .isMonthlyCalendar)
+        }
+    }
 }

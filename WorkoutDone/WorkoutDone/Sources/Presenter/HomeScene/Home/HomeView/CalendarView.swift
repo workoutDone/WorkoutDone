@@ -25,8 +25,6 @@ class CalendarView : BaseUIView {
     var daysCount : Int = 0
     var previousDays : Int = 0
     var days: [String] = []
-    var isMonthlyCalendar = false
-    //var isMonthlyCalendar = UserDefaultsManager.shared.load(.isMonthlyCalendar) != nil
     var dayoftheweek = ["월", "화", "수", "목", "금", "토", "일"]
     
     private let previousMonthButton = UIButton()
@@ -162,7 +160,7 @@ class CalendarView : BaseUIView {
         collectionView.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(21)
             $0.trailing.equalToSuperview().offset(-21)
-            $0.top.equalTo(stackView.snp.bottom).offset(isMonthlyCalendar ? 18 : 5).priority(1)
+            $0.top.equalTo(stackView.snp.bottom).offset(UserDefaultsManager.shared.isMonthlyCalendar ? 18 : 5).priority(1)
             $0.bottom.equalTo(showHideCalendarButton.snp.top).offset(-6.5)
             //$0.height.equalTo(208)
         }
@@ -188,7 +186,7 @@ class CalendarView : BaseUIView {
         self.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
         
         self.snp.makeConstraints {
-            $0.height.equalTo(isMonthlyCalendar ? 333 : 159).priority(1)
+            $0.height.equalTo(UserDefaultsManager.shared.isMonthlyCalendar ? 333 : 159).priority(1)
         }
     }
     
@@ -203,10 +201,10 @@ class CalendarView : BaseUIView {
         components.month = calendar.component(.month, from: Date())
         components.day = 1
 
-        if isMonthlyCalendar {
-            calculateWeek()
-        } else {
+        if UserDefaultsManager.shared.isMonthlyCalendar {
             calculateMonth()
+        } else {
+            calculateWeek()
         }
     }
     
@@ -219,7 +217,7 @@ class CalendarView : BaseUIView {
     @objc func previousMonthButtonTapped(sender: UIButton!) {
         components.month = components.month! - 1
        
-        if !isMonthlyCalendar && components.month ?? 1 == calendar.component(.month, from: Date()) {
+        if !UserDefaultsManager.shared.isMonthlyCalendar && components.month ?? 1 == calendar.component(.month, from: Date()) {
             calculateWeek()
         } else {
             calculateMonth()
@@ -231,7 +229,7 @@ class CalendarView : BaseUIView {
     @objc func nextMonthButtonTapped(sender: UIButton!) {
         components.month = components.month! + 1
         
-        if !isMonthlyCalendar && components.month ?? 1 == calendar.component(.month, from: Date()) {
+        if !UserDefaultsManager.shared.isMonthlyCalendar && components.month ?? 1 == calendar.component(.month, from: Date()) {
             calculateWeek()
         } else {
             calculateMonth()
@@ -241,7 +239,7 @@ class CalendarView : BaseUIView {
     }
     
     @objc func showHideCalendarButtonTapped(sender: UIButton!) {
-        if isMonthlyCalendar {
+        if UserDefaultsManager.shared.isMonthlyCalendar {
             showHideCalendarImage.image = UIImage(named: "hide")
             self.snp.makeConstraints {
                 $0.height.equalTo(159).priority(2)
@@ -266,9 +264,7 @@ class CalendarView : BaseUIView {
         }
        
         collectionView.reloadData()
-        isMonthlyCalendar = !isMonthlyCalendar
-        //UserDefaultsManager.shared.isMonthlyCalendar1()
-        
+        UserDefaultsManager.shared.saveCalendar()
     }
     
     func calculateMonth() {
@@ -323,25 +319,21 @@ class CalendarView : BaseUIView {
 
 extension CalendarView: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        if !isMonthlyCalendar {
-            return 2
+        if UserDefaultsManager.shared.isMonthlyCalendar {
+            return 1
         }
-        return 1
+        return 2
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if !isMonthlyCalendar {
-            if section == 0 {
-                return dayoftheweek.count
-            }
-            return days.count
+        if !UserDefaultsManager.shared.isMonthlyCalendar && section == 0 {
+            return dayoftheweek.count
         }
         return days.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if !isMonthlyCalendar {
-            
+        if !UserDefaultsManager.shared.isMonthlyCalendar {
             if indexPath.section ==  0 {
                 guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "DayOfTheWeekCell", for: indexPath) as? DayOfTheWeekCell else { return UICollectionViewCell() }
                 cell.dayOfTheWeekLabel.text = dayoftheweek[indexPath.row]
@@ -354,7 +346,7 @@ extension CalendarView: UICollectionViewDelegate, UICollectionViewDataSource, UI
             cell.todayImage.isHidden = true
             cell.workOutDoneImage.isHidden = true
             
-            if !isMonthlyCalendar && components.month ?? 1 == calendar.component(.month, from: Date()) {
+            if !UserDefaultsManager.shared.isMonthlyCalendar && components.month ?? 1 == calendar.component(.month, from: Date()) {
                 for data in sampleData {
                     if Calendar.current.date(from: DateComponents(year: components.year, month: components.month, day: Int(days[indexPath.row])))! == data.date {
                         cell.workOutDoneImage.isHidden = false
@@ -409,7 +401,7 @@ extension CalendarView: UICollectionViewDelegate, UICollectionViewDataSource, UI
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        if !isMonthlyCalendar {
+        if !UserDefaultsManager.shared.isMonthlyCalendar {
             if indexPath.section == 0 {
                 return CGSize(width: collectionView.bounds.width / 7.0, height: 20)
             }
