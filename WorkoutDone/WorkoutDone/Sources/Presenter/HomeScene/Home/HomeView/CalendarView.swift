@@ -82,6 +82,19 @@ class CalendarView : BaseUIView {
         $0.image = UIImage(named: UserDefaultsManager.shared.isMonthlyCalendar ? "show" : "hide")
     }
     
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        
+        setCalendarView()
+        setDelegateDataSource()
+        setAction()
+        setCurrentDate()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func setupLayout() {
         super.setupLayout()
         
@@ -102,11 +115,6 @@ class CalendarView : BaseUIView {
         }
         
         showHideCalendarButton.addSubview(showHideCalendarImage)
-        
-        setCalendarView()
-        setDelegateDataSource()
-        setAction()
-        setCurrentDate()
     }
     
     // MARK: - ACTIONS
