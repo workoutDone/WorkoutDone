@@ -57,6 +57,7 @@
 		A59ACBC029B6E2310084C73E /* DeviceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59ACBBF29B6E2310084C73E /* DeviceManager.swift */; };
 		A59EF6E229C0B69C005DE9B5 /* WorkoutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59EF6E129C0B69C005DE9B5 /* WorkoutViewController.swift */; };
 		A59EF6E529C0CE22005DE9B5 /* HomeButtonLessCameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59EF6E429C0CE22005DE9B5 /* HomeButtonLessCameraViewController.swift */; };
+		A59EF6F129C4C909005DE9B5 /* PreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59EF6F029C4C909005DE9B5 /* PreviewView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -123,6 +124,7 @@
 		A59ACBBF29B6E2310084C73E /* DeviceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceManager.swift; sourceTree = "<group>"; };
 		A59EF6E129C0B69C005DE9B5 /* WorkoutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutViewController.swift; sourceTree = "<group>"; };
 		A59EF6E429C0CE22005DE9B5 /* HomeButtonLessCameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeButtonLessCameraViewController.swift; sourceTree = "<group>"; };
+		A59EF6F029C4C909005DE9B5 /* PreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -438,6 +440,7 @@
 			isa = PBXGroup;
 			children = (
 				A59EF6E429C0CE22005DE9B5 /* HomeButtonLessCameraViewController.swift */,
+				A59EF6F029C4C909005DE9B5 /* PreviewView.swift */,
 			);
 			path = Camera;
 			sourceTree = "<group>";
@@ -609,6 +612,7 @@
 				9200604B29B1ADA500586063 /* BaseUIView.swift in Sources */,
 				9264A58229B8735C0010856F /* UserDefaultsManager.swift in Sources */,
 				A59ACBC029B6E2310084C73E /* DeviceManager.swift in Sources */,
+				A59EF6F129C4C909005DE9B5 /* PreviewView.swift in Sources */,
 				A59EF6E529C0CE22005DE9B5 /* HomeButtonLessCameraViewController.swift in Sources */,
 				9200604529B1ACD900586063 /* WorkoutView.swift in Sources */,
 				A59EF6E229C0B69C005DE9B5 /* WorkoutViewController.swift in Sources */,

@@ -11,7 +11,7 @@ import Then
 
 class HomeButtonLessCameraViewController : BaseViewController {
     
-    private let preview = UIView()
+    private let previewView = PreviewView()
     
     private let captureButton = UIButton()
     
@@ -43,6 +43,11 @@ class HomeButtonLessCameraViewController : BaseViewController {
     private let womanWholeBodyFrameButton = UIButton()
     
     private let frameButtons = [UIButton]()
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .red
+    }
     
     override func setupLayout() {
         super.setupLayout()
