@@ -48,6 +48,9 @@
 		920060E429B71D7400586063 /* DayCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 920060E329B71D7400586063 /* DayCell.swift */; };
 		9264A58229B8735C0010856F /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9264A58129B8735C0010856F /* UserDefaultsManager.swift */; };
 		9264A58429BA22FE0010856F /* DayOfTheWeekCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9264A58329BA22FE0010856F /* DayOfTheWeekCell.swift */; };
+		9264A5EC29C4B0610010856F /* HomeButtonCameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9264A5EB29C4B0610010856F /* HomeButtonCameraViewController.swift */; };
+		9264A5EE29C550220010856F /* FrameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9264A5ED29C550220010856F /* FrameCell.swift */; };
+		9264A5F729C5EB6D0010856F /* PressShutterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9264A5F629C5EB6D0010856F /* PressShutterView.swift */; };
 		A576693B29B6EB4900673DFE /* ImageSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A576693A29B6EB4900673DFE /* ImageSelectionViewController.swift */; };
 		A576693E29BB06CB00673DFE /* RegisterMyBodyInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A576693D29BB06CB00673DFE /* RegisterMyBodyInfoViewController.swift */; };
 		A576694029BF1A9900673DFE /* UITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = A576693F29BF1A9900673DFE /* UITextField.swift */; };
@@ -114,6 +117,9 @@
 		920060E329B71D7400586063 /* DayCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DayCell.swift; path = WorkoutDone/Sources/Presenter/HomeScene/Home/HomeView/Cell/DayCell.swift; sourceTree = SOURCE_ROOT; };
 		9264A58129B8735C0010856F /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
 		9264A58329BA22FE0010856F /* DayOfTheWeekCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayOfTheWeekCell.swift; sourceTree = "<group>"; };
+		9264A5EB29C4B0610010856F /* HomeButtonCameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeButtonCameraViewController.swift; sourceTree = "<group>"; };
+		9264A5ED29C550220010856F /* FrameCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameCell.swift; sourceTree = "<group>"; };
+		9264A5F629C5EB6D0010856F /* PressShutterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PressShutterView.swift; sourceTree = "<group>"; };
 		A576693A29B6EB4900673DFE /* ImageSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSelectionViewController.swift; sourceTree = "<group>"; };
 		A576693D29BB06CB00673DFE /* RegisterMyBodyInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterMyBodyInfoViewController.swift; sourceTree = "<group>"; };
 		A576693F29BF1A9900673DFE /* UITextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextField.swift; sourceTree = "<group>"; };
@@ -377,6 +383,16 @@
 			path = Cell;
 			sourceTree = "<group>";
 		};
+		9264A5EF29C5B1690010856F /* HomeButton */ = {
+			isa = PBXGroup;
+			children = (
+				9264A5ED29C550220010856F /* FrameCell.swift */,
+				9264A5EB29C4B0610010856F /* HomeButtonCameraViewController.swift */,
+				9264A5F629C5EB6D0010856F /* PressShutterView.swift */,
+			);
+			path = HomeButton;
+			sourceTree = "<group>";
+		};
 		A576693929B6E98100673DFE /* ImageSelection */ = {
 			isa = PBXGroup;
 			children = (
@@ -437,6 +453,7 @@
 		A59EF6E329C0CD9D005DE9B5 /* Camera */ = {
 			isa = PBXGroup;
 			children = (
+				9264A5EF29C5B1690010856F /* HomeButton */,
 				A59EF6E429C0CE22005DE9B5 /* HomeButtonLessCameraViewController.swift */,
 			);
 			path = Camera;
@@ -599,6 +616,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9200602429B1A7CC00586063 /* BaseViewController.swift in Sources */,
+				9264A5EE29C550220010856F /* FrameCell.swift in Sources */,
 				9264A58429BA22FE0010856F /* DayOfTheWeekCell.swift in Sources */,
 				9200604729B1ACF400586063 /* WorkoutResultView.swift in Sources */,
 				9200604329B1ACBF00586063 /* RecordView.swift in Sources */,
@@ -622,10 +640,12 @@
 				92005FC629B1A49400586063 /* AppDelegate.swift in Sources */,
 				92005FC829B1A49400586063 /* SceneDelegate.swift in Sources */,
 				9200601D29B1A74300586063 /* OnboardingViewController.swift in Sources */,
+				9264A5EC29C4B0610010856F /* HomeButtonCameraViewController.swift in Sources */,
 				920060E029B63C0D00586063 /* TestViewController.swift in Sources */,
 				9200604929B1AD7200586063 /* HomeViewController.swift in Sources */,
 				A576693E29BB06CB00673DFE /* RegisterMyBodyInfoViewController.swift in Sources */,
 				920060E429B71D7400586063 /* DayCell.swift in Sources */,
+				9264A5F729C5EB6D0010856F /* PressShutterView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
