@@ -8,8 +8,15 @@
 import UIKit
 import SnapKit
 import Then
+import RxCocoa
+import RxSwift
 
 class RegisterMyBodyInfoViewController : BaseViewController {
+    // MARK: - ViewModel
+    var viewModel = RegisterMyBodyInfoViewModel()
+    private lazy var input = RegisterMyBodyInfoViewModel.Input(weightInputText: weightTextField.rx.text.orEmpty.asDriver(), skeletalMusleMassInputText: skeletalMuscleMassTextField.rx.text.orEmpty.asDriver(), fatPercentageInputText: fatPercentageTextField.rx.text.orEmpty.asDriver())
+    private lazy var output = viewModel.transform(input: input)
+    
     // MARK: - PROPERTIES
     private let baseView = UIView().then {
         $0.backgroundColor = .colorFFFFFF
@@ -228,6 +235,11 @@ class RegisterMyBodyInfoViewController : BaseViewController {
             $0.height.equalTo(35)
             $0.width.equalTo(101)
         }
+    }
+    override func setupBinding() {
+        super.setupBinding()
+        output.weightOutputText.drive(weightTextField.rx.text).disposed(by: disposeBag)
+        
     }
     override func actions() {
         super.actions()

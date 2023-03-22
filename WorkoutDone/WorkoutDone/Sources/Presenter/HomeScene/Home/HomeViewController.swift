@@ -38,6 +38,7 @@ class HomeViewController : BaseViewController {
     }
     override func setupLayout() {
         super.setupLayout()
+//        navigationController?.isNavigationBarHidden = true
         view.addSubview(contentScrollView)
         contentScrollView.addSubview(contentView)
         [calendarView, recordBaseView, workoutBaseView, workoutResultBaseView].forEach {
@@ -96,7 +97,7 @@ class HomeViewController : BaseViewController {
     }
     @objc func workoutDoneCameraButtonTapped() {
         let imageSelectionViewController = ImageSelectionViewController()
-//        imageSelectionViewController.rootView = self
+        imageSelectionViewController.rootView = self
         imageSelectionViewController.modalTransitionStyle = .crossDissolve
         imageSelectionViewController.modalPresentationStyle = .overFullScreen
         present(imageSelectionViewController, animated: true)

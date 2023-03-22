@@ -1,18 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "switchCamera.png",
-      "filename" : "cameraMode.png",
+      "filename" : "homeButtonLessCaptureButton.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "Group 149@2x.png",
+      "filename" : "Group 137@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "Group 149@3x.png",
+      "filename" : "Group 137@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

@@ -34,7 +34,7 @@ class ImageSelectionViewController : BaseViewController {
         $0.titleLabel?.font = .pretendard(.medium, size: 20)
         $0.layer.cornerRadius = 12
     }
-    var rootViewController : HomeViewController?
+    var rootView : HomeViewController?
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -78,23 +78,22 @@ class ImageSelectionViewController : BaseViewController {
         cancelButton.addTarget(self, action: #selector(cancelButtonTapped), for: .touchUpInside)
     }
     @objc func cameraButtonTapped() {
-//        let device = Device.current
-//        print(device)
-//        if DeviceManager.shared.isHomeButtonDevice() || DeviceManager.shared.isSimulatorIsHomeButtonDevice() {
-//            print("홈버튼이 있는 기종")
+        let device = Device.current
+        print(device)
+        if DeviceManager.shared.isHomeButtonDevice() || DeviceManager.shared.isSimulatorIsHomeButtonDevice() {
+            print("홈버튼이 있는 기종")
 //            let homeButtonCameraViewController = HomeButtonCameraViewController()
 //            dismiss(animated: false) {
-//                self.rootView?.navigationController?.pushViewController(homeButtonCameraViewController, animated: true)
+//                self.rootViewController?.navigationController?.pushViewController(homeButtonCameraViewController, animated: true)
 //            }
-//        }
-//        else {
-//            print("홈 버튼이 없는 기종")
-//            let homeButtonLessCameraViewController = HomeButtonLessCameraViewController()
-//            navigationController?.pushViewController(homeButtonLessCameraViewController, animated: true)
-//            dismiss(animated: false) {
-//                self.rootView?.navigationController?.pushViewController(homeButtonLessCameraViewController, animated: true)
-//            }
-//        }
+        }
+        else {
+            print("홈 버튼이 없는 기종")
+            let homeButtonLessCameraViewController = HomeButtonLessCameraViewController()
+            dismiss(animated: false) {
+                self.rootView?.navigationController?.pushViewController(homeButtonLessCameraViewController, animated: true)
+            }
+        }
     }
     @objc func galleryButtonTapped() {
 //        let photoViewController = PhotoViewController()
