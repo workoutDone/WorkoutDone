@@ -35,7 +35,7 @@ class HomeViewController : BaseViewController {
     }
     override func setupLayout() {
         super.setupLayout()
-        navigationController?.isNavigationBarHidden = true
+//        navigationController?.isNavigationBarHidden = true
         view.addSubview(contentScrollView)
         contentScrollView.addSubview(contentView)
         [recordBaseView, workoutBaseView, workoutResultBaseView].forEach {

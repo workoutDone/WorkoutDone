@@ -23,13 +23,14 @@ class BaseViewController : UIViewController {
 //    // MARK: - LIFECYCLE
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        view.backgroundColor = .white
-        
         setupLayout()
         setupConstraints()
         setupBinding()
+        setComponents()
         actions()
+        let backBarButtonItem = UIBarButtonItem(title: "뒤로가기", style: .plain, target: self, action: nil)
+        backBarButtonItem.tintColor = .color000000
+        self.navigationItem.backBarButtonItem = backBarButtonItem
     }
     
     // MARK: - 서브뷰 추가 함수
@@ -41,6 +42,10 @@ class BaseViewController : UIViewController {
     func setupConstraints() {
         /// Override Constraints
         /// snapkit
+    }
+    // MARK: - 컴포넌트 설정 함수
+    func setComponents() {
+        /// Override setComponent
     }
     // MARK: - RX 관련 코드
     func setupBinding() {
