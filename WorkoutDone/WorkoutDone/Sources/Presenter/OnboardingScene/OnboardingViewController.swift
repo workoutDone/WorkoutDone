@@ -79,7 +79,7 @@ class OnboardingViewController : BaseViewController {
         collectionView.snp.makeConstraints {
             $0.top.greaterThanOrEqualTo(view.safeAreaLayoutGuide).offset(0)
             $0.top.lessThanOrEqualTo(view.safeAreaLayoutGuide).offset(68)
-            $0.left.right.equalTo(view.safeAreaLayoutGuide)
+            $0.leading.right.equalTo(view.safeAreaLayoutGuide)
             $0.height.equalTo(488)
         }
 
@@ -111,9 +111,9 @@ class OnboardingViewController : BaseViewController {
             let indexPath = IndexPath(item: currentPage, section: 0)
             collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
         } else if currentPage == numberOfPages - 1 {
-            let homeVC = HomeViewController()
-            homeVC.modalPresentationStyle = .fullScreen
-            self.present(homeVC, animated: false)
+            let tabBarC = TabBarController()
+            tabBarC.modalPresentationStyle = .fullScreen
+            self.present(tabBarC, animated: false)
         }
     }
 }

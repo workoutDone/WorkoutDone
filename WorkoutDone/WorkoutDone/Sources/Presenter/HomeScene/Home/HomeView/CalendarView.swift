@@ -79,7 +79,20 @@ class CalendarView : BaseUIView {
     private let showHideCalendarButton = UIButton()
     
     private let showHideCalendarImage = UIImageView().then {
-        $0.image = UIImage(named: "show")
+        $0.image = UIImage(named: UserDefaultsManager.shared.isMonthlyCalendar ? "show" : "hide")
+    }
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        
+        setCalendarView()
+        setDelegateDataSource()
+        setAction()
+        setCurrentDate()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     override func setupLayout() {
@@ -102,11 +115,6 @@ class CalendarView : BaseUIView {
         }
         
         showHideCalendarButton.addSubview(showHideCalendarImage)
-        
-        setCalendarView()
-        setDelegateDataSource()
-        setAction()
-        setCurrentDate()
     }
     
     // MARK: - ACTIONS
@@ -241,30 +249,45 @@ class CalendarView : BaseUIView {
     @objc func showHideCalendarButtonTapped(sender: UIButton!) {
         if UserDefaultsManager.shared.isMonthlyCalendar {
             showHideCalendarImage.image = UIImage(named: "hide")
-            self.snp.makeConstraints {
-                $0.height.equalTo(159).priority(2)
-            }
-            collectionView.snp.makeConstraints {
-                $0.top.equalTo(stackView.snp.bottom).offset(5).priority(2)
-            }
-            if components.month ?? 1 == calendar.component(.month, from: Date()) {
-                calculateWeek()
-            } else {
-                calculateMonth()
+            
+            UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations:  {
+                self.snp.makeConstraints {
+                    $0.height.equalTo(159).priority(2)
+                }
+                self.collectionView.snp.makeConstraints {
+                    $0.top.equalTo(self.stackView.snp.bottom).offset(5).priority(2)
+                }
+                self.superview?.layoutIfNeeded()
+            })
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.12) {
+                if self.components.month ?? 1 == self.calendar.component(.month, from: Date()) {
+                    self.calculateWeek()
+                } else {
+                    self.calculateMonth()
+                }
+                self.collectionView.reloadData()
+                UserDefaultsManager.shared.saveCalendar()
             }
         } else {
-            showHideCalendarImage.image = UIImage(named: "show")
-            self.snp.makeConstraints {
-                $0.height.equalTo(333).priority(2)
+                showHideCalendarImage.image = UIImage(named: "show")
+                
+                UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations:  {
+                    self.snp.makeConstraints {
+                        $0.height.equalTo(333).priority(2)
+                    }
+                    self.collectionView.snp.makeConstraints {
+                        $0.top.equalTo(self.stackView.snp.bottom).offset(18).priority(2)
+                    }
+                    self.superview?.layoutIfNeeded()
+                })
+
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.12) {
+                self.calculateMonth()
+                self.collectionView.reloadData()
+                UserDefaultsManager.shared.saveCalendar()
             }
-            collectionView.snp.makeConstraints {
-                $0.top.equalTo(stackView.snp.bottom).offset(18).priority(2)
-            }
-            calculateMonth()
         }
-       
-        collectionView.reloadData()
-        UserDefaultsManager.shared.saveCalendar()
     }
     
     func calculateMonth() {

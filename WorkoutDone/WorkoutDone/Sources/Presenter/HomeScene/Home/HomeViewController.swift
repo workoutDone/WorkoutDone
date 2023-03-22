@@ -13,7 +13,10 @@ class HomeViewController : BaseViewController {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.backgroundColor = .clear
     }
+    
     private let contentView = UIView()
+    
+    private let calendarView = CalendarView()
     ///기록하기
     private let recordBaseView = RecordView().then {
         $0.backgroundColor = .colorFFFFFF
@@ -38,7 +41,7 @@ class HomeViewController : BaseViewController {
 //        navigationController?.isNavigationBarHidden = true
         view.addSubview(contentScrollView)
         contentScrollView.addSubview(contentView)
-        [recordBaseView, workoutBaseView, workoutResultBaseView].forEach {
+        [calendarView, recordBaseView, workoutBaseView, workoutResultBaseView].forEach {
             contentView.addSubview($0)
         }
     }
@@ -57,10 +60,14 @@ class HomeViewController : BaseViewController {
             $0.width.equalToSuperview()
             $0.centerX.top.bottom.equalToSuperview()
         }
-        // Todo - 캘린더 추가해야함
+        // 캘린더 view
+        calendarView.snp.makeConstraints {
+            $0.top.equalTo(contentView.snp.top)
+            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide)
+        }
         ///기록하기 view
         recordBaseView.snp.makeConstraints {
-            $0.top.equalTo(contentView.snp.top)
+            $0.top.equalTo(calendarView.snp.bottom).offset(41)
             $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(513)
         }
