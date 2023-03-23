@@ -11,7 +11,7 @@ import RxCocoa
 
 class BaseViewController : UIViewController {
     var disposeBag = DisposeBag()
-    
+
 //    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
 //        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
 //        hidesBottomBarWhenPushed = true
@@ -28,11 +28,16 @@ class BaseViewController : UIViewController {
         setupBinding()
         setComponents()
         actions()
-        let backBarButtonItem = UIBarButtonItem(title: "뒤로가기", style: .plain, target: self, action: nil)
-        backBarButtonItem.tintColor = .color000000
-        self.navigationItem.backBarButtonItem = backBarButtonItem
+
+        view.backgroundColor = .colorFFFFFF
         
-        view.backgroundColor = .white
+        let backBarButtonItem = UIBarButtonItem(title: "뒤로가기", style: .plain, target: self, action: nil)
+        if DeviceManager.shared.isHomeButtonDevice() || DeviceManager.shared.isSimulatorIsHomeButtonDevice() {
+            backBarButtonItem.tintColor = .colorFFFFFF
+        } else {
+            backBarButtonItem.tintColor = .color000000
+        }
+        self.navigationItem.backBarButtonItem = backBarButtonItem
     }
     
     // MARK: - 서브뷰 추가 함수

@@ -18,7 +18,7 @@ class HomeViewController : BaseViewController {
     }
     
     private let contentView = UIView().then {
-        $0.backgroundColor = .white
+        $0.backgroundColor = .colorFFFFFF
     }
     
     private let calendarView = CalendarView()
@@ -128,13 +128,13 @@ extension HomeViewController : UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if UserDefaultsManager.shared.isMonthlyCalendar {
             if scrollView.contentOffset.y > CGFloat(monthlyCalendarHeight) {
-                view.backgroundColor = .white
+                view.backgroundColor = .colorFFFFFF
             } else {
                 view.backgroundColor = .color7442FF
             }
         } else {
             if scrollView.contentOffset.y > CGFloat(weeklyCalendarHeight) {
-                view.backgroundColor = .white
+                view.backgroundColor = .colorFFFFFF
             } else {
                 view.backgroundColor = .color7442FF
             }

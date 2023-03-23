@@ -34,18 +34,21 @@ class HomeButtonCameraViewController : BaseViewController {
     }
     
     private let pressShutterView = PressShutterView()
-    
-//    private let saveButton = GradientButton(colors: [UIColor.color8E36FF.cgColor, UIColor.color7442FF.cgColor]).then {
-//           $0.setTitle("저장하기", for: .normal)
-//           $0.titleLabel?.font = .pretendard(.bold, size: 20)
-//    }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setDelegateDataSource()
         pressShutterView.isHidden = true
         //        saveButton.isHidden = true
+        
+        navigationController?.isNavigationBarHidden = false
+        
+        let backBarButtonItem = UIBarButtonItem(title: "뒤로가기", style: .plain, target: self, action: nil)
+        backBarButtonItem.tintColor = .red
+        self.navigationItem.backBarButtonItem = backBarButtonItem
+        
+        
     }
     
     override func setupLayout() {
@@ -60,7 +63,8 @@ class HomeButtonCameraViewController : BaseViewController {
         super.setupConstraints()
         
         cameraView.snp.makeConstraints {
-            $0.top.leading.trailing.equalTo(view.safeAreaLayoutGuide)
+            $0.top.equalToSuperview()
+            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide)
             $0.height.equalTo(468)
         }
         
