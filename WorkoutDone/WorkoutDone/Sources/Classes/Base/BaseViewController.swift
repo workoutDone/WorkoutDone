@@ -31,6 +31,8 @@ class BaseViewController : UIViewController {
         let backBarButtonItem = UIBarButtonItem(title: "뒤로가기", style: .plain, target: self, action: nil)
         backBarButtonItem.tintColor = .color000000
         self.navigationItem.backBarButtonItem = backBarButtonItem
+        
+        view.backgroundColor = .white
     }
     
     // MARK: - 서브뷰 추가 함수
