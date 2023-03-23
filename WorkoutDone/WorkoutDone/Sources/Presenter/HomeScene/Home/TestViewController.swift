@@ -19,8 +19,7 @@ class TestViewController: BaseViewController {
     
     func setLayout() {
         calendarView.snp.makeConstraints {
-            $0.top.equalToSuperview()
-            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide)
+            $0.top.leading.trailing.equalTo(view.safeAreaLayoutGuide)
         }
     }
 }

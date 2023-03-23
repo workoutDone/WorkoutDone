@@ -89,6 +89,7 @@ class CalendarView : BaseUIView {
         setDelegateDataSource()
         setAction()
         setCurrentDate()
+        
     }
     
     required init?(coder: NSCoder) {
@@ -162,7 +163,7 @@ class CalendarView : BaseUIView {
         
         stackView.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.top.equalToSuperview().offset(50)
+            $0.top.equalToSuperview().offset(13)
         }
         
         collectionView.snp.makeConstraints {
@@ -170,7 +171,6 @@ class CalendarView : BaseUIView {
             $0.trailing.equalToSuperview().offset(-21)
             $0.top.equalTo(stackView.snp.bottom).offset(UserDefaultsManager.shared.isMonthlyCalendar ? 18 : 5).priority(1)
             $0.bottom.equalTo(showHideCalendarButton.snp.top).offset(-6.5)
-            //$0.height.equalTo(208)
         }
         
         showHideCalendarImage.snp.makeConstraints {
@@ -194,7 +194,7 @@ class CalendarView : BaseUIView {
         self.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
         
         self.snp.makeConstraints {
-            $0.height.equalTo(UserDefaultsManager.shared.isMonthlyCalendar ? 333 : 159).priority(1)
+            $0.height.equalTo(UserDefaultsManager.shared.isMonthlyCalendar ? 289 : 115).priority(1)
         }
     }
     
@@ -252,7 +252,7 @@ class CalendarView : BaseUIView {
             
             UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations:  {
                 self.snp.makeConstraints {
-                    $0.height.equalTo(159).priority(2)
+                    $0.height.equalTo(115).priority(2)
                 }
                 self.collectionView.snp.makeConstraints {
                     $0.top.equalTo(self.stackView.snp.bottom).offset(5).priority(2)
@@ -260,7 +260,7 @@ class CalendarView : BaseUIView {
                 self.superview?.layoutIfNeeded()
             })
             
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.12) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                 if self.components.month ?? 1 == self.calendar.component(.month, from: Date()) {
                     self.calculateWeek()
                 } else {
@@ -274,7 +274,7 @@ class CalendarView : BaseUIView {
                 
                 UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations:  {
                     self.snp.makeConstraints {
-                        $0.height.equalTo(333).priority(2)
+                        $0.height.equalTo(289).priority(2)
                     }
                     self.collectionView.snp.makeConstraints {
                         $0.top.equalTo(self.stackView.snp.bottom).offset(18).priority(2)
@@ -282,7 +282,7 @@ class CalendarView : BaseUIView {
                     self.superview?.layoutIfNeeded()
                 })
 
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.12) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                 self.calculateMonth()
                 self.collectionView.reloadData()
                 UserDefaultsManager.shared.saveCalendar()
