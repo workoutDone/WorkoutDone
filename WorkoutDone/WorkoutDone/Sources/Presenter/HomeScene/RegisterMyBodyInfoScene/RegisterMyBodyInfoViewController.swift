@@ -14,7 +14,10 @@ import RxSwift
 class RegisterMyBodyInfoViewController : BaseViewController {
     // MARK: - ViewModel
     var viewModel = RegisterMyBodyInfoViewModel()
-    private lazy var input = RegisterMyBodyInfoViewModel.Input(weightInputText: weightTextField.rx.text.orEmpty.asDriver(), skeletalMusleMassInputText: skeletalMuscleMassTextField.rx.text.orEmpty.asDriver(), fatPercentageInputText: fatPercentageTextField.rx.text.orEmpty.asDriver())
+    private lazy var input = RegisterMyBodyInfoViewModel.Input(
+        weightInputText: weightTextField.rx.text.orEmpty.asDriver(),
+        skeletalMusleMassInputText: skeletalMuscleMassTextField.rx.text.orEmpty.asDriver(),
+        fatPercentageInputText: fatPercentageTextField.rx.text.orEmpty.asDriver())
     private lazy var output = viewModel.transform(input: input)
     
     // MARK: - PROPERTIES
@@ -238,7 +241,12 @@ class RegisterMyBodyInfoViewController : BaseViewController {
     }
     override func setupBinding() {
         super.setupBinding()
-        output.weightOutputText.drive(weightTextField.rx.text).disposed(by: disposeBag)
+        output.weightOutputText.drive(weightTextField.rx.text)
+            .disposed(by: disposeBag)
+        output.skeletalMusleMassOutputText.drive(skeletalMuscleMassTextField.rx.text)
+            .disposed(by: disposeBag)
+        output.fatPercentageOutputtText.drive(fatPercentageTextField.rx.text)
+            .disposed(by: disposeBag)
         
     }
     override func actions() {
