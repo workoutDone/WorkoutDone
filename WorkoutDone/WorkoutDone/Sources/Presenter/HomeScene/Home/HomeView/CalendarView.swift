@@ -250,7 +250,7 @@ class CalendarView : BaseUIView {
         if UserDefaultsManager.shared.isMonthlyCalendar {
             showHideCalendarImage.image = UIImage(named: "hide")
             
-            UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations:  {
+            UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseIn, animations:  {
                 self.snp.makeConstraints {
                     $0.height.equalTo(115).priority(2)
                 }
@@ -260,34 +260,29 @@ class CalendarView : BaseUIView {
                 self.superview?.layoutIfNeeded()
             })
             
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                if self.components.month ?? 1 == self.calendar.component(.month, from: Date()) {
-                    self.calculateWeek()
-                } else {
-                    self.calculateMonth()
-                }
-                self.collectionView.reloadData()
-                UserDefaultsManager.shared.saveCalendar()
+            if components.month ?? 1 == calendar.component(.month, from: Date()) {
+                calculateWeek()
+            } else {
+                calculateMonth()
             }
         } else {
-                showHideCalendarImage.image = UIImage(named: "show")
+            showHideCalendarImage.image = UIImage(named: "show")
                 
-                UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations:  {
-                    self.snp.makeConstraints {
-                        $0.height.equalTo(289).priority(2)
-                    }
-                    self.collectionView.snp.makeConstraints {
-                        $0.top.equalTo(self.stackView.snp.bottom).offset(18).priority(2)
-                    }
-                    self.superview?.layoutIfNeeded()
-                })
-
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                self.calculateMonth()
-                self.collectionView.reloadData()
-                UserDefaultsManager.shared.saveCalendar()
-            }
+            UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseIn, animations:  {
+                self.snp.makeConstraints {
+                    $0.height.equalTo(289).priority(2)
+                }
+                self.collectionView.snp.makeConstraints {
+                    $0.top.equalTo(self.stackView.snp.bottom).offset(18).priority(2)
+                }
+                self.superview?.layoutIfNeeded()
+            })
+            
+            calculateMonth()
         }
+        
+        collectionView.reloadData()
+        UserDefaultsManager.shared.saveCalendar()
     }
     
     func calculateMonth() {
