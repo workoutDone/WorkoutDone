@@ -10,7 +10,7 @@ import SnapKit
 import Then
 
 class PressShutterView : BaseUIView {
-    private let againButton = UIButton()
+    let againButton = UIButton()
     
     private let againView = UIView().then {
         $0.backgroundColor = .colorE6E0FF
@@ -153,9 +153,7 @@ class PressShutterView : BaseUIView {
     
     func setAction() {
         saveButton.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
-        
     }
-    
     
     @objc func saveButtonTapped(sender: UIButton!) {
         print("x")

@@ -99,21 +99,25 @@ class HomeButtonCameraViewController : BaseViewController {
         gridRowLine1.snp.makeConstraints {
             $0.top.equalTo(cameraView).offset(cameraViewHeight / 3)
             $0.leading.trailing.equalTo(cameraView)
+            $0.height.equalTo(0.5)
         }
         
         gridRowLine2.snp.makeConstraints {
             $0.top.equalTo(cameraView).offset((cameraViewHeight / 3) * 2)
             $0.leading.trailing.equalTo(cameraView)
+            $0.height.equalTo(0.5)
         }
         
         gridColumnLine1.snp.makeConstraints {
             $0.leading.equalTo(cameraView).offset(view.bounds.width / 3)
             $0.top.bottom.equalTo(cameraView)
+            $0.width.equalTo(0.5)
         }
         
         gridColumnLine2.snp.makeConstraints {
             $0.leading.equalTo(cameraView).offset((view.bounds.width / 3) * 2)
             $0.top.bottom.equalTo(cameraView)
+            $0.width.equalTo(0.5)
         }
         
         collectionView.snp.makeConstraints {
@@ -153,6 +157,7 @@ class HomeButtonCameraViewController : BaseViewController {
         switchCameraButton.addTarget(self, action: #selector(switchCameraButtonTapped), for: .touchUpInside)
         backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
         gridToggleButton.addTarget(self, action: #selector(gridToggleButtonTapped), for: .touchUpInside)
+        pressShutterView.againButton.addTarget(self, action: #selector(againButtonTapped), for: .touchUpInside)
     }
     
     func setDelegateDataSource() {
@@ -189,6 +194,12 @@ class HomeButtonCameraViewController : BaseViewController {
         print(2)
     }
     
+    @objc func againButtonTapped(sender: UIButton!) {
+        pressShutterView.isHidden = true
+        collectionView.isHidden = false
+        shutterButton.isHidden = false
+        switchCameraButton.isHidden = false
+    }
 }
 
 extension HomeButtonCameraViewController : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
@@ -198,6 +209,13 @@ extension HomeButtonCameraViewController : UICollectionViewDelegate, UICollectio
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FrameCell", for: indexPath) as? FrameCell else { return UICollectionViewCell() }
+        if indexPath.row == 0 {
+            cell.basicLabel.isHidden = false
+            cell.frameImage.isHidden = true
+            cell.backgroundColor = .colorE6E0FF
+            cell.layer.borderWidth = 2
+            cell.layer.borderColor = UIColor.color7442FF.cgColor
+        }
         return cell
     }
     
