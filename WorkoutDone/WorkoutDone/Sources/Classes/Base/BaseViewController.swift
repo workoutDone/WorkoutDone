@@ -23,20 +23,17 @@ class BaseViewController : UIViewController {
 //    // MARK: - LIFECYCLE
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         setupLayout()
         setupConstraints()
         setupBinding()
         setComponents()
         actions()
-
+        
         view.backgroundColor = .colorFFFFFF
         
         let backBarButtonItem = UIBarButtonItem(title: "뒤로가기", style: .plain, target: self, action: nil)
-        if DeviceManager.shared.isHomeButtonDevice() || DeviceManager.shared.isSimulatorIsHomeButtonDevice() {
-            backBarButtonItem.tintColor = .colorFFFFFF
-        } else {
-            backBarButtonItem.tintColor = .color000000
-        }
+        backBarButtonItem.tintColor = .color000000
         self.navigationItem.backBarButtonItem = backBarButtonItem
     }
     

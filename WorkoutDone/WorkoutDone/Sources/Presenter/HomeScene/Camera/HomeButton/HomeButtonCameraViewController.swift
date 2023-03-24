@@ -10,8 +10,30 @@ import SnapKit
 import Then
 
 class HomeButtonCameraViewController : BaseViewController {
+    let cameraViewHeight: Int = 468
+    
     private let cameraView = UIView().then {
-        $0.backgroundColor = .yellow
+        $0.backgroundColor = .blue
+    }
+    
+    private let backButton = BackButton()
+    
+    private let gridToggleButton = GridToggleButton()
+    
+    private let gridRowLine1 = UIImageView().then {
+        $0.image = UIImage(named: "rowLine")
+    }
+    
+    private let gridRowLine2 = UIImageView().then {
+        $0.image = UIImage(named: "rowLine")
+    }
+    
+    private let gridColumnLine1 = UIImageView().then {
+        $0.image = UIImage(named: "columnLine")
+    }
+    
+    private let gridColumnLine2 = UIImageView().then {
+        $0.image = UIImage(named: "columnLine")
     }
     
     private let collectionView : UICollectionView = {
@@ -41,31 +63,57 @@ class HomeButtonCameraViewController : BaseViewController {
         setDelegateDataSource()
         pressShutterView.isHidden = true
         //        saveButton.isHidden = true
-        
-        navigationController?.isNavigationBarHidden = false
-        
-        let backBarButtonItem = UIBarButtonItem(title: "뒤로가기", style: .plain, target: self, action: nil)
-        backBarButtonItem.tintColor = .red
-        self.navigationItem.backBarButtonItem = backBarButtonItem
-        
-        
     }
     
     override func setupLayout() {
         super.setupLayout()
         
-        [cameraView, collectionView, shutterButton, switchCameraButton, pressShutterView].forEach {
+        [cameraView, backButton, gridToggleButton, collectionView, shutterButton, switchCameraButton, pressShutterView].forEach {
             view.addSubview($0)
         }
+        
+        cameraView.addSubview(gridRowLine1)
+        cameraView.addSubview(gridRowLine2)
+        cameraView.addSubview(gridColumnLine1)
+        cameraView.addSubview(gridColumnLine2)
     }
     
     override func setupConstraints() {
         super.setupConstraints()
-        
         cameraView.snp.makeConstraints {
-            $0.top.equalToSuperview()
+            $0.top.equalToSuperview().offset(20)
             $0.leading.trailing.equalTo(view.safeAreaLayoutGuide)
-            $0.height.equalTo(468)
+            $0.height.equalTo(cameraViewHeight)
+        }
+        
+        backButton.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(33)
+            $0.leading.equalToSuperview().offset(16)
+        }
+        
+        gridToggleButton.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(36)
+            $0.trailing.equalToSuperview().offset(-10)
+        }
+        
+        gridRowLine1.snp.makeConstraints {
+            $0.top.equalTo(cameraView).offset(cameraViewHeight / 3)
+            $0.leading.trailing.equalTo(cameraView)
+        }
+        
+        gridRowLine2.snp.makeConstraints {
+            $0.top.equalTo(cameraView).offset((cameraViewHeight / 3) * 2)
+            $0.leading.trailing.equalTo(cameraView)
+        }
+        
+        gridColumnLine1.snp.makeConstraints {
+            $0.leading.equalTo(cameraView).offset(view.bounds.width / 3)
+            $0.top.bottom.equalTo(cameraView)
+        }
+        
+        gridColumnLine2.snp.makeConstraints {
+            $0.leading.equalTo(cameraView).offset((view.bounds.width / 3) * 2)
+            $0.top.bottom.equalTo(cameraView)
         }
         
         collectionView.snp.makeConstraints {
@@ -103,11 +151,31 @@ class HomeButtonCameraViewController : BaseViewController {
     override func actions() {
         shutterButton.addTarget(self, action: #selector(captureButtonTapped), for: .touchUpInside)
         switchCameraButton.addTarget(self, action: #selector(switchCameraButtonTapped), for: .touchUpInside)
+        backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
+        gridToggleButton.addTarget(self, action: #selector(gridToggleButtonTapped), for: .touchUpInside)
     }
     
     func setDelegateDataSource() {
         collectionView.delegate = self
         collectionView.dataSource = self
+    }
+    
+    @objc func backButtonTapped(sender: UIButton!) {
+        self.navigationController?.popViewController(animated: true)
+    }
+    
+    @objc func gridToggleButtonTapped(sender: UIButton!) {
+        if gridToggleButton.isOnToggle {
+            [gridRowLine1, gridRowLine2, gridColumnLine1, gridColumnLine2].forEach {
+                $0.isHidden = true
+            }
+        } else {
+            [gridRowLine1, gridRowLine2, gridColumnLine1, gridColumnLine2].forEach {
+                $0.isHidden = false
+            }
+        }
+        gridToggleButton.changeToggle()
+        gridToggleButton.isOnToggle = !gridToggleButton.isOnToggle
     }
 
     @objc func captureButtonTapped(sender: UIButton!) {
