@@ -92,10 +92,10 @@ class HomeButtonCameraViewController : BaseViewController {
             view.addSubview($0)
         }
         
-        cameraView.addSubview(gridRowLine1)
-        cameraView.addSubview(gridRowLine2)
-        cameraView.addSubview(gridColumnLine1)
-        cameraView.addSubview(gridColumnLine2)
+        view.addSubview(gridRowLine1)
+        view.addSubview(gridRowLine2)
+        view.addSubview(gridColumnLine1)
+        view.addSubview(gridColumnLine2)
     }
     
     override func setupConstraints() {
@@ -107,42 +107,42 @@ class HomeButtonCameraViewController : BaseViewController {
         }
         
         captureImage.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide)
+            $0.top.equalToSuperview().offset(22)
             $0.leading.trailing.equalTo(view.safeAreaLayoutGuide)
             $0.height.equalTo(cameraViewHeight)
         }
         
         backButton.snp.makeConstraints {
-            $0.top.equalTo(cameraView).offset(14)
+            $0.top.equalTo(cameraView).offset(24)
             $0.leading.equalToSuperview().offset(16)
         }
         
         gridToggleButton.snp.makeConstraints {
-            $0.top.equalTo(cameraView).offset(16)
+            $0.top.equalTo(cameraView).offset(26)
             $0.trailing.equalToSuperview().offset(-10)
         }
         
         gridRowLine1.snp.makeConstraints {
-            $0.top.equalTo(cameraView).offset(cameraViewHeight / 3)
+            $0.top.equalToSuperview().offset(cameraViewHeight / 3 + 10)
             $0.leading.trailing.equalTo(cameraView)
             $0.height.equalTo(0.5)
         }
         
         gridRowLine2.snp.makeConstraints {
-            $0.top.equalTo(cameraView).offset((cameraViewHeight / 3) * 2)
+            $0.top.equalToSuperview().offset((cameraViewHeight / 3) * 2 + 10)
             $0.leading.trailing.equalTo(cameraView)
             $0.height.equalTo(0.5)
         }
         
         gridColumnLine1.snp.makeConstraints {
             $0.leading.equalTo(cameraView).offset(view.bounds.width / 3)
-            $0.top.bottom.equalTo(cameraView)
+            $0.top.bottom.equalTo(cameraView).offset(10)
             $0.width.equalTo(0.5)
         }
         
         gridColumnLine2.snp.makeConstraints {
             $0.leading.equalTo(cameraView).offset((view.bounds.width / 3) * 2)
-            $0.top.bottom.equalTo(cameraView)
+            $0.top.bottom.equalTo(cameraView).offset(10)
             $0.width.equalTo(0.5)
         }
         
@@ -246,7 +246,7 @@ class HomeButtonCameraViewController : BaseViewController {
     
     func setupPreviewLayer() {
         previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
-        previewLayer.videoGravity = .resizeAspectFill
+        previewLayer.videoGravity = .resize
         cameraView.layer.insertSublayer(previewLayer, below: switchCameraButton.layer)
         previewLayer.frame = self.cameraView.layer.frame
     }
