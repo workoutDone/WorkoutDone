@@ -12,7 +12,8 @@ import AVFoundation
 
 class HomeButtonCameraViewController : BaseViewController {
     let cameraViewHeight: Int = 468
-    var backCameraOn = true
+    var backCameraOn: Bool = true
+    var frameImages: [String] = ["frame1", "frame2", "frame3", "frame4", "frame5", "frame6"]
     
     var captureSession: AVCaptureSession!
     var frontCamera: AVCaptureDevice!
@@ -24,6 +25,8 @@ class HomeButtonCameraViewController : BaseViewController {
     var takePicture = false
     
     private let cameraView = UIView()
+    
+    private let frameImage = UIImageView()
     
     private let captureImage = UIImageView().then {
         $0.backgroundColor = .yellow
@@ -96,18 +99,14 @@ class HomeButtonCameraViewController : BaseViewController {
         view.addSubview(gridRowLine2)
         view.addSubview(gridColumnLine1)
         view.addSubview(gridColumnLine2)
+        
+        view.addSubview(frameImage)
     }
     
     override func setupConstraints() {
         super.setupConstraints()
         cameraView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(10)
-            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide)
-            $0.height.equalTo(cameraViewHeight)
-        }
-        
-        captureImage.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(22)
             $0.leading.trailing.equalTo(view.safeAreaLayoutGuide)
             $0.height.equalTo(cameraViewHeight)
         }
@@ -120,6 +119,11 @@ class HomeButtonCameraViewController : BaseViewController {
         gridToggleButton.snp.makeConstraints {
             $0.top.equalTo(cameraView).offset(26)
             $0.trailing.equalToSuperview().offset(-10)
+        }
+        
+        frameImage.snp.makeConstraints {
+            $0.top.bottom.equalTo(cameraView).offset(10)
+            $0.leading.trailing.equalTo(cameraView)
         }
         
         gridRowLine1.snp.makeConstraints {
@@ -144,6 +148,12 @@ class HomeButtonCameraViewController : BaseViewController {
             $0.leading.equalTo(cameraView).offset((view.bounds.width / 3) * 2)
             $0.top.bottom.equalTo(cameraView).offset(10)
             $0.width.equalTo(0.5)
+        }
+        
+        captureImage.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(22)
+            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide)
+            $0.height.equalTo(cameraViewHeight)
         }
         
         collectionView.snp.makeConstraints {
@@ -312,7 +322,7 @@ class HomeButtonCameraViewController : BaseViewController {
 
 extension HomeButtonCameraViewController : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 6
+        return frameImages.count + 1
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -323,6 +333,8 @@ extension HomeButtonCameraViewController : UICollectionViewDelegate, UICollectio
             cell.backgroundColor = .colorE6E0FF
             cell.layer.borderWidth = 2
             cell.layer.borderColor = UIColor.color7442FF.cgColor
+        } else {
+            cell.frameImage.image = UIImage(named: frameImages[indexPath.row - 1])
         }
         return cell
     }
@@ -337,6 +349,14 @@ extension HomeButtonCameraViewController : UICollectionViewDelegate, UICollectio
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
             return 10
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if indexPath.row == 0 {
+            frameImage.image = nil
+        } else {
+            frameImage.image = UIImage(named: frameImages[indexPath.row - 1])
+        }
     }
 }
 
