@@ -13,9 +13,9 @@ public enum DeviceGroup {
     public var rawValue : [Device] {
         switch self {
         case .homeButtonDevice:
-            return [.iPhone8, .iPhone8Plus, .iPhoneSE2, .iPhoneSE3]
+            return [.iPhone7, .iPhone8, .iPhone8Plus, .iPhoneSE2, .iPhoneSE3]
         case .simulatorHomeButtonDevice:
-            return [.simulator(.iPhoneSE3), .simulator(.iPhoneSE2), .simulator(.iPhone8), .simulator(.iPhone8Plus)]
+            return [.simulator(.iPhoneSE3), .simulator(.iPhoneSE2), .simulator(.iPhone7), .simulator(.iPhone8), .simulator(.iPhone8Plus)]
         }
     }
 }

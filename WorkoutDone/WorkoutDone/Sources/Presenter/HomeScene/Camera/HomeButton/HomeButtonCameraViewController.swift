@@ -23,9 +23,7 @@ class HomeButtonCameraViewController : BaseViewController {
     var videoOutput: AVCaptureVideoDataOutput!
     var takePicture = false
     
-    private let cameraView = UIView().then {
-        $0.backgroundColor = .blue
-    }
+    private let cameraView = UIView()
     
     private let captureImage = UIImageView().then {
         $0.backgroundColor = .yellow
@@ -103,24 +101,24 @@ class HomeButtonCameraViewController : BaseViewController {
     override func setupConstraints() {
         super.setupConstraints()
         cameraView.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(20)
+            $0.top.equalToSuperview().offset(10)
             $0.leading.trailing.equalTo(view.safeAreaLayoutGuide)
             $0.height.equalTo(cameraViewHeight)
         }
         
         captureImage.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(20)
+            $0.top.equalTo(view.safeAreaLayoutGuide)
             $0.leading.trailing.equalTo(view.safeAreaLayoutGuide)
             $0.height.equalTo(cameraViewHeight)
         }
         
         backButton.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(33)
+            $0.top.equalTo(cameraView).offset(14)
             $0.leading.equalToSuperview().offset(16)
         }
         
         gridToggleButton.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(36)
+            $0.top.equalTo(cameraView).offset(16)
             $0.trailing.equalToSuperview().offset(-10)
         }
         
@@ -149,7 +147,7 @@ class HomeButtonCameraViewController : BaseViewController {
         }
         
         collectionView.snp.makeConstraints {
-            $0.top.equalTo(cameraView.snp.bottom).offset(12)
+            $0.top.equalTo(cameraView.snp.bottom).offset(20)
             $0.leading.equalToSuperview()
             $0.trailing.equalToSuperview()
             $0.height.equalTo(66)
@@ -248,6 +246,7 @@ class HomeButtonCameraViewController : BaseViewController {
     
     func setupPreviewLayer() {
         previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
+        previewLayer.videoGravity = .resizeAspectFill
         cameraView.layer.insertSublayer(previewLayer, below: switchCameraButton.layer)
         previewLayer.frame = self.cameraView.layer.frame
     }
