@@ -45,20 +45,23 @@ class HomeViewController : BaseViewController {
             contentView.addSubview($0)
         }
     }
-    override func setupConstraints() {
-        super.setupConstraints()
+    override func setComponents() {
+        super.setComponents()
         view.backgroundColor = .colorFFFFFF
         contentScrollView.translatesAutoresizingMaskIntoConstraints = false
         contentScrollView.isUserInteractionEnabled = true
         contentScrollView.isScrollEnabled = true
         contentScrollView.isUserInteractionEnabled = true
+    }
+    override func setupConstraints() {
+        super.setupConstraints()
         
         contentScrollView.snp.makeConstraints {
             $0.edges.equalTo(view.safeAreaLayoutGuide)
         }
         contentView.snp.makeConstraints {
             $0.width.equalToSuperview()
-            $0.centerX.top.bottom.equalToSuperview()
+            $0.top.bottom.equalToSuperview()
         }
         // 캘린더 view
         calendarView.snp.makeConstraints {
