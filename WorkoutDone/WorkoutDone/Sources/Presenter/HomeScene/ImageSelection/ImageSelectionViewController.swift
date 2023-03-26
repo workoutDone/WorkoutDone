@@ -82,10 +82,11 @@ class ImageSelectionViewController : BaseViewController {
         print(device)
         if DeviceManager.shared.isHomeButtonDevice() || DeviceManager.shared.isSimulatorIsHomeButtonDevice() {
             print("홈버튼이 있는 기종")
-//            let homeButtonCameraViewController = HomeButtonCameraViewController()
-//            dismiss(animated: false) {
-//                self.rootViewController?.navigationController?.pushViewController(homeButtonCameraViewController, animated: true)
-//            }
+            let homeButtonCameraViewController = HomeButtonCameraViewController()
+            homeButtonCameraViewController.hidesBottomBarWhenPushed = true
+            dismiss(animated: false) {
+                self.rootView?.navigationController?.pushViewController(homeButtonCameraViewController, animated: false)
+            }
         }
         else {
             print("홈 버튼이 없는 기종")
