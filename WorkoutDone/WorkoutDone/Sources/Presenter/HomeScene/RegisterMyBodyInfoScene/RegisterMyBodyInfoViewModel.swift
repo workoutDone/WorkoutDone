@@ -21,41 +21,44 @@ class RegisterMyBodyInfoViewModel {
         let fatPercentageOutputtText : Driver<String>
     }
     func trimText(text: String) -> String {
-//        var value = ""
-//        print("ddd")
-//        if text.count > 3 {
-//            print("sss")
-//            let index = text.index(text.startIndex, offsetBy: 3)
-//            value = String(text[..<index])
-//        }
-//        return value]
-        return ""
+        if text.count >= 3 {
+            let index = text.index(text.startIndex, offsetBy: 3)
+            let newString = text[text.startIndex..<index]
+            return String(newString)
+            
+        }
+        else {
+            return text
+        }
+    }
+    func ignoreZeroText(text: String) -> String {
+        if text.count >= 1 && text[text.startIndex] == "0" {
+            return ""
+        }
+        else {
+            return text
+        }
     }
     
     func transform(input: Input) -> Output {
         let weightText = input.weightInputText.map { value in
-            print(value)
-//            var newValue = ""
-//            let index = value.index(value.startIndex, offsetBy: 3)
-//            if value.count > 3 {
-//                let
-//            }
-//            return String(value[..<index])
-//            if value.count >= 3 {
-//                let index = value.index(value.startIndex, offsetBy: 3)
-//                let newValue = value[value.startIndex..<index]
-//            }
-//            newValue = newValue
-//            return newValue
-//            let newValue = self.trimText(text: value)
-            return value
+            let ignoreZeroValue = self.ignoreZeroText(text: value)
+            let trimValue = self.trimText(text: ignoreZeroValue)
+            return trimValue
         }
         let skeletalMusleMassText = input.skeletalMusleMassInputText.map { value in
-            return value
+            let ignoreZeroValue = self.ignoreZeroText(text: value)
+            let trimValue = self.trimText(text: ignoreZeroValue)
+            return trimValue
         }
         let fatPercentageText = input.fatPercentageInputText.map { value in
-            return value
+            let ignoreZeroValue = self.ignoreZeroText(text: value)
+            let trimValue = self.trimText(text: ignoreZeroValue)
+            return trimValue
         }
-        return Output(weightOutputText: weightText, skeletalMusleMassOutputText: skeletalMusleMassText, fatPercentageOutputtText: fatPercentageText)
+        return Output(
+            weightOutputText: weightText,
+            skeletalMusleMassOutputText: skeletalMusleMassText,
+            fatPercentageOutputtText: fatPercentageText)
     }
 }
