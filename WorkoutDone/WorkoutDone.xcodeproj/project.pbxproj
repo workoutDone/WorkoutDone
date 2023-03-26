@@ -59,6 +59,8 @@
 		A57061CF29CD6A5E0083ECDD /* GalleryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57061CE29CD6A5E0083ECDD /* GalleryViewController.swift */; };
 		A57061D129CD6A840083ECDD /* AnalyzeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57061D029CD6A840083ECDD /* AnalyzeViewController.swift */; };
 		A57061D429D045690083ECDD /* WeightGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57061D329D045690083ECDD /* WeightGraphView.swift */; };
+		A57061D629D09AC40083ECDD /* SkeletalMuscleMassGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57061D529D09AC40083ECDD /* SkeletalMuscleMassGraphView.swift */; };
+		A57061D829D09AD40083ECDD /* FatPercentageGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57061D729D09AD40083ECDD /* FatPercentageGraphView.swift */; };
 		A576693B29B6EB4900673DFE /* ImageSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A576693A29B6EB4900673DFE /* ImageSelectionViewController.swift */; };
 		A576693E29BB06CB00673DFE /* RegisterMyBodyInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A576693D29BB06CB00673DFE /* RegisterMyBodyInfoViewController.swift */; };
 		A576694029BF1A9900673DFE /* UITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = A576693F29BF1A9900673DFE /* UITextField.swift */; };
@@ -139,6 +141,8 @@
 		A57061CE29CD6A5E0083ECDD /* GalleryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryViewController.swift; sourceTree = "<group>"; };
 		A57061D029CD6A840083ECDD /* AnalyzeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyzeViewController.swift; sourceTree = "<group>"; };
 		A57061D329D045690083ECDD /* WeightGraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeightGraphView.swift; sourceTree = "<group>"; };
+		A57061D529D09AC40083ECDD /* SkeletalMuscleMassGraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkeletalMuscleMassGraphView.swift; sourceTree = "<group>"; };
+		A57061D729D09AD40083ECDD /* FatPercentageGraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FatPercentageGraphView.swift; sourceTree = "<group>"; };
 		A576693A29B6EB4900673DFE /* ImageSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSelectionViewController.swift; sourceTree = "<group>"; };
 		A576693D29BB06CB00673DFE /* RegisterMyBodyInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterMyBodyInfoViewController.swift; sourceTree = "<group>"; };
 		A576693F29BF1A9900673DFE /* UITextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextField.swift; sourceTree = "<group>"; };
@@ -441,6 +445,8 @@
 			isa = PBXGroup;
 			children = (
 				A57061D329D045690083ECDD /* WeightGraphView.swift */,
+				A57061D529D09AC40083ECDD /* SkeletalMuscleMassGraphView.swift */,
+				A57061D729D09AD40083ECDD /* FatPercentageGraphView.swift */,
 			);
 			path = Graph;
 			sourceTree = "<group>";
@@ -701,7 +707,9 @@
 				A59ACB7A29B4BC740084C73E /* RoutineViewController.swift in Sources */,
 				A57061CF29CD6A5E0083ECDD /* GalleryViewController.swift in Sources */,
 				920060E229B63C1500586063 /* CalendarView.swift in Sources */,
+				A57061D829D09AD40083ECDD /* FatPercentageGraphView.swift in Sources */,
 				A59ACB7E29B4BCF70084C73E /* MyRecordViewController.swift in Sources */,
+				A57061D629D09AC40083ECDD /* SkeletalMuscleMassGraphView.swift in Sources */,
 				A576693B29B6EB4900673DFE /* ImageSelectionViewController.swift in Sources */,
 				92005FC629B1A49400586063 /* AppDelegate.swift in Sources */,
 				92005FC829B1A49400586063 /* SceneDelegate.swift in Sources */,
