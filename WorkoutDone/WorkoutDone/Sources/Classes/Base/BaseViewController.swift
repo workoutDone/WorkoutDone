@@ -11,7 +11,7 @@ import RxCocoa
 
 class BaseViewController : UIViewController {
     var disposeBag = DisposeBag()
-    
+
 //    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
 //        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
 //        hidesBottomBarWhenPushed = true
@@ -23,11 +23,15 @@ class BaseViewController : UIViewController {
 //    // MARK: - LIFECYCLE
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         setupLayout()
         setupConstraints()
         setupBinding()
         setComponents()
         actions()
+        
+        view.backgroundColor = .colorFFFFFF
+        
         let backBarButtonItem = UIBarButtonItem(title: "뒤로가기", style: .plain, target: self, action: nil)
         backBarButtonItem.tintColor = .color000000
         self.navigationItem.backBarButtonItem = backBarButtonItem

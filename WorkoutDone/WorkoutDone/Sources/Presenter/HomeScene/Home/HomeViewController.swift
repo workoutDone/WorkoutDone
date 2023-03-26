@@ -9,12 +9,17 @@ import UIKit
 
 class HomeViewController : BaseViewController {
     // MARK: - PROPERTIES
+    let monthlyCalendarHeight: Int = 289
+    let weeklyCalendarHeight: Int = 115
+    
     private let contentScrollView = UIScrollView().then {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.backgroundColor = .clear
     }
     
-    private let contentView = UIView()
+    private let contentView = UIView().then {
+        $0.backgroundColor = .colorFFFFFF
+    }
     
     private let calendarView = CalendarView()
     ///기록하기
@@ -32,13 +37,17 @@ class HomeViewController : BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        view.backgroundColor = .color7442FF
+        contentScrollView.delegate = self
+     
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
     }
     override func setupLayout() {
         super.setupLayout()
-//        navigationController?.isNavigationBarHidden = true
+        navigationController?.isNavigationBarHidden = true
         view.addSubview(contentScrollView)
         contentScrollView.addSubview(contentView)
         [calendarView, recordBaseView, workoutBaseView, workoutResultBaseView].forEach {
@@ -65,7 +74,7 @@ class HomeViewController : BaseViewController {
         }
         // 캘린더 view
         calendarView.snp.makeConstraints {
-            $0.top.equalTo(contentView.snp.top)
+            $0.top.equalToSuperview()
             $0.leading.trailing.equalTo(view.safeAreaLayoutGuide)
         }
         ///기록하기 view
@@ -114,5 +123,24 @@ class HomeViewController : BaseViewController {
     @objc func workoutRoutineChoiceButtonTapped() {
         let workoutViewController = WorkoutViewController()
         navigationController?.pushViewController(workoutViewController, animated: true)
+    }
+ 
+}
+
+extension HomeViewController : UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if UserDefaultsManager.shared.isMonthlyCalendar {
+            if scrollView.contentOffset.y > CGFloat(monthlyCalendarHeight) {
+                view.backgroundColor = .colorFFFFFF
+            } else {
+                view.backgroundColor = .color7442FF
+            }
+        } else {
+            if scrollView.contentOffset.y > CGFloat(weeklyCalendarHeight) {
+                view.backgroundColor = .colorFFFFFF
+            } else {
+                view.backgroundColor = .color7442FF
+            }
+        }
     }
 }
