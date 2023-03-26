@@ -17,11 +17,10 @@ class FrameCell: UICollectionViewCell {
         $0.textColor = .color7442FF
     }
     
-    
-    let frameImage = UIImageView().then {
+    var frameImage = UIImageView().then {
         $0.contentMode = .scaleAspectFill
         $0.layer.cornerRadius = 10
-        $0.backgroundColor = .systemGray5
+        //$0.backgroundColor = .systemGray5
     }
     
     override init(frame: CGRect) {

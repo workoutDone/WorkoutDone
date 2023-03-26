@@ -8,12 +8,28 @@
 import UIKit
 import SnapKit
 import Then
+import AVFoundation
 
 class HomeButtonCameraViewController : BaseViewController {
     let cameraViewHeight: Int = 468
+    var backCameraOn: Bool = true
+    var frameImages: [String] = ["frame1", "frame2", "frame3", "frame4", "frame5", "frame6"]
     
-    private let cameraView = UIView().then {
-        $0.backgroundColor = .blue
+    var captureSession: AVCaptureSession!
+    var frontCamera: AVCaptureDevice!
+    var backCamera: AVCaptureDevice!
+    var frontInput: AVCaptureInput!
+    var backInput: AVCaptureInput!
+    var previewLayer: AVCaptureVideoPreviewLayer!
+    var videoOutput: AVCaptureVideoDataOutput!
+    var takePicture = false
+    
+    private let cameraView = UIView()
+    
+    private let frameImage = UIImageView()
+    
+    private let captureImage = UIImageView().then {
+        $0.backgroundColor = .yellow
     }
     
     private let backButton = BackButton()
@@ -63,65 +79,85 @@ class HomeButtonCameraViewController : BaseViewController {
         setDelegateDataSource()
         pressShutterView.isHidden = true
         //        saveButton.isHidden = true
+        captureImage.isHidden = true
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        setupCaptureSession()
     }
     
     override func setupLayout() {
         super.setupLayout()
         
-        [cameraView, backButton, gridToggleButton, collectionView, shutterButton, switchCameraButton, pressShutterView].forEach {
+        [cameraView, captureImage, backButton, gridToggleButton, collectionView, shutterButton, switchCameraButton, pressShutterView].forEach {
             view.addSubview($0)
         }
         
-        cameraView.addSubview(gridRowLine1)
-        cameraView.addSubview(gridRowLine2)
-        cameraView.addSubview(gridColumnLine1)
-        cameraView.addSubview(gridColumnLine2)
+        view.addSubview(gridRowLine1)
+        view.addSubview(gridRowLine2)
+        view.addSubview(gridColumnLine1)
+        view.addSubview(gridColumnLine2)
+        
+        view.addSubview(frameImage)
     }
     
     override func setupConstraints() {
         super.setupConstraints()
         cameraView.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(20)
+            $0.top.equalToSuperview().offset(10)
             $0.leading.trailing.equalTo(view.safeAreaLayoutGuide)
             $0.height.equalTo(cameraViewHeight)
         }
         
         backButton.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(33)
+            $0.top.equalTo(cameraView).offset(24)
             $0.leading.equalToSuperview().offset(16)
         }
         
         gridToggleButton.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(36)
+            $0.top.equalTo(cameraView).offset(26)
             $0.trailing.equalToSuperview().offset(-10)
         }
         
+        frameImage.snp.makeConstraints {
+            $0.top.bottom.equalTo(cameraView).offset(10)
+            $0.leading.trailing.equalTo(cameraView)
+        }
+        
         gridRowLine1.snp.makeConstraints {
-            $0.top.equalTo(cameraView).offset(cameraViewHeight / 3)
+            $0.top.equalToSuperview().offset(cameraViewHeight / 3 + 10)
             $0.leading.trailing.equalTo(cameraView)
             $0.height.equalTo(0.5)
         }
         
         gridRowLine2.snp.makeConstraints {
-            $0.top.equalTo(cameraView).offset((cameraViewHeight / 3) * 2)
+            $0.top.equalToSuperview().offset((cameraViewHeight / 3) * 2 + 10)
             $0.leading.trailing.equalTo(cameraView)
             $0.height.equalTo(0.5)
         }
         
         gridColumnLine1.snp.makeConstraints {
             $0.leading.equalTo(cameraView).offset(view.bounds.width / 3)
-            $0.top.bottom.equalTo(cameraView)
+            $0.top.bottom.equalTo(cameraView).offset(10)
             $0.width.equalTo(0.5)
         }
         
         gridColumnLine2.snp.makeConstraints {
             $0.leading.equalTo(cameraView).offset((view.bounds.width / 3) * 2)
-            $0.top.bottom.equalTo(cameraView)
+            $0.top.bottom.equalTo(cameraView).offset(10)
             $0.width.equalTo(0.5)
         }
         
+        captureImage.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(22)
+            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide)
+            $0.height.equalTo(cameraViewHeight)
+        }
+        
         collectionView.snp.makeConstraints {
-            $0.top.equalTo(cameraView.snp.bottom).offset(12)
+            $0.top.equalTo(cameraView.snp.bottom).offset(20)
             $0.leading.equalToSuperview()
             $0.trailing.equalToSuperview()
             $0.height.equalTo(66)
@@ -165,6 +201,86 @@ class HomeButtonCameraViewController : BaseViewController {
         collectionView.dataSource = self
     }
     
+    func setupCaptureSession() {
+        DispatchQueue.global(qos: .userInitiated).async {
+            self.captureSession = AVCaptureSession()
+            self.captureSession.beginConfiguration()
+            if self.captureSession.canSetSessionPreset(.photo) {
+                self.captureSession.sessionPreset = .photo
+            }
+            self.captureSession.automaticallyConfiguresCaptureDeviceForWideColor = true
+            self.setupInput()
+            DispatchQueue.main.async {
+                self.setupPreviewLayer()
+            }
+            self.setupOutput()
+            self.captureSession.commitConfiguration()
+            self.captureSession.startRunning()
+        }
+    }
+    
+    func setupInput() {
+        if let device = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back) {
+            backCamera = device
+        }
+        
+        if let device = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .front) {
+            frontCamera = device
+        }
+        
+        guard let bInput = try? AVCaptureDeviceInput(device: backCamera) else {
+            return
+        }
+        backInput = bInput
+    
+        
+        guard let fInput = try? AVCaptureDeviceInput(device: frontCamera) else {
+            return
+        }
+        frontInput = fInput
+        
+        captureSession.addInput(backInput)
+    }
+    
+    func setupOutput() {
+        videoOutput = AVCaptureVideoDataOutput()
+        let videoQueue = DispatchQueue(label: "videoQueue", qos: .userInteractive)
+        videoOutput.setSampleBufferDelegate(self, queue: videoQueue)
+        
+        if captureSession.canAddOutput(videoOutput) {
+            captureSession.addOutput(videoOutput)
+        }
+        
+        videoOutput.connections.first?.videoOrientation = .portrait
+    }
+    
+    func setupPreviewLayer() {
+        previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
+        previewLayer.videoGravity = .resize
+        cameraView.layer.insertSublayer(previewLayer, below: switchCameraButton.layer)
+        previewLayer.frame = self.cameraView.layer.frame
+    }
+    
+    func switchCameraInput() {
+        switchCameraButton.isUserInteractionEnabled = false
+        
+        captureSession.beginConfiguration()
+        if backCameraOn {
+            captureSession.removeInput(backInput)
+            captureSession.addInput(frontInput)
+        } else {
+            captureSession.removeInput(frontInput)
+            captureSession.addInput(backInput)
+        }
+        
+        backCameraOn = !backCameraOn
+        
+        videoOutput.connections.first?.videoOrientation = .portrait
+        videoOutput.connections.first?.isVideoMirrored = !backCameraOn
+        captureSession.commitConfiguration()
+        switchCameraButton.isUserInteractionEnabled = true
+    }
+    
     @objc func backButtonTapped(sender: UIButton!) {
         self.navigationController?.popViewController(animated: true)
     }
@@ -188,10 +304,12 @@ class HomeButtonCameraViewController : BaseViewController {
         shutterButton.isHidden = true
         switchCameraButton.isHidden = true
         pressShutterView.isHidden = false
+        
+        takePicture = true
     }
     
     @objc func switchCameraButtonTapped(sender: UIButton!) {
-        print(2)
+        switchCameraInput()
     }
     
     @objc func againButtonTapped(sender: UIButton!) {
@@ -204,7 +322,7 @@ class HomeButtonCameraViewController : BaseViewController {
 
 extension HomeButtonCameraViewController : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 6
+        return frameImages.count + 1
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -215,6 +333,8 @@ extension HomeButtonCameraViewController : UICollectionViewDelegate, UICollectio
             cell.backgroundColor = .colorE6E0FF
             cell.layer.borderWidth = 2
             cell.layer.borderColor = UIColor.color7442FF.cgColor
+        } else {
+            cell.frameImage.image = UIImage(named: frameImages[indexPath.row - 1])
         }
         return cell
     }
@@ -230,4 +350,36 @@ extension HomeButtonCameraViewController : UICollectionViewDelegate, UICollectio
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
             return 10
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if indexPath.row == 0 {
+            frameImage.image = nil
+        } else {
+            frameImage.image = UIImage(named: frameImages[indexPath.row - 1])
+        }
+    }
+}
+
+extension HomeButtonCameraViewController : AVCaptureVideoDataOutputSampleBufferDelegate {
+    func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
+        if !takePicture {
+            return
+        }
+        
+        guard let cvBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else {
+            return
+        }
+        
+        let ciImage = CIImage(cvImageBuffer: cvBuffer)
+        
+        let uiImage = UIImage(ciImage: ciImage)
+        
+        DispatchQueue.main.async {
+            self.captureImage.image = uiImage
+            self.captureImage.isHidden = false
+            self.takePicture = false
+            self.captureSession.stopRunning()
+        }
+    }
+    
 }
