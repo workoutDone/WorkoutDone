@@ -80,8 +80,8 @@ struct WeightGraphView: View {
                     x: .value("Month", formatDate(dateFormatter.date(from: data.date) ?? Date())),
                     y: .value("Weight", data.weight)
                 )
+                ///custom point
                 .annotation(position: .overlay, alignment: .center) {
-//                    Image(systemName: "pencil")
                     ZStack {
                         Circle()
                             .frame(width: 12, height: 12)
@@ -101,10 +101,17 @@ struct WeightGraphView: View {
 //            .chartXAxis {
 //                AxisMarks(preset: <#T##AxisMarkPreset#>)
 //            }
+            .chartYAxis {
+                AxisMarks(position: .leading)
+            }
             .frame(width: ViewConstants.dataPointWidth * CGFloat(testData.count))
-
+            .padding()
         }
         .frame(height: 220)
+        .background {
+            RoundedRectangle(cornerRadius: 15, style: .continuous)
+                .strokeBorder(Color(UIColor.colorE6E0FF), lineWidth: 1)
+        }
     }
     
     private struct ViewConstants {
@@ -121,85 +128,3 @@ struct WeightGraphView_Previews: PreviewProvider {
         WeightGraphView()
     }
 }
-//struct WeightChartView3: View {
-// 2    @ObservedObject private var weightVm = WeightViewModel()
-// 3
-// 4    var body: some View {
-// 5        ZStack {
-// 6            Color(hue: 0.58, saturation: 0.17, brightness: 1.0)
-// 7                .edgesIgnoringSafeArea(.all)
-// 8
-// 9            VStack() {
-//10                GroupBox ("Daily weight (pounds)") {
-//11                    if let weights = weightVm.allWeights {
-//12                        ScrollView(.horizontal) {
-//13                            Chart {
-//14                                ForEach(weights) { weight in
-//15                                    LineMark(
-//16                                        x: .value("Week Day", weight.day),
-//17                                        y: .value("Step Count", weight.pounds)
-//18                                    )
-//19                                    .foregroundStyle(ViewConstants.color1)
-//20                                    .accessibilityLabel("\(weight.day.toString())")
-//21                                    .accessibilityValue("\(weight.pounds) pounds")
-//22                                }
-//23                            }
-//24                            .chartYScale(domain: ViewConstants.minYScale...ViewConstants.maxYScale)
-//25                            .chartYAxis() {
-//26                                AxisMarks(position: .leading)
-//27                            }
-//28                            .chartXAxis {
-//29                                AxisMarks(preset: .extended,
-//30                                          position: .bottom,
-//31                                          values: .stride (by: .day)) { value in
-//32                                    if value.as(Date.self)!.isFirstOfMonth() {
-//33                                        AxisGridLine()
-//34                                            .foregroundStyle(.black.opacity(0.5))
-//35                                        let label = "01\n\(value.as(Date.self)!.monthName())"
-//36                                        AxisValueLabel(label).foregroundStyle(.black)
-//37                                    } else {
-//38                                        AxisValueLabel(
-//39                                            format: .dateTime.day(.twoDigits)
-//40                                        )
-//41                                    }
-//42                                }
-//43                            }
-//44                            .frame(width: ViewConstants.dataPointWidth * CGFloat(weights.count))
-//45                        }
-//46                    }
-//47                }
-//48                .groupBoxStyle(YellowGroupBoxStyle())
-//49                .frame(width: ViewConstants.chartWidth,  height: ViewConstants.chartHeight)
-//50
-//51                Text("Generate Data")
-//52                    .font(.title2)
-//53                HStack {
-//54                    Button("10") {
-//55                        weightVm.generateWeightData(numberOfDays: 10)
-//56                    }
-//57                    Button("50") {
-//58                        weightVm.generateWeightData(numberOfDays: 50)
-//59                    }
-//60                    Button("100") {
-//61                        weightVm.generateWeightData(numberOfDays: 100)
-//62                    }
-//63                    Button("1000") {
-//64                        weightVm.generateWeightData(numberOfDays: 1000)
-//65                    }
-//66                }
-//67
-//68                Spacer()
-//69            }
-//70            .padding()
-//71        }
-//    }
-//
-//    private struct ViewConstants {
-//        static let color1 = Color(hue: 0.33, saturation: 0.81, brightness: 0.76)
-//        static let minYScale = 150
-//        static let maxYScale = 240
-//78        static let chartWidth: CGFloat = 350
-//        static let chartHeight: CGFloat = 400
-//80        static let dataPointWidth: CGFloat = 20
-//81    }
-//}
