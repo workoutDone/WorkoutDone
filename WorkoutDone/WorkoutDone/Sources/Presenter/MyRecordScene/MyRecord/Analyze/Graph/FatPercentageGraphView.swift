@@ -103,13 +103,12 @@ struct FatPercentageGraphView: View {
                         )
                 }
             }
-            .frame(height: 300)
             .padding()
+            .frame(height: 220)
             .background {
                 RoundedRectangle(cornerRadius: 10, style: .continuous)
                     .fill(.white.shadow(.drop(radius: 2)))
             }
-            .padding()
             .onAppear {
                 for (index, _) in testData.enumerated() {
                     withAnimation(.easeInOut(duration: 0.8).delay(Double(index) * 0.05)) {

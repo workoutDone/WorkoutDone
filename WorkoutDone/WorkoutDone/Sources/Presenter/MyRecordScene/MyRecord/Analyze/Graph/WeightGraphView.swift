@@ -20,7 +20,6 @@ var list = [
     TestModel(date: "2023.01.06", weight: 60),
     TestModel(date: "2023.01.07", weight: 80),
     TestModel(date: "2023.01.07", weight: 80),
-    TestModel(date: "2023.01.10", weight: 80),
     TestModel(date: "2023.01.14", weight: 80),
     TestModel(date: "2023.01.15", weight: 50),
     TestModel(date: "2023.01.29", weight: 60),
@@ -62,9 +61,9 @@ struct WeightGraphView: View {
     @State private var plotWidth: CGFloat = 0
     
     var body: some View {
-        let max = testData.max {
-            return $0.weight > $1.weight
-        }
+        let max = testData.max { item1, item2 in
+            return item2.weight > item1.weight
+        }?.weight ?? 0
 //        let max = bodyInfoGraphViewModel.bodyInfo.max { item1, item2 in
 //            return item2.weight ?? 0 > item1.weight ?? 0
 //        }?.weight ?? 0
@@ -92,39 +91,82 @@ struct WeightGraphView: View {
                     }
                     .shadow(color: Color(UIColor.color7442FF), radius: 2)
                 }
+//                if let currentActiveItem, currentActiveItem.date == data.date {
+//                    RuleMark(x: .value("Month", formatDate(dateFormatter.date(from: data.date) ?? Date())))
+//                        .lineStyle(.init(lineWidth: 1, miterLimit: 2, dash: [2], dashPhase: 5))
+//                        .annotation {
+//                            //FIX
+//                            VStack(alignment: .leading, spacing: 6) {
+//                                Text("몸무게")
+//                                    .font(.caption)
+//                                    .foregroundColor(.gray)
+//                                Text("\(currentActiveItem.weight )")
+//                                    .font(.title3.bold())
+//                            }
+//                            .padding(.horizontal, 10)
+//                            .padding(.vertical, 4)
+//                            .background {
+//                                RoundedRectangle(cornerRadius: 6, style: .continuous)
+//                                    .fill(.white.shadow(.drop(radius: 2)))
+//                            }
+//                        }
+//                }
             }
             
-//            .chartYScale(domain: <#T##ScaleDomain#>)
-//            .chartYAxis() {
-//                AxisMarks(position: .leading)
-//            }
 //            .chartXAxis {
 //                AxisMarks(preset: <#T##AxisMarkPreset#>)
 //            }
             .chartYAxis {
                 AxisMarks(position: .trailing)
             }
-            .frame(width: ViewConstants.dataPointWidth * CGFloat(testData.count))
+            .chartYScale(domain: 0...(max + 50))
+//            .chartOverlay(content: { proxy in
+//                GeometryReader { innerProxy in
+//                    Rectangle()
+//                        .fill(.clear).contentShape(Rectangle())
+//                        .gesture(
+//                            DragGesture()
+//                                .onChanged({ value in
+//                                    let location = value.location
+//                                    if let weight : Double = proxy.value(atY: location.y) {
+//                                        if let currentItem = testData.first(where: { item in
+//                                            item.weight == weight
+//                                        }) {
+//                                            self.currentActiveItem = currentItem
+//                                            print(currentActiveItem?.weight, "ss")
+//                                        }
+//                                    }
+//                                }).onEnded({ value in
+//                                    self.currentActiveItem = nil
+//                                })
+//                        )
+//                }
+//            })
             .padding()
+            .frame(width: ViewConstants.dataPointWidth * CGFloat(testData.count))
+//            .frame(height: 220)
         }
-        .frame(height: 220)
         .background {
             RoundedRectangle(cornerRadius: 15, style: .continuous)
                 .strokeBorder(Color(UIColor.colorE6E0FF), lineWidth: 1)
         }
         .onAppear {
+            print(max, "맥스값")
             for (index, _) in testData.enumerated() {
                 withAnimation(.easeOut(duration: 0.8).delay(Double(index) * 0.05)) {
                     animate = true
                 }
             }
         }
+        .onDisappear {
+            animate = false
+        }
     }
     
     private struct ViewConstants {
         static let minYScale = 150
         static let maxYScale = 240
-        static let dataPointWidth: CGFloat = 20
+        static let dataPointWidth: CGFloat = 60
         static let chartHeight: CGFloat = 400
         static let chartWidth: CGFloat = 350
     }

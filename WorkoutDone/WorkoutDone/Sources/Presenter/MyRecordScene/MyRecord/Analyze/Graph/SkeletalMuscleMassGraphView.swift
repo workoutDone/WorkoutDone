@@ -97,10 +97,9 @@ struct SkeletalMuscleMassGraphView: View {
                         ScrollView(.horizontal) {
                             Chart {
                                 ForEach(weights) { weight in
-                                    BarMark(
+                                    LineMark(
                                         x: .value("Week Day", weight.day),
-                                        y: .value("Step Count", weight.pounds),
-                                        width: ViewConstants.barWidth
+                                        y: .value("Step Count", weight.pounds)
                                     )
 //                                    .annotation(position: .top) {
 //                                        Text("\(weight.pounds)").font(.footnote)
@@ -110,6 +109,7 @@ struct SkeletalMuscleMassGraphView: View {
 //                                    .accessibilityValue("\(weight.pounds) pounds")
                                 }
                             }
+                            .chartYScale(domain: 0...300)
 //                            .chartYScale(domain: 0...ViewConstants.maxYScale)
 //                            .chartYAxis() {
 //                                AxisMarks(position: .leading)
@@ -135,25 +135,7 @@ struct SkeletalMuscleMassGraphView: View {
                     }
                 }
 //                .groupBoxStyle(YellowGroupBoxStyle())
-                .frame(width: ViewConstants.chartWidth,  height: ViewConstants.chartHeight)
-                
-                Text("Generate Data")
-                    .font(.title2)
-                HStack {
-                    Button("10") {
-                        weightVm.generateWeightData(numberOfDays: 10)
-                    }
-                    Button("50") {
-                        weightVm.generateWeightData(numberOfDays: 50)
-                    }
-                    Button("100") {
-                        weightVm.generateWeightData(numberOfDays: 100)
-                    }
-                    Button("1000") {
-                        weightVm.generateWeightData(numberOfDays: 1000)
-                    }
-                }
-                Spacer()
+                .frame(width: ViewConstants.chartWidth,  height: 220)
             }
             .padding()
         }
