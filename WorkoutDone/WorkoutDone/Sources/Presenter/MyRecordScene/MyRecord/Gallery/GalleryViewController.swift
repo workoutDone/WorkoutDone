@@ -34,13 +34,11 @@ class GalleryViewController : BaseViewController {
     let sortByMonthView = SortByMonthView()
     
     let sortByFrameView = SortByFrameView()
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-    }
+
     
     override func setupLayout() {
+        super.setupLayout()
+        
         self.view.addSubview(scrollView)
         scrollView.addSubview(contentView)
         
@@ -48,15 +46,17 @@ class GalleryViewController : BaseViewController {
         sortButton.addSubview(sortLabel)
         
         contentView.addSubview(sortByMonthView)
-        //contentView.addSubview(sortByFrameView)
     }
     
     override func setComponents() {
+        super.setComponents()
+        
         sortButton.addTarget(self, action: #selector(sortButtonTapped), for: .touchUpInside)
-        sortByFrameView.isHidden = true
     }
     
     override func setupConstraints() {
+        super.setupConstraints()
+        
         scrollView.snp.makeConstraints {
             $0.leading.trailing.bottom.equalToSuperview()
             $0.top.equalToSuperview()
@@ -78,17 +78,15 @@ class GalleryViewController : BaseViewController {
             $0.centerX.centerY.equalTo(sortButton)
         }
         
-        sortByMonthView.snp.makeConstraints {
+        setSortViewConstraints(view: sortByMonthView)
+    }
+    
+    func setSortViewConstraints(view: UIView) {
+        view.snp.makeConstraints {
             $0.top.equalTo(sortButton.snp.bottom).offset(30)
-            $0.leading.trailing.equalToSuperview()
-            $0.bottom.equalToSuperview().offset(-30)
+            $0.leading.trailing.equalTo(contentView)
+            $0.bottom.equalTo(contentView).offset(-30)
         }
-        
-//        sortByFrameView.snp.makeConstraints {
-//            $0.top.equalTo(sortButton.snp.bottom).offset(30)
-//            $0.leading.trailing.equalToSuperview()
-//            $0.bottom.equalToSuperview().offset(-30)
-//        }
     }
     
     @objc func sortButtonTapped(sender: UIButton!) {
@@ -97,11 +95,22 @@ class GalleryViewController : BaseViewController {
             sortButton.snp.updateConstraints {
                 $0.width.equalTo(119)
             }
+            
+            sortByFrameView.removeFromSuperview()
+            
+            contentView.addSubview(sortByMonthView)
+            setSortViewConstraints(view: sortByMonthView)
+            
         } else {
             sortLabel.text = "월별 정렬"
             sortButton.snp.updateConstraints {
                 $0.width.equalTo(80)
             }
+            
+            sortByMonthView.removeFromSuperview()
+            
+            contentView.addSubview(sortByFrameView)
+            setSortViewConstraints(view: sortByFrameView)
         }
         
         sortByFrame = !sortByFrame

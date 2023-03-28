@@ -9,7 +9,14 @@ import UIKit
 import SnapKit
 import Then
 
+struct MonthInfo {
+    var month : Int
+    var monthImage : [String]
+}
+
 class SortByMonthView : BaseUIView {
+    var monthSampleData : [MonthInfo] = [MonthInfo(month: 3, monthImage: Array(repeating: "", count: 9)), MonthInfo(month: 2, monthImage: Array(repeating: "", count: 12))]
+    
     private let monthCollectionView : UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -18,6 +25,7 @@ class SortByMonthView : BaseUIView {
         collectionView.register(MonthCell.self, forCellWithReuseIdentifier: "monthCell")
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.isScrollEnabled = false
+        collectionView.backgroundColor = .orange
         
         return collectionView
     }()
@@ -43,7 +51,7 @@ class SortByMonthView : BaseUIView {
         
         monthCollectionView.snp.makeConstraints {
             $0.top.leading.trailing.bottom.equalToSuperview()
-            $0.height.equalTo(((116 * 4) + (6 * 3) + 29) * 2)
+            $0.height.equalTo(((116 * 4) + (6 * 3) + 29 + 34) * 2)
         }
     }
     
@@ -55,7 +63,7 @@ class SortByMonthView : BaseUIView {
 
 extension SortByMonthView : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 2
+        return monthSampleData.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -71,7 +79,7 @@ extension SortByMonthView : UICollectionViewDelegate, UICollectionViewDataSource
         return UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 34
     }
 }
