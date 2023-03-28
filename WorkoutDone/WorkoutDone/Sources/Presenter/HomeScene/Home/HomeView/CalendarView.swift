@@ -162,7 +162,7 @@ class CalendarView : BaseUIView {
         
         stackView.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.top.equalToSuperview().offset(13)
+            $0.top.equalToSuperview().offset(6)
         }
         
         collectionView.snp.makeConstraints {
@@ -183,7 +183,7 @@ class CalendarView : BaseUIView {
             $0.centerX.equalToSuperview()
             $0.bottom.equalToSuperview()
             $0.width.equalTo(35)
-            $0.height.equalTo(24)
+            $0.height.equalTo(22)
         }
     }
     
@@ -340,8 +340,6 @@ class CalendarView : BaseUIView {
                 days.append(String(day))
             }
         }
-        
-        print(days)
     }
 }
 
