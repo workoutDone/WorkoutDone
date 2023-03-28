@@ -328,9 +328,20 @@ class CalendarView : BaseUIView {
         
         days.removeAll()
         
-//        for day in startDayOfWeek...endDayOfWeek {
-//            days.append(String(day))
-//        }
+        if startDayOfWeek > endDayOfWeek {
+            for day in startDayOfWeek..<startDayOfWeek + (7 - endDayOfWeek) {
+                days.append(String(day))
+            }
+            for day in 1...endDayOfWeek {
+                days.append(String(day))
+            }
+        } else {
+            for day in startDayOfWeek...endDayOfWeek {
+                days.append(String(day))
+            }
+        }
+        
+        print(days)
     }
 }
 
@@ -399,15 +410,16 @@ extension CalendarView: UICollectionViewDelegate, UICollectionViewDataSource, UI
                     cell.workOutDoneImage.isHidden = false
                 }
             }
+            if components.month ?? 1 == calendar.component(.month, from: Date()) && days[indexPath.row] == String(calendar.component(.day, from: Date())) {
+                cell.todayImage.isHidden = false
+                cell.dayLabel.font = .pretendard(.bold, size: 14)
+            }
             cell.dayLabel.textColor = .colorF3F3F3
         } else {
             cell.dayLabel.textColor = .colorF3F3F303
         }
         
-        if components.month ?? 1 == calendar.component(.month, from: Date()) && days[indexPath.row] == String(calendar.component(.day, from: Date())) && indexPath.row >= firstWeekday - 1  {
-            cell.todayImage.isHidden = false
-            cell.dayLabel.font = .pretendard(.bold, size: 14)
-        }
+      
         return cell
     }
     
