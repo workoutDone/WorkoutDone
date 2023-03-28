@@ -72,13 +72,13 @@ struct WeightGraphView: View {
             Chart(testData, id: \.date) { data in
                 LineMark(
                     x: .value("Month", formatDate(dateFormatter.date(from: data.date) ?? Date())),
-                    y: .value("Weight", data.weight)
+                    y: .value("Weight", animate ? data.weight : 0)
                 )
                 .interpolationMethod(.cardinal)
                 .foregroundStyle(Color(UIColor.color7442FF))
                 PointMark(
                     x: .value("Month", formatDate(dateFormatter.date(from: data.date) ?? Date())),
-                    y: .value("Weight", data.weight)
+                    y: .value("Weight", animate ? data.weight : 0)
                 )
                 ///custom point
                 .annotation(position: .overlay, alignment: .center) {
@@ -102,7 +102,7 @@ struct WeightGraphView: View {
 //                AxisMarks(preset: <#T##AxisMarkPreset#>)
 //            }
             .chartYAxis {
-                AxisMarks(position: .leading)
+                AxisMarks(position: .trailing)
             }
             .frame(width: ViewConstants.dataPointWidth * CGFloat(testData.count))
             .padding()
@@ -111,6 +111,13 @@ struct WeightGraphView: View {
         .background {
             RoundedRectangle(cornerRadius: 15, style: .continuous)
                 .strokeBorder(Color(UIColor.colorE6E0FF), lineWidth: 1)
+        }
+        .onAppear {
+            for (index, _) in testData.enumerated() {
+                withAnimation(.easeOut(duration: 0.8).delay(Double(index) * 0.05)) {
+                    animate = true
+                }
+            }
         }
     }
     
