@@ -89,7 +89,6 @@ class CalendarView : BaseUIView {
         setDelegateDataSource()
         setAction()
         setCurrentDate()
-        
     }
     
     required init?(coder: NSCoder) {
@@ -405,7 +404,7 @@ extension CalendarView: UICollectionViewDelegate, UICollectionViewDataSource, UI
             cell.dayLabel.textColor = .colorF3F3F303
         }
         
-        if components.month ?? 1 == calendar.component(.month, from: Date()) && days[indexPath.row] == String(calendar.component(.day, from: Date())) {
+        if components.month ?? 1 == calendar.component(.month, from: Date()) && days[indexPath.row] == String(calendar.component(.day, from: Date())) && indexPath.row >= firstWeekday - 1  {
             cell.todayImage.isHidden = false
             cell.dayLabel.font = .pretendard(.bold, size: 14)
         }
