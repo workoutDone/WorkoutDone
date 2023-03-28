@@ -2,7 +2,7 @@
 //  SortByMonthView.swift
 //  WorkoutDone
 //
-//  Created by hyemi on 2023/03/27.
+//  Created by hyemi on 2023/03/28.
 //
 
 import UIKit
@@ -10,30 +10,17 @@ import SnapKit
 import Then
 
 class SortByMonthView : BaseUIView {
-    let frameCategoryImages: [String] = ["frame1", "frame2", "frame3", "frame4", "frame5", "frame6"]
-    
-    private let frameCategoryCollectionView : UICollectionView = {
+    private let monthCollectionView : UICollectionView = {
         let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
+        layout.scrollDirection = .vertical
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.register(FrameCategoryCell.self, forCellWithReuseIdentifier: "frameCategoryCell")
+        collectionView.register(MonthCell.self, forCellWithReuseIdentifier: "monthCell")
         collectionView.showsHorizontalScrollIndicator = false
-        
-        return collectionView
-    }()
-    
-    private let frameImageCollectionView : UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.register(FrameImageCell.self, forCellWithReuseIdentifier: "frameImageCell")
-        collectionView.showsVerticalScrollIndicator = false
         collectionView.isScrollEnabled = false
         
         return collectionView
     }()
-    
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -48,63 +35,36 @@ class SortByMonthView : BaseUIView {
     override func setupLayout() {
         super.setupLayout()
         
-        self.addSubview(frameCategoryCollectionView)
-        self.addSubview(frameImageCollectionView)
+        self.addSubview(monthCollectionView)
     }
     
     override func setupConstraints() {
         super.setupConstraints()
         
-        frameCategoryCollectionView.snp.makeConstraints {
-            $0.top.equalToSuperview()
-            $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(99)
-        }
-        
-        frameImageCollectionView.snp.makeConstraints {
-            $0.top.equalTo(frameCategoryCollectionView.snp.bottom).offset(40)
-            $0.leading.trailing.bottom.equalToSuperview()
-            $0.height.equalTo((5 * 116) + (4 * 6))
+        monthCollectionView.snp.makeConstraints {
+            $0.top.leading.trailing.bottom.equalToSuperview()
+            $0.height.equalTo(((116 * 4) + (6 * 3) + 29) * 2)
         }
     }
     
     func setDelegateDataSource() {
-        frameCategoryCollectionView.delegate = self
-        frameCategoryCollectionView.dataSource = self
-        
-        frameImageCollectionView.delegate = self
-        frameImageCollectionView.dataSource = self
+        monthCollectionView.delegate = self
+        monthCollectionView.dataSource = self
     }
 }
 
 extension SortByMonthView : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if collectionView == frameCategoryCollectionView {
-            return frameCategoryImages.count + 1
-        }
-        return 15
+        return 2
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if collectionView == frameCategoryCollectionView {
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "frameCategoryCell", for: indexPath) as? FrameCategoryCell else { return UICollectionViewCell() }
-            if indexPath.row == 0 {
-                collectionView.selectItem(at: indexPath, animated: false, scrollPosition: .init())
-            } else {
-                cell.frameImage.image = UIImage(named: frameCategoryImages[indexPath.row - 1])
-            }
-            cell.isSelected = indexPath.row == 0
-            return cell
-        }
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "frameImageCell", for: indexPath) as? FrameImageCell else { return UICollectionViewCell() }
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "monthCell", for: indexPath) as? MonthCell else { return UICollectionViewCell() }
         return cell
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        if collectionView == frameCategoryCollectionView {
-            return CGSize(width: collectionView.bounds.height , height: collectionView.bounds.height)
-        }
-        return CGSize(width: 116 , height: 116)
+        return CGSize(width: collectionView.bounds.width - 30 , height: (116 * 4) + (6 * 3) + 29)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
@@ -112,9 +72,7 @@ extension SortByMonthView : UICollectionViewDelegate, UICollectionViewDataSource
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        if collectionView == frameCategoryCollectionView {
-            return 8
-        }
-        return 6
+        return 34
     }
 }
+

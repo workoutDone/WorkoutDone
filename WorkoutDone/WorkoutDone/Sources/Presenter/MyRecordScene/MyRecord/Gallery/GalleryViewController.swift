@@ -33,33 +33,27 @@ class GalleryViewController : BaseViewController {
     
     let sortByMonthView = SortByMonthView()
     
-//    let view1 = UIView()
-//    let view2 = UIView()
-//    let view3 = UIButton()
+    let sortByFrameView = SortByFrameView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        sortButton.addTarget(self, action: #selector(sortButtonTapped), for: .touchUpInside)
     }
     
     override func setupLayout() {
         self.view.addSubview(scrollView)
         scrollView.addSubview(contentView)
         
-    
-        //_ = [view1, view2, view3].map { self.contentView.addSubview($0)}
-        
         contentView.addSubview(sortButton)
         sortButton.addSubview(sortLabel)
         
         contentView.addSubview(sortByMonthView)
+        //contentView.addSubview(sortByFrameView)
     }
     
     override func setComponents() {
-//        view1.backgroundColor = .red
-//        view2.backgroundColor = .black
-//        view3.backgroundColor = .blue
+        sortButton.addTarget(self, action: #selector(sortButtonTapped), for: .touchUpInside)
+        sortByFrameView.isHidden = true
     }
     
     override func setupConstraints() {
@@ -86,28 +80,14 @@ class GalleryViewController : BaseViewController {
         
         sortByMonthView.snp.makeConstraints {
             $0.top.equalTo(sortButton.snp.bottom).offset(30)
-            $0.leading.trailing.bottom.equalToSuperview()
+            $0.leading.trailing.equalToSuperview()
+            $0.bottom.equalToSuperview().offset(-30)
         }
-
-//        view1.snp.makeConstraints { (make) in
-//
-//            make.leading.top.trailing.equalToSuperview()
-//            make.height.equalTo(300)
-//        }
-//
-//        view2.snp.makeConstraints { (make) in
-//
-//            make.top.equalTo(view1.snp.bottom)
-//            make.leading.trailing.equalToSuperview()
-//            make.height.equalTo(300)
-//        }
-//
-//        view3.snp.makeConstraints { (make) in
-//
-//            make.top.equalTo(view2.snp.bottom)
-//            make.leading.trailing.equalToSuperview()
-//            make.height.equalTo(300)
-//            make.bottom.equalToSuperview() // 이것이 중요함
+        
+//        sortByFrameView.snp.makeConstraints {
+//            $0.top.equalTo(sortButton.snp.bottom).offset(30)
+//            $0.leading.trailing.equalToSuperview()
+//            $0.bottom.equalToSuperview().offset(-30)
 //        }
     }
     
@@ -123,6 +103,7 @@ class GalleryViewController : BaseViewController {
                 $0.width.equalTo(80)
             }
         }
+        
         sortByFrame = !sortByFrame
     }
 }

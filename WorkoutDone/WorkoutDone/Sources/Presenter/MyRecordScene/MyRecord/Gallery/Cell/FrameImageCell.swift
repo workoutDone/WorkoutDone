@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import SnapKit
+import Then
 
 class FrameImageCell : UICollectionViewCell {
     let image = UIImageView().then {

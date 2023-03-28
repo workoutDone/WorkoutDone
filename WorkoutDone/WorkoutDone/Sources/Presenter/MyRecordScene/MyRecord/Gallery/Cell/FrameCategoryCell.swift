@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import SnapKit
+import Then
 
 class FrameCategoryCell : UICollectionViewCell {
     let frameImage = UIImageView().then {
