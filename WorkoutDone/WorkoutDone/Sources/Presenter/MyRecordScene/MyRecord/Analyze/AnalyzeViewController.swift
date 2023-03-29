@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SwiftUI
 import SnapKit
 import Then
 
@@ -22,7 +23,7 @@ class AnalyzeViewController : BaseViewController {
         $0.textColor = .color121212
         $0.font = .pretendard(.bold, size: 20)
     }
-    private let weightGraphView = UIView()
+    private var weightGraphView = UIView()
     
     private let skeletalMuscleMassLabel = UILabel().then {
         $0.text = "골격근량"
@@ -30,7 +31,7 @@ class AnalyzeViewController : BaseViewController {
         $0.font = .pretendard(.bold, size: 20)
     }
     
-    private let skeletalMuscleMassGraphView = UIView()
+    private var skeletalMuscleMassGraphView = UIView()
     
     private let fatPercentageLabel = UILabel().then {
         $0.text = "체지방량"
@@ -38,20 +39,22 @@ class AnalyzeViewController : BaseViewController {
         $0.font = .pretendard(.bold, size: 20)
     }
     
-    private let fatPercentageGraphView = UIView()
+    
+    private var fatPercentageGraphView = UIView()
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        weightGraphView.backgroundColor = .red
-        skeletalMuscleMassGraphView.backgroundColor = .systemPink
-        fatPercentageGraphView.backgroundColor = .blue
+
     }
     
     override func setupLayout() {
         super.setupLayout()
         view.addSubview(contentScrollView)
         contentScrollView.addSubview(contentView)
+        weightGraphView = UIHostingController(rootView: WeightGraphView()).view
+        skeletalMuscleMassGraphView = UIHostingController(rootView: SkeletalMuscleMassGraphView()).view
+        fatPercentageGraphView = UIHostingController(rootView: FatPercentageGraphView()).view
         [weightLabel, weightGraphView, skeletalMuscleMassLabel, skeletalMuscleMassGraphView, fatPercentageLabel, fatPercentageGraphView].forEach {
             contentView.addSubview($0)
         }
@@ -80,8 +83,8 @@ class AnalyzeViewController : BaseViewController {
         }
         weightGraphView.snp.makeConstraints {
             $0.top.equalTo(weightLabel.snp.bottom).offset(10)
-            $0.centerX.equalToSuperview()
-            $0.leading.equalTo(15)
+            $0.leading.equalToSuperview().offset(15)
+            $0.trailing.equalToSuperview().offset(-15)
             $0.height.equalTo(220)
         }
         skeletalMuscleMassLabel.snp.makeConstraints {
@@ -100,8 +103,8 @@ class AnalyzeViewController : BaseViewController {
         }
         fatPercentageGraphView.snp.makeConstraints {
             $0.top.equalTo(fatPercentageLabel.snp.bottom).offset(10)
-            $0.centerX.equalToSuperview()
-            $0.leading.equalTo(15)
+            $0.leading.equalToSuperview().offset(15)
+            $0.trailing.equalToSuperview().offset(-15)
             $0.height.equalTo(220)
             $0.bottom.equalToSuperview().offset(-30)
         }
