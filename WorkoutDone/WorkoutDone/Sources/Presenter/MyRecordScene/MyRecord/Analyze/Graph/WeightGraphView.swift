@@ -11,7 +11,7 @@ import Charts
 extension String {
     func toDate() -> Date? { //"yyyy-MM-dd HH:mm:ss"
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy.MM.dd"
+        dateFormatter.dateFormat = "yy.MM.dd"
         if let date = dateFormatter.date(from: self) {
             return date
         } else {
@@ -22,7 +22,7 @@ extension String {
 extension Date {
     func toString() -> String {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy.MM.dd"
+        dateFormatter.dateFormat = "yy.MM.dd"
         return dateFormatter.string(from: self)
     }
 }
@@ -50,7 +50,7 @@ var list = [
     TestModel(date: "2023.02.08".toDate()!, weight: 75),
     TestModel(date: "2023.02.09".toDate()!, weight: 75),
     TestModel(date: "2023.02.10".toDate()!, weight: 75),
-    TestModel(date: "2023.02.11".toDate()!, weight: 0),
+    TestModel(date: "2023.02.11".toDate()!, weight: 100),
     
 ]
 
@@ -83,9 +83,6 @@ struct WeightGraphView: View {
         let max = testData.max { item1, item2 in
             return item2.weight > item1.weight
         }?.weight ?? 0
-//        let max = bodyInfoGraphViewModel.bodyInfo.max { item1, item2 in
-//            return item2.weight ?? 0 > item1.weight ?? 0
-//        }?.weight ?? 0
         ScrollView(.horizontal) {
             Chart(testData, id: \.date) { data in
                 LineMark(
@@ -112,39 +109,21 @@ struct WeightGraphView: View {
                 }
                 if let currentActiveItem, currentActiveItem.date == data.date {
                     RuleMark(x: .value("Month", data.date.toString()))
-                        .lineStyle(.init(lineWidth: 0, miterLimit: 2, dash: [2], dashPhase: 5))
+                        .foregroundStyle(Color(UIColor.color7442FF))
+                        .lineStyle(.init(lineWidth: 1, lineCap: .round, miterLimit: 2, dash: [2], dashPhase: 5))
                         .annotation(position: .top) {
                             ZStack {
                                 Image("speechBubble")
                                     .resizable()
-                                    .frame(width: 41, height: 34)
+                                    .frame(width: 50, height: 42)
+                                    .offset(y: 6)
                                 Text("\(Int(currentActiveItem.weight))kg")
                                     .foregroundColor(Color(UIColor.color7442FF))
                                     .font(Font(UIFont.pretendard(.semiBold, size: 14)))
                             }
-                            .offset(x: 0, y: 50)
+                            .offset(x: 0, y: max - data.weight + 40)
                         }
                 }
-//                if let currentActiveItem, currentActiveItem.date == data.date {
-//                    RuleMark(x: .value("Month", formatDate(dateFormatter.date(from: data.date) ?? Date())))
-//                        .lineStyle(.init(lineWidth: 1, miterLimit: 2, dash: [2], dashPhase: 5))
-//                        .annotation {
-//                            //FIX
-//                            VStack(alignment: .leading, spacing: 6) {
-//                                Text("몸무게")
-//                                    .font(.caption)
-//                                    .foregroundColor(.gray)
-//                                Text("\(currentActiveItem.weight )")
-//                                    .font(.title3.bold())
-//                            }
-//                            .padding(.horizontal, 10)
-//                            .padding(.vertical, 4)
-//                            .background {
-//                                RoundedRectangle(cornerRadius: 6, style: .continuous)
-//                                    .fill(.white.shadow(.drop(radius: 2)))
-//                            }
-//                        }
-//                }
             }
             
 //            .chartXAxis {
@@ -173,31 +152,8 @@ struct WeightGraphView: View {
                         }
                 }
             })
-//            .chartOverlay(content: { proxy in
-//                GeometryReader { innerProxy in
-//                    Rectangle()
-//                        .fill(.clear).contentShape(Rectangle())
-//                        .gesture(
-//                            DragGesture()
-//                                .onChanged({ value in
-//                                    let location = value.location
-//                                    if let weight : Double = proxy.value(atY: location.y) {
-//                                        if let currentItem = testData.first(where: { item in
-//                                            item.weight == weight
-//                                        }) {
-//                                            self.currentActiveItem = currentItem
-//                                            print(currentActiveItem?.weight, "ss")
-//                                        }
-//                                    }
-//                                }).onEnded({ value in
-//                                    self.currentActiveItem = nil
-//                                })
-//                        )
-//                }
-//            })
             .padding()
             .frame(width: ViewConstants.dataPointWidth * CGFloat(testData.count))
-//            .frame(height: 220)
         }
         .background {
             RoundedRectangle(cornerRadius: 15, style: .continuous)
