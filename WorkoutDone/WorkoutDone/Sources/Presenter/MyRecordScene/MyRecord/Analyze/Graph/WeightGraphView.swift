@@ -7,32 +7,64 @@
 
 import SwiftUI
 import Charts
+import Foundation
+
+//let formatter = DateFormatter()
+//formatter.dateFormat = "yyyy-MM-dd"
+//
+//// Create a few example dates
+//let date1 = formatter.date(from: "2023-03-27")!
+//let date2 = formatter.date(from: "2023-03-28")!
+//let date3 = formatter.date(from: "2023-03-29")!
+//
+//// Print the dates to the console
+//print(date1) // Output: 2023-03-27 00:00:00 +0000
+//print(date2) // Output: 2023-03-28 00:00:00 +0000
+//print(date3) // Output: 2023-03-29 00:00:00 +0000
+
+extension String {
+    func toDate() -> Date? { //"yyyy-MM-dd HH:mm:ss"
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy.MM.dd"
+        if let date = dateFormatter.date(from: self) {
+            return date
+        } else {
+            return nil
+        }
+    }
+}
+extension Date {
+    func toString() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy.MM.dd"
+        return dateFormatter.string(from: self)
+    }
+}
 
 struct TestModel {
-    let date : String
+    var date : Date
     let weight : Double
 }
 var list = [
-    TestModel(date: "2023.01.01", weight: 0),
-    TestModel(date: "2023.01.02", weight: 73),
-    TestModel(date: "2023.01.03", weight: 74),
-    TestModel(date: "2023.01.05", weight: 71),
-    TestModel(date: "2023.01.06", weight: 60),
-    TestModel(date: "2023.01.07", weight: 80),
-    TestModel(date: "2023.01.07", weight: 80),
-    TestModel(date: "2023.01.14", weight: 80),
-    TestModel(date: "2023.01.15", weight: 50),
-    TestModel(date: "2023.01.29", weight: 60),
-    TestModel(date: "2023.02.01", weight: 70),
-    TestModel(date: "2023.02.02", weight: 75),
-    TestModel(date: "2023.02.03", weight: 75),
-    TestModel(date: "2023.02.05", weight: 75),
-    TestModel(date: "2023.02.06", weight: 75),
-    TestModel(date: "2023.02.07", weight: 75),
-    TestModel(date: "2023.02.08", weight: 75),
-    TestModel(date: "2023.02.09", weight: 75),
-    TestModel(date: "2023.02.10", weight: 75),
-    TestModel(date: "2023.02.11", weight: 0),
+    TestModel(date: "2023.01.01".toDate()!, weight: 0),
+    TestModel(date: "2023.01.02".toDate()!, weight: 73),
+    TestModel(date: "2023.01.03".toDate()!, weight: 74),
+    TestModel(date: "2023.01.05".toDate()!, weight: 71),
+    TestModel(date: "2023.01.06".toDate()!, weight: 60),
+    TestModel(date: "2023.01.07".toDate()!, weight: 80),
+    TestModel(date: "2023.01.14".toDate()!, weight: 80),
+    TestModel(date: "2023.01.15".toDate()!, weight: 50),
+    TestModel(date: "2023.01.29".toDate()!, weight: 60),
+    TestModel(date: "2023.02.01".toDate()!, weight: 70),
+    TestModel(date: "2023.02.02".toDate()!, weight: 75),
+    TestModel(date: "2023.02.03".toDate()!, weight: 75),
+    TestModel(date: "2023.02.05".toDate()!, weight: 75),
+    TestModel(date: "2023.02.06".toDate()!, weight: 75),
+    TestModel(date: "2023.02.07".toDate()!, weight: 75),
+    TestModel(date: "2023.02.08".toDate()!, weight: 75),
+    TestModel(date: "2023.02.09".toDate()!, weight: 75),
+    TestModel(date: "2023.02.10".toDate()!, weight: 75),
+    TestModel(date: "2023.02.11".toDate()!, weight: 0),
     
 ]
 
@@ -40,14 +72,15 @@ struct WeightGraphView: View {
     ///DateToString
     func formatDate(_ date : Date) -> String {
         let cal = Calendar.current
-        let dateComponents = cal.dateComponents([.day, .month], from: date)
+        let dateComponents = cal.dateComponents([.day, .month, .year], from: date)
         guard let day = dateComponents.day,
-              let month = dateComponents.month else { return "-" }
-        return "\(month)/\(day)"
+              let month = dateComponents.month,
+              let year = dateComponents.year else { return "-" }
+        return "\(year).\(month).\(day)"
     }
     var dateFormatter: DateFormatter = {
         let df = DateFormatter()
-        df.dateFormat = "yy/MM/dd"
+        df.dateFormat = "yyyy.MM.dd"
         return df
     }()
     @StateObject var weightGraphViewModel = WeightGraphViewModel()
@@ -70,13 +103,13 @@ struct WeightGraphView: View {
         ScrollView(.horizontal) {
             Chart(testData, id: \.date) { data in
                 LineMark(
-                    x: .value("Month", formatDate(dateFormatter.date(from: data.date) ?? Date())),
+                    x: .value("Month", data.date.toString()),
                     y: .value("Weight", animate ? data.weight : 0)
                 )
                 .interpolationMethod(.cardinal)
                 .foregroundStyle(Color(UIColor.color7442FF))
                 PointMark(
-                    x: .value("Month", formatDate(dateFormatter.date(from: data.date) ?? Date())),
+                    x: .value("Month", data.date.toString()),
                     y: .value("Weight", animate ? data.weight : 0)
                 )
                 ///custom point
@@ -90,6 +123,21 @@ struct WeightGraphView: View {
                             .foregroundColor(Color(UIColor.colorFFFFFF))
                     }
                     .shadow(color: Color(UIColor.color7442FF), radius: 2)
+                }
+                if let currentActiveItem, currentActiveItem.date == data.date {
+                    RuleMark(x: .value("Month", data.date.toString()))
+                        .lineStyle(.init(lineWidth: 0, miterLimit: 2, dash: [2], dashPhase: 5))
+                        .annotation(position: .top) {
+                            ZStack {
+                                Image("speechBubble")
+                                    .resizable()
+                                    .frame(width: 41, height: 34)
+                                Text("\(Int(currentActiveItem.weight))kg")
+                                    .foregroundColor(Color(UIColor.color7442FF))
+                                    .font(Font(UIFont.pretendard(.semiBold, size: 14)))
+                            }
+                            .offset(x: 0, y: 50)
+                        }
                 }
 //                if let currentActiveItem, currentActiveItem.date == data.date {
 //                    RuleMark(x: .value("Month", formatDate(dateFormatter.date(from: data.date) ?? Date())))
@@ -120,6 +168,25 @@ struct WeightGraphView: View {
                 AxisMarks(position: .trailing)
             }
             .chartYScale(domain: 0...(max + 50))
+            .chartOverlay(content: { proxy in
+                GeometryReader { innerProxy in
+                    Rectangle()
+                        .fill(.clear).contentShape(Rectangle())
+                        .onTapGesture { value in
+                            if let date : String = proxy.value(atX: value.x) {
+                                print(date)
+                                if let currentItem = testData.first(where: { item in
+                                    item.date.toString() == date
+                                }) {
+                                    print(currentItem.weight, "sssdd")
+                                    self.currentActiveItem = currentItem
+                                    self.plotWidth = proxy.plotAreaSize.width
+                                }
+
+                            }
+                        }
+                }
+            })
 //            .chartOverlay(content: { proxy in
 //                GeometryReader { innerProxy in
 //                    Rectangle()

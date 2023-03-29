@@ -36,13 +36,13 @@ struct FatPercentageGraphView: View {
             }?.weight ?? 0
             Chart(testData, id: \.date) { data in
                 LineMark(
-                    x: .value("Month", formatDate(dateFormatter.date(from: data.date) ?? Date())),
+                    x: .value("Month", formatDate(data.date)),
                     y: .value("Weight", animate ? data.weight : 0)
                 )
                 .interpolationMethod(.cardinal) //둥근 선
                 .foregroundStyle(.red)
                 PointMark(
-                    x: .value("Month", formatDate(dateFormatter.date(from: data.date) ?? Date())),
+                    x: .value("Month", formatDate(data.date)),
                     y: .value("Weight", animate ? data.weight : 0)
                 ).foregroundStyle(.black)
                     .symbolSize(5)
@@ -52,7 +52,7 @@ struct FatPercentageGraphView: View {
     //            }
     //            RuleMark(x: .value("Month", currentActiveItem?.createdDate ?? ""))
                 if let currentActiveItem, currentActiveItem.date == data.date {
-                    RuleMark(x: .value("Month", formatDate(dateFormatter.date(from: data.date) ?? Date())))
+                    RuleMark(x: .value("Month", formatDate(data.date)))
                         .lineStyle(.init(lineWidth: 2, miterLimit: 2, dash: [2], dashPhase: 5))
                         .annotation(position: .top) {
                             VStack(alignment: .leading, spacing: 6) {
@@ -89,6 +89,7 @@ struct FatPercentageGraphView: View {
                                     //Swift Charts Gives The Direct Ability to do that
                                     // We're going to extract the Date in A-Axis Then with the help of That Date Value We're extracting the current Items
                                     if let weight: Double = proxy.value(atY: location.y) {
+                                        print(weight)
                                         if let currentItem = testData.first(where: { item in
                                             item.weight == weight
                                         }) {

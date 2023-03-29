@@ -175,13 +175,13 @@ struct YellowGroupBoxStyle: GroupBoxStyle {
 
 
 extension Date {
-    func toString() -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = .long
-        dateFormatter.timeStyle = .none
-        dateFormatter.locale = Locale(identifier: "en_US")
-        return dateFormatter.string(from: self)
-    }
+//    func toString() -> String {
+//        let dateFormatter = DateFormatter()
+//        dateFormatter.dateStyle = .long
+//        dateFormatter.timeStyle = .none
+//        dateFormatter.locale = Locale(identifier: "en_US")
+//        return dateFormatter.string(from: self)
+//    }
     
     func isFirstOfMonth() -> Bool {
         let components = Calendar.current.dateComponents([.day], from: self)
