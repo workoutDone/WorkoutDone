@@ -7,20 +7,6 @@
 
 import SwiftUI
 import Charts
-import Foundation
-
-//let formatter = DateFormatter()
-//formatter.dateFormat = "yyyy-MM-dd"
-//
-//// Create a few example dates
-//let date1 = formatter.date(from: "2023-03-27")!
-//let date2 = formatter.date(from: "2023-03-28")!
-//let date3 = formatter.date(from: "2023-03-29")!
-//
-//// Print the dates to the console
-//print(date1) // Output: 2023-03-27 00:00:00 +0000
-//print(date2) // Output: 2023-03-28 00:00:00 +0000
-//print(date3) // Output: 2023-03-29 00:00:00 +0000
 
 extension String {
     func toDate() -> Date? { //"yyyy-MM-dd HH:mm:ss"
