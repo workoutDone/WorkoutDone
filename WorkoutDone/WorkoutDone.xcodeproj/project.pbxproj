@@ -56,6 +56,12 @@
 		92DCF47A29D0818A00F90002 /* WorkOutDoneData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DCF47929D0818A00F90002 /* WorkOutDoneData.swift */; };
 		92DCF47E29D0830B00F90002 /* FrameImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DCF47D29D0830B00F90002 /* FrameImage.swift */; };
 		92DCF48029D0846B00F90002 /* BodyInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DCF47F29D0846B00F90002 /* BodyInfo.swift */; };
+		92DCF4D229D1B64100F90002 /* FrameCategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DCF4D129D1B64100F90002 /* FrameCategoryCell.swift */; };
+		92DCF4D429D1B66F00F90002 /* FrameImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DCF4D329D1B66F00F90002 /* FrameImageCell.swift */; };
+		92DCF4D829D1E09B00F90002 /* SortByFrameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DCF4D729D1E09B00F90002 /* SortByFrameView.swift */; };
+		92DCF4DA29D2021A00F90002 /* SortByMonthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DCF4D929D2021A00F90002 /* SortByMonthView.swift */; };
+		92DCF4DC29D2024A00F90002 /* MonthCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DCF4DB29D2024A00F90002 /* MonthCell.swift */; };
+		92DCF4DE29D203A200F90002 /* MonthImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DCF4DD29D203A200F90002 /* MonthImageCell.swift */; };
 		A57061CF29CD6A5E0083ECDD /* GalleryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57061CE29CD6A5E0083ECDD /* GalleryViewController.swift */; };
 		A57061D129CD6A840083ECDD /* AnalyzeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57061D029CD6A840083ECDD /* AnalyzeViewController.swift */; };
 		A57061D429D045690083ECDD /* WeightGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57061D329D045690083ECDD /* WeightGraphView.swift */; };
@@ -136,6 +142,12 @@
 		92DCF47929D0818A00F90002 /* WorkOutDoneData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkOutDoneData.swift; sourceTree = "<group>"; };
 		92DCF47D29D0830B00F90002 /* FrameImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameImage.swift; sourceTree = "<group>"; };
 		92DCF47F29D0846B00F90002 /* BodyInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyInfo.swift; sourceTree = "<group>"; };
+		92DCF4D129D1B64100F90002 /* FrameCategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameCategoryCell.swift; sourceTree = "<group>"; };
+		92DCF4D329D1B66F00F90002 /* FrameImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameImageCell.swift; sourceTree = "<group>"; };
+		92DCF4D729D1E09B00F90002 /* SortByFrameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortByFrameView.swift; sourceTree = "<group>"; };
+		92DCF4D929D2021A00F90002 /* SortByMonthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortByMonthView.swift; sourceTree = "<group>"; };
+		92DCF4DB29D2024A00F90002 /* MonthCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthCell.swift; sourceTree = "<group>"; };
+		92DCF4DD29D203A200F90002 /* MonthImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthImageCell.swift; sourceTree = "<group>"; };
 		A57061CE29CD6A5E0083ECDD /* GalleryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryViewController.swift; sourceTree = "<group>"; };
 		A57061D029CD6A840083ECDD /* AnalyzeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyzeViewController.swift; sourceTree = "<group>"; };
 		A57061D329D045690083ECDD /* WeightGraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeightGraphView.swift; sourceTree = "<group>"; };
@@ -420,10 +432,24 @@
 			path = HomeButton;
 			sourceTree = "<group>";
 		};
+		92DCF4EF29D2CD2E00F90002 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				92DCF4D129D1B64100F90002 /* FrameCategoryCell.swift */,
+				92DCF4D329D1B66F00F90002 /* FrameImageCell.swift */,
+				92DCF4DB29D2024A00F90002 /* MonthCell.swift */,
+				92DCF4DD29D203A200F90002 /* MonthImageCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
 		A57061CC29CD6A290083ECDD /* Gallery */ = {
 			isa = PBXGroup;
 			children = (
 				A57061CE29CD6A5E0083ECDD /* GalleryViewController.swift */,
+				92DCF4D929D2021A00F90002 /* SortByMonthView.swift */,
+				92DCF4D729D1E09B00F90002 /* SortByFrameView.swift */,
+				92DCF4EF29D2CD2E00F90002 /* Cell */,
 			);
 			path = Gallery;
 			sourceTree = "<group>";
@@ -678,18 +704,23 @@
 				9200604729B1ACF400586063 /* WorkoutResultView.swift in Sources */,
 				9200604329B1ACBF00586063 /* RecordView.swift in Sources */,
 				92DCF48029D0846B00F90002 /* BodyInfo.swift in Sources */,
+				92DCF4DC29D2024A00F90002 /* MonthCell.swift in Sources */,
 				A57061D129CD6A840083ECDD /* AnalyzeViewController.swift in Sources */,
+				92DCF4DE29D203A200F90002 /* MonthImageCell.swift in Sources */,
 				A59ACB7829B46DEB0084C73E /* TabBarController.swift in Sources */,
 				A576694029BF1A9900673DFE /* UITextField.swift in Sources */,
+				92DCF4DA29D2021A00F90002 /* SortByMonthView.swift in Sources */,
 				9200602729B1A7F400586063 /* UIColor.swift in Sources */,
 				9200602D29B1A91600586063 /* OnboardingCell.swift in Sources */,
 				9200604B29B1ADA500586063 /* BaseUIView.swift in Sources */,
+				92DCF4D229D1B64100F90002 /* FrameCategoryCell.swift in Sources */,
 				A57061D429D045690083ECDD /* WeightGraphView.swift in Sources */,
 				924E56B229CCB9EA00AA73A2 /* GridToggleButton.swift in Sources */,
 				9264A58229B8735C0010856F /* UserDefaultsManager.swift in Sources */,
 				A59ACBC029B6E2310084C73E /* DeviceManager.swift in Sources */,
 				A59EF6F129C4C909005DE9B5 /* PreviewView.swift in Sources */,
 				A59EF6E529C0CE22005DE9B5 /* HomeButtonLessCameraViewController.swift in Sources */,
+				92DCF4D829D1E09B00F90002 /* SortByFrameView.swift in Sources */,
 				9200604529B1ACD900586063 /* WorkoutView.swift in Sources */,
 				A59EF6E229C0B69C005DE9B5 /* WorkoutViewController.swift in Sources */,
 				A59A3DDE29C9F76200126ECE /* RegisterMyBodyInfoViewModel.swift in Sources */,
@@ -708,6 +739,7 @@
 				9200601D29B1A74300586063 /* OnboardingViewController.swift in Sources */,
 				9264A5EC29C4B0610010856F /* HomeButtonCameraViewController.swift in Sources */,
 				920060E029B63C0D00586063 /* TestViewController.swift in Sources */,
+				92DCF4D429D1B66F00F90002 /* FrameImageCell.swift in Sources */,
 				9200604929B1AD7200586063 /* HomeViewController.swift in Sources */,
 				92DCF47A29D0818A00F90002 /* WorkOutDoneData.swift in Sources */,
 				92DCF3EC29CDB38300F90002 /* BackButton.swift in Sources */,
