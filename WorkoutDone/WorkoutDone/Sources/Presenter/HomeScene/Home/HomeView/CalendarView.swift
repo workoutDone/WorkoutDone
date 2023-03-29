@@ -89,7 +89,6 @@ class CalendarView : BaseUIView {
         setDelegateDataSource()
         setAction()
         setCurrentDate()
-        
     }
     
     required init?(coder: NSCoder) {
@@ -163,7 +162,7 @@ class CalendarView : BaseUIView {
         
         stackView.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.top.equalToSuperview().offset(13)
+            $0.top.equalToSuperview().offset(6)
         }
         
         collectionView.snp.makeConstraints {
@@ -184,7 +183,7 @@ class CalendarView : BaseUIView {
             $0.centerX.equalToSuperview()
             $0.bottom.equalToSuperview()
             $0.width.equalTo(35)
-            $0.height.equalTo(24)
+            $0.height.equalTo(22)
         }
     }
     
@@ -329,9 +328,18 @@ class CalendarView : BaseUIView {
         
         days.removeAll()
         
-//        for day in startDayOfWeek...endDayOfWeek {
-//            days.append(String(day))
-//        }
+        if startDayOfWeek > endDayOfWeek {
+            for day in startDayOfWeek..<startDayOfWeek + (7 - endDayOfWeek) {
+                days.append(String(day))
+            }
+            for day in 1...endDayOfWeek {
+                days.append(String(day))
+            }
+        } else {
+            for day in startDayOfWeek...endDayOfWeek {
+                days.append(String(day))
+            }
+        }
     }
 }
 
@@ -400,15 +408,16 @@ extension CalendarView: UICollectionViewDelegate, UICollectionViewDataSource, UI
                     cell.workOutDoneImage.isHidden = false
                 }
             }
+            if components.month ?? 1 == calendar.component(.month, from: Date()) && days[indexPath.row] == String(calendar.component(.day, from: Date())) {
+                cell.todayImage.isHidden = false
+                cell.dayLabel.font = .pretendard(.bold, size: 14)
+            }
             cell.dayLabel.textColor = .colorF3F3F3
         } else {
             cell.dayLabel.textColor = .colorF3F3F303
         }
         
-        if components.month ?? 1 == calendar.component(.month, from: Date()) && days[indexPath.row] == String(calendar.component(.day, from: Date())) {
-            cell.todayImage.isHidden = false
-            cell.dayLabel.font = .pretendard(.bold, size: 14)
-        }
+      
         return cell
     }
     
