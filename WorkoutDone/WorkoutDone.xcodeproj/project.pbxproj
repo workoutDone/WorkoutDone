@@ -80,6 +80,8 @@
 		A59EF6E229C0B69C005DE9B5 /* WorkoutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59EF6E129C0B69C005DE9B5 /* WorkoutViewController.swift */; };
 		A59EF6E529C0CE22005DE9B5 /* HomeButtonLessCameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59EF6E429C0CE22005DE9B5 /* HomeButtonLessCameraViewController.swift */; };
 		A59EF6F129C4C909005DE9B5 /* PreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59EF6F029C4C909005DE9B5 /* PreviewView.swift */; };
+		A5A10CA929D59ED600E45FC8 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5A10CA829D59ED600E45FC8 /* String.swift */; };
+		A5A10CAB29D59EF300E45FC8 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5A10CAA29D59EF300E45FC8 /* Date.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -169,6 +171,8 @@
 		A59EF6E129C0B69C005DE9B5 /* WorkoutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutViewController.swift; sourceTree = "<group>"; };
 		A59EF6E429C0CE22005DE9B5 /* HomeButtonLessCameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeButtonLessCameraViewController.swift; sourceTree = "<group>"; };
 		A59EF6F029C4C909005DE9B5 /* PreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewView.swift; sourceTree = "<group>"; };
+		A5A10CA829D59ED600E45FC8 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
+		A5A10CAA29D59EF300E45FC8 /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -367,6 +371,8 @@
 				9200602629B1A7F400586063 /* UIColor.swift */,
 				9200602929B1A81100586063 /* UIFont.swift */,
 				A576693F29BF1A9900673DFE /* UITextField.swift */,
+				A5A10CA829D59ED600E45FC8 /* String.swift */,
+				A5A10CAA29D59EF300E45FC8 /* Date.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -721,11 +727,13 @@
 				92DCF4DA29D2021A00F90002 /* SortByMonthView.swift in Sources */,
 				9200602729B1A7F400586063 /* UIColor.swift in Sources */,
 				9200602D29B1A91600586063 /* OnboardingCell.swift in Sources */,
+				A5A10CA929D59ED600E45FC8 /* String.swift in Sources */,
 				9200604B29B1ADA500586063 /* BaseUIView.swift in Sources */,
 				92DCF4D229D1B64100F90002 /* FrameCategoryCell.swift in Sources */,
 				A57061D429D045690083ECDD /* WeightGraphView.swift in Sources */,
 				924E56B229CCB9EA00AA73A2 /* GridToggleButton.swift in Sources */,
 				9264A58229B8735C0010856F /* UserDefaultsManager.swift in Sources */,
+				A5A10CAB29D59EF300E45FC8 /* Date.swift in Sources */,
 				A59ACBC029B6E2310084C73E /* DeviceManager.swift in Sources */,
 				A59EF6F129C4C909005DE9B5 /* PreviewView.swift in Sources */,
 				A59EF6E529C0CE22005DE9B5 /* HomeButtonLessCameraViewController.swift in Sources */,

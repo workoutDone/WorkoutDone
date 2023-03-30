@@ -5,54 +5,36 @@
 //  Created by 류창휘 on 2023/03/26.
 //
 
-//MARK: - TODO 갯수에 따른 스크롤 여부 에러 구현
+//MARK: - TODO 말풍선 위치 이슈
 
 import SwiftUI
 import Charts
 
-extension String {
-    func toDate() -> Date? { //"yyyy-MM-dd HH:mm:ss"
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yy.MM.dd"
-        if let date = dateFormatter.date(from: self) {
-            return date
-        } else {
-            return nil
-        }
-    }
-}
-extension Date {
-    func toString() -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yy.MM.dd"
-        return dateFormatter.string(from: self)
-    }
-}
 
 struct TestModel {
     var date : Date
     let weight : Double
 }
 var list = [
-    TestModel(date: "2023.01.01".toDate()!, weight: 1),
-    TestModel(date: "2023.01.02".toDate()!, weight: 73),
-//    TestModel(date: "2023.01.03".toDate()!, weight: 74),
-//    TestModel(date: "2023.01.05".toDate()!, weight: 71),
-//    TestModel(date: "2023.01.06".toDate()!, weight: 60),
-//    TestModel(date: "2023.01.07".toDate()!, weight: 80),
-//    TestModel(date: "2023.01.14".toDate()!, weight: 80),
-//    TestModel(date: "2023.01.15".toDate()!, weight: 50),
-//    TestModel(date: "2023.01.29".toDate()!, weight: 60),
-//    TestModel(date: "2023.02.01".toDate()!, weight: 70),
-//    TestModel(date: "2023.02.02".toDate()!, weight: 75),
-//    TestModel(date: "2023.02.03".toDate()!, weight: 75),
-//    TestModel(date: "2023.02.05".toDate()!, weight: 75),
-//    TestModel(date: "2023.02.06".toDate()!, weight: 75),
-//    TestModel(date: "2023.02.07".toDate()!, weight: 75),
-//    TestModel(date: "2023.02.08".toDate()!, weight: 75),
-//    TestModel(date: "2023.02.09".toDate()!, weight: 75),
-//    TestModel(date: "2023.02.10".toDate()!, weight: 75),
-//    TestModel(date: "2023.02.11".toDate()!, weight: 150),
+    TestModel(date: "2023.01.01".yyMMddToDate()!, weight: 1),
+    TestModel(date: "2023.01.02".yyMMddToDate()!, weight: 73),
+    TestModel(date: "2023.01.03".yyMMddToDate()!, weight: 74),
+    TestModel(date: "2023.01.05".yyMMddToDate()!, weight: 71),
+    TestModel(date: "2023.01.06".yyMMddToDate()!, weight: 60),
+    TestModel(date: "2023.01.07".yyMMddToDate()!, weight: 80),
+    TestModel(date: "2023.01.14".yyMMddToDate()!, weight: 80),
+    TestModel(date: "2023.01.15".yyMMddToDate()!, weight: 50),
+    TestModel(date: "2023.01.29".yyMMddToDate()!, weight: 60),
+    TestModel(date: "2023.02.01".yyMMddToDate()!, weight: 70),
+    TestModel(date: "2023.02.02".yyMMddToDate()!, weight: 75),
+    TestModel(date: "2023.02.03".yyMMddToDate()!, weight: 75),
+    TestModel(date: "2023.02.05".yyMMddToDate()!, weight: 75),
+    TestModel(date: "2023.02.06".yyMMddToDate()!, weight: 75),
+    TestModel(date: "2023.02.07".yyMMddToDate()!, weight: 75),
+    TestModel(date: "2023.02.08".yyMMddToDate()!, weight: 75),
+    TestModel(date: "2023.02.09".yyMMddToDate()!, weight: 75),
+    TestModel(date: "2023.02.10".yyMMddToDate()!, weight: 75),
+    TestModel(date: "2023.02.11".yyMMddToDate()!, weight: 150),
     
 ]
 
@@ -95,13 +77,13 @@ struct WeightGraphView: View {
             ScrollView(.horizontal) {
                 Chart(testData, id: \.date) { data in
                     LineMark(
-                        x: .value("Month", data.date.toString()),
+                        x: .value("Month", data.date.yyMMddToString()),
                         y: .value("Weight", animate ? data.weight : 0)
                     )
                     .interpolationMethod(.cardinal)
                     .foregroundStyle(Color(UIColor.color7442FF))
                     PointMark(
-                        x: .value("Month", data.date.toString()),
+                        x: .value("Month", data.date.yyMMddToString()),
                         y: .value("Weight", animate ? data.weight : 0)
                     )
                     ///커스텀 포인트 마크
@@ -117,7 +99,7 @@ struct WeightGraphView: View {
                         .shadow(color: Color(UIColor.color7442FF), radius: 2)
                     }
                     if let currentActiveItem, currentActiveItem.date == data.date {
-                        RuleMark(x: .value("Month", data.date.toString()))
+                        RuleMark(x: .value("Month", data.date.yyMMddToString()))
                             .foregroundStyle(Color(UIColor.color7442FF))
                             .lineStyle(.init(lineWidth: 1, lineCap: .round, miterLimit: 2, dash: [2], dashPhase: 5))
                             .annotation(position: .top) {
@@ -153,7 +135,7 @@ struct WeightGraphView: View {
                             .onTapGesture { value in
                                 if let date : String = proxy.value(atX: value.x) {
                                     if let currentItem = testData.first(where: { item in
-                                        item.date.toString() == date
+                                        item.date.yyMMddToString() == date
                                     }) {
                                         print(currentItem.weight, "sssdd")
                                         self.currentActiveItem = currentItem
