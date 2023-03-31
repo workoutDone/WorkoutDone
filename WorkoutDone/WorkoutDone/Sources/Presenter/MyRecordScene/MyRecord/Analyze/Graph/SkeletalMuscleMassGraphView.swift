@@ -8,190 +8,141 @@
 import SwiftUI
 import Charts
 
-//struct SkeletalMuscleMassGraphView: View {
-//    var body: some View {
-//        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-//    }
-//}
-//
-//struct SkeletalMuscleMassGraphView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        SkeletalMuscleMassGraphView()
-//    }
-//}
 
-struct WeightData {
-    private(set) var allWeights: [Weight]?
-    
-    static let weightInitial = 180
-    static let weightInterval = 2
-    static let weightMin = 175
-    static let weightMax = 200
-    
-    mutating func createWeightData(days: Int) {
-        // Generate sample weight date between 175 and 200 pounds (+ or - 0-3 pounds daily)
-        self.allWeights = []
-        var selectedWeight = WeightData.weightInitial
-        var add = true
-        for interval in 0...days {
-            switch selectedWeight {
-            case (WeightData.weightMax - WeightData.weightInterval + 1)..<Int.max:
-                add = false
-            case 0..<(WeightData.weightMin + WeightData.weightInterval):
-                add = true
-            default:
-                add = (Int.random(in: 0...4) == 3) ? !add : add
-            }
-            
-            selectedWeight = add ? selectedWeight + Int.random(in: 0...WeightData.weightInterval) : selectedWeight - Int.random(in: 0...WeightData.weightInterval)
-            let selectedDate = Calendar.current.date(byAdding: .day, value: (-1 * interval), to: Date())!
-            self.allWeights!.append(Weight(date: selectedDate, weight: selectedWeight))
-        }
-    }
+struct TestModel3 {
+    var date : Date
+    let skeletalMusleMass : Double
 }
 
+var list3 = [
+    TestModel3(date: "2023.01.01".yyMMddToDate()!, skeletalMusleMass: 30),
+    TestModel3(date: "2023.01.02".yyMMddToDate()!, skeletalMusleMass: 40),
+    TestModel3(date: "2023.01.03".yyMMddToDate()!, skeletalMusleMass: 50),
 
-struct Weight: Identifiable {
-    let id = UUID()
-    let day: Date
-    let pounds: Int
-    
-    init(date: Date, weight: Int) {
-        self.day = date
-        self.pounds = weight
-    }
-    
-    var something: String {
-        "XYZ"
-    }
-}
-
-class WeightViewModel: ObservableObject {
-    @Published private var weightModel = WeightData()
-
-    init() {
-        weightModel.createWeightData(days: 100)
-    }
-    
-    var allWeights: [Weight]? {
-        weightModel.allWeights
-    }
-    
-    func generateWeightData(numberOfDays: Int) {
-        weightModel.createWeightData(days: numberOfDays)
-    }
-}
-
+]
 
 struct SkeletalMuscleMassGraphView: View {
-    @ObservedObject private var weightVm = WeightViewModel()
-
+    
+    ///우측 정렬
+    @Namespace var trailingID
+    ///Test
+    @State var testData : [TestModel3] = list3
+    ///Gesture Property
+    @State private var currentActiveItem : TestModel3?
+    ///ViewAppear 시 애니메이션 사용 위한 변수
+    @State private var animate : Bool = false
+    @State private var plotWidth : CGFloat = 0
+    
+    
     var body: some View {
-        ZStack {
-//            Color(hue: 0.58, saturation: 0.17, brightness: 1.0)
-//                .edgesIgnoringSafeArea(.all)
-            
-            VStack() {
-                GroupBox ("Daily weight (pounds)") {
-                    if let weights = weightVm.allWeights {
-                        ScrollView(.horizontal) {
-                            Chart {
-                                ForEach(weights) { weight in
-                                    LineMark(
-                                        x: .value("Week Day", weight.day),
-                                        y: .value("Step Count", weight.pounds)
-                                    )
-//                                    .annotation(position: .top) {
-//                                        Text("\(weight.pounds)").font(.footnote)
-//                                    }
-//                                    .foregroundStyle(ViewConstants.color1)
-//                                    .accessibilityLabel("\(weight.day.toString())")
-//                                    .accessibilityValue("\(weight.pounds) pounds")
-                                }
-                            }
-                            .chartYScale(domain: 0...300)
-//                            .chartYScale(domain: 0...ViewConstants.maxYScale)
-//                            .chartYAxis() {
-//                                AxisMarks(position: .leading)
-//                            }
-//                            .chartXAxis {
-//                                AxisMarks(preset: .extended,
-//                                          position: .bottom,
-//                                          values: .stride (by: .day)) { value in
-//                                    if value.as(Date.self)!.isFirstOfMonth() {
-//                                        AxisGridLine()
-//                                            .foregroundStyle(.black.opacity(0.5))
-//                                        let label = "01\n\(value.as(Date.self)!.monthName())"
-//                                        AxisValueLabel(label).foregroundStyle(.black)
-//                                    } else {
-//                                        AxisValueLabel(
-//                                            format: .dateTime.day(.twoDigits)
-//                                        )
-//                                    }
-//                                }
-//                            }
-                            .frame(width: ViewConstants.dataPointWidth * CGFloat(weights.count))
+        ///데이터 최댓값
+        let max = testData.max { item1, item2 in
+            return item2.skeletalMusleMass > item1.skeletalMusleMass
+        }?.skeletalMusleMass ?? 0
+        ///데이터 최솟값
+        let min = testData.min { item1, item2 in
+            return item2.skeletalMusleMass > item1.skeletalMusleMass
+        }?.skeletalMusleMass ?? 0
+        ///우측 정렬을 위한 scrollViewReader
+        ScrollViewReader { proxy in
+            ScrollView(.horizontal) {
+                Chart(testData, id: \.date) { data in
+                    LineMark(
+                        x: .value("Month", data.date.yyMMddToString()),
+                        y: .value("SkeletalMuclsMass", animate ? data.skeletalMusleMass : 0)
+                    )
+                    .interpolationMethod(.cardinal)
+                    .foregroundStyle(Color(UIColor.color7442FF))
+                    PointMark(
+                        x: .value("Month", data.date.yyMMddToString()),
+                        y: .value("Weight", animate ? data.skeletalMusleMass : 0)
+                    )
+                    ///커스텀 포인트 마크
+                    .annotation(position: .overlay, alignment: .center) {
+                        ZStack {
+                            Circle()
+                                .frame(width: 12, height: 12)
+                                .foregroundColor(Color(UIColor.color7442FF))
+                            Circle()
+                                .frame(width: 10, height: 10)
+                                .foregroundColor(Color(UIColor.colorFFFFFF))
                         }
+                        .shadow(color: Color(UIColor.color7442FF), radius: 2)
+                    }
+                    if let currentActiveItem, currentActiveItem.date == data.date {
+                        RuleMark(x: .value("Month", data.date.yyMMddToString()))
+                            .foregroundStyle(Color(UIColor.color7442FF))
+                            .lineStyle(.init(lineWidth: 1, lineCap: .round, miterLimit: 2, dash: [2], dashPhase: 5))
+                            .annotation(position: .top) {
+                                ZStack {
+                                    Image("speechBubble")
+                                        .resizable()
+                                        .frame(width: 50, height: 42)
+                                        .offset(y: 6)
+                                    Text("\(Int(currentActiveItem.skeletalMusleMass))kg")
+                                        .foregroundColor(Color(UIColor.color7442FF))
+                                        .font(Font(UIFont.pretendard(.semiBold, size: 14)))
+                                }
+                                // MARK: - offset
+                                .offset(x: 0, y: -data.skeletalMusleMass + 200 - 20)
+                            }
                     }
                 }
-//                .groupBoxStyle(YellowGroupBoxStyle())
-                .frame(width: ViewConstants.chartWidth,  height: 220)
+                .chartYAxis {
+                    AxisMarks(position: .trailing)
+                }
+                .chartYScale(domain: max > 100 ? 0...(max + 100) : 0...(max + 40))
+                .chartOverlay(content: { proxy in
+                    GeometryReader { innerProxy in
+                        Rectangle()
+                            .fill(.clear).contentShape(Rectangle())
+                            .onTapGesture { value in
+                                if let date : String = proxy.value(atX: value.x) {
+                                    if let currentItem = testData.first(where: { item in
+                                        item.date.yyMMddToString() == date
+                                    }) {
+                                        print(currentItem.skeletalMusleMass, "sssdd")
+                                        self.currentActiveItem = currentItem
+                                        self.plotWidth = proxy.plotAreaSize.width
+                                    }
+
+                                }
+                            }
+                    }
+                })
+                .padding()
+                ///데이터 갯수에 따른 차트 UI 구분
+                .frame(width: UIScreen.main.bounds.width > ViewConstants.dataPointWidth * CGFloat(testData.count) ? UIScreen.main.bounds.width : ViewConstants.dataPointWidth * CGFloat(testData.count))
+                ///우측 정렬을 위한 id 설졍
+                .id(trailingID)
             }
-            .padding()
+            .onAppear {
+                ///우측 정렬을 위한 anchor 설정
+                proxy.scrollTo(trailingID, anchor: .trailing)
+            }
+        }
+        .background {
+            RoundedRectangle(cornerRadius: 15, style: .continuous)
+                .strokeBorder(Color(UIColor.colorE6E0FF), lineWidth: 1)
+        }
+        .onAppear {
+            for (index, _) in testData.enumerated() {
+                withAnimation(.easeOut(duration: 0.8).delay(Double(index) * 0.05)) {
+                    animate = true
+                }
+            }
+        }
+        .onDisappear {
+            animate = false
         }
     }
-    
     private struct ViewConstants {
-        static let color1 = Color(hue: 0.33, saturation: 0.81, brightness: 0.76)
         static let minYScale = 150
         static let maxYScale = 240
-        static let chartWidth: CGFloat = 350
+        static let dataPointWidth: CGFloat = 60
         static let chartHeight: CGFloat = 400
-        static let dataPointWidth: CGFloat = 30
-        static let barWidth: MarkDimension = 22
+        static let chartWidth: CGFloat = 350
     }
 }
+        
 
-struct SkeletalMuscleMassGraphView_Previews: PreviewProvider {
-    static var previews: some View {
-        SkeletalMuscleMassGraphView()
-    }
-}
-
-
-struct YellowGroupBoxStyle: GroupBoxStyle {
-    func makeBody(configuration: Configuration) -> some View {
-        configuration.content
-            .padding(.top, 30)
-            .padding(20)
-            .background(Color(hue: 0.10, saturation: 0.10, brightness: 0.98))
-            .cornerRadius(20)
-            .overlay(
-                configuration.label.padding(10),
-                alignment: .topLeading
-            )
-    }
-}
-
-
-extension Date {
-//    func toString() -> String {
-//        let dateFormatter = DateFormatter()
-//        dateFormatter.dateStyle = .long
-//        dateFormatter.timeStyle = .none
-//        dateFormatter.locale = Locale(identifier: "en_US")
-//        return dateFormatter.string(from: self)
-//    }
-    
-    func isFirstOfMonth() -> Bool {
-        let components = Calendar.current.dateComponents([.day], from: self)
-        return components.day == 1
-    }
-    
-    func monthName() -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MMMM"
-        dateFormatter.locale = Locale(identifier: "en_US")
-        return dateFormatter.string(from: self)
-    }
-}

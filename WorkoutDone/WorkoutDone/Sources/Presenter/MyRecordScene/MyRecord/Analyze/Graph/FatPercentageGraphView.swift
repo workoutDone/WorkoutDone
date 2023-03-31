@@ -8,120 +8,142 @@
 import SwiftUI
 import Charts
 
+struct TestModel2 {
+    var date : Date
+    let fatPercentage : Double
+}
 
+var list2 = [
+    TestModel2(date: "2023.02.01".yyMMddToDate()!, fatPercentage: 20),
+    TestModel2(date: "2023.02.02".yyMMddToDate()!, fatPercentage: 22),
+    TestModel2(date: "2023.02.03".yyMMddToDate()!, fatPercentage: 24),
+    TestModel2(date: "2023.02.04".yyMMddToDate()!, fatPercentage: 20),
+    TestModel2(date: "2023.02.05".yyMMddToDate()!, fatPercentage: 20),
+    
+
+
+
+]
 
 struct FatPercentageGraphView: View {
-        func formatDate(_ date: Date) -> String {
-            let cal = Calendar.current
-            let dateComponents = cal.dateComponents([.day, .month], from: date)
-            guard let day = dateComponents.day,
-                  let month = dateComponents.month else { return "-" }
-            return "\(month)/\(day)"
-        }
-        var dateFormatter: DateFormatter = {
-            let df = DateFormatter()
-            df.dateFormat = "yy/MM/dd"
-            return df
-        }()
+    ///우측 정렬
+    @Namespace var trailingID
+    ///더미 데이터
+    @State var testData : [TestModel2] = list2
+    ///Gesture Property
+    @State private var currentActiveItem : TestModel2?
+    ///ViewAppear 시 애니메이션 사용 위한 변수
+    @State private var animate : Bool = false
+    @State private var plotWidth: CGFloat = 0
 //        @StateObject var bodyInfoGraphViewModel = BodyInfoGraphViewModel()
-        //제스처 프로퍼티
-        @State var currentActiveItem: TestModel?
-        @State var testData : [TestModel] = list
-        @State var animate: Bool = false
-        @State var plotWidth: CGFloat = 0
-        
-        var body: some View {
-            let max = testData.max { item1, item2 in
-                return item2.weight ?? 0 > item1.weight ?? 0
-            }?.weight ?? 0
-            Chart(testData, id: \.date) { data in
-                LineMark(
-                    x: .value("Month", formatDate(data.date)),
-                    y: .value("Weight", animate ? data.weight : 0)
-                )
-                .interpolationMethod(.cardinal) //둥근 선
-                .foregroundStyle(.red)
-                PointMark(
-                    x: .value("Month", formatDate(data.date)),
-                    y: .value("Weight", animate ? data.weight : 0)
-                ).foregroundStyle(.black)
-                    .symbolSize(5)
-    //            if let currentActiveItem, currentActiveItem.createdDate == data.createdDate {
-    ////                RuleMark(x: .value("weight", currentActiveItem?.weight!))
-    //                RuleMark(x: .value("Weight", currentActiveItem.weight ?? 0))
-    //            }
-    //            RuleMark(x: .value("Month", currentActiveItem?.createdDate ?? ""))
-                if let currentActiveItem, currentActiveItem.date == data.date {
-                    RuleMark(x: .value("Month", formatDate(data.date)))
-                        .lineStyle(.init(lineWidth: 2, miterLimit: 2, dash: [2], dashPhase: 5))
-                        .annotation(position: .top) {
-                            VStack(alignment: .leading, spacing: 6) {
-                                Text("몸무게")
-                                    .font(.caption)
-                                    .foregroundColor(.gray)
-                                Text("\(currentActiveItem.weight ?? 0)")
-                                    .font(.title3.bold())
-                            }
-                            .padding(.horizontal, 10)
-                            .padding(.vertical, 4)
-                            .background {
-                                RoundedRectangle(cornerRadius: 6, style: .continuous)
-                                    .fill(.white.shadow(.drop(radius: 2)))
-                            }
+    var body: some View {
+        ///데이터 최댓값
+        let max = testData.max { item1, item2 in
+            return item2.fatPercentage > item1.fatPercentage
+        }?.fatPercentage ?? 0
+        ///데이터 최솟값
+        let min = testData.min { item1, item2 in
+            return item2.fatPercentage > item1.fatPercentage
+        }?.fatPercentage ?? 0
+        ScrollViewReader { proxy in
+            ScrollView(.horizontal) {
+                Chart(testData, id: \.date) { data in
+                    LineMark(
+                        x: .value("Month", data.date.yyMMddToString()),
+                        y: .value("FatPercentage", animate ? data.fatPercentage : 0)
+                    )
+                    .interpolationMethod(.cardinal)
+                    .foregroundStyle(Color(UIColor.color7442FF))
+                    PointMark(
+                        x: .value("Month", data.date.yyMMddToString()),
+                        y: .value("Weight", animate ? data.fatPercentage : 0)
+                    )
+                    ///커스텀 포인트 마크
+                    .annotation(position: .overlay, alignment: .center) {
+                        ZStack {
+                            Circle()
+                                .frame(width: 12, height: 12)
+                                .foregroundColor(Color(UIColor.color7442FF))
+                            Circle()
+                                .frame(width: 10, height: 10)
+                                .foregroundColor(Color(UIColor.colorFFFFFF))
                         }
-    //                    .offset(x: (plotWidth / CGFloat(bodyInfoGraphViewModel.bodyInfo.count)) / 2)
-                    
-                }
-            }.chartYAxis {
-                AxisMarks(position: .leading)
-            }
-            .chartYScale(domain: 0...(max + 50)) //그래프의 최대값을 조절
-            .chartOverlay { proxy in
-                GeometryReader { innerProxy in
-                    Rectangle()
-                        .fill(.clear).contentShape(Rectangle())
-                        .gesture(
-                            DragGesture()
-                                .onChanged({ value in
-                                    //현재 위치 얻기
-                                    let location = value.location
-                                    //Extracting Value From The Location
-                                    //Swift Charts Gives The Direct Ability to do that
-                                    // We're going to extract the Date in A-Axis Then with the help of That Date Value We're extracting the current Items
-                                    if let weight: Double = proxy.value(atY: location.y) {
-                                        print(weight)
-                                        if let currentItem = testData.first(where: { item in
-                                            item.weight == weight
-                                        }) {
-                                            self.currentActiveItem = currentItem
-    //                                        self.plotWidth = proxy.plotAreaSize.width
-                                            print(currentActiveItem?.weight, "ss")
-                                        }
-                                    }
-                                }).onEnded({ value in
-                                    self.currentActiveItem = nil
-                                })
-                        )
-                }
-            }
-            .padding()
-            .frame(height: 220)
-            .background {
-                RoundedRectangle(cornerRadius: 10, style: .continuous)
-                    .fill(.white.shadow(.drop(radius: 2)))
-            }
-            .onAppear {
-                for (index, _) in testData.enumerated() {
-                    withAnimation(.easeInOut(duration: 0.8).delay(Double(index) * 0.05)) {
-                        animate = true
-                        print(testData, "???")
+                        .shadow(color: Color(UIColor.color7442FF), radius: 2)
+                    }
+                    if let currentActiveItem, currentActiveItem.date == data.date {
+                        RuleMark(x: .value("Month", data.date.yyMMddToString()))
+                            .foregroundStyle(Color(UIColor.color7442FF))
+                            .lineStyle(.init(lineWidth: 1, lineCap: .round, miterLimit: 2, dash: [2], dashPhase: 5))
+                            .annotation(position: .top) {
+                                ZStack {
+                                    Image("speechBubble")
+                                        .resizable()
+                                        .frame(width: 50, height: 42)
+                                        .offset(y: 6)
+                                    Text("\(Int(currentActiveItem.fatPercentage))%")
+                                        .foregroundColor(Color(UIColor.color7442FF))
+                                        .font(Font(UIFont.pretendard(.semiBold, size: 14)))
+                                }
+//                                .offset(x: 0, y: -data.weight + 200 - 20)
+                                //MARK: - TODO
+                            }
                     }
                 }
+                .chartYAxis {
+                    AxisMarks(position: .trailing)
+                }
+                .chartYScale(domain: max > 100 ? 0...(max + 100) : 0...(max + 40))
+                .chartOverlay(content: { proxy in
+                    GeometryReader { innerProxy in
+                        Rectangle()
+                            .fill(.clear).contentShape(Rectangle())
+                            .onTapGesture { value in
+                                if let date : String = proxy.value(atX: value.x) {
+                                    if let currentItem = testData.first(where: { item in
+                                        item.date.yyMMddToString() == date
+                                    }) {
+                                        print(currentItem.fatPercentage, "sssdd")
+                                        self.currentActiveItem = currentItem
+                                        self.plotWidth = proxy.plotAreaSize.width
+                                    }
+
+                                }
+                            }
+                    }
+                })
+                .padding()
+                ///데이터 갯수에 따른 차트 UI 구분
+                .frame(width: UIScreen.main.bounds.width > ViewConstants.dataPointWidth * CGFloat(testData.count) ? UIScreen.main.bounds.width : ViewConstants.dataPointWidth * CGFloat(testData.count))
+                ///우측 정렬을 위한 id 설졍
+                .id(trailingID)
             }
-            .onDisappear {
-                animate = false
+            .onAppear {
+                ///우측 정렬을 위한 anchor 설정
+                proxy.scrollTo(trailingID, anchor: .trailing)
             }
         }
+        .background {
+            RoundedRectangle(cornerRadius: 15, style: .continuous)
+                .strokeBorder(Color(UIColor.colorE6E0FF), lineWidth: 1)
+        }
+        .onAppear {
+            for (index, _) in testData.enumerated() {
+                withAnimation(.easeOut(duration: 0.8).delay(Double(index) * 0.05)) {
+                    animate = true
+                }
+            }
+        }
+        .onDisappear {
+            animate = false
+        }
+    }
+    private struct ViewConstants {
+        static let minYScale = 150
+        static let maxYScale = 240
+        static let dataPointWidth: CGFloat = 60
+        static let chartHeight: CGFloat = 400
+        static let chartWidth: CGFloat = 350
+    }
 }
 
 struct FatPercentageGraphView_Previews: PreviewProvider {
