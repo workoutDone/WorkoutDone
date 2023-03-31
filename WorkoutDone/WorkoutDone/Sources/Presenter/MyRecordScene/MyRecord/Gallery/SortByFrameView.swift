@@ -17,7 +17,7 @@ class SortByFrameView : BaseUIView {
         layout.scrollDirection = .horizontal
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.register(FrameCategoryCell.self, forCellWithReuseIdentifier: "frameCategoryCell")
+        collectionView.register(FrameCell.self, forCellWithReuseIdentifier: "frameCategoryCell")
         collectionView.showsHorizontalScrollIndicator = false
         
         return collectionView
@@ -87,7 +87,7 @@ extension SortByFrameView : UICollectionViewDelegate, UICollectionViewDataSource
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == frameCategoryCollectionView {
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "frameCategoryCell", for: indexPath) as? FrameCategoryCell else { return UICollectionViewCell() }
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "frameCategoryCell", for: indexPath) as? FrameCell else { return UICollectionViewCell() }
             if indexPath.row == 0 {
                 collectionView.selectItem(at: indexPath, animated: false, scrollPosition: .init())
             } else {

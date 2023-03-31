@@ -7,7 +7,13 @@
 
 import UIKit
 
+protocol SortButtonTappedDelegate : AnyObject {
+    func sortButtonTapped(sortDelegate: Bool)
+}
+
 class SortButtonCell : UICollectionViewCell {
+    var delegate : SortButtonTappedDelegate?
+    
     var sortFrame : Bool = false
     
     let sortButton = UIButton().then {
@@ -56,6 +62,7 @@ class SortButtonCell : UICollectionViewCell {
     }
     
     @objc func sortButtonTapped() {
+        
         if !sortFrame {
             sortLabel.text = "월별 정렬"
             
@@ -69,6 +76,8 @@ class SortButtonCell : UICollectionViewCell {
                 $0.width.equalTo(115)
             }
         }
-       sortFrame = !sortFrame
+        
+        sortFrame = !sortFrame
+        delegate?.sortButtonTapped(sortDelegate: sortFrame)
     }
 }

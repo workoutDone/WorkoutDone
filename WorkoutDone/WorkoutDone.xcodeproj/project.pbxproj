@@ -61,6 +61,7 @@
 		92DCF4D829D1E09B00F90002 /* SortByFrameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DCF4D729D1E09B00F90002 /* SortByFrameView.swift */; };
 		92DCF54229D5B41700F90002 /* MonthHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DCF54129D5B41700F90002 /* MonthHeaderView.swift */; };
 		92DCF54A29D6BD8200F90002 /* SortButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DCF54929D6BD8200F90002 /* SortButtonCell.swift */; };
+		92DCF54C29D6D15600F90002 /* FrameHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DCF54B29D6D15600F90002 /* FrameHeaderView.swift */; };
 		A57061CF29CD6A5E0083ECDD /* GalleryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57061CE29CD6A5E0083ECDD /* GalleryViewController.swift */; };
 		A57061D129CD6A840083ECDD /* AnalyzeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57061D029CD6A840083ECDD /* AnalyzeViewController.swift */; };
 		A57061D429D045690083ECDD /* WeightGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57061D329D045690083ECDD /* WeightGraphView.swift */; };
@@ -149,6 +150,7 @@
 		92DCF4D729D1E09B00F90002 /* SortByFrameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortByFrameView.swift; sourceTree = "<group>"; };
 		92DCF54129D5B41700F90002 /* MonthHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthHeaderView.swift; sourceTree = "<group>"; };
 		92DCF54929D6BD8200F90002 /* SortButtonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortButtonCell.swift; sourceTree = "<group>"; };
+		92DCF54B29D6D15600F90002 /* FrameHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameHeaderView.swift; sourceTree = "<group>"; };
 		A57061CE29CD6A5E0083ECDD /* GalleryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryViewController.swift; sourceTree = "<group>"; };
 		A57061D029CD6A840083ECDD /* AnalyzeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyzeViewController.swift; sourceTree = "<group>"; };
 		A57061D329D045690083ECDD /* WeightGraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeightGraphView.swift; sourceTree = "<group>"; };
@@ -451,6 +453,7 @@
 			children = (
 				A57061CE29CD6A5E0083ECDD /* GalleryViewController.swift */,
 				92DCF54129D5B41700F90002 /* MonthHeaderView.swift */,
+				92DCF54B29D6D15600F90002 /* FrameHeaderView.swift */,
 				92DCF4D729D1E09B00F90002 /* SortByFrameView.swift */,
 				92DCF4EF29D2CD2E00F90002 /* Cell */,
 			);
@@ -731,6 +734,7 @@
 				A59A3DDC29C977BC00126ECE /* HomeButtonLessCameraViewModel.swift in Sources */,
 				920060CF29B37C9F00586063 /* GradientButton.swift in Sources */,
 				92005FCA29B1A49400586063 /* ViewController.swift in Sources */,
+				92DCF54C29D6D15600F90002 /* FrameHeaderView.swift in Sources */,
 				92DCF47E29D0830B00F90002 /* FrameImage.swift in Sources */,
 				9200602A29B1A81100586063 /* UIFont.swift in Sources */,
 				A59ACB7A29B4BC740084C73E /* RoutineViewController.swift in Sources */,

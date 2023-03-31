@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 import Then
 
-class MonthHeaderView: UICollectionReusableView {
+class MonthHeaderView : UICollectionReusableView {
     let monthLabel = UILabel().then {
         $0.text = "10월"
         $0.font = .pretendard(.semiBold, size: 18)
