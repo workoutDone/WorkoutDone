@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -17,6 +18,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         setRootViewController(scene)
+        
+        let realm = try! Realm()
+        print(Realm.Configuration.defaultConfiguration.fileURL)
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
