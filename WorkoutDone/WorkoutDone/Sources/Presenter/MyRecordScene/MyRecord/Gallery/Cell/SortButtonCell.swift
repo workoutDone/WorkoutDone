@@ -8,6 +8,8 @@
 import UIKit
 
 class SortButtonCell : UICollectionViewCell {
+    var sortFrame : Bool = false
+    
     let sortButton = UIButton().then {
         $0.backgroundColor = .colorF8F6FF
         $0.layer.cornerRadius = 5
@@ -25,10 +27,13 @@ class SortButtonCell : UICollectionViewCell {
         
         setupLayout()
         setupConstraints()
+        
+        sortButton.addTarget(self, action: #selector(sortButtonTapped), for: .touchUpInside)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+
     }
     
     // MARK: - ACTIONS
@@ -41,12 +46,29 @@ class SortButtonCell : UICollectionViewCell {
         sortButton.snp.makeConstraints {
             $0.top.equalToSuperview()
             $0.trailing.equalToSuperview().offset(-7)
-            $0.width.equalTo(119)
+            $0.width.equalTo(115)
             $0.height.equalTo(30)
         }
         
         sortLabel.snp.makeConstraints {
             $0.centerX.centerY.equalTo(sortButton)
         }
+    }
+    
+    @objc func sortButtonTapped() {
+        if !sortFrame {
+            sortLabel.text = "월별 정렬"
+            
+            sortButton.snp.updateConstraints {
+                $0.width.equalTo(80)
+            }
+        } else {
+            sortLabel.text = "프레임 모아보기"
+            
+            sortButton.snp.updateConstraints {
+                $0.width.equalTo(115)
+            }
+        }
+       sortFrame = !sortFrame
     }
 }

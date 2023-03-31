@@ -17,17 +17,6 @@ struct MonthImages {
 class GalleryViewController : BaseViewController {
     let MonthImagesSampleData = [MonthImages(month: 3, image: Array(repeating: "", count: 9)), MonthImages(month: 2, image: Array(repeating: "", count: 11)), MonthImages(month: 1, image: Array(repeating: "", count: 12))]
     
-    let sortButton = UIButton().then {
-        $0.backgroundColor = .colorF8F6FF
-        $0.layer.cornerRadius = 5
-    }
-
-    let sortLabel = UILabel().then {
-        $0.text = "프레임 모아보기"
-        $0.textColor = .color7442FF
-        $0.font = .pretendard(.semiBold, size: 16)
-    }
-    
     private let monthCollectionView : UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -54,8 +43,6 @@ class GalleryViewController : BaseViewController {
         
         monthCollectionView.delegate = self
         monthCollectionView.dataSource = self
-        
-        sortButton.addTarget(self, action: #selector(sortButtonTapped), for: .touchUpInside)
     }
     
     override func setupConstraints() {
@@ -67,13 +54,7 @@ class GalleryViewController : BaseViewController {
         }
     }
     
-    @objc func sortButtonTapped() {
-        sortLabel.text = "월별 정렬"
-        
-        sortButton.snp.updateConstraints {
-            $0.width.equalTo(80)
-        }
-    }
+   
 }
 
 extension GalleryViewController : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
