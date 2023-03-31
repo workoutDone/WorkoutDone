@@ -27,7 +27,7 @@ class SortByFrameView : BaseUIView {
         let layout = UICollectionViewFlowLayout()
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.register(FrameImageCell.self, forCellWithReuseIdentifier: "frameImageCell")
+        collectionView.register(ImageCell.self, forCellWithReuseIdentifier: "frameImageCell")
         collectionView.showsVerticalScrollIndicator = false
         collectionView.isScrollEnabled = false
         
@@ -96,7 +96,7 @@ extension SortByFrameView : UICollectionViewDelegate, UICollectionViewDataSource
             cell.isSelected = indexPath.row == 0
             return cell
         }
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "frameImageCell", for: indexPath) as? FrameImageCell else { return UICollectionViewCell() }
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "frameImageCell", for: indexPath) as? ImageCell else { return UICollectionViewCell() }
         return cell
     }
     
