@@ -53,8 +53,8 @@ class AnalyzeViewController : BaseViewController {
         view.addSubview(contentScrollView)
         contentScrollView.addSubview(contentView)
         weightGraphView = UIHostingController(rootView: WeightGraphView()).view
-        skeletalMuscleMassGraphView = UIHostingController(rootView: EmptyView()).view
-        fatPercentageGraphView = UIHostingController(rootView: EmptyView()).view
+        skeletalMuscleMassGraphView = UIHostingController(rootView: SkeletalMuscleMassGraphView()).view
+        fatPercentageGraphView = UIHostingController(rootView: FatPercentageGraphView()).view
         [weightLabel, weightGraphView, skeletalMuscleMassLabel, skeletalMuscleMassGraphView, fatPercentageLabel, fatPercentageGraphView].forEach {
             contentView.addSubview($0)
         }

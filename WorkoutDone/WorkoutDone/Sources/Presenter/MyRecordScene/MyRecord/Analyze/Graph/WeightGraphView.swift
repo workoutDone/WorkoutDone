@@ -39,21 +39,9 @@ var list = [
 ]
 
 struct WeightGraphView: View {
+    ///우측 정렬
     @Namespace var trailingID
-    ///DateToString
-    func formatDate(_ date : Date) -> String {
-        let cal = Calendar.current
-        let dateComponents = cal.dateComponents([.day, .month, .year], from: date)
-        guard let day = dateComponents.day,
-              let month = dateComponents.month,
-              let year = dateComponents.year else { return "-" }
-        return "\(year).\(month).\(day)"
-    }
-    var dateFormatter: DateFormatter = {
-        let df = DateFormatter()
-        df.dateFormat = "yyyy.MM.dd"
-        return df
-    }()
+
     @StateObject var weightGraphViewModel = WeightGraphViewModel()
     ///TEST
     @State var testData : [TestModel] = list
@@ -62,13 +50,14 @@ struct WeightGraphView: View {
     @State private var currentActiveItem : TestModel?
     ///ViewAppear 시 애니메이션 사용 위한 변수
     @State private var animate : Bool = false
-    @State private var plotWidth: CGFloat = 0
-    ///데이터의 최댓값
+    @State private var plotWidth : CGFloat = 0
 
     var body: some View {
+        ///데이터 최댓값
         let max = testData.max { item1, item2 in
             return item2.weight > item1.weight
         }?.weight ?? 0
+        ///데이터 최솟값
         let min = testData.min { item1, item2 in
             return item2.weight > item1.weight
         }?.weight ?? 0
@@ -163,7 +152,6 @@ struct WeightGraphView: View {
                 .strokeBorder(Color(UIColor.colorE6E0FF), lineWidth: 1)
         }
         .onAppear {
-            print(max, "맥스값")
             for (index, _) in testData.enumerated() {
                 withAnimation(.easeOut(duration: 0.8).delay(Double(index) * 0.05)) {
                     animate = true
