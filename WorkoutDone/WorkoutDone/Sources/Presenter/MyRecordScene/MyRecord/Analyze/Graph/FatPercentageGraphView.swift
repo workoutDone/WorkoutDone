@@ -85,6 +85,7 @@ struct FatPercentageGraphView: View {
                                         .font(Font(UIFont.pretendard(.semiBold, size: 14)))
                                 }
 //                                .offset(x: 0, y: -data.weight + 200 - 20)
+                                //MARK: - TODO
                             }
                     }
                 }
