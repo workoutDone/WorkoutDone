@@ -17,7 +17,9 @@ class RegisterMyBodyInfoViewController : BaseViewController {
     private lazy var input = RegisterMyBodyInfoViewModel.Input(
         weightInputText: weightTextField.rx.text.orEmpty.asDriver(),
         skeletalMusleMassInputText: skeletalMuscleMassTextField.rx.text.orEmpty.asDriver(),
-        fatPercentageInputText: fatPercentageTextField.rx.text.orEmpty.asDriver())
+        fatPercentageInputText: fatPercentageTextField.rx.text.orEmpty.asDriver(),
+        saveButtonTapped: saveButton.rx.tap.asDriver(), selectedDate: Driver.just(Date())
+    )
     private lazy var output = viewModel.transform(input: input)
     
     // MARK: - PROPERTIES
@@ -245,7 +247,7 @@ class RegisterMyBodyInfoViewController : BaseViewController {
             .disposed(by: disposeBag)
         output.skeletalMusleMassOutputText.drive(skeletalMuscleMassTextField.rx.text)
             .disposed(by: disposeBag)
-        output.fatPercentageOutputtText.drive(fatPercentageTextField.rx.text)
+        output.fatPercentageOutputText.drive(fatPercentageTextField.rx.text)
             .disposed(by: disposeBag)
         
     }
