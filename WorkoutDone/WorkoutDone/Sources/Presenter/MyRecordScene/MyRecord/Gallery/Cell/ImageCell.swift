@@ -9,9 +9,9 @@ import UIKit
 import SnapKit
 import Then
 
-class FrameImageCell : UICollectionViewCell {
+class ImageCell : UICollectionViewCell {
     let image = UIImageView().then {
-        $0.backgroundColor = .orange
+        $0.backgroundColor = .yellow
         $0.layer.cornerRadius = 5
     }
     

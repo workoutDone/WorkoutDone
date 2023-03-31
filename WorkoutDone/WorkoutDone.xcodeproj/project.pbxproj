@@ -57,11 +57,11 @@
 		92DCF47E29D0830B00F90002 /* FrameImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DCF47D29D0830B00F90002 /* FrameImage.swift */; };
 		92DCF48029D0846B00F90002 /* BodyInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DCF47F29D0846B00F90002 /* BodyInfo.swift */; };
 		92DCF4D229D1B64100F90002 /* FrameCategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DCF4D129D1B64100F90002 /* FrameCategoryCell.swift */; };
-		92DCF4D429D1B66F00F90002 /* FrameImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DCF4D329D1B66F00F90002 /* FrameImageCell.swift */; };
+		92DCF4D429D1B66F00F90002 /* ImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DCF4D329D1B66F00F90002 /* ImageCell.swift */; };
 		92DCF4D829D1E09B00F90002 /* SortByFrameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DCF4D729D1E09B00F90002 /* SortByFrameView.swift */; };
-		92DCF4DA29D2021A00F90002 /* SortByMonthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DCF4D929D2021A00F90002 /* SortByMonthView.swift */; };
-		92DCF4DC29D2024A00F90002 /* MonthCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DCF4DB29D2024A00F90002 /* MonthCell.swift */; };
-		92DCF4DE29D203A200F90002 /* MonthImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DCF4DD29D203A200F90002 /* MonthImageCell.swift */; };
+		92DCF54229D5B41700F90002 /* MonthHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DCF54129D5B41700F90002 /* MonthHeaderView.swift */; };
+		92DCF54A29D6BD8200F90002 /* SortButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DCF54929D6BD8200F90002 /* SortButtonCell.swift */; };
+		92DCF54C29D6D15600F90002 /* FrameHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DCF54B29D6D15600F90002 /* FrameHeaderView.swift */; };
 		A57061CF29CD6A5E0083ECDD /* GalleryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57061CE29CD6A5E0083ECDD /* GalleryViewController.swift */; };
 		A57061D129CD6A840083ECDD /* AnalyzeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57061D029CD6A840083ECDD /* AnalyzeViewController.swift */; };
 		A57061D429D045690083ECDD /* WeightGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57061D329D045690083ECDD /* WeightGraphView.swift */; };
@@ -146,11 +146,11 @@
 		92DCF47D29D0830B00F90002 /* FrameImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameImage.swift; sourceTree = "<group>"; };
 		92DCF47F29D0846B00F90002 /* BodyInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyInfo.swift; sourceTree = "<group>"; };
 		92DCF4D129D1B64100F90002 /* FrameCategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameCategoryCell.swift; sourceTree = "<group>"; };
-		92DCF4D329D1B66F00F90002 /* FrameImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameImageCell.swift; sourceTree = "<group>"; };
+		92DCF4D329D1B66F00F90002 /* ImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCell.swift; sourceTree = "<group>"; };
 		92DCF4D729D1E09B00F90002 /* SortByFrameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortByFrameView.swift; sourceTree = "<group>"; };
-		92DCF4D929D2021A00F90002 /* SortByMonthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortByMonthView.swift; sourceTree = "<group>"; };
-		92DCF4DB29D2024A00F90002 /* MonthCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthCell.swift; sourceTree = "<group>"; };
-		92DCF4DD29D203A200F90002 /* MonthImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthImageCell.swift; sourceTree = "<group>"; };
+		92DCF54129D5B41700F90002 /* MonthHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthHeaderView.swift; sourceTree = "<group>"; };
+		92DCF54929D6BD8200F90002 /* SortButtonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortButtonCell.swift; sourceTree = "<group>"; };
+		92DCF54B29D6D15600F90002 /* FrameHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameHeaderView.swift; sourceTree = "<group>"; };
 		A57061CE29CD6A5E0083ECDD /* GalleryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryViewController.swift; sourceTree = "<group>"; };
 		A57061D029CD6A840083ECDD /* AnalyzeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyzeViewController.swift; sourceTree = "<group>"; };
 		A57061D329D045690083ECDD /* WeightGraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeightGraphView.swift; sourceTree = "<group>"; };
@@ -441,10 +441,9 @@
 		92DCF4EF29D2CD2E00F90002 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
+				92DCF54929D6BD8200F90002 /* SortButtonCell.swift */,
 				92DCF4D129D1B64100F90002 /* FrameCategoryCell.swift */,
-				92DCF4D329D1B66F00F90002 /* FrameImageCell.swift */,
-				92DCF4DB29D2024A00F90002 /* MonthCell.swift */,
-				92DCF4DD29D203A200F90002 /* MonthImageCell.swift */,
+				92DCF4D329D1B66F00F90002 /* ImageCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -453,7 +452,8 @@
 			isa = PBXGroup;
 			children = (
 				A57061CE29CD6A5E0083ECDD /* GalleryViewController.swift */,
-				92DCF4D929D2021A00F90002 /* SortByMonthView.swift */,
+				92DCF54129D5B41700F90002 /* MonthHeaderView.swift */,
+				92DCF54B29D6D15600F90002 /* FrameHeaderView.swift */,
 				92DCF4D729D1E09B00F90002 /* SortByFrameView.swift */,
 				92DCF4EF29D2CD2E00F90002 /* Cell */,
 			);
@@ -713,12 +713,10 @@
 				9200604729B1ACF400586063 /* WorkoutResultView.swift in Sources */,
 				9200604329B1ACBF00586063 /* RecordView.swift in Sources */,
 				92DCF48029D0846B00F90002 /* BodyInfo.swift in Sources */,
-				92DCF4DC29D2024A00F90002 /* MonthCell.swift in Sources */,
 				A57061D129CD6A840083ECDD /* AnalyzeViewController.swift in Sources */,
-				92DCF4DE29D203A200F90002 /* MonthImageCell.swift in Sources */,
+				92DCF54A29D6BD8200F90002 /* SortButtonCell.swift in Sources */,
 				A59ACB7829B46DEB0084C73E /* TabBarController.swift in Sources */,
 				A576694029BF1A9900673DFE /* UITextField.swift in Sources */,
-				92DCF4DA29D2021A00F90002 /* SortByMonthView.swift in Sources */,
 				9200602729B1A7F400586063 /* UIColor.swift in Sources */,
 				9200602D29B1A91600586063 /* OnboardingCell.swift in Sources */,
 				9200604B29B1ADA500586063 /* BaseUIView.swift in Sources */,
@@ -736,6 +734,7 @@
 				A59A3DDC29C977BC00126ECE /* HomeButtonLessCameraViewModel.swift in Sources */,
 				920060CF29B37C9F00586063 /* GradientButton.swift in Sources */,
 				92005FCA29B1A49400586063 /* ViewController.swift in Sources */,
+				92DCF54C29D6D15600F90002 /* FrameHeaderView.swift in Sources */,
 				92DCF47E29D0830B00F90002 /* FrameImage.swift in Sources */,
 				9200602A29B1A81100586063 /* UIFont.swift in Sources */,
 				A59ACB7A29B4BC740084C73E /* RoutineViewController.swift in Sources */,
@@ -751,7 +750,8 @@
 				9200601D29B1A74300586063 /* OnboardingViewController.swift in Sources */,
 				9264A5EC29C4B0610010856F /* HomeButtonCameraViewController.swift in Sources */,
 				920060E029B63C0D00586063 /* TestViewController.swift in Sources */,
-				92DCF4D429D1B66F00F90002 /* FrameImageCell.swift in Sources */,
+				92DCF54229D5B41700F90002 /* MonthHeaderView.swift in Sources */,
+				92DCF4D429D1B66F00F90002 /* ImageCell.swift in Sources */,
 				9200604929B1AD7200586063 /* HomeViewController.swift in Sources */,
 				92DCF47A29D0818A00F90002 /* WorkOutDoneData.swift in Sources */,
 				92DCF3EC29CDB38300F90002 /* BackButton.swift in Sources */,
@@ -934,6 +934,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -962,6 +963,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
