@@ -60,8 +60,7 @@ class GalleryViewController : BaseViewController {
 extension GalleryViewController : SortButtonTappedDelegate {
     func sortButtonTapped(sortDelegate: Bool) {
         sortFrame = sortDelegate
-        print(sortFrame)
-        
+
         imageCollectionView.reloadData()
     }
 }
@@ -142,6 +141,12 @@ extension GalleryViewController : UICollectionViewDelegate, UICollectionViewData
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 6
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let galleryDetailVC = GalleryDetailViewController()
+        galleryDetailVC.modalPresentationStyle = .overFullScreen
+        present(galleryDetailVC, animated: false)
     }
 
 }
