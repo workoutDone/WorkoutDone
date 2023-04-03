@@ -17,18 +17,22 @@ class RegisterMyBodyInfoViewModel {
         self.workOutDoneData = realm.objects(WorkOutDoneData.self)
     }
     
+    //struct
+    var test = PublishSubject<Void>()
+    
     struct Input {
         let weightInputText : Driver<String>
         let skeletalMusleMassInputText : Driver<String>
         let fatPercentageInputText : Driver<String>
-        let saveButtonTapped : Driver<Void>
-        let selectedDate : Driver<Date>
+        let saveButtonTapped : Driver<String>
+        let selectedDate : Driver<String>
     }
     struct Output {
         let weightOutputText : Driver<String>
         let skeletalMusleMassOutputText : Driver<String>
         let fatPercentageOutputText : Driver<String>
-
+        let saveData : Driver<Void>
+        let isConfirmEnabled : Driver<Bool>
     }
     func trimText(text: String) -> String {
         if text.count >= 3 {
@@ -50,16 +54,20 @@ class RegisterMyBodyInfoViewModel {
         }
     }
     
-    func createBodyInfoData(weight : Double, skeletalMusleMass : Double, fatPercentage : Double, date : Date) {
+    func createBodyInfoData(weight : Double, skeletalMusleMass : Double, fatPercentage : Double, date : String) {
         do {
             try realm.write {
-                let workoutDoneData = WorkOutDoneData(id: 1, date: date)
+                let workoutDoneData = WorkOutDoneData(id: 20230407, date: "2023.04.07")
                 let bodyInfo = BodyInfo()
                 bodyInfo.wegiht = weight
                 bodyInfo.skeletalMuscleMass = skeletalMusleMass
                 bodyInfo.fatPercentage = fatPercentage
                 workoutDoneData.bodyInfo = bodyInfo
                 realm.add(workoutDoneData)
+                //??
+                test.onNext(())
+                
+                print("렘 세ㅇ")
             }
         }
         catch {
@@ -85,18 +93,40 @@ class RegisterMyBodyInfoViewModel {
             let trimValue = self.trimText(text: ignoreZeroValue)
             return trimValue
         }
-        
-        let saveBodyInfoData = Driver<Void>.combineLatest(weightText, skeletalMusleMassText, fatPercentageText, input.selectedDate, resultSelector: { (weight, skeletalMusle, fatPercentage, date) in
-            self.createBodyInfoData(
-                weight: Double(weight) ?? 0,
-                skeletalMusleMass: Double(skeletalMusle) ?? 0,
-                fatPercentage: Double(fatPercentage) ?? 0,
-                date: date)
+        let buttonEnabled = Driver<Bool>.combineLatest(input.weightInputText, skeletalMusleMassText, fatPercentageText, resultSelector: { (weight, skeletalMusle, fatPercenatage) in
+            if weight.count + skeletalMusle.count + fatPercenatage.count > 0 {
+                return true
+            }
+            else {
+                return false
+            }
         })
-                                                          
+        
+//        let saveBodyInfoData = Driver<Void>.combineLatest(weightText, skeletalMusleMassText, fatPercentageText, input.selectedDate, resultSelector: { (weight, skeletalMusle, fatPercentage, date) in
+//            self.createBodyInfoData(
+//                weight: Double(weight) ?? 0,
+//                skeletalMusleMass: Double(skeletalMusle) ?? 0,
+//                fatPercentage: Double(fatPercentage) ?? 0,
+//                date: date)
+//        })
+//        let save = input.saveButtonTapped.withLatestFrom(saveBodyInfoData)
+        
+        let test2 = input.saveButtonTapped.map { value in
+            self.createBodyInfoData(weight: Double(value) ?? 0, skeletalMusleMass: 0, fatPercentage: 0, date: "2023.04.03")
+        }.asDriver()
+        
+        
+                              
+//        let saveBodyInfoData = ControlEvent<Bool>.flatMapLatest(weightText, skeletalMusleMassText, fatPercentageText, input.selectedDate) { weight, skeletalMusle, fatPercentage, date in
+//
+//        }
+//        let save = input.saveButtonTapped.flatMapLatest(<#T##selector: (Void) throws -> ObservableConvertibleType##(Void) throws -> ObservableConvertibleType#>)
+        
         return Output(
             weightOutputText: weightText,
             skeletalMusleMassOutputText: skeletalMusleMassText,
-            fatPercentageOutputText: fatPercentageText)
+            fatPercentageOutputText: fatPercentageText, 
+            saveData: test2, isConfirmEnabled: buttonEnabled)
     }
 }
+

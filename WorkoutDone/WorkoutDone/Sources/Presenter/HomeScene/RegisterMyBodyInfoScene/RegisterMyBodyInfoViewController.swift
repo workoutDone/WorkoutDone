@@ -14,11 +14,20 @@ import RxSwift
 class RegisterMyBodyInfoViewController : BaseViewController {
     // MARK: - ViewModel
     var viewModel = RegisterMyBodyInfoViewModel()
+//    private lazy var input = RegisterMyBodyInfoViewModel.Input(
+//        weightInputText: weightTextField.rx.text.orEmpty.asDriver(),
+//        skeletalMusleMassInputText: skeletalMuscleMassTextField.rx.text.orEmpty.asDriver(),
+//        fatPercentageInputText: fatPercentageTextField.rx.text.orEmpty.asDriver(),
+//        saveButtonTapped: saveButton.rx.tap.asDriver(),
+//        selectedDate: Driver.just(Date().yyyyMMddToString())
+//    )
+    var test = PublishSubject<String>()
     private lazy var input = RegisterMyBodyInfoViewModel.Input(
         weightInputText: weightTextField.rx.text.orEmpty.asDriver(),
         skeletalMusleMassInputText: skeletalMuscleMassTextField.rx.text.orEmpty.asDriver(),
         fatPercentageInputText: fatPercentageTextField.rx.text.orEmpty.asDriver(),
-        saveButtonTapped: saveButton.rx.tap.asDriver(), selectedDate: Driver.just(Date())
+        saveButtonTapped: test.asDriver(onErrorJustReturn: ""),
+        selectedDate: Driver.just(Date().yyyyMMddToString())
     )
     private lazy var output = viewModel.transform(input: input)
     
@@ -250,13 +259,55 @@ class RegisterMyBodyInfoViewController : BaseViewController {
         output.fatPercentageOutputText.drive(fatPercentageTextField.rx.text)
             .disposed(by: disposeBag)
         
+        output.isConfirmEnabled.drive(onNext: { value in
+            if value {
+                print("클릭")
+                self.saveButton.isEnabled = true
+            }
+            else {
+                print("클릭 x")
+                self.saveButton.isEnabled = false
+                self.saveButton.backgroundColor = .gray
+            }
+        })
+            .disposed(by: disposeBag)
+        output.saveData.drive(onNext: {
+            self.dismiss(animated: true)
+        })
+            .disposed(by: disposeBag)
+        
+        saveButton.rx.tap
+            .bind { value in
+                self.test.onNext(self.weightTextField.text ?? "")
+            }.disposed(by: disposeBag)
+        
+//        output.saveData.drive().disposed(by: disposeBag)
+//        output.saveData.drive { value in
+//            if value {
+//                print("dd")
+//            }
+//            else {
+//                print("노노")
+//            }
+//        }
+//        output.saveData.bind {
+//            self.saveButton.rx.tap
+//        }
+//            .disposed(by: disposeBag)
+//        output.saveData.bind
+        
     }
     override func actions() {
         super.actions()
         cancelButton.addTarget(self, action: #selector(cancelButtonTapped), for: .touchUpInside)
+        saveButton.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
     }
     @objc func cancelButtonTapped() {
         dismiss(animated: true)
+    }
+    @objc func saveButtonTapped() {
+//        dismiss(animated: true)
+//        print("zmfflr")
     }
     @objc func keyboardUp(notification: NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
