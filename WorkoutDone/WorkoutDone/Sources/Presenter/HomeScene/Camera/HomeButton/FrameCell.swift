@@ -10,6 +10,7 @@ import SnapKit
 import Then
 
 class FrameCell: UICollectionViewCell {
+
     // MARK: - PROPERTIES
     let basicLabel = UILabel().then {
         $0.text = "기본"
@@ -20,7 +21,6 @@ class FrameCell: UICollectionViewCell {
     var frameImage = UIImageView().then {
         $0.contentMode = .scaleAspectFill
         $0.layer.cornerRadius = 10
-        //$0.backgroundColor = .systemGray5
     }
     
     override init(frame: CGRect) {
@@ -39,7 +39,7 @@ class FrameCell: UICollectionViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     func setLayout() {
         frameImage.snp.makeConstraints {
             $0.top.leading.trailing.bottom.equalToSuperview()

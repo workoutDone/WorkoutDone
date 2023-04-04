@@ -24,7 +24,11 @@ class HomeButtonCameraViewController : BaseViewController {
     var videoOutput: AVCaptureVideoDataOutput!
     var takePicture = false
     
-    private let cameraView = UIView()
+    var isSelectFrameImagesIndex = 0
+    
+    private let cameraView = UIView().then {
+        $0.backgroundColor = .orange
+    }
     
     private let frameImage = UIImageView()
     
@@ -85,7 +89,7 @@ class HomeButtonCameraViewController : BaseViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        setupCaptureSession()
+        //setupCaptureSession()
     }
     
     override func setupLayout() {
@@ -117,7 +121,7 @@ class HomeButtonCameraViewController : BaseViewController {
         }
         
         gridToggleButton.snp.makeConstraints {
-            $0.top.equalTo(cameraView).offset(26)
+            $0.top.equalTo(cameraView).offset(23)
             $0.trailing.equalToSuperview().offset(-10)
         }
         
@@ -328,13 +332,20 @@ extension HomeButtonCameraViewController : UICollectionViewDelegate, UICollectio
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FrameCell", for: indexPath) as? FrameCell else { return UICollectionViewCell() }
         if indexPath.row == 0 {
+            cell.frameImage.image = nil
             cell.basicLabel.isHidden = false
-            cell.frameImage.isHidden = true
-            cell.backgroundColor = .colorE6E0FF
-            cell.layer.borderWidth = 2
-            cell.layer.borderColor = UIColor.color7442FF.cgColor
         } else {
             cell.frameImage.image = UIImage(named: frameImages[indexPath.row - 1])
+            cell.basicLabel.isHidden = true
+        }
+        
+        if indexPath.row == isSelectFrameImagesIndex {
+            cell.layer.borderWidth = 2
+            cell.layer.borderColor = UIColor.color7442FF.cgColor
+            cell.backgroundColor = .colorE6E0FF
+        } else {
+            cell.layer.borderWidth = 0
+            cell.backgroundColor = .clear
         }
         return cell
     }
@@ -352,11 +363,8 @@ extension HomeButtonCameraViewController : UICollectionViewDelegate, UICollectio
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if indexPath.row == 0 {
-            frameImage.image = nil
-        } else {
-            frameImage.image = UIImage(named: frameImages[indexPath.row - 1])
-        }
+        isSelectFrameImagesIndex = indexPath.row
+        collectionView.reloadData()
     }
 }
 
@@ -381,5 +389,6 @@ extension HomeButtonCameraViewController : AVCaptureVideoDataOutputSampleBufferD
             self.captureSession.stopRunning()
         }
     }
-    
 }
+
+
