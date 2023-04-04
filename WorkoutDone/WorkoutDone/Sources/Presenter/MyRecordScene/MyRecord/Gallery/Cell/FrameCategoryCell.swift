@@ -15,17 +15,6 @@ class FrameCategoryCell : UICollectionViewCell {
         $0.backgroundColor = .yellow
     }
     
-    override var isSelected: Bool {
-        didSet {
-            if isSelected {
-                layer.borderWidth = 2
-                layer.borderColor = UIColor.color7442FF.cgColor
-            } else {
-                layer.borderWidth = 0
-            }
-        }
-    }
-    
     // MARK: - LIFECYCLE
     override init(frame: CGRect) {
         super.init(frame: frame)

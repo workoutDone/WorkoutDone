@@ -8,7 +8,8 @@
 import UIKit
 
 class FrameHeaderView : UICollectionReusableView {
-    let frameImages: [String] = ["frame1", "frame2", "frame3", "frame4", "frame5", "frame6"]
+    let frameImages : [String] = ["frame1", "frame2", "frame3", "frame4", "frame5", "frame6"]
+    var isSelectFrameImagesIndex = 0
     
     private let frameCollectionView : UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -56,18 +57,21 @@ extension FrameHeaderView : UICollectionViewDelegate, UICollectionViewDataSource
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "frameCategoryCell", for: indexPath) as? FrameCategoryCell else { return UICollectionViewCell() }
         if indexPath.row == 0 {
-            collectionView.selectItem(at: indexPath, animated: false, scrollPosition: .init())
+            cell.frameImage.image = nil
         } else {
             cell.frameImage.image = UIImage(named: frameImages[indexPath.row - 1])
         }
-        cell.isSelected = indexPath.row == 0
-        
+        if indexPath.row == isSelectFrameImagesIndex {
+            cell.layer.borderWidth = 2
+            cell.layer.borderColor = UIColor.color7442FF.cgColor
+            cell.backgroundColor = .colorE6E0FF
+        } else {
+            cell.layer.borderWidth = 0
+        }
         return cell
-        
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        
         return UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
     }
 
@@ -78,5 +82,10 @@ extension FrameHeaderView : UICollectionViewDelegate, UICollectionViewDataSource
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 8
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        isSelectFrameImagesIndex = indexPath.row
+        collectionView.reloadData()
     }
 }
