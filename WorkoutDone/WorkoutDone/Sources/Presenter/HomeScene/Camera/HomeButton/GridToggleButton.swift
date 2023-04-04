@@ -10,16 +10,12 @@ import SnapKit
 import Then
 
 class GridToggleButton: UIButton {
-    var isOnToggle: Bool = true
+    var isOnToggle: Bool = false
     
     private let gridToggleLabel = UILabel().then {
-        $0.text = "그리드 ON"
-        $0.textColor = .colorFFFFFF
+        $0.text = "그리드 OFF"
+        $0.textColor = .color5E5E5E
         $0.font = .pretendard(.regular, size: 14)
-    }
-
-    private let gridToggleCircleImage = UIImageView().then {
-        $0.image = UIImage(named: "gridToggleCircle")
     }
     
     override init(frame: CGRect) {
@@ -28,8 +24,10 @@ class GridToggleButton: UIButton {
         setLayout()
         setConstraints()
         
-        self.backgroundColor = .color7442FF
-        self.layer.cornerRadius = 15
+        self.backgroundColor = .colorFFFFFF04
+        self.layer.cornerRadius = 14.5
+        self.layer.borderWidth = 1
+        self.layer.borderColor = UIColor.color363636.cgColor
     }
     
     required init?(coder: NSCoder) {
@@ -38,55 +36,30 @@ class GridToggleButton: UIButton {
     
     func setLayout() {
         self.addSubview(gridToggleLabel)
-        self.addSubview(gridToggleCircleImage)
     }
     
     func setConstraints() {
         self.snp.makeConstraints {
-            $0.width.equalTo(103)
-            $0.height.equalTo(30)
+            $0.width.equalTo(84)
+            $0.height.equalTo(29)
         }
 
         gridToggleLabel.snp.makeConstraints {
-            $0.centerY.equalToSuperview()
-            $0.leading.equalToSuperview().offset(9)
-        }
-
-        gridToggleCircleImage.snp.makeConstraints {
-            $0.centerY.equalToSuperview()
-            $0.trailing.equalToSuperview().offset(-1.68)
-            $0.width.height.equalTo(26.64)
+            $0.centerX.centerY.equalToSuperview()
         }
     }
     
     func changeToggle() {
-        if !isOnToggle {
-            gridToggleLabel.text = "그리드 ON"
-            gridToggleLabel.snp.remakeConstraints {
-                $0.centerY.equalToSuperview()
-                $0.leading.equalToSuperview().offset(9)
-            }
-
-            gridToggleCircleImage.snp.remakeConstraints {
-                $0.centerY.equalToSuperview()
-                $0.trailing.equalToSuperview().offset(-1.68)
-                $0.width.height.equalTo(26.64)
-            }
-            self.backgroundColor = .color7442FF
-            gridToggleLabel.textColor = .colorFFFFFF
-        } else {
+        if isOnToggle {
             gridToggleLabel.text = "그리드 OFF"
-            gridToggleLabel.snp.remakeConstraints {
-                $0.centerY.equalToSuperview()
-                $0.trailing.equalToSuperview().offset(-7)
-            }
-            gridToggleCircleImage.snp.remakeConstraints {
-                $0.centerY.equalToSuperview()
-                $0.leading.equalToSuperview().offset(1.68)
-                $0.width.height.equalTo(26.64)
-            }
-            self.backgroundColor = .systemGray3
-            gridToggleLabel.textColor = .colorFFFFFF
+            self.backgroundColor = .colorFFFFFF04
+            self.layer.borderColor = UIColor.color363636.cgColor
+            gridToggleLabel.textColor = .color5E5E5E
+        } else {
+            gridToggleLabel.text = "그리드 ON"
+            self.backgroundColor = .colorFFFFFF08
+            self.layer.borderColor = UIColor.color7442FF.cgColor
+            gridToggleLabel.textColor = .color612CF8
         }
     }
 }

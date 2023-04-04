@@ -24,7 +24,9 @@ class HomeButtonCameraViewController : BaseViewController {
     var videoOutput: AVCaptureVideoDataOutput!
     var takePicture = false
     
-    private let cameraView = UIView()
+    private let cameraView = UIView().then {
+        $0.backgroundColor = .orange
+    }
     
     private let frameImage = UIImageView()
     
@@ -85,7 +87,7 @@ class HomeButtonCameraViewController : BaseViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        setupCaptureSession()
+        //setupCaptureSession()
     }
     
     override func setupLayout() {
@@ -117,7 +119,7 @@ class HomeButtonCameraViewController : BaseViewController {
         }
         
         gridToggleButton.snp.makeConstraints {
-            $0.top.equalTo(cameraView).offset(26)
+            $0.top.equalTo(cameraView).offset(23)
             $0.trailing.equalToSuperview().offset(-10)
         }
         
