@@ -26,9 +26,7 @@ class HomeButtonCameraViewController : BaseViewController {
     
     var isSelectFrameImagesIndex = 0
     
-    private let cameraView = UIView().then {
-        $0.backgroundColor = .orange
-    }
+    private let cameraView = UIView()
     
     private let frameImage = UIImageView()
     
@@ -40,21 +38,7 @@ class HomeButtonCameraViewController : BaseViewController {
     
     private let gridToggleButton = GridToggleButton()
     
-    private let gridRowLine1 = UIImageView().then {
-        $0.image = UIImage(named: "rowLine")
-    }
-    
-    private let gridRowLine2 = UIImageView().then {
-        $0.image = UIImage(named: "rowLine")
-    }
-    
-    private let gridColumnLine1 = UIImageView().then {
-        $0.image = UIImage(named: "columnLine")
-    }
-    
-    private let gridColumnLine2 = UIImageView().then {
-        $0.image = UIImage(named: "columnLine")
-    }
+    private let gridView = GridView()
     
     private let collectionView : UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -89,7 +73,7 @@ class HomeButtonCameraViewController : BaseViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        //setupCaptureSession()
+        setupCaptureSession()
     }
     
     override func setupLayout() {
@@ -99,11 +83,7 @@ class HomeButtonCameraViewController : BaseViewController {
             view.addSubview($0)
         }
         
-        view.addSubview(gridRowLine1)
-        view.addSubview(gridRowLine2)
-        view.addSubview(gridColumnLine1)
-        view.addSubview(gridColumnLine2)
-        
+        view.addSubview(gridView)
         view.addSubview(frameImage)
     }
     
@@ -125,33 +105,13 @@ class HomeButtonCameraViewController : BaseViewController {
             $0.trailing.equalToSuperview().offset(-10)
         }
         
+        gridView.snp.makeConstraints {
+            $0.top.leading.trailing.bottom.equalTo(cameraView)
+        }
+        
         frameImage.snp.makeConstraints {
             $0.top.bottom.equalTo(cameraView).offset(10)
             $0.leading.trailing.equalTo(cameraView)
-        }
-        
-        gridRowLine1.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(cameraViewHeight / 3 + 10)
-            $0.leading.trailing.equalTo(cameraView)
-            $0.height.equalTo(0.5)
-        }
-        
-        gridRowLine2.snp.makeConstraints {
-            $0.top.equalToSuperview().offset((cameraViewHeight / 3) * 2 + 10)
-            $0.leading.trailing.equalTo(cameraView)
-            $0.height.equalTo(0.5)
-        }
-        
-        gridColumnLine1.snp.makeConstraints {
-            $0.leading.equalTo(cameraView).offset(view.bounds.width / 3)
-            $0.top.bottom.equalTo(cameraView).offset(10)
-            $0.width.equalTo(0.5)
-        }
-        
-        gridColumnLine2.snp.makeConstraints {
-            $0.leading.equalTo(cameraView).offset((view.bounds.width / 3) * 2)
-            $0.top.bottom.equalTo(cameraView).offset(10)
-            $0.width.equalTo(0.5)
         }
         
         captureImage.snp.makeConstraints {
@@ -291,13 +251,10 @@ class HomeButtonCameraViewController : BaseViewController {
     
     @objc func gridToggleButtonTapped(sender: UIButton!) {
         if gridToggleButton.isOnToggle {
-            [gridRowLine1, gridRowLine2, gridColumnLine1, gridColumnLine2].forEach {
-                $0.isHidden = true
-            }
+           gridView.isHidden = true
+            
         } else {
-            [gridRowLine1, gridRowLine2, gridColumnLine1, gridColumnLine2].forEach {
-                $0.isHidden = false
-            }
+            gridView.isHidden = false
         }
         gridToggleButton.changeToggle()
         gridToggleButton.isOnToggle = !gridToggleButton.isOnToggle
