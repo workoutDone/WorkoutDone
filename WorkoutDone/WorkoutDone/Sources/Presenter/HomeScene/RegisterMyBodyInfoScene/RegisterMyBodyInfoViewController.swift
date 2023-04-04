@@ -11,22 +11,24 @@ import Then
 import RxCocoa
 import RxSwift
 
+struct BodyInputData {
+    var weight : String?
+    var skeletalMusleMass : String?
+    var fatPercentage : String?
+}
+
+
 class RegisterMyBodyInfoViewController : BaseViewController {
     // MARK: - ViewModel
     var viewModel = RegisterMyBodyInfoViewModel()
-//    private lazy var input = RegisterMyBodyInfoViewModel.Input(
-//        weightInputText: weightTextField.rx.text.orEmpty.asDriver(),
-//        skeletalMusleMassInputText: skeletalMuscleMassTextField.rx.text.orEmpty.asDriver(),
-//        fatPercentageInputText: fatPercentageTextField.rx.text.orEmpty.asDriver(),
-//        saveButtonTapped: saveButton.rx.tap.asDriver(),
-//        selectedDate: Driver.just(Date().yyyyMMddToString())
-//    )
-    var test = PublishSubject<String>()
+
+//    var test = PublishSubject<String>()
+    var test = PublishSubject<BodyInputData>()
     private lazy var input = RegisterMyBodyInfoViewModel.Input(
         weightInputText: weightTextField.rx.text.orEmpty.asDriver(),
         skeletalMusleMassInputText: skeletalMuscleMassTextField.rx.text.orEmpty.asDriver(),
         fatPercentageInputText: fatPercentageTextField.rx.text.orEmpty.asDriver(),
-        saveButtonTapped: test.asDriver(onErrorJustReturn: ""),
+        saveButtonTapped: test.asDriver(onErrorJustReturn: BodyInputData(weight: "", skeletalMusleMass: "", fatPercentage: "")),
         selectedDate: Driver.just(Date().yyyyMMddToString())
     )
     private lazy var output = viewModel.transform(input: input)
@@ -278,7 +280,11 @@ class RegisterMyBodyInfoViewController : BaseViewController {
         
         saveButton.rx.tap
             .bind { value in
-                self.test.onNext(self.weightTextField.text ?? "")
+//                self.test.onNext(self.weightTextField.text ?? "")
+                self.test.onNext(BodyInputData(
+                    weight: self.weightTextField.text ?? "",
+                    skeletalMusleMass: self.skeletalMuscleMassTextField.text ?? "",
+                    fatPercentage: self.fatPercentageTextField.text ?? ""))
             }.disposed(by: disposeBag)
         
 //        output.saveData.drive().disposed(by: disposeBag)
