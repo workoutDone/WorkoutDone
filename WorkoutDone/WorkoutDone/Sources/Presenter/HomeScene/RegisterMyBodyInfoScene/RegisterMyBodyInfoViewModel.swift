@@ -21,6 +21,7 @@ class RegisterMyBodyInfoViewModel {
     //struct
     var test = PublishSubject<Void>()
     struct Input {
+//        let loadView : Driver<Void>
         let weightInputText : Driver<String>
         let skeletalMusleMassInputText : Driver<String>
         let fatPercentageInputText : Driver<String>
@@ -33,6 +34,7 @@ class RegisterMyBodyInfoViewModel {
         let fatPercentageOutputText : Driver<String>
         let saveData : Driver<Void>
         let isConfirmEnabled : Driver<Bool>
+//        let readWeightData : Driver<String>
     }
     func trimText(text: String) -> String {
         if text.count >= 3 {
@@ -87,6 +89,14 @@ class RegisterMyBodyInfoViewModel {
             print("Error updating \(error)")
         }
     }
+    func validBodyInfoDdata(id : Int) -> Bool {
+        let selectedBodyInfoData = realm.object(ofType: WorkOutDoneData.self, forPrimaryKey: id)
+        return selectedBodyInfoData?.bodyInfo == nil ? false : true
+    }
+//    func readBodyInfoData(id : Int) -> Wo  {
+//        let selectedBodyInfoData = realm.object(ofType: WorkOutDoneData.self, forPrimaryKey: id)
+//        return selectedBodyInfoData
+//    }
     
     func transform(input: Input) -> Output {
         let weightText = input.weightInputText.map { value in
@@ -114,21 +124,38 @@ class RegisterMyBodyInfoViewModel {
                 return false
             }
         })
-  
+        
+//        let readWeightData = input.loadView.map { value in
+//            <#code#>
+//        }
         
         let inputData = input.saveButtonTapped.map { value in
-            self.updateBodyInfoData(
-                weight: Double(value.weight ?? ""),
-                skeletalMusleMass: Double(value.skeletalMusleMass ?? ""),
-                fatPercentage: Double(value.fatPercentage ?? ""),
-                date: "2023.04.20",
-                id: 20230420)
+            if self.validBodyInfoDdata(id: 20230420) {
+                ///값이 존재하는 경우 Update
+                self.updateBodyInfoData(
+                    weight: Double(value.weight ?? ""),
+                    skeletalMusleMass: Double(value.skeletalMusleMass ?? ""),
+                    fatPercentage: Double(value.fatPercentage ?? ""),
+                    date: "2023.04.20",
+                    id: 20230420)
+            }
+            else {
+                ///값이 없는 경우 Create
+                self.createBodyInfoData(
+                    weight: Double(value.weight ?? ""),
+                    skeletalMusleMass: Double(value.skeletalMusleMass ?? ""),
+                    fatPercentage: Double(value.fatPercentage ?? ""),
+                    date: "2023.04.20",
+                    id: 20230420)
+            }
         }
         return Output(
             weightOutputText: weightText,
             skeletalMusleMassOutputText: skeletalMusleMassText,
             fatPercentageOutputText: fatPercentageText, 
-            saveData: inputData, isConfirmEnabled: buttonEnabled)
+            saveData: inputData,
+            isConfirmEnabled: buttonEnabled
+        )
     }
 }
 

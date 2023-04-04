@@ -22,13 +22,12 @@ class RegisterMyBodyInfoViewController : BaseViewController {
     // MARK: - ViewModel
     var viewModel = RegisterMyBodyInfoViewModel()
 
-//    var test = PublishSubject<String>()
-    var test = PublishSubject<BodyInputData>()
+    var bodyInputData = PublishSubject<BodyInputData>()
     private lazy var input = RegisterMyBodyInfoViewModel.Input(
         weightInputText: weightTextField.rx.text.orEmpty.asDriver(),
         skeletalMusleMassInputText: skeletalMuscleMassTextField.rx.text.orEmpty.asDriver(),
         fatPercentageInputText: fatPercentageTextField.rx.text.orEmpty.asDriver(),
-        saveButtonTapped: test.asDriver(onErrorJustReturn: BodyInputData(weight: "", skeletalMusleMass: "", fatPercentage: "")),
+        saveButtonTapped: bodyInputData.asDriver(onErrorJustReturn: BodyInputData(weight: "", skeletalMusleMass: "", fatPercentage: "")),
         selectedDate: Driver.just(Date().yyyyMMddToString())
     )
     private lazy var output = viewModel.transform(input: input)
@@ -280,40 +279,21 @@ class RegisterMyBodyInfoViewController : BaseViewController {
         
         saveButton.rx.tap
             .bind { value in
-//                self.test.onNext(self.weightTextField.text ?? "")
-                self.test.onNext(BodyInputData(
+                self.bodyInputData.onNext(BodyInputData(
                     weight: self.weightTextField.text ?? "",
                     skeletalMusleMass: self.skeletalMuscleMassTextField.text ?? "",
                     fatPercentage: self.fatPercentageTextField.text ?? ""))
             }.disposed(by: disposeBag)
         
-//        output.saveData.drive().disposed(by: disposeBag)
-//        output.saveData.drive { value in
-//            if value {
-//                print("dd")
-//            }
-//            else {
-//                print("노노")
-//            }
-//        }
-//        output.saveData.bind {
-//            self.saveButton.rx.tap
-//        }
-//            .disposed(by: disposeBag)
-//        output.saveData.bind
+        
         
     }
     override func actions() {
         super.actions()
         cancelButton.addTarget(self, action: #selector(cancelButtonTapped), for: .touchUpInside)
-        saveButton.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
     }
     @objc func cancelButtonTapped() {
         dismiss(animated: true)
-    }
-    @objc func saveButtonTapped() {
-//        dismiss(animated: true)
-//        print("zmfflr")
     }
     @objc func keyboardUp(notification: NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
