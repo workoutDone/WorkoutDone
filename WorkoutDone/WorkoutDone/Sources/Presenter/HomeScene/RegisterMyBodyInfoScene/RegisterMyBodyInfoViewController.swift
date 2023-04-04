@@ -23,7 +23,9 @@ class RegisterMyBodyInfoViewController : BaseViewController {
     var viewModel = RegisterMyBodyInfoViewModel()
 
     var bodyInputData = PublishSubject<BodyInputData>()
+    var didLoad = PublishSubject<Void>()
     private lazy var input = RegisterMyBodyInfoViewModel.Input(
+        loadView: didLoad.asDriver(onErrorJustReturn: ()),
         weightInputText: weightTextField.rx.text.orEmpty.asDriver(),
         skeletalMusleMassInputText: skeletalMuscleMassTextField.rx.text.orEmpty.asDriver(),
         fatPercentageInputText: fatPercentageTextField.rx.text.orEmpty.asDriver(),
@@ -277,13 +279,23 @@ class RegisterMyBodyInfoViewController : BaseViewController {
         })
             .disposed(by: disposeBag)
         
+        output.readWeightData.drive(weightTextField.rx.text)
+            .disposed(by: disposeBag)
+        output.readSkeletalMusleMassData.drive(skeletalMuscleMassTextField.rx.text)
+            .disposed(by: disposeBag)
+        output.readFatPercentageData.drive(fatPercentageTextField.rx.text)
+            .disposed(by: disposeBag)
+        
+        
+        didLoad.onNext(())
         saveButton.rx.tap
             .bind { value in
                 self.bodyInputData.onNext(BodyInputData(
                     weight: self.weightTextField.text ?? "",
                     skeletalMusleMass: self.skeletalMuscleMassTextField.text ?? "",
                     fatPercentage: self.fatPercentageTextField.text ?? ""))
-            }.disposed(by: disposeBag)
+            }
+            .disposed(by: disposeBag)
         
         
         

@@ -21,7 +21,7 @@ class RegisterMyBodyInfoViewModel {
     //struct
     var test = PublishSubject<Void>()
     struct Input {
-//        let loadView : Driver<Void>
+        let loadView : Driver<Void>
         let weightInputText : Driver<String>
         let skeletalMusleMassInputText : Driver<String>
         let fatPercentageInputText : Driver<String>
@@ -34,7 +34,9 @@ class RegisterMyBodyInfoViewModel {
         let fatPercentageOutputText : Driver<String>
         let saveData : Driver<Void>
         let isConfirmEnabled : Driver<Bool>
-//        let readWeightData : Driver<String>
+        let readWeightData : Driver<String>
+        let readSkeletalMusleMassData : Driver<String>
+        let readFatPercentageData : Driver<String>
     }
     func trimText(text: String) -> String {
         if text.count >= 3 {
@@ -89,14 +91,14 @@ class RegisterMyBodyInfoViewModel {
             print("Error updating \(error)")
         }
     }
-    func validBodyInfoDdata(id : Int) -> Bool {
+    func validBodyInfoData(id : Int) -> Bool {
         let selectedBodyInfoData = realm.object(ofType: WorkOutDoneData.self, forPrimaryKey: id)
         return selectedBodyInfoData?.bodyInfo == nil ? false : true
     }
-//    func readBodyInfoData(id : Int) -> Wo  {
-//        let selectedBodyInfoData = realm.object(ofType: WorkOutDoneData.self, forPrimaryKey: id)
-//        return selectedBodyInfoData
-//    }
+    func readBodyInfoData(id : Int) -> WorkOutDoneData?  {
+        let selectedBodyInfoData = realm.object(ofType: WorkOutDoneData.self, forPrimaryKey: id)
+        return selectedBodyInfoData
+    }
     
     func transform(input: Input) -> Output {
         let weightText = input.weightInputText.map { value in
@@ -125,12 +127,36 @@ class RegisterMyBodyInfoViewModel {
             }
         })
         
-//        let readWeightData = input.loadView.map { value in
-//            <#code#>
-//        }
+        let readWeightData = input.loadView.map { _ in
+            if self.validBodyInfoData(id: 20230420) {
+                let weight = self.readBodyInfoData(id: 20230420)?.bodyInfo?.wegiht
+                return String(weight ?? 0)
+            }
+            else {
+                return ""
+            }
+        }
+        let readSkeletalMusleMassData = input.loadView.map { _ in
+            if self.validBodyInfoData(id: 20230420) {
+                let skeletalMusleMass = self.readBodyInfoData(id: 20230420)?.bodyInfo?.skeletalMuscleMass
+                return String(skeletalMusleMass ?? 0)
+            }
+            else {
+                return ""
+            }
+        }
+        let readFatPercentageData = input.loadView.map { _ in
+            if self.validBodyInfoData(id: 20230420) {
+                let fatPercentage = self.readBodyInfoData(id: 20230420)?.bodyInfo?.fatPercentage
+                return String(fatPercentage ?? 0)
+            }
+            else {
+                return ""
+            }
+        }
         
         let inputData = input.saveButtonTapped.map { value in
-            if self.validBodyInfoDdata(id: 20230420) {
+            if self.validBodyInfoData(id: 20230420) {
                 ///값이 존재하는 경우 Update
                 self.updateBodyInfoData(
                     weight: Double(value.weight ?? ""),
@@ -149,13 +175,16 @@ class RegisterMyBodyInfoViewModel {
                     id: 20230420)
             }
         }
+
         return Output(
             weightOutputText: weightText,
             skeletalMusleMassOutputText: skeletalMusleMassText,
-            fatPercentageOutputText: fatPercentageText, 
+            fatPercentageOutputText: fatPercentageText,
             saveData: inputData,
-            isConfirmEnabled: buttonEnabled
-        )
+            isConfirmEnabled: buttonEnabled,
+            readWeightData: readWeightData,
+            readSkeletalMusleMassData: readSkeletalMusleMassData,
+            readFatPercentageData: readFatPercentageData)
     }
 }
 
