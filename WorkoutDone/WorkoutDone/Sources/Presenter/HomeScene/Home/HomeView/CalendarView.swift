@@ -18,9 +18,12 @@ var sampleData = [WorkOutDone(date: Calendar.current.date(from: DateComponents(y
 
 class CalendarView : BaseUIView {
     // MARK: - PROPERTIES
+    var selectDate = ""
+    
     var calendar = Calendar.current
     let formatter = DateFormatter()
     var components = DateComponents()
+    var selectComponents = DateComponents()
     var firstWeekday : Int = 0
     var daysCount : Int = 0
     var previousDays : Int = 0
@@ -213,6 +216,12 @@ class CalendarView : BaseUIView {
         } else {
             calculateWeek()
         }
+        
+        selectComponents.year = calendar.component(.year, from: Date())
+        selectComponents.month = calendar.component(.month, from: Date())
+        selectComponents.day = calendar.component(.day, from: Date())
+        
+        selectDate = setSelectDateFormatter(selectDate: selectComponents)
     }
     
     func setAction() {
@@ -341,6 +350,13 @@ class CalendarView : BaseUIView {
             }
         }
     }
+    
+    func setSelectDateFormatter(selectDate : DateComponents) -> String {
+        let selecteDateFormatter = DateFormatter()
+        selecteDateFormatter.dateFormat = "yyyyMMdd"
+        
+        return selecteDateFormatter.string(from: calendar.date(from: selectDate)!)
+    }
 }
 
 extension CalendarView: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
@@ -372,7 +388,7 @@ extension CalendarView: UICollectionViewDelegate, UICollectionViewDataSource, UI
             cell.todayImage.isHidden = true
             cell.workOutDoneImage.isHidden = true
             
-            if !UserDefaultsManager.shared.isMonthlyCalendar && components.month ?? 1 == calendar.component(.month, from: Date()) {
+            if components.month ?? 1 == calendar.component(.month, from: Date()) {
                 for data in sampleData {
                     if Calendar.current.date(from: DateComponents(year: components.year, month: components.month, day: Int(days[indexPath.row])))! == data.date {
                         cell.workOutDoneImage.isHidden = false
@@ -383,7 +399,6 @@ extension CalendarView: UICollectionViewDelegate, UICollectionViewDataSource, UI
                 
                 if days[indexPath.row] == String(calendar.component(.day, from: Date())) {
                     cell.todayImage.isHidden = false
-                    cell.dayLabel.font = .pretendard(.bold, size: 16)
                 }
             } else {
                 if indexPath.row >= firstWeekday - 1 {
@@ -391,6 +406,12 @@ extension CalendarView: UICollectionViewDelegate, UICollectionViewDataSource, UI
                 } else {
                     cell.dayLabel.textColor = .colorF3F3F303
                 }
+            }
+            
+            if selectComponents.year == components.year && selectComponents.month == components.month && selectComponents.day == Int(days[indexPath.row]) {
+                cell.dayLabel.font = .pretendard(.bold, size: 16)
+            } else {
+                cell.dayLabel.font  = .pretendard(.regular, size: 16)
             }
             
             return cell
@@ -410,13 +431,18 @@ extension CalendarView: UICollectionViewDelegate, UICollectionViewDataSource, UI
             }
             if components.month ?? 1 == calendar.component(.month, from: Date()) && days[indexPath.row] == String(calendar.component(.day, from: Date())) {
                 cell.todayImage.isHidden = false
-                cell.dayLabel.font = .pretendard(.bold, size: 14)
             }
             cell.dayLabel.textColor = .colorF3F3F3
         } else {
             cell.dayLabel.textColor = .colorF3F3F303
         }
         
+        
+        if selectComponents.year == components.year && selectComponents.month == components.month && selectComponents.day == Int(days[indexPath.row]) {
+            cell.dayLabel.font = .pretendard(.bold, size: 14)
+        } else {
+            cell.dayLabel.font  = .pretendard(.regular, size: 14)
+        }
       
         return cell
     }
@@ -435,5 +461,33 @@ extension CalendarView: UICollectionViewDelegate, UICollectionViewDataSource, UI
             return CGSize(width: collectionView.bounds.width / 7.0, height: 29)
         }
         return CGSize(width: collectionView.bounds.width / 7.0, height: 208 / CGFloat(days.count / 7))
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        if UserDefaultsManager.shared.isMonthlyCalendar && indexPath.row >= firstWeekday - 1 && indexPath.row <= daysCount + firstWeekday - 2 {
+            if indexPath.row >= firstWeekday - 1 && indexPath.row <= daysCount + firstWeekday - 2 {
+                selectComponents.year = components.year
+                selectComponents.month = components.month
+                selectComponents.day = Int(days[indexPath.row])
+                selectDate = setSelectDateFormatter(selectDate: selectComponents)
+            }
+        } else {
+            if components.month ?? 1 == calendar.component(.month, from: Date()) {
+                selectComponents.year = components.year
+                selectComponents.month = components.month
+                selectComponents.day = Int(days[indexPath.row])
+                selectDate = setSelectDateFormatter(selectDate: selectComponents)
+            } else {
+                if indexPath.row >= firstWeekday - 1 {
+                    selectComponents.year = components.year
+                    selectComponents.month = components.month
+                    selectComponents.day = Int(days[indexPath.row])
+                    selectDate = setSelectDateFormatter(selectDate: selectComponents)
+                }
+            }
+        }
+        
+        collectionView.reloadData()
     }
 }
