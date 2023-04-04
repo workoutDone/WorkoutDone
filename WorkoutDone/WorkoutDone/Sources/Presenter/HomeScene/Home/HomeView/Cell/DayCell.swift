@@ -46,8 +46,9 @@ class DayCell: UICollectionViewCell {
         }
         
         todayImage.snp.makeConstraints {
-            $0.centerX.centerY.equalToSuperview()
-            $0.width.height.equalTo(27)
+            $0.centerX.equalToSuperview()
+            $0.top.equalTo(dayLabel.snp.bottom).offset(1)
+            $0.width.height.equalTo(3)
         }
         
         workOutDoneImage.snp.makeConstraints {
