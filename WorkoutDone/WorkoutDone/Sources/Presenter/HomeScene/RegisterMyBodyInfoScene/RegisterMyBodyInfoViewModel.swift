@@ -130,7 +130,12 @@ class RegisterMyBodyInfoViewModel {
         let readWeightData = input.loadView.map { _ in
             if self.validBodyInfoData(id: 20230420) {
                 let weight = self.readBodyInfoData(id: 20230420)?.bodyInfo?.wegiht
-                return String(weight ?? 0)
+                if let doubleWeight = weight {
+                    return String(doubleWeight)
+                }
+                else {
+                    return ""
+                }
             }
             else {
                 return ""
@@ -139,7 +144,12 @@ class RegisterMyBodyInfoViewModel {
         let readSkeletalMusleMassData = input.loadView.map { _ in
             if self.validBodyInfoData(id: 20230420) {
                 let skeletalMusleMass = self.readBodyInfoData(id: 20230420)?.bodyInfo?.skeletalMuscleMass
-                return String(skeletalMusleMass ?? 0)
+                if let doubleSkeletalMusleMass = skeletalMusleMass {
+                    return String(doubleSkeletalMusleMass)
+                }
+                else {
+                    return ""
+                }
             }
             else {
                 return ""
@@ -148,7 +158,12 @@ class RegisterMyBodyInfoViewModel {
         let readFatPercentageData = input.loadView.map { _ in
             if self.validBodyInfoData(id: 20230420) {
                 let fatPercentage = self.readBodyInfoData(id: 20230420)?.bodyInfo?.fatPercentage
-                return String(fatPercentage ?? 0)
+                if let doubleFatPercentage = fatPercentage {
+                    return String(doubleFatPercentage)
+                }
+                else {
+                    return ""
+                }
             }
             else {
                 return ""
