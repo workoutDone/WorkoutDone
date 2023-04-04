@@ -397,11 +397,11 @@
 		9200604129B1AC8900586063 /* HomeView */ = {
 			isa = PBXGroup;
 			children = (
-				9264A58529C19B750010856F /* Cell */,
 				920060E129B63C1500586063 /* CalendarView.swift */,
 				9200604229B1ACBF00586063 /* RecordView.swift */,
 				9200604429B1ACD900586063 /* WorkoutView.swift */,
 				9200604629B1ACF400586063 /* WorkoutResultView.swift */,
+				9264A58529C19B750010856F /* Cell */,
 			);
 			path = HomeView;
 			sourceTree = "<group>";

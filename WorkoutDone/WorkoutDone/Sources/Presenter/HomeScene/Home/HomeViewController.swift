@@ -119,6 +119,8 @@ class HomeViewController : BaseViewController {
         registerMyBodyInfoViewController.modalTransitionStyle = .crossDissolve
         registerMyBodyInfoViewController.modalPresentationStyle = .overFullScreen
         present(registerMyBodyInfoViewController, animated: true)
+        
+        print(calendarView.selectDate)
     }
     @objc func workoutRoutineChoiceButtonTapped() {
         let workoutViewController = WorkoutViewController()
