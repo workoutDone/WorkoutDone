@@ -388,7 +388,7 @@ extension CalendarView: UICollectionViewDelegate, UICollectionViewDataSource, UI
             cell.todayImage.isHidden = true
             cell.workOutDoneImage.isHidden = true
             
-            if !UserDefaultsManager.shared.isMonthlyCalendar && components.month ?? 1 == calendar.component(.month, from: Date()) {
+            if components.month ?? 1 == calendar.component(.month, from: Date()) {
                 for data in sampleData {
                     if Calendar.current.date(from: DateComponents(year: components.year, month: components.month, day: Int(days[indexPath.row])))! == data.date {
                         cell.workOutDoneImage.isHidden = false
@@ -399,7 +399,6 @@ extension CalendarView: UICollectionViewDelegate, UICollectionViewDataSource, UI
                 
                 if days[indexPath.row] == String(calendar.component(.day, from: Date())) {
                     cell.todayImage.isHidden = false
-                    cell.dayLabel.font = .pretendard(.bold, size: 16)
                 }
             } else {
                 if indexPath.row >= firstWeekday - 1 {
@@ -407,6 +406,12 @@ extension CalendarView: UICollectionViewDelegate, UICollectionViewDataSource, UI
                 } else {
                     cell.dayLabel.textColor = .colorF3F3F303
                 }
+            }
+            
+            if selectComponents.year == components.year && selectComponents.month == components.month && selectComponents.day == Int(days[indexPath.row]) {
+                cell.dayLabel.font = .pretendard(.bold, size: 16)
+            } else {
+                cell.dayLabel.font  = .pretendard(.regular, size: 16)
             }
             
             return cell
@@ -426,13 +431,18 @@ extension CalendarView: UICollectionViewDelegate, UICollectionViewDataSource, UI
             }
             if components.month ?? 1 == calendar.component(.month, from: Date()) && days[indexPath.row] == String(calendar.component(.day, from: Date())) {
                 cell.todayImage.isHidden = false
-                cell.dayLabel.font = .pretendard(.bold, size: 14)
             }
             cell.dayLabel.textColor = .colorF3F3F3
         } else {
             cell.dayLabel.textColor = .colorF3F3F303
         }
         
+        
+        if selectComponents.year == components.year && selectComponents.month == components.month && selectComponents.day == Int(days[indexPath.row]) {
+            cell.dayLabel.font = .pretendard(.bold, size: 14)
+        } else {
+            cell.dayLabel.font  = .pretendard(.regular, size: 14)
+        }
       
         return cell
     }
@@ -477,5 +487,7 @@ extension CalendarView: UICollectionViewDelegate, UICollectionViewDataSource, UI
                 }
             }
         }
+        
+        collectionView.reloadData()
     }
 }

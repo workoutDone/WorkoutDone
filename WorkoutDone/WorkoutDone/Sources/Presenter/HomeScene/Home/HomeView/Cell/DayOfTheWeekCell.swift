@@ -11,7 +11,7 @@ class DayOfTheWeekCell: UICollectionViewCell {
     // MARK: - PROPERTIES
     var dayOfTheWeekLabel = UILabel().then {
         $0.textColor = .colorFFFFFF
-        $0.font = .pretendard(.regular, size: 12)
+        $0.font = .pretendard(.regular, size: 16)
     }
     
     // MARK: - LIFECYCLE
