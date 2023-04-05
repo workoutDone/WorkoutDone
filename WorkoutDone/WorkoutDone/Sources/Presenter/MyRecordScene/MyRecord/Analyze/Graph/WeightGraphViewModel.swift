@@ -17,6 +17,7 @@ class WeightGraphViewModel : ObservableObject {
         let realm = try! Realm()
         let objects = realm.objects(WorkOutDoneData.self)
         workoutDoneData = Array(objects)
+        print(workoutDoneData)
         print("데이터")
     }
 

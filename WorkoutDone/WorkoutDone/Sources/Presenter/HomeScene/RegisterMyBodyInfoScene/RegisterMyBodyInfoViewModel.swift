@@ -63,7 +63,7 @@ class RegisterMyBodyInfoViewModel {
             try realm.write {
                 let workoutDoneData = WorkOutDoneData(id: id, date: date)
                 let bodyInfo = BodyInfo()
-                bodyInfo.wegiht = weight
+                bodyInfo.weight = weight
                 bodyInfo.skeletalMuscleMass = skeletalMusleMass
                 bodyInfo.fatPercentage = fatPercentage
                 workoutDoneData.bodyInfo = bodyInfo
@@ -82,7 +82,7 @@ class RegisterMyBodyInfoViewModel {
         do {
             try realm.write {
                 let workoutDoneData = WorkOutDoneData(id: id, date: date)
-                let bodyInfo = BodyInfo(value: ["wegiht" : weight, "skeletalMuscleMass" : skeletalMusleMass, "fatPercentage" : fatPercentage])
+                let bodyInfo = BodyInfo(value: ["weight" : weight, "skeletalMuscleMass" : skeletalMusleMass, "fatPercentage" : fatPercentage])
                 workoutDoneData.bodyInfo = bodyInfo
                 realm.add(workoutDoneData, update: .modified)
             }
@@ -129,7 +129,7 @@ class RegisterMyBodyInfoViewModel {
         
         let readWeightData = input.loadView.map { _ in
             if self.validBodyInfoData(id: 20230420) {
-                let weight = self.readBodyInfoData(id: 20230420)?.bodyInfo?.wegiht
+                let weight = self.readBodyInfoData(id: 20230420)?.bodyInfo?.weight
                 if let doubleWeight = weight {
                     return String(doubleWeight)
                 }
@@ -177,8 +177,8 @@ class RegisterMyBodyInfoViewModel {
                     weight: Double(value.weight ?? ""),
                     skeletalMusleMass: Double(value.skeletalMusleMass ?? ""),
                     fatPercentage: Double(value.fatPercentage ?? ""),
-                    date: "2023.04.20",
-                    id: 20230420)
+                    date: "2023.04.21",
+                    id: 20230421)
             }
             else {
                 ///값이 없는 경우 Create
@@ -186,8 +186,8 @@ class RegisterMyBodyInfoViewModel {
                     weight: Double(value.weight ?? ""),
                     skeletalMusleMass: Double(value.skeletalMusleMass ?? ""),
                     fatPercentage: Double(value.fatPercentage ?? ""),
-                    date: "2023.04.20",
-                    id: 20230420)
+                    date: "2023.04.21",
+                    id: 20230421)
             }
         }
 
