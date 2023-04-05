@@ -12,8 +12,10 @@ import AVFoundation
 
 class HomeButtonCameraViewController : BaseViewController {
     let cameraViewHeight: Int = 468
-    var backCameraOn: Bool = true
+    
     var frameImages: [String] = ["frame1", "frame2", "frame3", "frame4", "frame5", "frame6"]
+    var isSelectFrameImagesIndex = 0
+    var backCameraOn: Bool = true
     
     var captureSession: AVCaptureSession!
     var frontCamera: AVCaptureDevice!
@@ -24,15 +26,9 @@ class HomeButtonCameraViewController : BaseViewController {
     var videoOutput: AVCaptureVideoDataOutput!
     var takePicture = false
     
-    var isSelectFrameImagesIndex = 0
-    
     private let cameraView = UIView()
     
     private let frameImage = UIImageView()
-    
-    private let captureImage = UIImageView().then {
-        $0.backgroundColor = .yellow
-    }
     
     private let backButton = BackButton()
     
@@ -58,16 +54,13 @@ class HomeButtonCameraViewController : BaseViewController {
     private let switchCameraButton = UIButton().then {
         $0.setImage(UIImage(named: "switchCamera"), for: .normal)
     }
-    
-    private let pressShutterView = PressShutterView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setDelegateDataSource()
-        pressShutterView.isHidden = true
         //        saveButton.isHidden = true
-        captureImage.isHidden = true
+        gridView.isHidden = true
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -79,12 +72,9 @@ class HomeButtonCameraViewController : BaseViewController {
     override func setupLayout() {
         super.setupLayout()
         
-        [cameraView, captureImage, backButton, gridToggleButton, collectionView, shutterButton, switchCameraButton, pressShutterView].forEach {
+        [cameraView, backButton, gridView, gridToggleButton, collectionView, shutterButton, switchCameraButton, frameImage].forEach {
             view.addSubview($0)
         }
-        
-        view.addSubview(gridView)
-        view.addSubview(frameImage)
     }
     
     override func setupConstraints() {
@@ -114,12 +104,6 @@ class HomeButtonCameraViewController : BaseViewController {
             $0.leading.trailing.equalTo(cameraView)
         }
         
-        captureImage.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(22)
-            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide)
-            $0.height.equalTo(cameraViewHeight)
-        }
-        
         collectionView.snp.makeConstraints {
             $0.top.equalTo(cameraView.snp.bottom).offset(20)
             $0.leading.equalToSuperview()
@@ -139,10 +123,10 @@ class HomeButtonCameraViewController : BaseViewController {
             $0.width.height.equalTo(42)
         }
         
-        pressShutterView.snp.makeConstraints {
-            $0.top.equalTo(cameraView.snp.bottom)
-            $0.bottom.leading.trailing.equalToSuperview()
-        }
+//        pressShutterView.snp.makeConstraints {
+//            $0.top.equalTo(cameraView.snp.bottom)
+//            $0.bottom.leading.trailing.equalToSuperview()
+//        }
         
 //        saveButton.snp.makeConstraints {
 //            $0.bottom.equalTo(view.safeAreaLayoutGuide).offset(-13)
@@ -157,7 +141,7 @@ class HomeButtonCameraViewController : BaseViewController {
         switchCameraButton.addTarget(self, action: #selector(switchCameraButtonTapped), for: .touchUpInside)
         backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
         gridToggleButton.addTarget(self, action: #selector(gridToggleButtonTapped), for: .touchUpInside)
-        pressShutterView.againButton.addTarget(self, action: #selector(againButtonTapped), for: .touchUpInside)
+//        pressShutterView.againButton.addTarget(self, action: #selector(againButtonTapped), for: .touchUpInside)
     }
     
     func setDelegateDataSource() {
@@ -220,7 +204,7 @@ class HomeButtonCameraViewController : BaseViewController {
     
     func setupPreviewLayer() {
         previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
-        previewLayer.videoGravity = .resize
+        previewLayer.videoGravity = .resizeAspectFill
         cameraView.layer.insertSublayer(previewLayer, below: switchCameraButton.layer)
         previewLayer.frame = self.cameraView.layer.frame
     }
@@ -261,11 +245,6 @@ class HomeButtonCameraViewController : BaseViewController {
     }
 
     @objc func captureButtonTapped(sender: UIButton!) {
-        collectionView.isHidden = true
-        shutterButton.isHidden = true
-        switchCameraButton.isHidden = true
-        pressShutterView.isHidden = false
-        
         takePicture = true
     }
     
@@ -274,10 +253,7 @@ class HomeButtonCameraViewController : BaseViewController {
     }
     
     @objc func againButtonTapped(sender: UIButton!) {
-        pressShutterView.isHidden = true
-        collectionView.isHidden = false
-        shutterButton.isHidden = false
-        switchCameraButton.isHidden = false
+        
     }
 }
 
@@ -321,6 +297,11 @@ extension HomeButtonCameraViewController : UICollectionViewDelegate, UICollectio
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         isSelectFrameImagesIndex = indexPath.row
+        if indexPath.row == 0 {
+            frameImage.image = nil
+        } else {
+            frameImage.image = UIImage(named: frameImages[indexPath.row])
+        }
         collectionView.reloadData()
     }
 }
@@ -340,8 +321,10 @@ extension HomeButtonCameraViewController : AVCaptureVideoDataOutputSampleBufferD
         let uiImage = UIImage(ciImage: ciImage)
         
         DispatchQueue.main.async {
-            self.captureImage.image = uiImage
-            self.captureImage.isHidden = false
+            let pressShutterVC = PressShutterViewController()
+            pressShutterVC.captureImage.image = uiImage
+            self.navigationController?.pushViewController(pressShutterVC, animated: false)
+            
             self.takePicture = false
             self.captureSession.stopRunning()
         }
