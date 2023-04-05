@@ -82,6 +82,7 @@
 		A59EF6F129C4C909005DE9B5 /* PreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59EF6F029C4C909005DE9B5 /* PreviewView.swift */; };
 		A5A10CA929D59ED600E45FC8 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5A10CA829D59ED600E45FC8 /* String.swift */; };
 		A5A10CAB29D59EF300E45FC8 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5A10CAA29D59EF300E45FC8 /* Date.swift */; };
+		A5FD469829DDDB4C003AC96E /* SkeletalMuslemassViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5FD469729DDDB4C003AC96E /* SkeletalMuslemassViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -173,6 +174,7 @@
 		A59EF6F029C4C909005DE9B5 /* PreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewView.swift; sourceTree = "<group>"; };
 		A5A10CA829D59ED600E45FC8 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		A5A10CAA29D59EF300E45FC8 /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
+		A5FD469729DDDB4C003AC96E /* SkeletalMuslemassViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkeletalMuslemassViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -481,6 +483,7 @@
 				A57061D329D045690083ECDD /* WeightGraphView.swift */,
 				A57061D929D09D5C0083ECDD /* WeightGraphViewModel.swift */,
 				A57061D529D09AC40083ECDD /* SkeletalMuscleMassGraphView.swift */,
+				A5FD469729DDDB4C003AC96E /* SkeletalMuslemassViewModel.swift */,
 				A57061D729D09AD40083ECDD /* FatPercentageGraphView.swift */,
 			);
 			path = Graph;
@@ -729,6 +732,7 @@
 				A5A10CA929D59ED600E45FC8 /* String.swift in Sources */,
 				9200604B29B1ADA500586063 /* BaseUIView.swift in Sources */,
 				92DCF4D229D1B64100F90002 /* FrameCategoryCell.swift in Sources */,
+				A5FD469829DDDB4C003AC96E /* SkeletalMuslemassViewModel.swift in Sources */,
 				A57061D429D045690083ECDD /* WeightGraphView.swift in Sources */,
 				924E56B229CCB9EA00AA73A2 /* GridToggleButton.swift in Sources */,
 				9264A58229B8735C0010856F /* UserDefaultsManager.swift in Sources */,

@@ -8,17 +8,12 @@
 import SwiftUI
 import RealmSwift
 
-
 class WeightGraphViewModel : ObservableObject {
-    @Published var workoutDoneData : [WorkOutDoneData] = []
+    let realm = try! Realm()
+    @Published var weightData : [WorkOutDoneData] = []
     
-
     func readWeightData() {
-        let realm = try! Realm()
         let objects = realm.objects(WorkOutDoneData.self)
-        workoutDoneData = Array(objects)
-        print(workoutDoneData)
-        print("데이터")
+        weightData = Array(objects)
     }
-
 }

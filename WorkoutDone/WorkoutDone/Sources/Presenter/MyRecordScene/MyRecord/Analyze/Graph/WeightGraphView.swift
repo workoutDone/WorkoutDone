@@ -11,41 +11,11 @@ import SwiftUI
 import Charts
 
 
-struct TestModel {
-    var date : Date
-    let weight : Double
-}
-var list = [
-    TestModel(date: "2023.01.01".yyMMddToDate()!, weight: 1),
-    TestModel(date: "2023.01.02".yyMMddToDate()!, weight: 73),
-    TestModel(date: "2023.01.03".yyMMddToDate()!, weight: 74),
-    TestModel(date: "2023.01.05".yyMMddToDate()!, weight: 71),
-    TestModel(date: "2023.01.06".yyMMddToDate()!, weight: 60),
-    TestModel(date: "2023.01.07".yyMMddToDate()!, weight: 80),
-    TestModel(date: "2023.01.14".yyMMddToDate()!, weight: 80),
-    TestModel(date: "2023.01.15".yyMMddToDate()!, weight: 50),
-    TestModel(date: "2023.01.29".yyMMddToDate()!, weight: 60),
-    TestModel(date: "2023.02.01".yyMMddToDate()!, weight: 70),
-    TestModel(date: "2023.02.02".yyMMddToDate()!, weight: 75),
-    TestModel(date: "2023.02.03".yyMMddToDate()!, weight: 75),
-    TestModel(date: "2023.02.05".yyMMddToDate()!, weight: 75),
-    TestModel(date: "2023.02.06".yyMMddToDate()!, weight: 75),
-    TestModel(date: "2023.02.07".yyMMddToDate()!, weight: 75),
-    TestModel(date: "2023.02.08".yyMMddToDate()!, weight: 75),
-    TestModel(date: "2023.02.09".yyMMddToDate()!, weight: 75),
-    TestModel(date: "2023.02.10".yyMMddToDate()!, weight: 75),
-    TestModel(date: "2023.02.11".yyMMddToDate()!, weight: 150),
-
-]
-
 struct WeightGraphView: View {
     ///우측 정렬
     @Namespace var trailingID
-
+    ///ViewModel
     @StateObject var weightGraphViewModel = WeightGraphViewModel()
-    ///TEST
-    @State var testData : [TestModel] = list
-    
     ///Gesture Property
     @State private var currentActiveItem : WorkOutDoneData?
     ///ViewAppear 시 애니메이션 사용 위한 변수
@@ -54,17 +24,17 @@ struct WeightGraphView: View {
 
     var body: some View {
         ///데이터 최댓값
-        let max = weightGraphViewModel.workoutDoneData.max { item1, item2 in
+        let max = weightGraphViewModel.weightData.max { item1, item2 in
             return item2.bodyInfo?.weight ?? 0 > item1.bodyInfo?.weight ?? 0
         }?.bodyInfo?.weight ?? 0
         ///데이터 최솟값
-        let min = weightGraphViewModel.workoutDoneData.min { item1, item2 in
+        let min = weightGraphViewModel.weightData.min { item1, item2 in
             return item2.bodyInfo?.weight ?? 0 > item1.bodyInfo?.weight ?? 0
         }?.bodyInfo?.weight ?? 0
         ///우측 정렬을 위한 scrollViewReader
         ScrollViewReader { proxy in
             ScrollView(.horizontal) {
-                Chart(weightGraphViewModel.workoutDoneData, id: \.id) { data in
+                Chart(weightGraphViewModel.weightData, id: \.id) { data in
                     LineMark(
                         x: .value("Month", data.date),
                         y: .value("Weight", animate ? data.bodyInfo?.weight ?? 0 : 0)
@@ -123,7 +93,7 @@ struct WeightGraphView: View {
                             .fill(.clear).contentShape(Rectangle())
                             .onTapGesture { value in
                                 if let date : String = proxy.value(atX: value.x) {
-                                    if let currentItem = weightGraphViewModel.workoutDoneData.first(where: { item in
+                                    if let currentItem = weightGraphViewModel.weightData.first(where: { item in
                                         item.date == date
                                     }) {
                                         self.currentActiveItem = currentItem
@@ -136,7 +106,7 @@ struct WeightGraphView: View {
                 })
                 .padding()
                 ///데이터 갯수에 따른 차트 UI 구분
-                .frame(width: UIScreen.main.bounds.width > ViewConstants.dataPointWidth * CGFloat(weightGraphViewModel.workoutDoneData.count) ? UIScreen.main.bounds.width : ViewConstants.dataPointWidth * CGFloat(weightGraphViewModel.workoutDoneData.count))
+                .frame(width: UIScreen.main.bounds.width > ViewConstants.dataPointWidth * CGFloat(weightGraphViewModel.weightData.count) ? UIScreen.main.bounds.width : ViewConstants.dataPointWidth * CGFloat(weightGraphViewModel.weightData.count))
                 ///우측 정렬을 위한 id 설졍
                 .id(trailingID)
             }
@@ -151,13 +121,12 @@ struct WeightGraphView: View {
                 .strokeBorder(Color(UIColor.colorE6E0FF), lineWidth: 1)
         }
         .onAppear {
-            for (index, _) in testData.enumerated() {
+            weightGraphViewModel.readWeightData()
+            for (index, _) in weightGraphViewModel.weightData.enumerated() {
                 withAnimation(.easeOut(duration: 0.8).delay(Double(index) * 0.05)) {
                     animate = true
                 }
             }
-            weightGraphViewModel.readWeightData()
-            
         }
         .onDisappear {
             animate = false
