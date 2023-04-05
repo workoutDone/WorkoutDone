@@ -11,14 +11,26 @@ import Then
 import RxCocoa
 import RxSwift
 
+struct BodyInputData {
+    var weight : String?
+    var skeletalMusleMass : String?
+    var fatPercentage : String?
+}
+
+
 class RegisterMyBodyInfoViewController : BaseViewController {
     // MARK: - ViewModel
     var viewModel = RegisterMyBodyInfoViewModel()
+
+    var bodyInputData = PublishSubject<BodyInputData>()
+    var didLoad = PublishSubject<Void>()
     private lazy var input = RegisterMyBodyInfoViewModel.Input(
+        loadView: didLoad.asDriver(onErrorJustReturn: ()),
         weightInputText: weightTextField.rx.text.orEmpty.asDriver(),
         skeletalMusleMassInputText: skeletalMuscleMassTextField.rx.text.orEmpty.asDriver(),
         fatPercentageInputText: fatPercentageTextField.rx.text.orEmpty.asDriver(),
-        saveButtonTapped: saveButton.rx.tap.asDriver(), selectedDate: Driver.just(Date())
+        saveButtonTapped: bodyInputData.asDriver(onErrorJustReturn: BodyInputData(weight: "", skeletalMusleMass: "", fatPercentage: "")),
+        selectedDate: Driver.just(Date().yyyyMMddToString())
     )
     private lazy var output = viewModel.transform(input: input)
     
@@ -249,6 +261,43 @@ class RegisterMyBodyInfoViewController : BaseViewController {
             .disposed(by: disposeBag)
         output.fatPercentageOutputText.drive(fatPercentageTextField.rx.text)
             .disposed(by: disposeBag)
+        
+        output.isConfirmEnabled.drive(onNext: { value in
+            if value {
+                print("클릭")
+                self.saveButton.isEnabled = true
+            }
+            else {
+                print("클릭 x")
+                self.saveButton.isEnabled = false
+                self.saveButton.backgroundColor = .gray
+            }
+        })
+            .disposed(by: disposeBag)
+        output.saveData.drive(onNext: {
+            self.dismiss(animated: true)
+        })
+            .disposed(by: disposeBag)
+        
+        output.readWeightData.drive(weightTextField.rx.text)
+            .disposed(by: disposeBag)
+        output.readSkeletalMusleMassData.drive(skeletalMuscleMassTextField.rx.text)
+            .disposed(by: disposeBag)
+        output.readFatPercentageData.drive(fatPercentageTextField.rx.text)
+            .disposed(by: disposeBag)
+        
+        
+        didLoad.onNext(())
+        saveButton.rx.tap
+            .bind { value in
+                self.bodyInputData.onNext(BodyInputData(
+                    weight: self.weightTextField.text ?? "",
+                    skeletalMusleMass: self.skeletalMuscleMassTextField.text ?? "",
+                    fatPercentage: self.fatPercentageTextField.text ?? ""))
+            }
+            .disposed(by: disposeBag)
+        
+        
         
     }
     override func actions() {
