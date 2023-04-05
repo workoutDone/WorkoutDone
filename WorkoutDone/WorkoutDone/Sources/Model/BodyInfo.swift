@@ -9,7 +9,7 @@ import Foundation
 import RealmSwift
 
 class BodyInfo : Object {
-    @Persisted dynamic var wegiht : Double?
+    @Persisted dynamic var weight : Double?
     @Persisted dynamic var skeletalMuscleMass : Double?
     @Persisted dynamic var fatPercentage : Double?
 }

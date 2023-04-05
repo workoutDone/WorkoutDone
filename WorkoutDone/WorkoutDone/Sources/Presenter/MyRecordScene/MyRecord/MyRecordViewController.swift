@@ -201,5 +201,13 @@ extension MyRecordViewController : UIPageViewControllerDataSource, UIPageViewCon
             galleryButtonTappedAnimation()
         }
     }
+//    func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
+//        if myRecordPageViewController.viewControllers?[0] is GalleryViewController {
+//            analyzeButtonTappedAniamtion()
+//        }
+//        else {
+//            galleryButtonTappedAnimation()
+//        }
+//    }
 
 }
