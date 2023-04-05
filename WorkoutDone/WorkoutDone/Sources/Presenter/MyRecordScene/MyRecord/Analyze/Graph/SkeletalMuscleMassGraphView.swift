@@ -9,25 +9,11 @@ import SwiftUI
 import Charts
 
 
-struct TestModel3 {
-    var date : Date
-    let skeletalMusleMass : Double
-}
-
-var list3 = [
-    TestModel3(date: "2023.01.01".yyMMddToDate()!, skeletalMusleMass: 30),
-    TestModel3(date: "2023.01.02".yyMMddToDate()!, skeletalMusleMass: 40),
-    TestModel3(date: "2023.01.03".yyMMddToDate()!, skeletalMusleMass: 50),
-
-]
-
 struct SkeletalMuscleMassGraphView: View {
     ///ViewModel
     @StateObject var skeletalMusleMassGraphViewModel = SkeletalMuslemassGraphViewModel()
     ///우측 정렬
     @Namespace var trailingID
-    ///Test
-    @State var testData : [TestModel3] = list3
     ///Gesture Property
     @State private var currentActiveItem : WorkOutDoneData?
     ///ViewAppear 시 애니메이션 사용 위한 변수
