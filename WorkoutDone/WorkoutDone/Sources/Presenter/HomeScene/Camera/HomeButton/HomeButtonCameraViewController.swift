@@ -248,7 +248,7 @@ class HomeButtonCameraViewController : BaseViewController {
         takePicture = true
         
         let pressShutterVC = PressShutterViewController()
-
+        pressShutterVC.frameImage.image = UIImage(named: self.frameImages[self.isSelectFrameImagesIndex])
         self.navigationController?.pushViewController(pressShutterVC, animated: false)
     }
     
@@ -327,6 +327,7 @@ extension HomeButtonCameraViewController : AVCaptureVideoDataOutputSampleBufferD
         DispatchQueue.main.async {
             let pressShutterVC = PressShutterViewController()
             pressShutterVC.captureImage.image = uiImage
+            pressShutterVC.frameImage.image = UIImage(named: self.frameImages[self.isSelectFrameImagesIndex])
             self.navigationController?.pushViewController(pressShutterVC, animated: false)
             
             self.takePicture = false
