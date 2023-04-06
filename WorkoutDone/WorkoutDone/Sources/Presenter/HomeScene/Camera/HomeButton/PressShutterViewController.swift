@@ -66,7 +66,6 @@ class PressShutterViewController: BaseViewController {
         super.viewDidLoad()
         
         
-
     }
     
     override func setupLayout() {
@@ -161,7 +160,18 @@ class PressShutterViewController: BaseViewController {
     }
     
     @objc func saveButtonTapped(sender: UIButton!) {
-        print("x")
+        let saveImageToastMessageVC = SaveImageToastMessageViewController()
+        saveImageToastMessageVC.modalPresentationStyle = .overFullScreen
+        
+        UIView.animate(withDuration: 0.5, delay: 0.0, options: .curveEaseOut, animations: {
+            self.present(saveImageToastMessageVC, animated: false)
+        }) { (completed) in
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1) {
+                UIView.animate(withDuration: 0.5, delay: 0.0, options: .curveEaseOut) {
+                saveImageToastMessageVC.dismiss(animated: false)
+            }
+            }
+        }
     }
     
     @objc func instaButtonTapped(sender: UIButton!) {
