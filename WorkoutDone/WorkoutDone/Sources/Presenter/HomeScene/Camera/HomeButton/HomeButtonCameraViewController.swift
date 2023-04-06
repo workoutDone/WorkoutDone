@@ -66,7 +66,7 @@ class HomeButtonCameraViewController : BaseViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        setupCaptureSession()
+        //setupCaptureSession()
     }
     
     override func setupLayout() {
@@ -246,6 +246,10 @@ class HomeButtonCameraViewController : BaseViewController {
 
     @objc func captureButtonTapped(sender: UIButton!) {
         takePicture = true
+        
+        let pressShutterVC = PressShutterViewController()
+
+        self.navigationController?.pushViewController(pressShutterVC, animated: false)
     }
     
     @objc func switchCameraButtonTapped(sender: UIButton!) {

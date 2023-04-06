@@ -51,7 +51,7 @@
 		9264A58429BA22FE0010856F /* DayOfTheWeekCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9264A58329BA22FE0010856F /* DayOfTheWeekCell.swift */; };
 		9264A5EC29C4B0610010856F /* HomeButtonCameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9264A5EB29C4B0610010856F /* HomeButtonCameraViewController.swift */; };
 		9264A5EE29C550220010856F /* FrameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9264A5ED29C550220010856F /* FrameCell.swift */; };
-		9264A5F729C5EB6D0010856F /* PressShutterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9264A5F629C5EB6D0010856F /* PressShutterView.swift */; };
+		926DBC9229DDC905007BE22A /* PressShutterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 926DBC9129DDC905007BE22A /* PressShutterViewController.swift */; };
 		92DCF3EC29CDB38300F90002 /* BackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DCF3EB29CDB38300F90002 /* BackButton.swift */; };
 		92DCF47A29D0818A00F90002 /* WorkOutDoneData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DCF47929D0818A00F90002 /* WorkOutDoneData.swift */; };
 		92DCF47E29D0830B00F90002 /* FrameImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DCF47D29D0830B00F90002 /* FrameImage.swift */; };
@@ -143,7 +143,7 @@
 		9264A58329BA22FE0010856F /* DayOfTheWeekCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayOfTheWeekCell.swift; sourceTree = "<group>"; };
 		9264A5EB29C4B0610010856F /* HomeButtonCameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeButtonCameraViewController.swift; sourceTree = "<group>"; };
 		9264A5ED29C550220010856F /* FrameCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameCell.swift; sourceTree = "<group>"; };
-		9264A5F629C5EB6D0010856F /* PressShutterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PressShutterView.swift; sourceTree = "<group>"; };
+		926DBC9129DDC905007BE22A /* PressShutterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PressShutterViewController.swift; sourceTree = "<group>"; };
 		92DCF3EB29CDB38300F90002 /* BackButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackButton.swift; sourceTree = "<group>"; };
 		92DCF47929D0818A00F90002 /* WorkOutDoneData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkOutDoneData.swift; sourceTree = "<group>"; };
 		92DCF47D29D0830B00F90002 /* FrameImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameImage.swift; sourceTree = "<group>"; };
@@ -442,7 +442,7 @@
 				924E56B129CCB9EA00AA73A2 /* GridToggleButton.swift */,
 				92DCF61129DCAE3D00F90002 /* GridView.swift */,
 				9264A5ED29C550220010856F /* FrameCell.swift */,
-				9264A5F629C5EB6D0010856F /* PressShutterView.swift */,
+				926DBC9129DDC905007BE22A /* PressShutterViewController.swift */,
 			);
 			path = HomeButton;
 			sourceTree = "<group>";
@@ -729,6 +729,7 @@
 				A576694029BF1A9900673DFE /* UITextField.swift in Sources */,
 				9200602729B1A7F400586063 /* UIColor.swift in Sources */,
 				9200602D29B1A91600586063 /* OnboardingCell.swift in Sources */,
+				926DBC9229DDC905007BE22A /* PressShutterViewController.swift in Sources */,
 				A5A10CA929D59ED600E45FC8 /* String.swift in Sources */,
 				9200604B29B1ADA500586063 /* BaseUIView.swift in Sources */,
 				92DCF4D229D1B64100F90002 /* FrameCategoryCell.swift in Sources */,
@@ -769,7 +770,6 @@
 				92DCF3EC29CDB38300F90002 /* BackButton.swift in Sources */,
 				A576693E29BB06CB00673DFE /* RegisterMyBodyInfoViewController.swift in Sources */,
 				920060E429B71D7400586063 /* DayCell.swift in Sources */,
-				9264A5F729C5EB6D0010856F /* PressShutterView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
