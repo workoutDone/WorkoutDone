@@ -21,7 +21,7 @@ class GalleryDetailViewController: BaseViewController {
     }
     
     override func setComponents() {
-        view.backgroundColor = .colorFFFFFF09
+        view.backgroundColor = .colorFFFFFF.withAlphaComponent(0.9)
     }
     
     override func setupLayout() {

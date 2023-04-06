@@ -304,7 +304,7 @@ extension HomeButtonCameraViewController : UICollectionViewDelegate, UICollectio
         if indexPath.row == 0 {
             frameImage.image = nil
         } else {
-            frameImage.image = UIImage(named: frameImages[indexPath.row])
+            frameImage.image = UIImage(named: frameImages[indexPath.row - 1])
         }
         collectionView.reloadData()
     }

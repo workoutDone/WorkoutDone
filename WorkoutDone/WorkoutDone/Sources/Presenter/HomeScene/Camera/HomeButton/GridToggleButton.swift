@@ -24,7 +24,7 @@ class GridToggleButton: UIButton {
         setLayout()
         setConstraints()
         
-        self.backgroundColor = .colorFFFFFF04
+        self.backgroundColor = .colorFFFFFF.withAlphaComponent(0.4)
         self.layer.cornerRadius = 14.5
         self.layer.borderWidth = 1
         self.layer.borderColor = UIColor.color363636.cgColor
@@ -52,12 +52,12 @@ class GridToggleButton: UIButton {
     func changeToggle() {
         if isOnToggle {
             gridToggleLabel.text = "그리드 OFF"
-            self.backgroundColor = .colorFFFFFF04
+            self.backgroundColor = .colorFFFFFF.withAlphaComponent(0.4)
             self.layer.borderColor = UIColor.color363636.cgColor
             gridToggleLabel.textColor = .color5E5E5E
         } else {
             gridToggleLabel.text = "그리드 ON"
-            self.backgroundColor = .colorFFFFFF08
+            self.backgroundColor = .colorFFFFFF.withAlphaComponent(0.8)
             self.layer.borderColor = UIColor.color7442FF.cgColor
             gridToggleLabel.textColor = .color612CF8
         }
