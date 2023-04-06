@@ -59,20 +59,20 @@ class HomeButtonCameraViewController : BaseViewController {
         super.viewDidLoad()
         
         setDelegateDataSource()
-        //        saveButton.isHidden = true
+        //saveButton.isHidden = true
         gridView.isHidden = true
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        //setupCaptureSession()
+        setupCaptureSession()
     }
     
     override func setupLayout() {
         super.setupLayout()
         
-        [cameraView, backButton, gridView, gridToggleButton, collectionView, shutterButton, switchCameraButton, frameImage].forEach {
+        [cameraView, gridView, backButton, gridToggleButton, collectionView, shutterButton, switchCameraButton, frameImage].forEach {
             view.addSubview($0)
         }
     }
@@ -123,11 +123,6 @@ class HomeButtonCameraViewController : BaseViewController {
             $0.width.height.equalTo(42)
         }
         
-//        pressShutterView.snp.makeConstraints {
-//            $0.top.equalTo(cameraView.snp.bottom)
-//            $0.bottom.leading.trailing.equalToSuperview()
-//        }
-        
 //        saveButton.snp.makeConstraints {
 //            $0.bottom.equalTo(view.safeAreaLayoutGuide).offset(-13)
 //            $0.leading.equalTo(view.safeAreaLayoutGuide).offset(20)
@@ -141,7 +136,6 @@ class HomeButtonCameraViewController : BaseViewController {
         switchCameraButton.addTarget(self, action: #selector(switchCameraButtonTapped), for: .touchUpInside)
         backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
         gridToggleButton.addTarget(self, action: #selector(gridToggleButtonTapped), for: .touchUpInside)
-//        pressShutterView.againButton.addTarget(self, action: #selector(againButtonTapped), for: .touchUpInside)
     }
     
     func setDelegateDataSource() {
@@ -246,18 +240,10 @@ class HomeButtonCameraViewController : BaseViewController {
 
     @objc func captureButtonTapped(sender: UIButton!) {
         takePicture = true
-        
-        let pressShutterVC = PressShutterViewController()
-        pressShutterVC.frameImage.image = UIImage(named: self.frameImages[self.isSelectFrameImagesIndex])
-        self.navigationController?.pushViewController(pressShutterVC, animated: false)
     }
     
     @objc func switchCameraButtonTapped(sender: UIButton!) {
         switchCameraInput()
-    }
-    
-    @objc func againButtonTapped(sender: UIButton!) {
-        
     }
 }
 
