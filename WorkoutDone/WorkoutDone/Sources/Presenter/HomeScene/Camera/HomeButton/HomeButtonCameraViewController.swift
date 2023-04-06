@@ -25,7 +25,7 @@ class HomeButtonCameraViewController : BaseViewController {
     var previewLayer: AVCaptureVideoPreviewLayer!
     var videoOutput: AVCaptureVideoDataOutput!
     var takePicture = false
-    
+
     private let cameraView = UIView()
     
     private let frameImage = UIImageView()
@@ -79,6 +79,7 @@ class HomeButtonCameraViewController : BaseViewController {
     
     override func setupConstraints() {
         super.setupConstraints()
+    
         cameraView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(10)
             $0.leading.trailing.equalTo(view.safeAreaLayoutGuide)

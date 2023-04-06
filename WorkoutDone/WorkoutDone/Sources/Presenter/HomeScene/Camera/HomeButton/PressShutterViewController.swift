@@ -9,8 +9,6 @@ import UIKit
 
 class PressShutterViewController: BaseViewController {
     
-    let cameraViewHeight: Int = 468
-    
     var captureImage = UIImageView().then {
         $0.contentMode = .scaleToFill
         $0.backgroundColor = .green
@@ -83,7 +81,7 @@ class PressShutterViewController: BaseViewController {
         captureImage.snp.makeConstraints {
             $0.top.equalToSuperview().offset(22)
             $0.leading.trailing.equalTo(view.safeAreaLayoutGuide)
-            $0.height.equalTo(cameraViewHeight)
+            $0.height.equalTo(466)
         }
         
         frameImage.snp.makeConstraints {
