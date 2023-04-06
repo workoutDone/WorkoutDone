@@ -240,6 +240,8 @@ class HomeButtonCameraViewController : BaseViewController {
 
     @objc func captureButtonTapped(sender: UIButton!) {
         takePicture = true
+        
+        print(isSelectFrameImagesIndex)
     }
     
     @objc func switchCameraButtonTapped(sender: UIButton!) {
@@ -313,7 +315,9 @@ extension HomeButtonCameraViewController : AVCaptureVideoDataOutputSampleBufferD
         DispatchQueue.main.async {
             let pressShutterVC = PressShutterViewController()
             pressShutterVC.captureImage.image = uiImage
-            pressShutterVC.frameImage.image = UIImage(named: self.frameImages[self.isSelectFrameImagesIndex])
+            if self.isSelectFrameImagesIndex > 0 {
+                pressShutterVC.frameImage.image = UIImage(named: self.frameImages[self.isSelectFrameImagesIndex - 1])
+            }
             self.navigationController?.pushViewController(pressShutterVC, animated: false)
             
             self.takePicture = false
