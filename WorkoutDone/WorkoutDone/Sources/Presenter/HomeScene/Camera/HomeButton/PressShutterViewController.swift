@@ -10,8 +10,7 @@ import UIKit
 class PressShutterViewController: BaseViewController {
     
     var captureImage = UIImageView().then {
-        $0.contentMode = .scaleToFill
-        $0.backgroundColor = .green
+        $0.contentMode = .scaleAspectFit
     }
     
     var frameImage = UIImageView()
@@ -79,9 +78,9 @@ class PressShutterViewController: BaseViewController {
     
     override func setupConstraints() {
         captureImage.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(22)
+            $0.top.equalToSuperview().offset(20)
             $0.leading.trailing.equalTo(view.safeAreaLayoutGuide)
-            $0.height.equalTo(466)
+            $0.height.equalTo(view.frame.width * (4 / 3))
         }
         
         frameImage.snp.makeConstraints {

@@ -11,7 +11,6 @@ import Then
 import AVFoundation
 
 class HomeButtonCameraViewController : BaseViewController {
-    let cameraViewHeight: Int = 468
     
     var frameImages: [String] = ["frame1", "frame2", "frame3", "frame4", "frame5", "frame6"]
     var isSelectFrameImagesIndex = 0
@@ -83,7 +82,7 @@ class HomeButtonCameraViewController : BaseViewController {
         cameraView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(10)
             $0.leading.trailing.equalTo(view.safeAreaLayoutGuide)
-            $0.height.equalTo(cameraViewHeight)
+            $0.height.equalTo(view.frame.width * (4 / 3))
         }
         
         backButton.snp.makeConstraints {
@@ -241,8 +240,6 @@ class HomeButtonCameraViewController : BaseViewController {
 
     @objc func captureButtonTapped(sender: UIButton!) {
         takePicture = true
-        
-        print(isSelectFrameImagesIndex)
     }
     
     @objc func switchCameraButtonTapped(sender: UIButton!) {
