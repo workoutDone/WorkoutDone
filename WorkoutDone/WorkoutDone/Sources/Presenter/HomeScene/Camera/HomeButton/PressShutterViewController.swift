@@ -93,7 +93,7 @@ class PressShutterViewController: BaseViewController {
         }
         
         againButton.snp.makeConstraints {
-            $0.top.equalTo(captureImage.snp.bottom).offset(36)
+            $0.bottom.equalToSuperview().offset(-63)
             $0.leading.equalToSuperview().offset(32)
             $0.width.height.equalTo(62)
         }
