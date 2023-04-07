@@ -6,8 +6,22 @@
 //
 
 import UIKit
+import RxCocoa
+import RxSwift
+
+
 
 class HomeViewController : BaseViewController {
+    //MARK: - ViewModel
+    var viewModel = HomeViewModel()
+    
+    var selectedDate = BehaviorSubject(value: Date().dateToInt())
+    
+    private lazy var input = HomeViewModel.Input(selectedDate: selectedDate.asDriver(onErrorJustReturn: Date().dateToInt()))
+    
+    private lazy var output = viewModel.transform(input: input)
+    
+    
     // MARK: - PROPERTIES
     let monthlyCalendarHeight: Int = 289
     let weeklyCalendarHeight: Int = 115
@@ -100,7 +114,14 @@ class HomeViewController : BaseViewController {
     }
     override func setupBinding() {
         super.setupBinding()
+        output.weightData.drive(recordBaseView.weightInputLabel.rx.text)
+            .disposed(by: disposeBag)
+        output.skeletalMusleMassData.drive(recordBaseView.skeletalMuscleMassInputLabel.rx.text)
+            .disposed(by: disposeBag)
+        output.fatPercentageData.drive(recordBaseView.fatPercentageInputLabel.rx.text)
+            .disposed(by: disposeBag)
     }
+    
     override func actions() {
         super.actions()
         recordBaseView.workoutDoneCameraButton.addTarget(self, action: #selector(workoutDoneCameraButtonTapped), for: .touchUpInside)

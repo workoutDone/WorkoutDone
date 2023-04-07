@@ -21,9 +21,25 @@ class HomeViewModel {
         let selectedDate : Driver<Int>
     }
     struct Output {
-        
+        let weightData : Driver<String>
+        let skeletalMusleMassData : Driver<String>
+        let fatPercentageData : Driver<String>
     }
-//    func transform(input : Input) -> Output {
-//
-//    }
+    func transform(input : Input) -> Output {
+        
+        let weightData = input.selectedDate.map { value in
+            return String(value)
+        }
+        let skeletalMusleMassData = input.selectedDate.map { value in
+            return String(value)
+        }
+        let fatPercentageData = input.selectedDate.map { value in
+            return String(value)
+        }
+        
+        return Output(
+            weightData: weightData,
+            skeletalMusleMassData: skeletalMusleMassData,
+            fatPercentageData: fatPercentageData)
+    }
 }
