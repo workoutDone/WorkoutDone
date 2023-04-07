@@ -63,7 +63,7 @@ class RegisterMyBodyInfoViewModel {
             try realm.write {
                 let workoutDoneData = WorkOutDoneData(id: id, date: date)
                 let bodyInfo = BodyInfo()
-                bodyInfo.wegiht = weight
+                bodyInfo.weight = weight
                 bodyInfo.skeletalMuscleMass = skeletalMusleMass
                 bodyInfo.fatPercentage = fatPercentage
                 workoutDoneData.bodyInfo = bodyInfo
@@ -129,7 +129,7 @@ class RegisterMyBodyInfoViewModel {
         
         let readWeightData = input.loadView.map { _ in
             if self.validBodyInfoData(id: 20230420) {
-                let weight = self.readBodyInfoData(id: 20230420)?.bodyInfo?.wegiht
+                let weight = self.readBodyInfoData(id: 20230420)?.bodyInfo?.weight
                 if let doubleWeight = weight {
                     return String(doubleWeight)
                 }
