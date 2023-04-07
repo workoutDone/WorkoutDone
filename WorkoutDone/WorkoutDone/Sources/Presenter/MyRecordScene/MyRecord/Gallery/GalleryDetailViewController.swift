@@ -10,14 +10,21 @@ import SnapKit
 import Then
 
 class GalleryDetailViewController: BaseViewController {
+    var frameX : CGFloat = 0
+    var frameY : CGFloat = 0
+    var size : CGFloat = 0
     
     private let image = UIImageView().then {
-        $0.backgroundColor = .blue
+        $0.image = UIImage(named: "testImage")
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+    
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        performImageClickAnimation()
     }
     
     override func setComponents() {
@@ -30,10 +37,9 @@ class GalleryDetailViewController: BaseViewController {
     
     override func setupConstraints() {
         image.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(178.5)
-            $0.centerX.equalToSuperview()
-            $0.width.equalToSuperview()
-            $0.height.equalTo(view.frame.width * (4 / 3))
+            $0.top.equalTo(view.safeAreaLayoutGuide).offset(frameY + 73)
+            $0.leading.equalToSuperview().offset(frameX)
+            $0.width.height.equalTo(size)
         }
     }
     
@@ -41,6 +47,21 @@ class GalleryDetailViewController: BaseViewController {
         if touches.first!.location(in: self.view).y < image.frame.minY || touches.first!.location(in: self.view).y > image.frame.maxY {
             dismiss(animated: false)
         }
+    }
+    
+    func performImageClickAnimation() {
+        let imageWidth = self.image.frame.width
+        let imageHeight = self.image.frame.height
+        
+        UIView.animate(withDuration: 0.3, delay: 0.0, options: .curveEaseInOut, animations: {
+            self.image.frame.origin.x = self.view.frame.midX - (self.size / 2)
+            self.image.frame.origin.y = self.view.frame.midY - (self.size / 2)
+            self.image.transform = CGAffineTransform(scaleX: (self.view.frame.width / imageWidth) + 0.2 , y: (487 / imageHeight) + 0.2)
+        }, completion: { _ in
+            UIView.animate(withDuration: 0.1, delay: 0.0, options: .curveEaseInOut, animations: {
+                self.image.transform = CGAffineTransform(scaleX: self.view.frame.width / imageWidth, y: 487 / imageHeight)
+            })
+        })
     }
 }
 

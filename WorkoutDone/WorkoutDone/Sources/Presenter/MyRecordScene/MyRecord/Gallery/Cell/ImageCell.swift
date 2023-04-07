@@ -11,7 +11,7 @@ import Then
 
 class ImageCell : UICollectionViewCell {
     let image = UIImageView().then {
-        $0.backgroundColor = .yellow
+        $0.image = UIImage(named: "testImage")
         $0.layer.cornerRadius = 5
     }
     
