@@ -8,26 +8,11 @@
 import SwiftUI
 import Charts
 
-struct TestModel2 {
-    var date : Date
-    let fatPercentage : Double
-}
-
-var list2 = [
-    TestModel2(date: "2023.02.01".yyMMddToDate()!, fatPercentage: 20),
-    TestModel2(date: "2023.02.02".yyMMddToDate()!, fatPercentage: 22),
-    TestModel2(date: "2023.02.03".yyMMddToDate()!, fatPercentage: 24),
-    TestModel2(date: "2023.02.04".yyMMddToDate()!, fatPercentage: 20),
-    TestModel2(date: "2023.02.05".yyMMddToDate()!, fatPercentage: 20),
-]
-
 struct FatPercentageGraphView: View {
     ///VIewModel
     @StateObject private var fatPercentageViewModel = FatPercentageGraphViewModel()
     ///우측 정렬
     @Namespace var trailingID
-    ///더미 데이터
-    @State var testData : [TestModel2] = list2
     ///Gesture Property
     @State private var currentActiveItem : WorkOutDoneData?
     ///ViewAppear 시 애니메이션 사용 위한 변수
