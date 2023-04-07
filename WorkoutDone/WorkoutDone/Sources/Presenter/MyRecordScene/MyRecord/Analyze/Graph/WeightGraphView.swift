@@ -71,7 +71,7 @@ struct WeightGraphView: View {
                                         .foregroundColor(Color(UIColor.color7442FF))
                                         .font(Font(UIFont.pretendard(.semiBold, size: 14)))
                                 }
-//                                .offset(x: 0, y: -data.bodyInfo?.weight + 200 - 20)
+//                                .offset(x: 0, y: -data.bodyInfo?.weight ?? 0 + 200 - 20)
 //                                .offset(x: 0, y: (max / min > 100 ? -(200 - data.weight) : max - data.weight + 40 ))
 //                                .offset(x: 0, y: -data.weight + max + 40)
 //                                .offset(x: 0, y: (max - data.weight + 40))

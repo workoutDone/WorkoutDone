@@ -95,7 +95,7 @@ struct FatPercentageGraphView: View {
                 })
                 .padding()
                 ///데이터 갯수에 따른 차트 UI 구분
-                .frame(width: UIScreen.main.bounds.width > ViewConstants.dataPointWidth * CGFloat(testData.count) ? UIScreen.main.bounds.width : ViewConstants.dataPointWidth * CGFloat(testData.count))
+                .frame(width: UIScreen.main.bounds.width > ViewConstants.dataPointWidth * CGFloat(fatPercentageViewModel.fatPercentageData.count) ? UIScreen.main.bounds.width : ViewConstants.dataPointWidth * CGFloat(fatPercentageViewModel.fatPercentageData.count))
                 ///우측 정렬을 위한 id 설졍
                 .id(trailingID)
             }
@@ -109,7 +109,8 @@ struct FatPercentageGraphView: View {
                 .strokeBorder(Color(UIColor.colorE6E0FF), lineWidth: 1)
         }
         .onAppear {
-            for (index, _) in testData.enumerated() {
+            fatPercentageViewModel.readFatPercentageData()
+            for (index, _) in fatPercentageViewModel.fatPercentageData.enumerated() {
                 withAnimation(.easeOut(duration: 0.8).delay(Double(index) * 0.05)) {
                     animate = true
                 }
