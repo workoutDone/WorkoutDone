@@ -15,7 +15,7 @@ struct WeightGraphView: View {
     ///우측 정렬
     @Namespace var trailingID
     ///ViewModel
-    @StateObject var weightGraphViewModel = WeightGraphViewModel()
+    @StateObject private var weightGraphViewModel = WeightGraphViewModel()
     ///Gesture Property
     @State private var currentActiveItem : WorkOutDoneData?
     ///ViewAppear 시 애니메이션 사용 위한 변수

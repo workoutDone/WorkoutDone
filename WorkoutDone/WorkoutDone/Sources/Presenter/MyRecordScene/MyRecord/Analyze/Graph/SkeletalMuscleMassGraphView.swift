@@ -11,7 +11,7 @@ import Charts
 
 struct SkeletalMuscleMassGraphView: View {
     ///ViewModel
-    @StateObject var skeletalMusleMassGraphViewModel = SkeletalMuslemassGraphViewModel()
+    @StateObject private var skeletalMusleMassGraphViewModel = SkeletalMuslemassGraphViewModel()
     ///우측 정렬
     @Namespace var trailingID
     ///Gesture Property

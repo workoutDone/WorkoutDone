@@ -83,6 +83,7 @@
 		A5A10CA929D59ED600E45FC8 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5A10CA829D59ED600E45FC8 /* String.swift */; };
 		A5A10CAB29D59EF300E45FC8 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5A10CAA29D59EF300E45FC8 /* Date.swift */; };
 		A5FD469829DDDB4C003AC96E /* SkeletalMuslemassViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5FD469729DDDB4C003AC96E /* SkeletalMuslemassViewModel.swift */; };
+		A5FD469A29DDF18E003AC96E /* FatPercentageGraphViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5FD469929DDF18E003AC96E /* FatPercentageGraphViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -175,6 +176,7 @@
 		A5A10CA829D59ED600E45FC8 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		A5A10CAA29D59EF300E45FC8 /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 		A5FD469729DDDB4C003AC96E /* SkeletalMuslemassViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkeletalMuslemassViewModel.swift; sourceTree = "<group>"; };
+		A5FD469929DDF18E003AC96E /* FatPercentageGraphViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FatPercentageGraphViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -485,6 +487,7 @@
 				A57061D529D09AC40083ECDD /* SkeletalMuscleMassGraphView.swift */,
 				A5FD469729DDDB4C003AC96E /* SkeletalMuslemassViewModel.swift */,
 				A57061D729D09AD40083ECDD /* FatPercentageGraphView.swift */,
+				A5FD469929DDF18E003AC96E /* FatPercentageGraphViewModel.swift */,
 			);
 			path = Graph;
 			sourceTree = "<group>";
@@ -749,6 +752,7 @@
 				92DCF54C29D6D15600F90002 /* FrameHeaderView.swift in Sources */,
 				92DCF47E29D0830B00F90002 /* FrameImage.swift in Sources */,
 				9200602A29B1A81100586063 /* UIFont.swift in Sources */,
+				A5FD469A29DDF18E003AC96E /* FatPercentageGraphViewModel.swift in Sources */,
 				A59ACB7A29B4BC740084C73E /* RoutineViewController.swift in Sources */,
 				A57061CF29CD6A5E0083ECDD /* GalleryViewController.swift in Sources */,
 				920060E229B63C1500586063 /* CalendarView.swift in Sources */,
