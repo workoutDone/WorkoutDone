@@ -14,6 +14,11 @@ class GalleryDetailViewController: BaseViewController {
     var frameY : CGFloat = 0
     var size : CGFloat = 0
     
+    var scaleX : CGFloat = 0
+    var scaleY : CGFloat = 0
+    
+    var deltaValue: CGFloat = 0
+    
     private let image = UIImageView().then {
         $0.image = UIImage(named: "testImage")
     }
@@ -45,23 +50,33 @@ class GalleryDetailViewController: BaseViewController {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         if touches.first!.location(in: self.view).y < image.frame.minY || touches.first!.location(in: self.view).y > image.frame.maxY {
-            dismiss(animated: false)
+           
+            UIView.animate(withDuration: 0.25, delay: 0.0, options: .curveEaseInOut, animations: {
+                self.image.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                
+                self.image.frame.origin.x = self.frameX
+                self.image.frame.origin.y = self.frameY
+
+            }, completion: { _ in
+                self.dismiss(animated: false)
+            })
         }
     }
     
     func performImageClickAnimation() {
-        let imageWidth = self.image.frame.width
-        let imageHeight = self.image.frame.height
+        frameY = image.frame.minY
+        scaleX = view.frame.width / size
+        scaleY = 487 / size
         
         UIView.animate(withDuration: 0.3, delay: 0.0, options: .curveEaseInOut, animations: {
             self.image.frame.origin.x = self.view.frame.midX - (self.size / 2)
             self.image.frame.origin.y = self.view.frame.midY - (self.size / 2)
-            self.image.transform = CGAffineTransform(scaleX: (self.view.frame.width / imageWidth) + 0.2 , y: (487 / imageHeight) + 0.2)
+            self.image.transform = CGAffineTransform(scaleX: self.scaleX + 0.2 , y: self.scaleY + 0.2)
+
         }, completion: { _ in
             UIView.animate(withDuration: 0.1, delay: 0.0, options: .curveEaseInOut, animations: {
-                self.image.transform = CGAffineTransform(scaleX: self.view.frame.width / imageWidth, y: 487 / imageHeight)
+                self.image.transform = CGAffineTransform(scaleX: self.scaleX, y: self.scaleY)
             })
         })
     }
 }
-
