@@ -385,7 +385,6 @@ extension CalendarView: UICollectionViewDelegate, UICollectionViewDataSource, UI
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "DayCell", for: indexPath) as? DayCell else { return UICollectionViewCell() }
             cell.dayLabel.text = days[indexPath.row]
             cell.dayLabel.font = .pretendard(.light, size: 16)
-            cell.todayImage.isHidden = true
             cell.workOutDoneImage.isHidden = true
             
             if components.month ?? 1 == calendar.component(.month, from: Date()) {
@@ -398,7 +397,7 @@ extension CalendarView: UICollectionViewDelegate, UICollectionViewDataSource, UI
                 cell.dayLabel.textColor = .colorF3F3F3
                 
                 if days[indexPath.row] == String(calendar.component(.day, from: Date())) {
-                    cell.todayImage.isHidden = false
+                    cell.dayLabel.font = .pretendard(.extraBold, size: 16)
                 }
             } else {
                 if indexPath.row >= firstWeekday - 1 {
@@ -409,9 +408,9 @@ extension CalendarView: UICollectionViewDelegate, UICollectionViewDataSource, UI
             }
             
             if selectComponents.year == components.year && selectComponents.month == components.month && selectComponents.day == Int(days[indexPath.row]) {
-                cell.dayLabel.font = .pretendard(.bold, size: 16)
+                //cell.dayLabel.font = .pretendard(.bold, size: 16)
             } else {
-                cell.dayLabel.font  = .pretendard(.regular, size: 16)
+                //cell.dayLabel.font  = .pretendard(.regular, size: 16)
             }
             
             return cell
@@ -420,7 +419,6 @@ extension CalendarView: UICollectionViewDelegate, UICollectionViewDataSource, UI
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "DayCell", for: indexPath) as? DayCell else { return UICollectionViewCell() }
         cell.dayLabel.text = days[indexPath.row]
         cell.dayLabel.font = .pretendard(.light, size: 14)
-        cell.todayImage.isHidden = true
         cell.workOutDoneImage.isHidden = true
         
         if indexPath.row >= firstWeekday - 1 && indexPath.row <= daysCount + firstWeekday - 2 {
@@ -430,7 +428,7 @@ extension CalendarView: UICollectionViewDelegate, UICollectionViewDataSource, UI
                 }
             }
             if components.month ?? 1 == calendar.component(.month, from: Date()) && days[indexPath.row] == String(calendar.component(.day, from: Date())) {
-                cell.todayImage.isHidden = false
+                cell.dayLabel.font = .pretendard(.extraBold, size: 14)
             }
             cell.dayLabel.textColor = .colorF3F3F3
         } else {
@@ -439,9 +437,9 @@ extension CalendarView: UICollectionViewDelegate, UICollectionViewDataSource, UI
         
         
         if selectComponents.year == components.year && selectComponents.month == components.month && selectComponents.day == Int(days[indexPath.row]) {
-            cell.dayLabel.font = .pretendard(.bold, size: 14)
+            //cell.dayLabel.font = .pretendard(.bold, size: 14)
         } else {
-            cell.dayLabel.font  = .pretendard(.regular, size: 14)
+            //cell.dayLabel.font  = .pretendard(.regular, size: 14)
         }
       
         return cell

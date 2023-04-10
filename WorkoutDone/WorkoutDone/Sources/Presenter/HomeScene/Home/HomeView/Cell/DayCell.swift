@@ -15,10 +15,6 @@ class DayCell: UICollectionViewCell {
         $0.font = .pretendard(.light, size: 14)
     }
     
-    var todayImage = UIImageView().then {
-        $0.image = UIImage(named: "today")
-    }
-    
     var workOutDoneImage = UIImageView().then {
         $0.image = UIImage(named: "workOutDone")
     }
@@ -27,10 +23,8 @@ class DayCell: UICollectionViewCell {
         super.init(frame: frame)
         
         contentView.addSubview(dayLabel)
-        contentView.addSubview(todayImage)
         contentView.addSubview(workOutDoneImage)
         
-        todayImage.isHidden = true
         workOutDoneImage.isHidden = true
         
         setLayout()
@@ -43,12 +37,6 @@ class DayCell: UICollectionViewCell {
     func setLayout() {
         dayLabel.snp.makeConstraints {
             $0.centerX.centerY.equalToSuperview()
-        }
-        
-        todayImage.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
-            $0.top.equalTo(dayLabel.snp.bottom).offset(1)
-            $0.width.height.equalTo(3)
         }
         
         workOutDoneImage.snp.makeConstraints {
