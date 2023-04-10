@@ -385,19 +385,17 @@ extension CalendarView: UICollectionViewDelegate, UICollectionViewDataSource, UI
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "DayCell", for: indexPath) as? DayCell else { return UICollectionViewCell() }
             cell.dayLabel.text = days[indexPath.row]
             cell.dayLabel.font = .pretendard(.light, size: 16)
-            cell.workOutDoneImage.isHidden = true
+            cell.selectDateImage.isHidden = true
             
             if components.month ?? 1 == calendar.component(.month, from: Date()) {
-                for data in sampleData {
-                    if Calendar.current.date(from: DateComponents(year: components.year, month: components.month, day: Int(days[indexPath.row])))! == data.date {
-                        cell.workOutDoneImage.isHidden = false
-                    }
-                }
-                
                 cell.dayLabel.textColor = .colorF3F3F3
                 
                 if days[indexPath.row] == String(calendar.component(.day, from: Date())) {
                     cell.dayLabel.font = .pretendard(.extraBold, size: 16)
+                }
+                
+                if selectComponents.year == components.year && selectComponents.month == components.month && selectComponents.day == Int(days[indexPath.row]) {
+                    cell.selectDateImage.isHidden = false
                 }
             } else {
                 if indexPath.row >= firstWeekday - 1 {
@@ -407,41 +405,28 @@ extension CalendarView: UICollectionViewDelegate, UICollectionViewDataSource, UI
                 }
             }
             
-            if selectComponents.year == components.year && selectComponents.month == components.month && selectComponents.day == Int(days[indexPath.row]) {
-                //cell.dayLabel.font = .pretendard(.bold, size: 16)
-            } else {
-                //cell.dayLabel.font  = .pretendard(.regular, size: 16)
-            }
-            
             return cell
         }
         
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "DayCell", for: indexPath) as? DayCell else { return UICollectionViewCell() }
         cell.dayLabel.text = days[indexPath.row]
         cell.dayLabel.font = .pretendard(.light, size: 14)
-        cell.workOutDoneImage.isHidden = true
+        cell.selectDateImage.isHidden = true
         
         if indexPath.row >= firstWeekday - 1 && indexPath.row <= daysCount + firstWeekday - 2 {
-            for data in sampleData {
-                if Calendar.current.date(from: DateComponents(year: components.year, month: components.month, day: Int(days[indexPath.row])))! == data.date {
-                    cell.workOutDoneImage.isHidden = false
-                }
-            }
             if components.month ?? 1 == calendar.component(.month, from: Date()) && days[indexPath.row] == String(calendar.component(.day, from: Date())) {
                 cell.dayLabel.font = .pretendard(.extraBold, size: 14)
             }
             cell.dayLabel.textColor = .colorF3F3F3
+            
+            if selectComponents.year == components.year && selectComponents.month == components.month && selectComponents.day == Int(days[indexPath.row]) {
+                cell.selectDateImage.isHidden = false
+            }
+
         } else {
             cell.dayLabel.textColor = .colorF3F3F303
         }
         
-        
-        if selectComponents.year == components.year && selectComponents.month == components.month && selectComponents.day == Int(days[indexPath.row]) {
-            //cell.dayLabel.font = .pretendard(.bold, size: 14)
-        } else {
-            //cell.dayLabel.font  = .pretendard(.regular, size: 14)
-        }
-      
         return cell
     }
     
@@ -462,8 +447,7 @@ extension CalendarView: UICollectionViewDelegate, UICollectionViewDataSource, UI
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
-        if UserDefaultsManager.shared.isMonthlyCalendar && indexPath.row >= firstWeekday - 1 && indexPath.row <= daysCount + firstWeekday - 2 {
+        if UserDefaultsManager.shared.isMonthlyCalendar {
             if indexPath.row >= firstWeekday - 1 && indexPath.row <= daysCount + firstWeekday - 2 {
                 selectComponents.year = components.year
                 selectComponents.month = components.month
@@ -476,16 +460,9 @@ extension CalendarView: UICollectionViewDelegate, UICollectionViewDataSource, UI
                 selectComponents.month = components.month
                 selectComponents.day = Int(days[indexPath.row])
                 selectDate = setSelectDateFormatter(selectDate: selectComponents)
-            } else {
-                if indexPath.row >= firstWeekday - 1 {
-                    selectComponents.year = components.year
-                    selectComponents.month = components.month
-                    selectComponents.day = Int(days[indexPath.row])
-                    selectDate = setSelectDateFormatter(selectDate: selectComponents)
-                }
             }
         }
-        
+    
         collectionView.reloadData()
     }
 }
