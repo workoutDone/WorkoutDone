@@ -25,16 +25,42 @@ class HomeViewModel {
         let skeletalMusleMassData : Driver<String>
         let fatPercentageData : Driver<String>
     }
+    
+    func readBodyInfoData(id : Int) -> WorkOutDoneData?  {
+        let selectedBodyInfoData = realm.object(ofType: WorkOutDoneData.self, forPrimaryKey: id)
+        return selectedBodyInfoData
+    }
+    
+    
     func transform(input : Input) -> Output {
         
         let weightData = input.selectedDate.map { value in
-            return String(value)
+            let weight = self.readBodyInfoData(id: value)?.bodyInfo?.weight
+            if let stringWeight = weight {
+                return String(stringWeight)
+            }
+            else {
+                return "-"
+            }
         }
         let skeletalMusleMassData = input.selectedDate.map { value in
-            return String(value)
+            let skeletalMusleMass = self.readBodyInfoData(id: value)?.bodyInfo?.skeletalMuscleMass
+            if let stringSkeletalMusleMass = skeletalMusleMass {
+                return String(stringSkeletalMusleMass)
+            }
+            else {
+                return "-"
+            }
+            
         }
         let fatPercentageData = input.selectedDate.map { value in
-            return String(value)
+            let fatPercentage = self.readBodyInfoData(id: value)?.bodyInfo?.fatPercentage
+            if let stringFatPercentage = fatPercentage {
+                return String(stringFatPercentage)
+            }
+            else {
+                return "-"
+            }
         }
         
         return Output(

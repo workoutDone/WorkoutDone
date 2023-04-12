@@ -64,7 +64,7 @@ class CalendarView : BaseUIView {
         return stackView
     }()
     
-    private let collectionView: UICollectionView = {
+    let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.minimumLineSpacing = 0
         
@@ -489,6 +489,5 @@ extension CalendarView: UICollectionViewDelegate, UICollectionViewDataSource, UI
         }
         
         collectionView.reloadData()
-        print(selectDate, "ss")
     }
 }

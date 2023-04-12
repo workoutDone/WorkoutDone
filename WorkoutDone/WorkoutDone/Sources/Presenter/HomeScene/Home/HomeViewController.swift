@@ -120,6 +120,14 @@ class HomeViewController : BaseViewController {
             .disposed(by: disposeBag)
         output.fatPercentageData.drive(recordBaseView.fatPercentageInputLabel.rx.text)
             .disposed(by: disposeBag)
+        
+        calendarView.collectionView.rx.itemSelected
+            .bind { _ in
+                print(self.calendarView.selectDate, "ssss")
+                guard let intDate = Int(self.calendarView.selectDate) else { return }
+                self.selectedDate.onNext(intDate)
+            }
+            .disposed(by: disposeBag)
     }
     
     override func actions() {
