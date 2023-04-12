@@ -144,10 +144,15 @@ extension GalleryViewController : UICollectionViewDelegate, UICollectionViewData
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let galleryDetailVC = GalleryDetailViewController()
-        galleryDetailVC.modalPresentationStyle = .overFullScreen
-        present(galleryDetailVC, animated: false)
-    }
+        guard let cell = collectionView.cellForItem(at: indexPath) as? ImageCell else { return }
 
+        let galleryDetailVC = GalleryDetailViewController()
+        galleryDetailVC.frameX = cell.frame.minX
+        galleryDetailVC.frameY = cell.frame.minY
+        galleryDetailVC.size = cell.frame.width
+        galleryDetailVC.modalPresentationStyle = .overFullScreen
+        self.present(galleryDetailVC, animated: false)
+        
+    }
 }
 
