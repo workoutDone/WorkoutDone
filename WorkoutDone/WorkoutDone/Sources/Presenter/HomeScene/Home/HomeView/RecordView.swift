@@ -79,7 +79,7 @@ class RecordView : BaseUIView {
         $0.textColor = .color121212
         $0.font = .pretendard(.semiBold, size: 22)
     }
-    private let weightInputLabel = UILabel().then {
+    let weightInputLabel = UILabel().then {
         $0.text = "1200"
         $0.textColor = .color7442FF
         $0.font = .pretendard(.semiBold, size: 22)
@@ -100,7 +100,7 @@ class RecordView : BaseUIView {
         $0.textColor = .color121212
         $0.font = .pretendard(.medium, size: 16)
     }
-    private let skeletalMuscleMassInputLabel = UILabel().then {
+    let skeletalMuscleMassInputLabel = UILabel().then {
         $0.text = "28"
         $0.textColor = .color7442FF
         $0.font = .pretendard(.medium, size: 16)
@@ -115,7 +115,7 @@ class RecordView : BaseUIView {
         $0.textColor = .color121212
         $0.font = .pretendard(.medium, size: 16)
     }
-    private let fatPercentageInputLabel = UILabel().then {
+    let fatPercentageInputLabel = UILabel().then {
         $0.text = "20"
         $0.textColor = .color7442FF
         $0.font = .pretendard(.medium, size: 16)
