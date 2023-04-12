@@ -64,7 +64,7 @@ class CalendarView : BaseUIView {
         return stackView
     }()
     
-    private let collectionView: UICollectionView = {
+    let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.minimumLineSpacing = 0
         
@@ -404,7 +404,7 @@ extension CalendarView: UICollectionViewDelegate, UICollectionViewDataSource, UI
                 if indexPath.row >= firstWeekday - 1 {
                     cell.dayLabel.textColor = .colorF3F3F3
                 } else {
-                    cell.dayLabel.textColor = .colorF3F3F303
+                    cell.dayLabel.textColor = .colorF3F3F3.withAlphaComponent(0.3)
                 }
             }
             
@@ -434,7 +434,7 @@ extension CalendarView: UICollectionViewDelegate, UICollectionViewDataSource, UI
             }
             cell.dayLabel.textColor = .colorF3F3F3
         } else {
-            cell.dayLabel.textColor = .colorF3F3F303
+            cell.dayLabel.textColor = .colorF3F3F3.withAlphaComponent(0.3)
         }
         
         

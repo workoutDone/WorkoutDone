@@ -1,15 +1,15 @@
 //
-//  GridLineView.swift
+//  GridView.swift
 //  WorkoutDone
 //
-//  Created by hyemi on 2023/04/04.
+//  Created by hyemi on 2023/04/05.
 //
 
 import UIKit
 import SnapKit
 import Then
 
-class GridLineView: BaseUIView {
+class GridView: BaseUIView {
     let cameraViewHeight: Int = 468
     
     private let gridRowLine1 = UIImageView().then {
@@ -27,7 +27,7 @@ class GridLineView: BaseUIView {
     private let gridColumnLine2 = UIImageView().then {
         $0.image = UIImage(named: "columnLine")
     }
-
+    
     override func setupLayout() {
         super.setupLayout()
         
@@ -63,4 +63,5 @@ class GridLineView: BaseUIView {
             $0.width.equalTo(0.5)
         }
     }
+    
 }
