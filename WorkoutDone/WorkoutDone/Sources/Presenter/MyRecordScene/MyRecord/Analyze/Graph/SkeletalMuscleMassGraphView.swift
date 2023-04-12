@@ -9,26 +9,13 @@ import SwiftUI
 import Charts
 
 
-struct TestModel3 {
-    var date : Date
-    let skeletalMusleMass : Double
-}
-
-var list3 = [
-    TestModel3(date: "2023.01.01".yyMMddToDate()!, skeletalMusleMass: 30),
-    TestModel3(date: "2023.01.02".yyMMddToDate()!, skeletalMusleMass: 40),
-    TestModel3(date: "2023.01.03".yyMMddToDate()!, skeletalMusleMass: 50),
-
-]
-
 struct SkeletalMuscleMassGraphView: View {
-    
+    ///ViewModel
+    @StateObject private var skeletalMusleMassGraphViewModel = SkeletalMuslemassGraphViewModel()
     ///우측 정렬
     @Namespace var trailingID
-    ///Test
-    @State var testData : [TestModel3] = list3
     ///Gesture Property
-    @State private var currentActiveItem : TestModel3?
+    @State private var currentActiveItem : WorkOutDoneData?
     ///ViewAppear 시 애니메이션 사용 위한 변수
     @State private var animate : Bool = false
     @State private var plotWidth : CGFloat = 0
@@ -36,26 +23,26 @@ struct SkeletalMuscleMassGraphView: View {
     
     var body: some View {
         ///데이터 최댓값
-        let max = testData.max { item1, item2 in
-            return item2.skeletalMusleMass > item1.skeletalMusleMass
-        }?.skeletalMusleMass ?? 0
+        let max = skeletalMusleMassGraphViewModel.skeletalMusleMassData.max { item1, item2 in
+            return item2.bodyInfo?.skeletalMuscleMass ?? 0 > item1.bodyInfo?.skeletalMuscleMass ?? 0
+        }?.bodyInfo?.skeletalMuscleMass ?? 0
         ///데이터 최솟값
-        let min = testData.min { item1, item2 in
-            return item2.skeletalMusleMass > item1.skeletalMusleMass
-        }?.skeletalMusleMass ?? 0
+        let min = skeletalMusleMassGraphViewModel.skeletalMusleMassData.min { item1, item2 in
+            return item2.bodyInfo?.skeletalMuscleMass ?? 0 > item1.bodyInfo?.skeletalMuscleMass ?? 0
+        }?.bodyInfo?.skeletalMuscleMass ?? 0
         ///우측 정렬을 위한 scrollViewReader
         ScrollViewReader { proxy in
             ScrollView(.horizontal) {
-                Chart(testData, id: \.date) { data in
+                Chart(skeletalMusleMassGraphViewModel.skeletalMusleMassData, id: \.id) { data in
                     LineMark(
-                        x: .value("Month", data.date.yyMMddToString()),
-                        y: .value("SkeletalMuclsMass", animate ? data.skeletalMusleMass : 0)
+                        x: .value("Month", data.date),
+                        y: .value("SkeletalMuclsMass", animate ? data.bodyInfo?.skeletalMuscleMass ?? 0 : 0)
                     )
                     .interpolationMethod(.cardinal)
                     .foregroundStyle(Color(UIColor.color7442FF))
                     PointMark(
-                        x: .value("Month", data.date.yyMMddToString()),
-                        y: .value("Weight", animate ? data.skeletalMusleMass : 0)
+                        x: .value("Month", data.date),
+                        y: .value("SkeletalMuclsMass", animate ? data.bodyInfo?.skeletalMuscleMass ?? 0 : 0)
                     )
                     ///커스텀 포인트 마크
                     .annotation(position: .overlay, alignment: .center) {
@@ -70,7 +57,7 @@ struct SkeletalMuscleMassGraphView: View {
                         .shadow(color: Color(UIColor.color7442FF), radius: 2)
                     }
                     if let currentActiveItem, currentActiveItem.date == data.date {
-                        RuleMark(x: .value("Month", data.date.yyMMddToString()))
+                        RuleMark(x: .value("Month", data.date))
                             .foregroundStyle(Color(UIColor.color7442FF))
                             .lineStyle(.init(lineWidth: 1, lineCap: .round, miterLimit: 2, dash: [2], dashPhase: 5))
                             .annotation(position: .top) {
@@ -79,12 +66,12 @@ struct SkeletalMuscleMassGraphView: View {
                                         .resizable()
                                         .frame(width: 50, height: 42)
                                         .offset(y: 6)
-                                    Text("\(Int(currentActiveItem.skeletalMusleMass))kg")
+                                    Text("\(Int(currentActiveItem.bodyInfo?.skeletalMuscleMass ?? 0))kg")
                                         .foregroundColor(Color(UIColor.color7442FF))
                                         .font(Font(UIFont.pretendard(.semiBold, size: 14)))
                                 }
                                 // MARK: - offset
-                                .offset(x: 0, y: -data.skeletalMusleMass + 200 - 20)
+//                                .offset(x: 0, y: -data.skeletalMusleMass + 200 - 20)
                             }
                     }
                 }
@@ -98,10 +85,9 @@ struct SkeletalMuscleMassGraphView: View {
                             .fill(.clear).contentShape(Rectangle())
                             .onTapGesture { value in
                                 if let date : String = proxy.value(atX: value.x) {
-                                    if let currentItem = testData.first(where: { item in
-                                        item.date.yyMMddToString() == date
+                                    if let currentItem = skeletalMusleMassGraphViewModel.skeletalMusleMassData.first(where: { item in
+                                        item.date == date
                                     }) {
-                                        print(currentItem.skeletalMusleMass, "sssdd")
                                         self.currentActiveItem = currentItem
                                         self.plotWidth = proxy.plotAreaSize.width
                                     }
@@ -112,7 +98,7 @@ struct SkeletalMuscleMassGraphView: View {
                 })
                 .padding()
                 ///데이터 갯수에 따른 차트 UI 구분
-                .frame(width: UIScreen.main.bounds.width > ViewConstants.dataPointWidth * CGFloat(testData.count) ? UIScreen.main.bounds.width : ViewConstants.dataPointWidth * CGFloat(testData.count))
+                .frame(width: UIScreen.main.bounds.width > ViewConstants.dataPointWidth * CGFloat(skeletalMusleMassGraphViewModel.skeletalMusleMassData.count) ? UIScreen.main.bounds.width : ViewConstants.dataPointWidth * CGFloat(skeletalMusleMassGraphViewModel.skeletalMusleMassData.count))
                 ///우측 정렬을 위한 id 설졍
                 .id(trailingID)
             }
@@ -126,7 +112,8 @@ struct SkeletalMuscleMassGraphView: View {
                 .strokeBorder(Color(UIColor.colorE6E0FF), lineWidth: 1)
         }
         .onAppear {
-            for (index, _) in testData.enumerated() {
+            skeletalMusleMassGraphViewModel.readSkeletalMusleMassData()
+            for (index, _) in skeletalMusleMassGraphViewModel.skeletalMusleMassData.enumerated() {
                 withAnimation(.easeOut(duration: 0.8).delay(Double(index) * 0.05)) {
                     animate = true
                 }

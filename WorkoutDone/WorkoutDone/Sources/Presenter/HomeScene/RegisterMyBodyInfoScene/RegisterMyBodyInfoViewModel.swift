@@ -82,7 +82,7 @@ class RegisterMyBodyInfoViewModel {
         do {
             try realm.write {
                 let workoutDoneData = WorkOutDoneData(id: id, date: date)
-                let bodyInfo = BodyInfo(value: ["wegiht" : weight, "skeletalMuscleMass" : skeletalMusleMass, "fatPercentage" : fatPercentage])
+                let bodyInfo = BodyInfo(value: ["weight" : weight, "skeletalMuscleMass" : skeletalMusleMass, "fatPercentage" : fatPercentage])
                 workoutDoneData.bodyInfo = bodyInfo
                 realm.add(workoutDoneData, update: .modified)
             }
@@ -177,8 +177,8 @@ class RegisterMyBodyInfoViewModel {
                     weight: Double(value.weight ?? ""),
                     skeletalMusleMass: Double(value.skeletalMusleMass ?? ""),
                     fatPercentage: Double(value.fatPercentage ?? ""),
-                    date: "2023.04.20",
-                    id: 20230420)
+                    date: "2023.04.21",
+                    id: 20230421)
             }
             else {
                 ///값이 없는 경우 Create
@@ -186,8 +186,8 @@ class RegisterMyBodyInfoViewModel {
                     weight: Double(value.weight ?? ""),
                     skeletalMusleMass: Double(value.skeletalMusleMass ?? ""),
                     fatPercentage: Double(value.fatPercentage ?? ""),
-                    date: "2023.04.20",
-                    id: 20230420)
+                    date: "2023.04.21",
+                    id: 20230421)
             }
         }
 
