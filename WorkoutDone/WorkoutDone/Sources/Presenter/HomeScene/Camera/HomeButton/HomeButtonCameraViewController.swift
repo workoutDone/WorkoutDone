@@ -11,9 +11,10 @@ import Then
 import AVFoundation
 
 class HomeButtonCameraViewController : BaseViewController {
-    let cameraViewHeight: Int = 468
-    var backCameraOn: Bool = true
+    
     var frameImages: [String] = ["frame1", "frame2", "frame3", "frame4", "frame5", "frame6"]
+    var isSelectFrameImagesIndex = 0
+    var backCameraOn: Bool = true
     
     var captureSession: AVCaptureSession!
     var frontCamera: AVCaptureDevice!
@@ -23,38 +24,16 @@ class HomeButtonCameraViewController : BaseViewController {
     var previewLayer: AVCaptureVideoPreviewLayer!
     var videoOutput: AVCaptureVideoDataOutput!
     var takePicture = false
-    
-    var isSelectFrameImagesIndex = 0
-    
-    private let cameraView = UIView().then {
-        $0.backgroundColor = .orange
-    }
+
+    private let cameraView = UIView()
     
     private let frameImage = UIImageView()
-    
-    private let captureImage = UIImageView().then {
-        $0.backgroundColor = .yellow
-    }
     
     private let backButton = BackButton()
     
     private let gridToggleButton = GridToggleButton()
     
-    private let gridRowLine1 = UIImageView().then {
-        $0.image = UIImage(named: "rowLine")
-    }
-    
-    private let gridRowLine2 = UIImageView().then {
-        $0.image = UIImage(named: "rowLine")
-    }
-    
-    private let gridColumnLine1 = UIImageView().then {
-        $0.image = UIImage(named: "columnLine")
-    }
-    
-    private let gridColumnLine2 = UIImageView().then {
-        $0.image = UIImage(named: "columnLine")
-    }
+    private let gridView = GridView()
     
     private let collectionView : UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -74,45 +53,36 @@ class HomeButtonCameraViewController : BaseViewController {
     private let switchCameraButton = UIButton().then {
         $0.setImage(UIImage(named: "switchCamera"), for: .normal)
     }
-    
-    private let pressShutterView = PressShutterView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setDelegateDataSource()
-        pressShutterView.isHidden = true
-        //        saveButton.isHidden = true
-        captureImage.isHidden = true
+        //saveButton.isHidden = true
+        gridView.isHidden = true
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        //setupCaptureSession()
+        setupCaptureSession()
     }
     
     override func setupLayout() {
         super.setupLayout()
         
-        [cameraView, captureImage, backButton, gridToggleButton, collectionView, shutterButton, switchCameraButton, pressShutterView].forEach {
+        [cameraView, gridView, backButton, gridToggleButton, collectionView, shutterButton, switchCameraButton, frameImage].forEach {
             view.addSubview($0)
         }
-        
-        view.addSubview(gridRowLine1)
-        view.addSubview(gridRowLine2)
-        view.addSubview(gridColumnLine1)
-        view.addSubview(gridColumnLine2)
-        
-        view.addSubview(frameImage)
     }
     
     override func setupConstraints() {
         super.setupConstraints()
+    
         cameraView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(10)
             $0.leading.trailing.equalTo(view.safeAreaLayoutGuide)
-            $0.height.equalTo(cameraViewHeight)
+            $0.height.equalTo(view.frame.width * (4 / 3))
         }
         
         backButton.snp.makeConstraints {
@@ -125,39 +95,13 @@ class HomeButtonCameraViewController : BaseViewController {
             $0.trailing.equalToSuperview().offset(-10)
         }
         
+        gridView.snp.makeConstraints {
+            $0.top.leading.trailing.bottom.equalTo(cameraView)
+        }
+        
         frameImage.snp.makeConstraints {
             $0.top.bottom.equalTo(cameraView).offset(10)
             $0.leading.trailing.equalTo(cameraView)
-        }
-        
-        gridRowLine1.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(cameraViewHeight / 3 + 10)
-            $0.leading.trailing.equalTo(cameraView)
-            $0.height.equalTo(0.5)
-        }
-        
-        gridRowLine2.snp.makeConstraints {
-            $0.top.equalToSuperview().offset((cameraViewHeight / 3) * 2 + 10)
-            $0.leading.trailing.equalTo(cameraView)
-            $0.height.equalTo(0.5)
-        }
-        
-        gridColumnLine1.snp.makeConstraints {
-            $0.leading.equalTo(cameraView).offset(view.bounds.width / 3)
-            $0.top.bottom.equalTo(cameraView).offset(10)
-            $0.width.equalTo(0.5)
-        }
-        
-        gridColumnLine2.snp.makeConstraints {
-            $0.leading.equalTo(cameraView).offset((view.bounds.width / 3) * 2)
-            $0.top.bottom.equalTo(cameraView).offset(10)
-            $0.width.equalTo(0.5)
-        }
-        
-        captureImage.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(22)
-            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide)
-            $0.height.equalTo(cameraViewHeight)
         }
         
         collectionView.snp.makeConstraints {
@@ -179,11 +123,6 @@ class HomeButtonCameraViewController : BaseViewController {
             $0.width.height.equalTo(42)
         }
         
-        pressShutterView.snp.makeConstraints {
-            $0.top.equalTo(cameraView.snp.bottom)
-            $0.bottom.leading.trailing.equalToSuperview()
-        }
-        
 //        saveButton.snp.makeConstraints {
 //            $0.bottom.equalTo(view.safeAreaLayoutGuide).offset(-13)
 //            $0.leading.equalTo(view.safeAreaLayoutGuide).offset(20)
@@ -197,7 +136,6 @@ class HomeButtonCameraViewController : BaseViewController {
         switchCameraButton.addTarget(self, action: #selector(switchCameraButtonTapped), for: .touchUpInside)
         backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
         gridToggleButton.addTarget(self, action: #selector(gridToggleButtonTapped), for: .touchUpInside)
-        pressShutterView.againButton.addTarget(self, action: #selector(againButtonTapped), for: .touchUpInside)
     }
     
     func setDelegateDataSource() {
@@ -260,7 +198,7 @@ class HomeButtonCameraViewController : BaseViewController {
     
     func setupPreviewLayer() {
         previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
-        previewLayer.videoGravity = .resize
+        previewLayer.videoGravity = .resizeAspectFill
         cameraView.layer.insertSublayer(previewLayer, below: switchCameraButton.layer)
         previewLayer.frame = self.cameraView.layer.frame
     }
@@ -291,36 +229,21 @@ class HomeButtonCameraViewController : BaseViewController {
     
     @objc func gridToggleButtonTapped(sender: UIButton!) {
         if gridToggleButton.isOnToggle {
-            [gridRowLine1, gridRowLine2, gridColumnLine1, gridColumnLine2].forEach {
-                $0.isHidden = true
-            }
+           gridView.isHidden = true
+            
         } else {
-            [gridRowLine1, gridRowLine2, gridColumnLine1, gridColumnLine2].forEach {
-                $0.isHidden = false
-            }
+            gridView.isHidden = false
         }
         gridToggleButton.changeToggle()
         gridToggleButton.isOnToggle = !gridToggleButton.isOnToggle
     }
 
     @objc func captureButtonTapped(sender: UIButton!) {
-        collectionView.isHidden = true
-        shutterButton.isHidden = true
-        switchCameraButton.isHidden = true
-        pressShutterView.isHidden = false
-        
         takePicture = true
     }
     
     @objc func switchCameraButtonTapped(sender: UIButton!) {
         switchCameraInput()
-    }
-    
-    @objc func againButtonTapped(sender: UIButton!) {
-        pressShutterView.isHidden = true
-        collectionView.isHidden = false
-        shutterButton.isHidden = false
-        switchCameraButton.isHidden = false
     }
 }
 
@@ -364,6 +287,11 @@ extension HomeButtonCameraViewController : UICollectionViewDelegate, UICollectio
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         isSelectFrameImagesIndex = indexPath.row
+        if indexPath.row == 0 {
+            frameImage.image = nil
+        } else {
+            frameImage.image = UIImage(named: frameImages[indexPath.row - 1])
+        }
         collectionView.reloadData()
     }
 }
@@ -383,8 +311,13 @@ extension HomeButtonCameraViewController : AVCaptureVideoDataOutputSampleBufferD
         let uiImage = UIImage(ciImage: ciImage)
         
         DispatchQueue.main.async {
-            self.captureImage.image = uiImage
-            self.captureImage.isHidden = false
+            let pressShutterVC = PressShutterViewController()
+            pressShutterVC.captureImage.image = uiImage
+            if self.isSelectFrameImagesIndex > 0 {
+                pressShutterVC.frameImage.image = UIImage(named: self.frameImages[self.isSelectFrameImagesIndex - 1])
+            }
+            self.navigationController?.pushViewController(pressShutterVC, animated: false)
+            
             self.takePicture = false
             self.captureSession.stopRunning()
         }
