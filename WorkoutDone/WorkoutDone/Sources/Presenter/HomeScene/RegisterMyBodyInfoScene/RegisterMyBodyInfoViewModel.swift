@@ -99,6 +99,9 @@ class RegisterMyBodyInfoViewModel {
         let selectedBodyInfoData = realm.object(ofType: WorkOutDoneData.self, forPrimaryKey: id)
         return selectedBodyInfoData
     }
+//    func convertIDTo(dateString : String) -> Int {
+//
+//    }
     
     func transform(input: Input) -> Output {
         let weightText = input.weightInputText.map { value in
@@ -127,9 +130,10 @@ class RegisterMyBodyInfoViewModel {
             }
         })
         
-        let readWeightData = input.loadView.map { _ in
-            if self.validBodyInfoData(id: 20230420) {
-                let weight = self.readBodyInfoData(id: 20230420)?.bodyInfo?.weight
+        let readWeightData = Driver<String>.combineLatest(input.loadView, input.selectedDate, resultSelector: { (load, date) in
+            guard let idDate = Int(date) else { return "" }
+            if self.validBodyInfoData(id: idDate) {
+                let weight = self.readBodyInfoData(id: idDate)?.bodyInfo?.weight
                 if let doubleWeight = weight {
                     return String(doubleWeight)
                 }
@@ -140,10 +144,11 @@ class RegisterMyBodyInfoViewModel {
             else {
                 return ""
             }
-        }
-        let readSkeletalMusleMassData = input.loadView.map { _ in
-            if self.validBodyInfoData(id: 20230420) {
-                let skeletalMusleMass = self.readBodyInfoData(id: 20230420)?.bodyInfo?.skeletalMuscleMass
+        })
+        let readSkeletalMusleMassData = Driver<String>.combineLatest(input.loadView, input.selectedDate, resultSelector: { (load, date) in
+            guard let idDate = Int(date) else { return "" }
+            if self.validBodyInfoData(id: idDate) {
+                let skeletalMusleMass = self.readBodyInfoData(id: idDate)?.bodyInfo?.skeletalMuscleMass
                 if let doubleSkeletalMusleMass = skeletalMusleMass {
                     return String(doubleSkeletalMusleMass)
                 }
@@ -154,10 +159,12 @@ class RegisterMyBodyInfoViewModel {
             else {
                 return ""
             }
-        }
-        let readFatPercentageData = input.loadView.map { _ in
-            if self.validBodyInfoData(id: 20230420) {
-                let fatPercentage = self.readBodyInfoData(id: 20230420)?.bodyInfo?.fatPercentage
+
+        })
+        let readFatPercentageData = Driver<String>.combineLatest(input.loadView, input.selectedDate, resultSelector: { (load, date) in
+            guard let idDate = Int(date) else { return "" }
+            if self.validBodyInfoData(id: idDate) {
+                let fatPercentage = self.readBodyInfoData(id: idDate)?.bodyInfo?.fatPercentage
                 if let doubleFatPercentage = fatPercentage {
                     return String(doubleFatPercentage)
                 }
@@ -168,7 +175,9 @@ class RegisterMyBodyInfoViewModel {
             else {
                 return ""
             }
-        }
+
+        })
+        
         
         let inputData = input.saveButtonTapped.map { value in
             if self.validBodyInfoData(id: 20230420) {
