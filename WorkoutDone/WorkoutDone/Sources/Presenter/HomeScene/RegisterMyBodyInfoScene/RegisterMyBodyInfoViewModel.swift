@@ -17,9 +17,7 @@ class RegisterMyBodyInfoViewModel {
         self.workOutDoneData = realm.objects(WorkOutDoneData.self)
     
     }
-    
-    //struct
-    var test = PublishSubject<Void>()
+
     struct Input {
         let loadView : Driver<Void>
         let weightInputText : Driver<String>
@@ -70,10 +68,7 @@ class RegisterMyBodyInfoViewModel {
                 bodyInfo.fatPercentage = fatPercentage
                 workoutDoneData.bodyInfo = bodyInfo
                 realm.add(workoutDoneData)
-                //??
-                test.onNext(())
-                
-                print("렘 세ㅇ")
+
             }
         }
         catch {
