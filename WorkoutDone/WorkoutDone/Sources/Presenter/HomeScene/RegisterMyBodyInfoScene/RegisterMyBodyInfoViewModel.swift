@@ -99,9 +99,18 @@ class RegisterMyBodyInfoViewModel {
         let selectedBodyInfoData = realm.object(ofType: WorkOutDoneData.self, forPrimaryKey: id)
         return selectedBodyInfoData
     }
-//    func convertIDTo(dateString : String) -> Int {
-//
-//    }
+    ///id 값(string) -> Date(string)으로 변경
+    func convertIDToDateString(dateString : String) -> String? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyyMMdd"
+        if let date = dateFormatter.date(from: dateString) {
+            dateFormatter.dateFormat = "yyyy.MM.dd"
+            return dateFormatter.string(from: date)
+        }
+        else {
+            return nil
+        }
+    }
     
     func transform(input: Input) -> Output {
         let weightText = input.weightInputText.map { value in
@@ -129,7 +138,7 @@ class RegisterMyBodyInfoViewModel {
                 return false
             }
         })
-        
+        ///몸무게 데이터 확인(read)
         let readWeightData = Driver<String>.combineLatest(input.loadView, input.selectedDate, resultSelector: { (load, date) in
             guard let idDate = Int(date) else { return "" }
             if self.validBodyInfoData(id: idDate) {
@@ -145,6 +154,7 @@ class RegisterMyBodyInfoViewModel {
                 return ""
             }
         })
+        ///골격근량 데이터 확인(read)
         let readSkeletalMusleMassData = Driver<String>.combineLatest(input.loadView, input.selectedDate, resultSelector: { (load, date) in
             guard let idDate = Int(date) else { return "" }
             if self.validBodyInfoData(id: idDate) {
@@ -161,6 +171,7 @@ class RegisterMyBodyInfoViewModel {
             }
 
         })
+        ///체지방량 데이터  확인(read)
         let readFatPercentageData = Driver<String>.combineLatest(input.loadView, input.selectedDate, resultSelector: { (load, date) in
             guard let idDate = Int(date) else { return "" }
             if self.validBodyInfoData(id: idDate) {
@@ -177,28 +188,34 @@ class RegisterMyBodyInfoViewModel {
             }
 
         })
-        
-        
-        let inputData = input.saveButtonTapped.map { value in
-            if self.validBodyInfoData(id: 20230420) {
-                ///값이 존재하는 경우 Update
+
+        ///데이터 입력(update or create)
+        let inputData = Driver<Void>.combineLatest(input.saveButtonTapped, input.selectedDate, resultSelector: { (inputData, date) in
+            guard let idValue = Int(date) else { return }
+            let convertDate = self.convertIDToDateString(dateString: date)
+            guard let dateValue = convertDate else { return }
+            if self.validBodyInfoData(id: idValue) {
+                ///값이 존재하는 경우
                 self.updateBodyInfoData(
-                    weight: Double(value.weight ?? ""),
-                    skeletalMusleMass: Double(value.skeletalMusleMass ?? ""),
-                    fatPercentage: Double(value.fatPercentage ?? ""),
-                    date: "2023.04.21",
-                    id: 20230421)
+                    weight: Double(inputData.weight ?? ""),
+                    skeletalMusleMass: Double(inputData.skeletalMusleMass ?? ""),
+                    fatPercentage: Double(inputData.fatPercentage ?? ""),
+                    date: dateValue,
+                    id: idValue)
             }
             else {
-                ///값이 없는 경우 Create
+                ///값이 존재하지 않는 경우
                 self.createBodyInfoData(
-                    weight: Double(value.weight ?? ""),
-                    skeletalMusleMass: Double(value.skeletalMusleMass ?? ""),
-                    fatPercentage: Double(value.fatPercentage ?? ""),
-                    date: "2023.04.21",
-                    id: 20230421)
+                    weight: Double(inputData.weight ?? ""),
+                    skeletalMusleMass: Double(inputData.skeletalMusleMass ?? ""),
+                    fatPercentage: Double(inputData.fatPercentage ?? ""),
+                    date: dateValue,
+                    id: idValue)
             }
-        }
+            
+        })
+        
+        
 
         return Output(
             weightOutputText: weightText,
