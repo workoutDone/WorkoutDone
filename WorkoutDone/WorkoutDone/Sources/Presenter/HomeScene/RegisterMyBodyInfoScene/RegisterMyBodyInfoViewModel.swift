@@ -38,6 +38,7 @@ class RegisterMyBodyInfoViewModel {
         let readSkeletalMusleMassData : Driver<String>
         let readFatPercentageData : Driver<String>
     }
+    ///최대 3글자로 제한
     func trimText(text: String) -> String {
         if text.count >= 3 {
             let index = text.index(text.startIndex, offsetBy: 3)
@@ -49,6 +50,7 @@ class RegisterMyBodyInfoViewModel {
             return text
         }
     }
+    ///첫글자 "0" 막기
     func ignoreZeroText(text: String) -> String {
         if text.count >= 1 && text[text.startIndex] == "0" {
             return ""
@@ -57,7 +59,7 @@ class RegisterMyBodyInfoViewModel {
             return text
         }
     }
-    
+    ///Realm Create
     func createBodyInfoData(weight : Double?, skeletalMusleMass : Double?, fatPercentage : Double?, date : String, id : Int) {
         do {
             try realm.write {
@@ -78,6 +80,7 @@ class RegisterMyBodyInfoViewModel {
             print("Error saving \(error)")
         }
     }
+    ///Realm Update
     func updateBodyInfoData(weight: Double?, skeletalMusleMass : Double?, fatPercentage : Double?, date : String, id : Int) {
         do {
             try realm.write {
@@ -91,10 +94,12 @@ class RegisterMyBodyInfoViewModel {
             print("Error updating \(error)")
         }
     }
+    ///id값으로 데이터가 있는지 판별
     func validBodyInfoData(id : Int) -> Bool {
         let selectedBodyInfoData = realm.object(ofType: WorkOutDoneData.self, forPrimaryKey: id)
         return selectedBodyInfoData?.bodyInfo == nil ? false : true
     }
+    ///id값으로 BodyInfoData 가져오기
     func readBodyInfoData(id : Int) -> WorkOutDoneData?  {
         let selectedBodyInfoData = realm.object(ofType: WorkOutDoneData.self, forPrimaryKey: id)
         return selectedBodyInfoData
@@ -113,23 +118,26 @@ class RegisterMyBodyInfoViewModel {
     }
     
     func transform(input: Input) -> Output {
+        ///텍스트필드 입력 값 - 몸무게
         let weightText = input.weightInputText.map { value in
             let ignoreZeroValue = self.ignoreZeroText(text: value )
             let trimValue = self.trimText(text: ignoreZeroValue)
             return trimValue
         }
-        
+        ///텍스트필드 입력 값 - 골격근량
         let skeletalMusleMassText = input.skeletalMusleMassInputText.map { value in
             let ignoreZeroValue = self.ignoreZeroText(text: value )
             let trimValue = self.trimText(text: ignoreZeroValue)
             return trimValue
         }
-        
+        ///텍스트필드 입력 값 - 체지방량
         let fatPercentageText = input.fatPercentageInputText.map { value in
             let ignoreZeroValue = self.ignoreZeroText(text: value )
             let trimValue = self.trimText(text: ignoreZeroValue)
             return trimValue
         }
+        
+        ///버튼 활성화. 상태
         let buttonEnabled = Driver<Bool>.combineLatest(input.weightInputText, skeletalMusleMassText, fatPercentageText, resultSelector: { (weight, skeletalMusle, fatPercenatage) in
             if weight.count + skeletalMusle.count + fatPercenatage.count > 0 {
                 return true
