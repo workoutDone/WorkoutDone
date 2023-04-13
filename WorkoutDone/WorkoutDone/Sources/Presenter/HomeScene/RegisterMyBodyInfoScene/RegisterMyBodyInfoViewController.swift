@@ -35,6 +35,9 @@ class RegisterMyBodyInfoViewController : BaseViewController {
     )
     private lazy var output = viewModel.transform(input: input)
     
+    ///dismiss 시 사용될 CompletionHandler
+    var completionHandler : ((String) -> Void)?
+    
     // MARK: - PROPERTIES
     private let baseView = UIView().then {
         $0.backgroundColor = .colorFFFFFF
@@ -277,6 +280,7 @@ class RegisterMyBodyInfoViewController : BaseViewController {
             .disposed(by: disposeBag)
         output.saveData.drive(onNext: {
             self.dismiss(animated: true)
+            self.completionHandler?(self.selectedData)
         })
             .disposed(by: disposeBag)
         

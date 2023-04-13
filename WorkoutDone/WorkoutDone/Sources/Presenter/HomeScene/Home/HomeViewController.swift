@@ -149,7 +149,11 @@ class HomeViewController : BaseViewController {
         registerMyBodyInfoViewController.modalTransitionStyle = .crossDissolve
         registerMyBodyInfoViewController.modalPresentationStyle = .overFullScreen
         present(registerMyBodyInfoViewController, animated: true)
-        
+        registerMyBodyInfoViewController.completionHandler = { [weak self] dateValue in
+            guard let self else { return }
+            guard let intDateValue = Int(dateValue) else { return }
+            self.selectedDate.onNext(intDateValue)
+        }
         print(calendarView.selectDate)
     }
     @objc func workoutRoutineChoiceButtonTapped() {
