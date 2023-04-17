@@ -63,8 +63,11 @@
 		92DCF54A29D6BD8200F90002 /* SortButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DCF54929D6BD8200F90002 /* SortButtonCell.swift */; };
 		92DCF54C29D6D15600F90002 /* FrameHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DCF54B29D6D15600F90002 /* FrameHeaderView.swift */; };
 		92DCF55A29D878FB00F90002 /* GalleryDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DCF55929D878FB00F90002 /* GalleryDetailViewController.swift */; };
-		A56D904229E08604009FD0B2 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A56D904129E08604009FD0B2 /* HomeViewModel.swift */; };
 		92DCF61229DCAE3D00F90002 /* GridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DCF61129DCAE3D00F90002 /* GridView.swift */; };
+		A52573EA29EDB8A9004FBAC0 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52573E929EDB8A9004FBAC0 /* UIView.swift */; };
+		A52573EC29EDB928004FBAC0 /* UIStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52573EB29EDB928004FBAC0 /* UIStackView.swift */; };
+		A52573EE29EDB9B9004FBAC0 /* ViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52573ED29EDB9B9004FBAC0 /* ViewModelType.swift */; };
+		A56D904229E08604009FD0B2 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A56D904129E08604009FD0B2 /* HomeViewModel.swift */; };
 		A57061CF29CD6A5E0083ECDD /* GalleryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57061CE29CD6A5E0083ECDD /* GalleryViewController.swift */; };
 		A57061D129CD6A840083ECDD /* AnalyzeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57061D029CD6A840083ECDD /* AnalyzeViewController.swift */; };
 		A57061D429D045690083ECDD /* WeightGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57061D329D045690083ECDD /* WeightGraphView.swift */; };
@@ -159,8 +162,11 @@
 		92DCF54929D6BD8200F90002 /* SortButtonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortButtonCell.swift; sourceTree = "<group>"; };
 		92DCF54B29D6D15600F90002 /* FrameHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameHeaderView.swift; sourceTree = "<group>"; };
 		92DCF55929D878FB00F90002 /* GalleryDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryDetailViewController.swift; sourceTree = "<group>"; };
-		A56D904129E08604009FD0B2 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		92DCF61129DCAE3D00F90002 /* GridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridView.swift; sourceTree = "<group>"; };
+		A52573E929EDB8A9004FBAC0 /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
+		A52573EB29EDB928004FBAC0 /* UIStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIStackView.swift; sourceTree = "<group>"; };
+		A52573ED29EDB9B9004FBAC0 /* ViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelType.swift; sourceTree = "<group>"; };
+		A56D904129E08604009FD0B2 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		A57061CE29CD6A5E0083ECDD /* GalleryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryViewController.swift; sourceTree = "<group>"; };
 		A57061D029CD6A840083ECDD /* AnalyzeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyzeViewController.swift; sourceTree = "<group>"; };
 		A57061D329D045690083ECDD /* WeightGraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeightGraphView.swift; sourceTree = "<group>"; };
@@ -243,9 +249,9 @@
 			children = (
 				9200601729B1A6A300586063 /* Resources */,
 				9200601829B1A6AD00586063 /* Sources */,
+				9200602B29B1A81B00586063 /* Utils */,
 				92005FC929B1A49400586063 /* ViewController.swift */,
 				92005FD329B1A49500586063 /* Info.plist */,
-				9200602B29B1A81B00586063 /* Utils */,
 			);
 			path = WorkoutDone;
 			sourceTree = "<group>";
@@ -383,6 +389,8 @@
 				A576693F29BF1A9900673DFE /* UITextField.swift */,
 				A5A10CA829D59ED600E45FC8 /* String.swift */,
 				A5A10CAA29D59EF300E45FC8 /* Date.swift */,
+				A52573E929EDB8A9004FBAC0 /* UIView.swift */,
+				A52573EB29EDB928004FBAC0 /* UIStackView.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -390,6 +398,7 @@
 		9200602B29B1A81B00586063 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				A52573ED29EDB9B9004FBAC0 /* ViewModelType.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -735,7 +744,9 @@
 				9200604329B1ACBF00586063 /* RecordView.swift in Sources */,
 				92DCF48029D0846B00F90002 /* BodyInfo.swift in Sources */,
 				A57061D129CD6A840083ECDD /* AnalyzeViewController.swift in Sources */,
+				A52573EC29EDB928004FBAC0 /* UIStackView.swift in Sources */,
 				92DCF55A29D878FB00F90002 /* GalleryDetailViewController.swift in Sources */,
+				A52573EE29EDB9B9004FBAC0 /* ViewModelType.swift in Sources */,
 				92DCF54A29D6BD8200F90002 /* SortButtonCell.swift in Sources */,
 				A59ACB7829B46DEB0084C73E /* TabBarController.swift in Sources */,
 				A576694029BF1A9900673DFE /* UITextField.swift in Sources */,
@@ -772,6 +783,7 @@
 				A56D904229E08604009FD0B2 /* HomeViewModel.swift in Sources */,
 				A57061D629D09AC40083ECDD /* SkeletalMuscleMassGraphView.swift in Sources */,
 				A576693B29B6EB4900673DFE /* ImageSelectionViewController.swift in Sources */,
+				A52573EA29EDB8A9004FBAC0 /* UIView.swift in Sources */,
 				A57061DA29D09D5C0083ECDD /* WeightGraphViewModel.swift in Sources */,
 				92005FC629B1A49400586063 /* AppDelegate.swift in Sources */,
 				92005FC829B1A49400586063 /* SceneDelegate.swift in Sources */,
@@ -962,7 +974,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -991,7 +1003,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
