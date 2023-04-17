@@ -55,6 +55,15 @@ class GalleryViewController : BaseViewController {
             $0.leading.trailing.bottom.equalToSuperview()
         }
     }
+    
+    func getScreenPositionForCell(collectionView: UICollectionView, cell: UICollectionViewCell) -> CGRect? {
+        if let indexPath = collectionView.indexPath(for: cell) {
+            let cellRect = collectionView.layoutAttributesForItem(at: indexPath)?.frame
+            let cellRectInSuperview = collectionView.convert(cellRect ?? CGRect.zero, to: collectionView.superview)
+            return cellRectInSuperview
+        }
+        return nil
+    }
 }
 
 extension GalleryViewController : SortButtonTappedDelegate {
@@ -145,11 +154,12 @@ extension GalleryViewController : UICollectionViewDelegate, UICollectionViewData
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let cell = collectionView.cellForItem(at: indexPath) as? ImageCell else { return }
-
+        let positionOfCell = getScreenPositionForCell(collectionView: collectionView, cell: cell)
+        
         let galleryDetailVC = GalleryDetailViewController()
-        galleryDetailVC.frameX = cell.frame.minX
-        galleryDetailVC.frameY = cell.frame.minY
-        galleryDetailVC.size = cell.frame.width
+        galleryDetailVC.frameX = positionOfCell?.minX ?? 0
+        galleryDetailVC.frameY = positionOfCell?.minY ?? 0
+        galleryDetailVC.size = positionOfCell?.width ?? 0
         galleryDetailVC.modalPresentationStyle = .overFullScreen
         self.present(galleryDetailVC, animated: false)
         
