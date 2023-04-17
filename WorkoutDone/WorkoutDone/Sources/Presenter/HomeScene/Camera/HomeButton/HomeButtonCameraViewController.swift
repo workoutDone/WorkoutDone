@@ -58,14 +58,18 @@ class HomeButtonCameraViewController : BaseViewController {
         super.viewDidLoad()
         
         setDelegateDataSource()
-        //saveButton.isHidden = true
-        gridView.isHidden = true
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
         setupCaptureSession()
+    }
+    
+    override func setComponents() {
+        //saveButton.isHidden = true
+        gridView.isHidden = true
+        view.backgroundColor = .colorFFFFFF
     }
     
     override func setupLayout() {
@@ -313,9 +317,6 @@ extension HomeButtonCameraViewController : AVCaptureVideoDataOutputSampleBufferD
         DispatchQueue.main.async {
             let pressShutterVC = PressShutterViewController()
             pressShutterVC.captureImage.image = uiImage
-            if self.isSelectFrameImagesIndex > 0 {
-                pressShutterVC.frameImage.image = UIImage(named: self.frameImages[self.isSelectFrameImagesIndex - 1])
-            }
             self.navigationController?.pushViewController(pressShutterVC, animated: false)
             
             self.takePicture = false

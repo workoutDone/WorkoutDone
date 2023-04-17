@@ -13,8 +13,6 @@ class PressShutterViewController: BaseViewController {
         $0.contentMode = .scaleAspectFit
     }
     
-    var frameImage = UIImageView()
-    
     private let backButton = BackButton()
     
     let againButton = UIButton().then {
@@ -62,7 +60,10 @@ class PressShutterViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
+    }
+    
+    override func setComponents() {
+        view.backgroundColor = .colorFFFFFF
     }
     
     override func setupLayout() {
@@ -70,7 +71,6 @@ class PressShutterViewController: BaseViewController {
             view.addSubview($0)
         }
         
-        captureImage.addSubview(frameImage)
         againButton.addSubview(againImage)
         saveButton.addSubview(saveImage)
         instaButton.addSubview(instaImage)
@@ -81,10 +81,6 @@ class PressShutterViewController: BaseViewController {
             $0.top.equalToSuperview().offset(20)
             $0.leading.trailing.equalTo(view.safeAreaLayoutGuide)
             $0.height.equalTo(view.frame.width * (4 / 3))
-        }
-        
-        frameImage.snp.makeConstraints {
-            $0.top.leading.trailing.bottom.equalTo(captureImage)
         }
         
         backButton.snp.makeConstraints {
