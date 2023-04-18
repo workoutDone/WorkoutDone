@@ -63,7 +63,7 @@ class OnboardingViewController : BaseViewController {
     // MARK: - ACTIONS
     override func setupLayout() {
         super.setupLayout()
-        
+        view.backgroundColor = .colorFFFFFF
         [collectionView, pageControl, nextButton].forEach {
             view.addSubview($0)
         }
