@@ -6,14 +6,15 @@
 //
 
 import UIKit
+import Photos
 
 class PressShutterViewController: BaseViewController {
+    var captureImage : UIImage?
+    let albumName = "오운완"
     
-    var captureImage = UIImageView().then {
+    var captureImageView = UIImageView().then {
         $0.contentMode = .scaleAspectFit
     }
-    
-    var frameImage = UIImageView()
     
     private let backButton = BackButton()
     
@@ -62,33 +63,32 @@ class PressShutterViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
+    }
+    
+    override func setComponents() {
+        view.backgroundColor = .colorFFFFFF
+        //captureImageView.image = captureImage
     }
     
     override func setupLayout() {
-        [captureImage, backButton, againButton, againLabel, saveButton, saveLabel, instaButton, instaLabel].forEach {
+        [captureImageView, backButton, againButton, againLabel, saveButton, saveLabel, instaButton, instaLabel].forEach {
             view.addSubview($0)
         }
         
-        captureImage.addSubview(frameImage)
         againButton.addSubview(againImage)
         saveButton.addSubview(saveImage)
         instaButton.addSubview(instaImage)
     }
     
     override func setupConstraints() {
-        captureImage.snp.makeConstraints {
+        captureImageView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(20)
             $0.leading.trailing.equalTo(view.safeAreaLayoutGuide)
             $0.height.equalTo(view.frame.width * (4 / 3))
         }
         
-        frameImage.snp.makeConstraints {
-            $0.top.leading.trailing.bottom.equalTo(captureImage)
-        }
-        
         backButton.snp.makeConstraints {
-            $0.top.equalTo(captureImage).offset(13.5)
+            $0.top.equalTo(captureImageView).offset(13.5)
             $0.leading.equalToSuperview().offset(16)
         }
         
@@ -157,6 +157,11 @@ class PressShutterViewController: BaseViewController {
     }
     
     @objc func saveButtonTapped(sender: UIButton!) {
+        setSaveImageToastMessage()
+        getGalleryAuthorization()
+    }
+    
+    func setSaveImageToastMessage() {
         let saveImageToastMessageVC = SaveImageToastMessageViewController()
         saveImageToastMessageVC.modalPresentationStyle = .overFullScreen
         
@@ -166,12 +171,85 @@ class PressShutterViewController: BaseViewController {
             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1) {
                 UIView.animate(withDuration: 0.5, delay: 0.0, options: .curveEaseOut) {
                 saveImageToastMessageVC.dismiss(animated: false)
-            }
+                }
+                self.navigationController?.popToRootViewController(animated: true)
             }
         }
     }
     
     @objc func instaButtonTapped(sender: UIButton!) {
-        print("x")
+        print("^-^")
+    }
+    
+    func getGalleryAuthorization() {
+        // 접근 권한 요청
+        PHPhotoLibrary.requestAuthorization { (status) in
+            switch status {
+            case .authorized:
+                self.checkAlbumExistence()
+            case .denied:
+                print("갤러리 접근 권한이 거부되었습니다.")
+            case .restricted:
+                print("갤러리 접근이 제한되었습니다.")
+            case .notDetermined:
+                print("갤러리 접근 권한이 아직 결정되지 않았습니다.")
+            default:
+                fatalError("갤러리 접근 권한 상태를 처리할 수 없습니다.")
+            }
+        }
+    }
+    
+    func checkAlbumExistence() {
+        let fetchOptions = PHFetchOptions() // 사진 검색을 위한 클래스
+        fetchOptions.predicate = NSPredicate(format: "title = %@", albumName) // 검색 결과에 적용할 필터링 조건 설정
+        let collections = PHAssetCollection.fetchAssetCollections(with: .album, subtype: .any, options: fetchOptions) // 조건에 따라 앨범 검색
+        // 검색된 앨범이 있는 경우,
+        if let collection = collections.firstObject {
+            // 포토 라이브러리에 추가, 수정, 삭제 등의 변경 사항을 적용하기 위해 사용, 변경 사항은 백그라운드에서 비동기적으로 처리
+            PHPhotoLibrary.shared().performChanges({
+                let assetChangeRequest = PHAssetChangeRequest.creationRequestForAsset(from: UIImage(named: "mang")!) // PHAsset을 생성하고 고유 식별자를 가져옴
+                let assetPlaceholder = assetChangeRequest.placeholderForCreatedAsset // 실제 이미지가 생성되기 전에 플레이스홀더 반환. PHAsset의 삭별자를 가지고 있으며 참조를 유지하거나 앨범에 이미즈를 추가하는 작업을 할 수 있음
+                let albumChangeRequest = PHAssetCollectionChangeRequest(for: collection) // 앨범에 대한 변경 작업 처리
+                albumChangeRequest?.addAssets([assetPlaceholder!] as NSArray) // 앨범에 이미지 추가
+            }, completionHandler: { (success, error) in
+                if success {
+                    print("이미지 추가")
+                } else {
+                    print("이미지 추가 실패 : \(error?.localizedDescription ?? "")")
+                }
+            })
+        } else {
+            self.saveImageToGallery()
+        }
+    }
+    
+    func saveImageToGallery() {
+        // 폴더 생성
+        var albumPlaceholder: PHObjectPlaceholder?
+        PHPhotoLibrary.shared().performChanges({
+            let albumCreationRequest = PHAssetCollectionChangeRequest.creationRequestForAssetCollection(withTitle: self.albumName)
+            albumPlaceholder = albumCreationRequest.placeholderForCreatedAssetCollection
+        }, completionHandler: { (success, error) in
+            if success, let albumPlaceholder = albumPlaceholder {
+                print("앨범 생성")
+                // 이미지 저장
+                PHPhotoLibrary.shared().performChanges({
+                    let album = PHAssetCollection.fetchAssetCollections(withLocalIdentifiers: [albumPlaceholder.localIdentifier], options: nil)
+                    if let album = album.firstObject {
+                        let albumChangeRequest = PHAssetCollectionChangeRequest(for: album)
+                        let creationRequest = PHAssetChangeRequest.creationRequestForAsset(from: UIImage(named: "mang")!)
+                        let assetPlaceholder = creationRequest.placeholderForCreatedAsset
+                        let albumAssets: Void? = albumChangeRequest?.addAssets([assetPlaceholder!] as NSArray)
+                        if albumAssets != nil {
+                            print("이미지 저장")
+                        }
+                    }
+                }, completionHandler: { (success, error) in
+                    if !success {
+                        print("이미지 저장 실패: \(error?.localizedDescription ?? "")")
+                    }
+                })
+            }
+        })
     }
 }
