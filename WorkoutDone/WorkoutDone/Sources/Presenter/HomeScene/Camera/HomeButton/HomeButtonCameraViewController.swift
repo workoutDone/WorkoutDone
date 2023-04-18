@@ -316,7 +316,7 @@ extension HomeButtonCameraViewController : AVCaptureVideoDataOutputSampleBufferD
         
         DispatchQueue.main.async {
             let pressShutterVC = PressShutterViewController()
-            pressShutterVC.captureImage.image = uiImage
+            pressShutterVC.captureImageView.image = uiImage
             self.navigationController?.pushViewController(pressShutterVC, animated: false)
             
             self.takePicture = false
