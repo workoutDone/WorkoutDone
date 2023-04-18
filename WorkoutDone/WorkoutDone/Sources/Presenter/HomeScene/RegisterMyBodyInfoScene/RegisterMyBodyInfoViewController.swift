@@ -20,19 +20,23 @@ struct BodyInputData {
 
 class RegisterMyBodyInfoViewController : BaseViewController {
     // MARK: - ViewModel
-    var viewModel = RegisterMyBodyInfoViewModel()
-
-    var bodyInputData = PublishSubject<BodyInputData>()
-    var didLoad = PublishSubject<Void>()
+    private var viewModel = RegisterMyBodyInfoViewModel()
+    
+    private var bodyInputData = PublishSubject<BodyInputData>()
+    var selectedData : String = Date().yyyyMMddToString()
+    private var didLoad = PublishSubject<Void>()
     private lazy var input = RegisterMyBodyInfoViewModel.Input(
         loadView: didLoad.asDriver(onErrorJustReturn: ()),
         weightInputText: weightTextField.rx.text.orEmpty.asDriver(),
         skeletalMusleMassInputText: skeletalMuscleMassTextField.rx.text.orEmpty.asDriver(),
         fatPercentageInputText: fatPercentageTextField.rx.text.orEmpty.asDriver(),
         saveButtonTapped: bodyInputData.asDriver(onErrorJustReturn: BodyInputData(weight: "", skeletalMusleMass: "", fatPercentage: "")),
-        selectedDate: Driver.just(Date().yyyyMMddToString())
+        selectedDate: Driver.just(selectedData)
     )
     private lazy var output = viewModel.transform(input: input)
+    
+    ///dismiss 시 사용될 CompletionHandler
+    var completionHandler : ((String) -> Void)?
     
     // MARK: - PROPERTIES
     private let baseView = UIView().then {
@@ -276,6 +280,7 @@ class RegisterMyBodyInfoViewController : BaseViewController {
             .disposed(by: disposeBag)
         output.saveData.drive(onNext: {
             self.dismiss(animated: true)
+            self.completionHandler?(self.selectedData)
         })
             .disposed(by: disposeBag)
         

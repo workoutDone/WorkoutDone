@@ -123,7 +123,6 @@ class HomeViewController : BaseViewController {
         
         calendarView.collectionView.rx.itemSelected
             .bind { _ in
-                print(self.calendarView.selectDate, "ssss")
                 guard let intDate = Int(self.calendarView.selectDate) else { return }
                 self.selectedDate.onNext(intDate)
             }
@@ -145,10 +144,16 @@ class HomeViewController : BaseViewController {
     }
     @objc func bodyDataEntryButtonTapped() {
         let registerMyBodyInfoViewController = RegisterMyBodyInfoViewController()
+        registerMyBodyInfoViewController.selectedData = calendarView.selectDate
+        print(registerMyBodyInfoViewController.selectedData, "눌린 데이터")
         registerMyBodyInfoViewController.modalTransitionStyle = .crossDissolve
         registerMyBodyInfoViewController.modalPresentationStyle = .overFullScreen
         present(registerMyBodyInfoViewController, animated: true)
-        
+        registerMyBodyInfoViewController.completionHandler = { [weak self] dateValue in
+            guard let self else { return }
+            guard let intDateValue = Int(dateValue) else { return }
+            self.selectedDate.onNext(intDateValue)
+        }
         print(calendarView.selectDate)
     }
     @objc func workoutRoutineChoiceButtonTapped() {
