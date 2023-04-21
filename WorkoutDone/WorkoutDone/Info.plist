@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string></string>
+	<string>사진 저장</string>
 	<key>NSCameraUsageDescription</key>
-	<string></string>
+	<string>카메라좀 쓰자!</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Pretendard-Black.ttf</string>

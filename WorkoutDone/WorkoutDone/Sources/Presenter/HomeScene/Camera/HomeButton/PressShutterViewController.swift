@@ -10,8 +10,9 @@ import Photos
 
 class PressShutterViewController: BaseViewController {
     var captureImage : UIImage?
-    let albumName = "오운완"
+    let albumName = "오운완222"
     
+    var album: PHAssetCollection?
     var captureImageView = UIImageView().then {
         $0.contentMode = .scaleAspectFit
     }
@@ -63,14 +64,18 @@ class PressShutterViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+       
     }
     
     override func setComponents() {
         view.backgroundColor = .colorFFFFFF
-        //captureImageView.image = captureImage
+  
     }
     
     override func setupLayout() {
+        
+        captureImageView = UIImageView(image: self.captureImage)
+        
         [captureImageView, backButton, againButton, againLabel, saveButton, saveLabel, instaButton, instaLabel].forEach {
             view.addSubview($0)
         }
@@ -159,6 +164,7 @@ class PressShutterViewController: BaseViewController {
     @objc func saveButtonTapped(sender: UIButton!) {
         setSaveImageToastMessage()
         getGalleryAuthorization()
+       
     }
     
     func setSaveImageToastMessage() {
@@ -207,7 +213,8 @@ class PressShutterViewController: BaseViewController {
         if let collection = collections.firstObject {
             // 포토 라이브러리에 추가, 수정, 삭제 등의 변경 사항을 적용하기 위해 사용, 변경 사항은 백그라운드에서 비동기적으로 처리
             PHPhotoLibrary.shared().performChanges({
-                let assetChangeRequest = PHAssetChangeRequest.creationRequestForAsset(from: UIImage(named: "mang")!) // PHAsset을 생성하고 고유 식별자를 가져옴
+                PHAssetChangeRequest.creationRequestForAsset(from: self.captureImage!)
+                let assetChangeRequest = PHAssetChangeRequest.creationRequestForAsset(from: self.captureImage!) // PHAsset을 생성하고 고유 식별자를 가져옴
                 let assetPlaceholder = assetChangeRequest.placeholderForCreatedAsset // 실제 이미지가 생성되기 전에 플레이스홀더 반환. PHAsset의 삭별자를 가지고 있으며 참조를 유지하거나 앨범에 이미즈를 추가하는 작업을 할 수 있음
                 let albumChangeRequest = PHAssetCollectionChangeRequest(for: collection) // 앨범에 대한 변경 작업 처리
                 albumChangeRequest?.addAssets([assetPlaceholder!] as NSArray) // 앨범에 이미지 추가
@@ -237,7 +244,7 @@ class PressShutterViewController: BaseViewController {
                     let album = PHAssetCollection.fetchAssetCollections(withLocalIdentifiers: [albumPlaceholder.localIdentifier], options: nil)
                     if let album = album.firstObject {
                         let albumChangeRequest = PHAssetCollectionChangeRequest(for: album)
-                        let creationRequest = PHAssetChangeRequest.creationRequestForAsset(from: UIImage(named: "mang")!)
+                        let creationRequest = PHAssetChangeRequest.creationRequestForAsset(from: self.captureImage!)
                         let assetPlaceholder = creationRequest.placeholderForCreatedAsset
                         let albumAssets: Void? = albumChangeRequest?.addAssets([assetPlaceholder!] as NSArray)
                         if albumAssets != nil {
