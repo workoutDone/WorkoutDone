@@ -67,6 +67,13 @@
 		A52573EA29EDB8A9004FBAC0 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52573E929EDB8A9004FBAC0 /* UIView.swift */; };
 		A52573EC29EDB928004FBAC0 /* UIStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52573EB29EDB928004FBAC0 /* UIStackView.swift */; };
 		A52573EE29EDB9B9004FBAC0 /* ViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52573ED29EDB9B9004FBAC0 /* ViewModelType.swift */; };
+		A52573F529F2F478004FBAC0 /* PhotoGalleryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52573F429F2F478004FBAC0 /* PhotoGalleryViewController.swift */; };
+		A54C485E29FF9FB1004CEE3D /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54C485D29FF9FB1004CEE3D /* RealmManager.swift */; };
+		A54C486129FFA176004CEE3D /* HomeButtonLessPhotoFrameTypeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54C486029FFA176004CEE3D /* HomeButtonLessPhotoFrameTypeViewController.swift */; };
+		A54C486329FFA1A0004CEE3D /* HomeButtonPhotoFrameTypeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54C486229FFA1A0004CEE3D /* HomeButtonPhotoFrameTypeViewController.swift */; };
+		A5550A9229F302DC00CBD1BF /* AuthorizedPhotoGalleryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5550A9129F302DC00CBD1BF /* AuthorizedPhotoGalleryView.swift */; };
+		A5550A9429F3092600CBD1BF /* PhotoGalleryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5550A9329F3092600CBD1BF /* PhotoGalleryViewModel.swift */; };
+		A5550A9629F310D500CBD1BF /* PhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5550A9529F310D500CBD1BF /* PhotoCollectionViewCell.swift */; };
 		A56D904229E08604009FD0B2 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A56D904129E08604009FD0B2 /* HomeViewModel.swift */; };
 		A57061CF29CD6A5E0083ECDD /* GalleryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57061CE29CD6A5E0083ECDD /* GalleryViewController.swift */; };
 		A57061D129CD6A840083ECDD /* AnalyzeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57061D029CD6A840083ECDD /* AnalyzeViewController.swift */; };
@@ -166,6 +173,13 @@
 		A52573E929EDB8A9004FBAC0 /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
 		A52573EB29EDB928004FBAC0 /* UIStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIStackView.swift; sourceTree = "<group>"; };
 		A52573ED29EDB9B9004FBAC0 /* ViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelType.swift; sourceTree = "<group>"; };
+		A52573F429F2F478004FBAC0 /* PhotoGalleryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoGalleryViewController.swift; sourceTree = "<group>"; };
+		A54C485D29FF9FB1004CEE3D /* RealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
+		A54C486029FFA176004CEE3D /* HomeButtonLessPhotoFrameTypeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeButtonLessPhotoFrameTypeViewController.swift; sourceTree = "<group>"; };
+		A54C486229FFA1A0004CEE3D /* HomeButtonPhotoFrameTypeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeButtonPhotoFrameTypeViewController.swift; sourceTree = "<group>"; };
+		A5550A9129F302DC00CBD1BF /* AuthorizedPhotoGalleryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizedPhotoGalleryView.swift; sourceTree = "<group>"; };
+		A5550A9329F3092600CBD1BF /* PhotoGalleryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoGalleryViewModel.swift; sourceTree = "<group>"; };
+		A5550A9529F310D500CBD1BF /* PhotoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCollectionViewCell.swift; sourceTree = "<group>"; };
 		A56D904129E08604009FD0B2 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		A57061CE29CD6A5E0083ECDD /* GalleryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryViewController.swift; sourceTree = "<group>"; };
 		A57061D029CD6A840083ECDD /* AnalyzeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyzeViewController.swift; sourceTree = "<group>"; };
@@ -336,10 +350,11 @@
 			isa = PBXGroup;
 			children = (
 				9200604029B1AA4900586063 /* Home */,
+				A576693929B6E98100673DFE /* ImageSelection */,
+				A52573F329F2F3F9004FBAC0 /* PhotoGallery */,
 				A59EF6E329C0CD9D005DE9B5 /* Camera */,
 				A59EF6E029C0B673005DE9B5 /* Workout */,
 				A576693C29BB056900673DFE /* RegisterMyBodyInfoScene */,
-				A576693929B6E98100673DFE /* ImageSelection */,
 			);
 			path = HomeScene;
 			sourceTree = "<group>";
@@ -476,6 +491,27 @@
 			path = Cell;
 			sourceTree = "<group>";
 		};
+		A52573F329F2F3F9004FBAC0 /* PhotoGallery */ = {
+			isa = PBXGroup;
+			children = (
+				A52573F429F2F478004FBAC0 /* PhotoGalleryViewController.swift */,
+				A5550A9329F3092600CBD1BF /* PhotoGalleryViewModel.swift */,
+				A5550A9129F302DC00CBD1BF /* AuthorizedPhotoGalleryView.swift */,
+				A5550A9529F310D500CBD1BF /* PhotoCollectionViewCell.swift */,
+				A54C485F29FFA113004CEE3D /* PhotoFrameType */,
+			);
+			path = PhotoGallery;
+			sourceTree = "<group>";
+		};
+		A54C485F29FFA113004CEE3D /* PhotoFrameType */ = {
+			isa = PBXGroup;
+			children = (
+				A54C486029FFA176004CEE3D /* HomeButtonLessPhotoFrameTypeViewController.swift */,
+				A54C486229FFA1A0004CEE3D /* HomeButtonPhotoFrameTypeViewController.swift */,
+			);
+			path = PhotoFrameType;
+			sourceTree = "<group>";
+		};
 		A57061CC29CD6A290083ECDD /* Gallery */ = {
 			isa = PBXGroup;
 			children = (
@@ -558,6 +594,7 @@
 			children = (
 				A59ACBBF29B6E2310084C73E /* DeviceManager.swift */,
 				9264A58129B8735C0010856F /* UserDefaultsManager.swift */,
+				A54C485D29FF9FB1004CEE3D /* RealmManager.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -738,6 +775,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9200602429B1A7CC00586063 /* BaseViewController.swift in Sources */,
+				A5550A9629F310D500CBD1BF /* PhotoCollectionViewCell.swift in Sources */,
 				9264A5EE29C550220010856F /* FrameCell.swift in Sources */,
 				9264A58429BA22FE0010856F /* DayOfTheWeekCell.swift in Sources */,
 				9200604729B1ACF400586063 /* WorkoutResultView.swift in Sources */,
@@ -753,22 +791,28 @@
 				9200602729B1A7F400586063 /* UIColor.swift in Sources */,
 				9200602D29B1A91600586063 /* OnboardingCell.swift in Sources */,
 				926DBC9229DDC905007BE22A /* PressShutterViewController.swift in Sources */,
+				A54C486129FFA176004CEE3D /* HomeButtonLessPhotoFrameTypeViewController.swift in Sources */,
 				A5A10CA929D59ED600E45FC8 /* String.swift in Sources */,
 				9200604B29B1ADA500586063 /* BaseUIView.swift in Sources */,
 				92DCF4D229D1B64100F90002 /* FrameCategoryCell.swift in Sources */,
 				A5FD469829DDDB4C003AC96E /* SkeletalMuslemassViewModel.swift in Sources */,
 				A57061D429D045690083ECDD /* WeightGraphView.swift in Sources */,
 				924E56B229CCB9EA00AA73A2 /* GridToggleButton.swift in Sources */,
+				A52573F529F2F478004FBAC0 /* PhotoGalleryViewController.swift in Sources */,
 				9264A58229B8735C0010856F /* UserDefaultsManager.swift in Sources */,
 				A5A10CAB29D59EF300E45FC8 /* Date.swift in Sources */,
 				A59ACBC029B6E2310084C73E /* DeviceManager.swift in Sources */,
 				A59EF6F129C4C909005DE9B5 /* PreviewView.swift in Sources */,
+				A5550A9229F302DC00CBD1BF /* AuthorizedPhotoGalleryView.swift in Sources */,
+				A5550A9429F3092600CBD1BF /* PhotoGalleryViewModel.swift in Sources */,
 				A59EF6E529C0CE22005DE9B5 /* HomeButtonLessCameraViewController.swift in Sources */,
 				9200604529B1ACD900586063 /* WorkoutView.swift in Sources */,
 				A59EF6E229C0B69C005DE9B5 /* WorkoutViewController.swift in Sources */,
 				A59A3DDE29C9F76200126ECE /* RegisterMyBodyInfoViewModel.swift in Sources */,
 				A59A3DDC29C977BC00126ECE /* HomeButtonLessCameraViewModel.swift in Sources */,
+				A54C485E29FF9FB1004CEE3D /* RealmManager.swift in Sources */,
 				920060CF29B37C9F00586063 /* GradientButton.swift in Sources */,
+				A54C486329FFA1A0004CEE3D /* HomeButtonPhotoFrameTypeViewController.swift in Sources */,
 				92005FCA29B1A49400586063 /* ViewController.swift in Sources */,
 				92DCF54C29D6D15600F90002 /* FrameHeaderView.swift in Sources */,
 				92DCF47E29D0830B00F90002 /* FrameImage.swift in Sources */,

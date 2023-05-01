@@ -97,10 +97,10 @@ class ImageSelectionViewController : BaseViewController {
         }
     }
     @objc func galleryButtonTapped() {
-//        let photoViewController = PhotoViewController()
-//        dismiss(animated: false) {
-//            self.rootView?.navigationController?.pushViewController(photoViewController, animated: true)
-//        }
+        let photoGalleryViewController = PhotoGalleryViewController()
+        dismiss(animated: false) {
+            self.rootView?.navigationController?.pushViewController(photoGalleryViewController, animated: true)
+        }
     }
     @objc func cancelButtonTapped() {
         dismiss(animated: true)
