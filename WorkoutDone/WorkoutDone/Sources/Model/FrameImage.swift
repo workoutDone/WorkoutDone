@@ -10,13 +10,11 @@ import RealmSwift
 
 class FrameImage : Object {
     @Persisted dynamic var frameType : Int = 0
-    @Persisted dynamic var imageName : String = ""
-    //@Persisted dynamic var image : UIImage
+    @Persisted dynamic var image : Data?
     
-    convenience init(frameType: Int, imageName: String) {
+    convenience init(frameType: Int, image: Data) {
         self.init()
         self.frameType = frameType
-        self.imageName = imageName
-        //self.image = image
+        self.image = image
     }
 }

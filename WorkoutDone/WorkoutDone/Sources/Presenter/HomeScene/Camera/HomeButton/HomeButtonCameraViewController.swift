@@ -16,13 +16,6 @@ class HomeButtonCameraViewController : BaseViewController {
     var isSelectFrameImagesIndex = 0
     var backCameraOn: Bool = true
     
-//    var captureSession: AVCaptureSession!
-//    var frontCamera: AVCaptureDevice!
-//    var backCamera: AVCaptureDevice!
-//    var frontInput: AVCaptureInput!
-//    var backInput: AVCaptureInput!
-//    var previewLayer: AVCaptureVideoPreviewLayer!
-//    var videoOutput: AVCaptureVideoDataOutput!
     var takePicture = false
     let captureSettion = AVCaptureSession()
     var videoDeviceInput : AVCaptureDeviceInput!
@@ -32,7 +25,6 @@ class HomeButtonCameraViewController : BaseViewController {
     let videoDeviceDiscoverySession = AVCaptureDevice.DiscoverySession(deviceTypes: [.builtInDualCamera, .builtInTrueDepthCamera, .builtInTrueDepthCamera], mediaType: .video, position: .unspecified)
     
 
-   // private let cameraView = UIView()
     let previewView = PreviewView()
     
     private let frameImage = UIImageView()
@@ -71,7 +63,6 @@ class HomeButtonCameraViewController : BaseViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        //setupCaptureSession()
         previewView.session = captureSettion
         sesstionQueue.async {
             self.setupSession()
@@ -159,86 +150,6 @@ class HomeButtonCameraViewController : BaseViewController {
         collectionView.delegate = self
         collectionView.dataSource = self
     }
-//
-//    func setupCaptureSession() {
-//        DispatchQueue.global(qos: .userInitiated).async {
-//            self.captureSession = AVCaptureSession()
-//            self.captureSession.beginConfiguration()
-//            if self.captureSession.canSetSessionPreset(.photo) {
-//                self.captureSession.sessionPreset = .photo
-//            }
-//            self.captureSession.automaticallyConfiguresCaptureDeviceForWideColor = true
-//            self.setupInput()
-//            DispatchQueue.main.async {
-//                self.setupPreviewLayer()
-//            }
-//            self.setupOutput()
-//            self.captureSession.commitConfiguration()
-//            self.captureSession.startRunning()
-//        }
-//    }
-    
-//    func setupInput() {
-//        if let device = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back) {
-//            backCamera = device
-//        }
-//
-//        if let device = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .front) {
-//            frontCamera = device
-//        }
-//
-//        guard let bInput = try? AVCaptureDeviceInput(device: backCamera) else {
-//            return
-//        }
-//        backInput = bInput
-//
-//
-//        guard let fInput = try? AVCaptureDeviceInput(device: frontCamera) else {
-//            return
-//        }
-//        frontInput = fInput
-//
-//        captureSession.addInput(backInput)
-//    }
-    
-//    func setupOutput() {
-//        videoOutput = AVCaptureVideoDataOutput()
-//        let videoQueue = DispatchQueue(label: "videoQueue", qos: .userInteractive)
-//        videoOutput.setSampleBufferDelegate(self, queue: videoQueue)
-//
-//        if captureSession.canAddOutput(videoOutput) {
-//            captureSession.addOutput(videoOutput)
-//        }
-//
-//        videoOutput.connections.first?.videoOrientation = .portrait
-//    }
-//
-//    func setupPreviewLayer() {
-//        previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
-//        previewLayer.videoGravity = .resizeAspectFill
-//        cameraView.layer.insertSublayer(previewLayer, below: switchCameraButton.layer)
-//        previewLayer.frame = self.cameraView.layer.frame
-//    }
-//
-//    func switchCameraInput() {
-//        switchCameraButton.isUserInteractionEnabled = false
-//
-//        captureSession.beginConfiguration()
-//        if backCameraOn {
-//            captureSession.removeInput(backInput)
-//            captureSession.addInput(frontInput)
-//        } else {
-//            captureSession.removeInput(frontInput)
-//            captureSession.addInput(backInput)
-//        }
-//
-//        backCameraOn = !backCameraOn
-//
-//        videoOutput.connections.first?.videoOrientation = .portrait
-//        videoOutput.connections.first?.isVideoMirrored = !backCameraOn
-//        captureSession.commitConfiguration()
-//        switchCameraButton.isUserInteractionEnabled = true
-//    }
     
     @objc func backButtonTapped(sender: UIButton!) {
         self.navigationController?.popViewController(animated: true)
@@ -267,15 +178,9 @@ class HomeButtonCameraViewController : BaseViewController {
     }
     
     @objc func switchCameraButtonTapped(sender: UIButton!) {
-        // TODO: 카메라는 1개 이상이어야함
         guard videoDeviceDiscoverySession.devices.count > 1 else {
             return
         }
-        
-        // TODO: 반대 카메라 찾아서 재설정
-        // 1 반대 카메라 찾기
-        // 2 새로운 디바이스 가지고 세션을 업데이트
-        // 3 카메라 토글 버튼 업데이트
         
         sesstionQueue.async {
             let currentVideoDevice = self.videoDeviceInput.device
@@ -288,7 +193,6 @@ class HomeButtonCameraViewController : BaseViewController {
             newVideoDevice = devices.first(where: { device in
                 return preferredPosition == device.position
             })
-            //update capture sesstion
             
             if let newDevice = newVideoDevice {
                 do {
@@ -312,7 +216,6 @@ class HomeButtonCameraViewController : BaseViewController {
             }
             
         }
-        //switchCameraInput()
     }
 }
 
@@ -365,48 +268,12 @@ extension HomeButtonCameraViewController : UICollectionViewDelegate, UICollectio
     }
 }
 
-//extension HomeButtonCameraViewController : AVCaptureVideoDataOutputSampleBufferDelegate {
-//    func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
-//        if !takePicture {
-//            return
-//        }
-//
-//        guard let cvBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else {
-//            return
-//        }
-//
-//        let ciImage = CIImage(cvImageBuffer: cvBuffer)
-//
-//        let uiImage = UIImage(ciImage: ciImage)
-//
-//        DispatchQueue.main.async {
-//            let pressShutterVC = PressShutterViewController()
-//            pressShutterVC.captureImage = uiImage
-//            self.navigationController?.pushViewController(pressShutterVC, animated: false)
-//
-//            self.takePicture = false
-//            self.captureSession.stopRunning()
-//        }
-//    }
-//}
-//
-//
 
 extension HomeButtonCameraViewController {
-    // MARK: - Setup session and preview
     func setupSession() {
-        // TODO: captureSession 구성하기
-        // - presetSetting 하기
-        // - beginConfiguration
-        // - Add Video Input
-        // - Add Photo Output
-        // - commitConfiguration
-        
 
         captureSettion.sessionPreset = .photo
         captureSettion.beginConfiguration()
-        
-        //add vidio input
         
         guard let camera = videoDeviceDiscoverySession.devices.first else {
             captureSettion.commitConfiguration()
@@ -427,7 +294,6 @@ extension HomeButtonCameraViewController {
             return
         }
         
-        //add photo output
         photoOutput.setPreparedPhotoSettingsArray([AVCapturePhotoSettings(format: [AVVideoCodecKey: AVVideoCodecType.jpeg])], completionHandler: nil)
         if captureSettion.canAddOutput(photoOutput) {
             captureSettion.addOutput(photoOutput)
@@ -438,26 +304,20 @@ extension HomeButtonCameraViewController {
         captureSettion.commitConfiguration()
     }
     
-    
-    
     func startSession() {
-        // TODO: session Start
         sesstionQueue.async {
             if !self.captureSettion.isRunning {
                 self.captureSettion.startRunning()
             }
         }
-
     }
     
     func stopSession() {
-        // TODO: session Stop
         sesstionQueue.async {
             if self.captureSettion.isRunning {
                 self.captureSettion.stopRunning()
             }
         }
-        
     }
 }
 

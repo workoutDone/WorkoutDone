@@ -9,8 +9,10 @@ import UIKit
 import Photos
 
 class PressShutterViewController: BaseViewController {
+    let frameImageViewModel = FrameImageViewModel()
+    
     var captureImage : UIImage?
-    let albumName = "오운완222"
+    let albumName = "오운완"
     
     var album: PHAssetCollection?
     var captureImageView = UIImageView().then {
@@ -162,12 +164,14 @@ class PressShutterViewController: BaseViewController {
     }
     
     @objc func saveButtonTapped(sender: UIButton!) {
-        setSaveImageToastMessage()
+        showToastMessage()
         getGalleryAuthorization()
-       
+        
+        let resizedImage = resizeImage(image: captureImage!, newSize: CGSize(width: view.frame.width, height: view.frame.width * (4 / 3)))
+        frameImageViewModel.saveImageToRealm(date: Date(), frameType: 0, image: resizedImage)
     }
     
-    func setSaveImageToastMessage() {
+    func showToastMessage() {
         let saveImageToastMessageVC = SaveImageToastMessageViewController()
         saveImageToastMessageVC.modalPresentationStyle = .overFullScreen
         
@@ -185,6 +189,14 @@ class PressShutterViewController: BaseViewController {
     
     @objc func instaButtonTapped(sender: UIButton!) {
         print("^-^")
+    }
+    
+    func resizeImage(image: UIImage, newSize: CGSize) -> UIImage {
+        UIGraphicsBeginImageContextWithOptions(newSize, false, 0.0)
+        image.draw(in: CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height))
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return newImage!
     }
     
     func getGalleryAuthorization() {
