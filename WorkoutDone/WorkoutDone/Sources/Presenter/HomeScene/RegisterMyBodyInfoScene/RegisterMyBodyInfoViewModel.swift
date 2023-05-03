@@ -12,6 +12,7 @@ import UIKit
 
 class RegisterMyBodyInfoViewModel {
     let realm = try! Realm()
+    let realmManager = RealmManager.shared
     var workOutDoneData : Results<WorkOutDoneData>?
     init(workOutDoneData: Results<WorkOutDoneData>? = nil) {
         self.workOutDoneData = realm.objects(WorkOutDoneData.self)
@@ -59,21 +60,29 @@ class RegisterMyBodyInfoViewModel {
     }
     ///Realm Create
     func createBodyInfoData(weight : Double?, skeletalMusleMass : Double?, fatPercentage : Double?, date : String, id : Int) {
-        do {
-            try realm.write {
-                let workoutDoneData = WorkOutDoneData(id: id, date: date)
-                let bodyInfo = BodyInfo()
-                bodyInfo.weight = weight
-                bodyInfo.skeletalMuscleMass = skeletalMusleMass
-                bodyInfo.fatPercentage = fatPercentage
-                workoutDoneData.bodyInfo = bodyInfo
-                realm.add(workoutDoneData)
+        let workoutDoneData = WorkOutDoneData(id: id, date: date)
+        let bodyInfo = BodyInfo()
+        bodyInfo.weight = weight
+        bodyInfo.skeletalMuscleMass = skeletalMusleMass
+        bodyInfo.fatPercentage = fatPercentage
+        workoutDoneData.bodyInfo = bodyInfo
+        realmManager.createData(data: workoutDoneData)
 
-            }
-        }
-        catch {
-            print("Error saving \(error)")
-        }
+//        do {
+//            try realm.write {
+//                let workoutDoneData = WorkOutDoneData(id: id, date: date)
+//                let bodyInfo = BodyInfo()
+//                bodyInfo.weight = weight
+//                bodyInfo.skeletalMuscleMass = skeletalMusleMass
+//                bodyInfo.fatPercentage = fatPercentage
+//                workoutDoneData.bodyInfo = bodyInfo
+//                realm.add(workoutDoneData)
+//
+//            }
+//        }
+//        catch {
+//            print("Error saving \(error)")
+//        }
     }
     ///Realm Update
     func updateBodyInfoData(weight: Double?, skeletalMusleMass : Double?, fatPercentage : Double?, date : String, id : Int) {
