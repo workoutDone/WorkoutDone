@@ -98,7 +98,7 @@ class PhotoGalleryViewController : BaseViewController {
         }
         authorizedPhotoGalleryView.snp.makeConstraints {
             $0.top.bottom.equalTo(view.safeAreaLayoutGuide)
-            $0.leading.trailing.equalToSuperview().inset(15)
+            $0.leading.trailing.equalToSuperview()
         }
     }
     override func actions() {

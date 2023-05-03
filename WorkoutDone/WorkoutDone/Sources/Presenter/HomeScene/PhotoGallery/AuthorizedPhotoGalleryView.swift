@@ -40,7 +40,8 @@ class AuthorizedPhotoGalleryView : BaseUIView {
     override func setupConstraints() {
         super.setupConstraints()
         photoCollectionView.snp.makeConstraints {
-            $0.top.bottom.leading.trailing.equalToSuperview()
+            $0.top.bottom.equalToSuperview()
+            $0.leading.trailing.equalToSuperview().inset(15)
         }
     }
     func setDelegateDataSource() {
@@ -58,7 +59,7 @@ extension AuthorizedPhotoGalleryView : UICollectionViewDelegate, UICollectionVie
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PhotosCollectionViewCell", for: indexPath) as? PhotosCollectionViewCell else { fatalError("not found") }
         let asset = self.images[indexPath.row]
         let manager = PHImageManager.default()
-        let frameSize = (collectionView.frame.width - 8) / 3
+        let frameSize = (collectionView.frame.width - 12) / 3
         let options = PHImageRequestOptions()
         options.deliveryMode = .highQualityFormat
         manager.requestImage(for: asset, targetSize: CGSize(width: frameSize, height: frameSize), contentMode: .aspectFit, options: options) { image, _ in
@@ -70,14 +71,14 @@ extension AuthorizedPhotoGalleryView : UICollectionViewDelegate, UICollectionVie
     }
     ///옆 간격
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 8
+        return 6
     }
     ///위 아래 간격
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 8
+        return 6
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let frameSize = (collectionView.frame.width - 16) / 3
+        let frameSize = (collectionView.frame.width - 12) / 3
         let size = CGSize(width: frameSize, height: frameSize)
         return size
     }

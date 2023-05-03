@@ -58,10 +58,11 @@ class HomeViewController : BaseViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        navigationController?.isNavigationBarHidden = true
     }
     override func setupLayout() {
         super.setupLayout()
-        navigationController?.isNavigationBarHidden = true
+
         view.addSubview(contentScrollView)
         contentScrollView.addSubview(contentView)
         [calendarView, recordBaseView, workoutBaseView, workoutResultBaseView].forEach {
