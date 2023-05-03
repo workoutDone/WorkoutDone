@@ -29,7 +29,7 @@ class WorkoutView : BaseUIView {
         $0.setTitle("루틴 선택", for: .normal)
         $0.titleLabel?.font = .pretendard(.semiBold, size: 16)
     }
-
+    
     override func setupLayout() {
         super.setupLayout()
         [workoutLabel, workoutRoutineBaseView, workoutRoutineChoiceButton, workoutRoutineInfoLabel].forEach {

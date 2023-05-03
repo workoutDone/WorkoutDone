@@ -14,6 +14,8 @@ import DeviceKit
 //Todo: - 몸무게, 체지방량, 근골격량 길이 길어질 때 처리하기
 
 class RecordView : BaseUIView {
+    let calenderView = CalendarView()
+    let frameImageViewModel = FrameImageViewModel()
     // MARK: - PROPERTIES
     private let recordLabel = UILabel().then {
         $0.text = "기록하기"
@@ -151,6 +153,17 @@ class RecordView : BaseUIView {
         $0.spacing = 0
     }
     
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        
+        bodyImageView.image = frameImageViewModel.loadImageFromRealm(date: calenderView.selectDate)
+
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     override func setupLayout() {
         super.setupLayout()
         [recordLabel, recordView, workoutImageBaseView, workoutNotDoneInfoLabel, clickImage, clickAlertLabel, bodyInfoView, workoutDoneCameraButton, bodyDataBaseView, bodyDataEntryButton, bodyInfoView, separateView, weightLabel, weightStackView, skelatalMuscleMassAndFatPercentageLabelStackView, skelatalMuscleMassAndFatPercentageValueStackView, bodyImageView].forEach {

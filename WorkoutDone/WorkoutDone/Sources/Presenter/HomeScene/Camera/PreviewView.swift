@@ -19,7 +19,7 @@ class PreviewView : UIView {
         return layer
     }
     
-    var sesstion : AVCaptureSession? {
+    var session : AVCaptureSession? {
         get { previewLayer.session }
         set { previewLayer.session = newValue }
     }
