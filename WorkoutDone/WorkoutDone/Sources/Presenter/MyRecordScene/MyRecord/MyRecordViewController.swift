@@ -145,12 +145,10 @@ class MyRecordViewController : BaseViewController {
     }
     @objc func swipeActions(_ sender : UISwipeGestureRecognizer) {
         if sender.direction == .right {
-            print("sss")
             swipeToggleAnimation(left: true)
             myRecordPageViewController.setViewControllers([viewControllers[0]], direction: .reverse, animated: true)
         }
         else if sender.direction == .left {
-            print("ddd")
             swipeToggleAnimation(left: false)
             myRecordPageViewController.setViewControllers([viewControllers[1]], direction: .forward, animated: true)
         }
