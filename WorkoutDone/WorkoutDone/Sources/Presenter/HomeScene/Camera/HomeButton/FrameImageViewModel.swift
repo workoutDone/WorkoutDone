@@ -12,24 +12,29 @@ class FrameImageViewModel {
     func saveImageToRealm(date: Date, frameType: Int, image: UIImage) {
         guard let imageData = image.pngData() else { return }
         
-        let workOutDone = WorkOutDoneData(id: date.dateToInt(), date: date.yyyyMMddToString())
-        workOutDone.frameImage = FrameImage(frameType: frameType, image: imageData)
-        
         let realm = try! Realm()
-        try! realm.write {
-            realm.add(workOutDone)
+        if let existingWorkOutDone = realm.object(ofType: WorkOutDoneData.self, forPrimaryKey: date.dateToInt()) {
+            try! realm.write {
+                existingWorkOutDone.frameImage = FrameImage(frameType: frameType, image: imageData)
+                print("변경")
+            }
+        } else {
+            let workOutDone = WorkOutDoneData(id: date.dateToInt(), date: date.yyyyMMddToString())
+            workOutDone.frameImage = FrameImage(frameType: frameType, image: imageData)
+            
+            try! realm.write {
+                realm.add(workOutDone)
+                print("추가")
+            }
         }
     }
 
-    func loadImageFromRealm(date: String) -> UIImage? {
+    func loadImageFromRealm(date: Date) -> UIImage? {
         let realm = try! Realm()
+        let workOutDone = realm.objects(WorkOutDoneData.self).filter("date == %@", date.yyyyMMddToString())
         
-        let workOutDone = realm.objects(WorkOutDoneData.self).filter("date == %@", date)
-
         guard let frameImage = workOutDone.first?.frameImage else { return nil }
         
-        print(workOutDone)
-
         return UIImage(data: frameImage.image!)
     }
 }

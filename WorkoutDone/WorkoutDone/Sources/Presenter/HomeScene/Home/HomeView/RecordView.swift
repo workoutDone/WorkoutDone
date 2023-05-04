@@ -54,6 +54,7 @@ class RecordView : BaseUIView {
         $0.layer.cornerRadius = 10
         $0.layer.borderWidth = 0.5
         $0.layer.borderColor = UIColor.color7442FF.cgColor
+        $0.contentMode = .scaleAspectFill
     }
     let workoutDoneCameraButton = UIButton()
     
@@ -156,7 +157,7 @@ class RecordView : BaseUIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        bodyImageView.image = frameImageViewModel.loadImageFromRealm(date: calenderView.selectDate)
+        bodyImageView.image = frameImageViewModel.loadImageFromRealm(date: calenderView.selectDate.yyMMddToDate() ?? Date())
 
     }
     
