@@ -167,7 +167,6 @@ class HomeButtonCameraViewController : BaseViewController {
     }
 
     @objc func captureButtonTapped(sender: UIButton!) {
-        //takePicture = true
         let videoPreviewLayerOrientaion = self.previewView.previewLayer.connection?.videoOrientation
         sesstionQueue.async {
             let connection = self.photoOutput.connection(with: .video)
@@ -289,7 +288,7 @@ extension HomeButtonCameraViewController {
                 captureSettion.commitConfiguration()
                 return
             }
-        } catch let error {
+        } catch _ {
             captureSettion.commitConfiguration()
             return
         }
@@ -331,6 +330,7 @@ extension HomeButtonCameraViewController: AVCapturePhotoCaptureDelegate {
         DispatchQueue.main.async {
             let pressShutterVC = PressShutterViewController()
             pressShutterVC.captureImage = image
+            pressShutterVC.isSelectFrame = self.isSelectFrameImagesIndex
             self.navigationController?.pushViewController(pressShutterVC, animated: false)
         }
     }
