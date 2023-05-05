@@ -32,7 +32,6 @@ class FrameImageViewModel {
         let workOutDone = realm.objects(WorkOutDoneData.self).filter("date == %@", date.yyyyMMddToString())
         
         guard let frameImage = workOutDone.first?.frameImage else { return nil }
-        
         return UIImage(data: frameImage.image!)
     }
 }

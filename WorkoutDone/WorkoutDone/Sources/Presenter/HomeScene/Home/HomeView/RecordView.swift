@@ -49,7 +49,7 @@ class RecordView : BaseUIView {
         $0.font = .pretendard(.regular, size: 16)
     }
     
-    private let bodyImageView = UIImageView().then {
+    let bodyImageView = UIImageView().then {
         $0.clipsToBounds = true
         $0.layer.cornerRadius = 10
         $0.layer.borderWidth = 0.5
@@ -158,7 +158,6 @@ class RecordView : BaseUIView {
         super.init(frame: frame)
         
         bodyImageView.image = frameImageViewModel.loadImageFromRealm(date: calenderView.selectDate.yyMMddToDate() ?? Date())
-
     }
     
     required init?(coder: NSCoder) {
