@@ -169,7 +169,7 @@ class PressShutterViewController: BaseViewController {
         getGalleryAuthorization()
         
         let resizedImage = resizeImage(image: captureImage!, newSize: CGSize(width: view.frame.width, height: view.frame.width * (4 / 3)))
-        frameImageViewModel.saveImageToRealm(date: calendarView.selectDate.yyMMddToDate() ?? Date(), frameType: isSelectFrame, image: resizedImage)
+        frameImageViewModel.saveImageToRealm(date: calendarView.selectDate ?? Date(), frameType: isSelectFrame, image: resizedImage)
     }
     
     func showToastMessage() {
@@ -186,8 +186,7 @@ class PressShutterViewController: BaseViewController {
                 self.navigationController?.popToRootViewController(animated: true)
                 
                 if let homeVC = self.navigationController?.viewControllers.first as? HomeViewController {
-                    homeVC.recordBaseView.bodyImageView.image = self.frameImageViewModel.loadImageFromRealm(date: self.calendarView.selectDate.yyMMddToDate() ?? Date())
-                    
+                    homeVC.setWorkOutDoneImage()
                 }
             }
         }
