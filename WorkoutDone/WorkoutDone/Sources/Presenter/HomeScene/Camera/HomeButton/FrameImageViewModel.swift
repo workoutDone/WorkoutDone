@@ -16,7 +16,6 @@ class FrameImageViewModel {
         if let existingWorkOutDone = realm.object(ofType: WorkOutDoneData.self, forPrimaryKey: date.dateToInt()) {
             try! realm.write {
                 existingWorkOutDone.frameImage = FrameImage(frameType: frameType, image: imageData)
-                print("변경")
             }
         } else {
             let workOutDone = WorkOutDoneData(id: date.dateToInt(), date: date.yyyyMMddToString())
@@ -24,7 +23,6 @@ class FrameImageViewModel {
             
             try! realm.write {
                 realm.add(workOutDone)
-                print("추가")
             }
         }
     }
