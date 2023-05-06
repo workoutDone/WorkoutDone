@@ -234,6 +234,7 @@ class PressShutterViewController: BaseViewController {
                 let assetPlaceholder = assetChangeRequest.placeholderForCreatedAsset // 실제 이미지가 생성되기 전에 플레이스홀더 반환. PHAsset의 삭별자를 가지고 있으며 참조를 유지하거나 앨범에 이미즈를 추가하는 작업을 할 수 있음
                 let albumChangeRequest = PHAssetCollectionChangeRequest(for: collection) // 앨범에 대한 변경 작업 처리
                 albumChangeRequest?.addAssets([assetPlaceholder!] as NSArray) // 앨범에 이미지 추가
+                albumChangeRequest?.insertAssets([assetPlaceholder!] as NSArray, at: IndexSet(integer: 0))
             }, completionHandler: { (success, error) in
                 if success {
                     print("이미지 추가")
