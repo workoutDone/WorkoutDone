@@ -13,13 +13,6 @@ protocol CalendarViewDelegate: AnyObject {
     func didSelectedCalendarDate()
 }
 
-struct WorkOutDone {
-    var date: Date
-    var image: String
-}
-
-var sampleData = [WorkOutDone(date: Calendar.current.date(from: DateComponents(year: 2023, month: 03, day: 15))!, image: ""), WorkOutDone(date: Calendar.current.date(from: DateComponents(year: 2023, month: 03, day: 13))!, image: ""), WorkOutDone(date: Calendar.current.date(from: DateComponents(year: 2023, month: 03, day: 10))!, image: ""), WorkOutDone(date: Calendar.current.date(from: DateComponents(year: 2023, month: 02, day: 23))!, image: ""), WorkOutDone(date: Calendar.current.date(from: DateComponents(year: 2023, month: 03, day: 1))!, image: "")]
-
 class CalendarView : BaseUIView {
     // MARK: - PROPERTIES
     var selectDate : Date?
@@ -177,7 +170,7 @@ class CalendarView : BaseUIView {
         collectionView.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(21)
             $0.trailing.equalToSuperview().offset(-21)
-            $0.top.equalTo(stackView.snp.bottom).offset(UserDefaultsManager.shared.isMonthlyCalendar ? 18 : 5).priority(1)
+            $0.top.equalTo(stackView.snp.bottom).offset(5)
             $0.bottom.equalTo(showHideCalendarButton.snp.top).offset(-6.5)
         }
         
@@ -268,9 +261,6 @@ class CalendarView : BaseUIView {
                 self.snp.makeConstraints {
                     $0.height.equalTo(115).priority(2)
                 }
-                self.collectionView.snp.makeConstraints {
-                    $0.top.equalTo(self.stackView.snp.bottom).offset(5).priority(2)
-                }
                 self.superview?.layoutIfNeeded()
             })
             
@@ -285,9 +275,6 @@ class CalendarView : BaseUIView {
             UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseIn, animations:  {
                 self.snp.makeConstraints {
                     $0.height.equalTo(289).priority(2)
-                }
-                self.collectionView.snp.makeConstraints {
-                    $0.top.equalTo(self.stackView.snp.bottom).offset(18).priority(2)
                 }
                 self.superview?.layoutIfNeeded()
             })
@@ -367,27 +354,24 @@ class CalendarView : BaseUIView {
 
 extension CalendarView: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        if UserDefaultsManager.shared.isMonthlyCalendar {
-            return 1
-        }
         return 2
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if !UserDefaultsManager.shared.isMonthlyCalendar && section == 0 {
+        if section == 0 {
             return dayoftheweek.count
         }
         return days.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        if indexPath.section ==  0 {
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "DayOfTheWeekCell", for: indexPath) as? DayOfTheWeekCell else { return UICollectionViewCell() }
+            cell.dayOfTheWeekLabel.text = dayoftheweek[indexPath.row]
+            return cell
+        }
+        
         if !UserDefaultsManager.shared.isMonthlyCalendar {
-            if indexPath.section ==  0 {
-                guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "DayOfTheWeekCell", for: indexPath) as? DayOfTheWeekCell else { return UICollectionViewCell() }
-                cell.dayOfTheWeekLabel.text = dayoftheweek[indexPath.row]
-                return cell
-            }
-
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "DayCell", for: indexPath) as? DayCell else { return UICollectionViewCell() }
             cell.dayLabel.text = days[indexPath.row]
             cell.dayLabel.font = .pretendard(.light, size: 16)
@@ -428,7 +412,7 @@ extension CalendarView: UICollectionViewDelegate, UICollectionViewDataSource, UI
             if selectComponents.year == components.year && selectComponents.month == components.month && selectComponents.day == Int(days[indexPath.row]) {
                 cell.selectDateImage.isHidden = false
             }
-
+            
         } else {
             cell.dayLabel.textColor = .colorF3F3F3.withAlphaComponent(0.3)
         }
@@ -443,10 +427,11 @@ extension CalendarView: UICollectionViewDelegate, UICollectionViewDataSource, UI
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        if indexPath.section == 0 {
+            return CGSize(width: collectionView.bounds.width / 7.0, height: 20)
+        }
+        
         if !UserDefaultsManager.shared.isMonthlyCalendar {
-            if indexPath.section == 0 {
-                return CGSize(width: collectionView.bounds.width / 7.0, height: 20)
-            }
             return CGSize(width: collectionView.bounds.width / 7.0, height: 29)
         }
         return CGSize(width: collectionView.bounds.width / 7.0, height: 208 / CGFloat(days.count / 7))
