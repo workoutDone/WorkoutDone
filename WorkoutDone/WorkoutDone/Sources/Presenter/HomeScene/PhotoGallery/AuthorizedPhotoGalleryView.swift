@@ -11,8 +11,8 @@ import Then
 import Photos
 
 class AuthorizedPhotoGalleryView : BaseUIView {
+    var selectedImage : PHAsset?
     var images = [PHAsset]()
-    
     let photoCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -51,6 +51,10 @@ class AuthorizedPhotoGalleryView : BaseUIView {
 }
 
 extension AuthorizedPhotoGalleryView : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        selectedImage = images[indexPath.row]
+        
+    }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.images.count
     }

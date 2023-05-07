@@ -81,6 +81,7 @@ class HomeButtonLessPhotoFrameTypeViewController : BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setImage()
         
     }
     override func setComponents() {

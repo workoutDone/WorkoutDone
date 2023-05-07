@@ -31,7 +31,8 @@ class PhotoGalleryViewModel {
     
     struct Input {
         let loadView : Driver<Void>
-        let selectedPhoto : Driver<Bool>
+        let selectedPhotoStatus : Driver<Bool>
+//        let selectedImage : Driver<UIImage>
     }
     struct Output{
         let photoAuthority : Driver<PhotoGalleryAccessStatusType>
@@ -62,7 +63,7 @@ class PhotoGalleryViewModel {
         let photoAuth = input.loadView.map { _ in
             return self.requestPhotoAccessStatus()
         }
-        let buttonEnabled = input.selectedPhoto
+        let buttonEnabled = input.selectedPhotoStatus
         return Output(photoAuthority: photoAuth,
                       nextButtonStatus: buttonEnabled)
     }

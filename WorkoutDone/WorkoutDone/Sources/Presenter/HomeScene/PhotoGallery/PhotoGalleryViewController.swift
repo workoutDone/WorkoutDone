@@ -15,7 +15,6 @@ import PhotosUI
 import DeviceKit
 
 class PhotoGalleryViewController : BaseViewController {
-    
     //MARK: - ViewModel
     
     private var viewModel = PhotoGalleryViewModel()
@@ -24,7 +23,7 @@ class PhotoGalleryViewController : BaseViewController {
     private var selectedIndexPath = BehaviorRelay<IndexPath?>(value: nil)
     private lazy var input = PhotoGalleryViewModel.Input(
         loadView: didLoad.asDriver(onErrorJustReturn: ()),
-        selectedPhoto: selectedPhoto.asDriver(onErrorJustReturn: false))
+        selectedPhotoStatus: selectedPhoto.asDriver(onErrorJustReturn: false))
     private lazy var output = viewModel.transform(input: input)
     
     // MARK: - PROPERTIES
@@ -95,6 +94,7 @@ class PhotoGalleryViewController : BaseViewController {
         
         authorizedPhotoGalleryView.photoCollectionView.rx.itemSelected
             .bind { _ in
+//                guard let selectedImage = self.authorizedPhotoGalleryView.selectedImage else { return }
                 self.selectedPhoto.onNext(true)
             }
             .disposed(by: disposeBag)
@@ -149,8 +149,20 @@ class PhotoGalleryViewController : BaseViewController {
         else {
             ///홈버튼 없는 기종
             let homeButtonLessPhotoFrameTypeViewController = HomeButtonLessPhotoFrameTypeViewController()
-            navigationController?.pushViewController(homeButtonLessPhotoFrameTypeViewController, animated: true)
-//            homeButtonLessPhotoFrameTypeViewController.selectedImage = 
+
+            let width = view.frame.width
+            let height = width * 4 / 3
+            let manager = PHImageManager.default()
+            let options = PHImageRequestOptions()
+            options.deliveryMode = .highQualityFormat
+            guard let phAsset = authorizedPhotoGalleryView.selectedImage else { return }
+            manager.requestImage(for: phAsset, targetSize: CGSize(width: width, height: height), contentMode: .aspectFill, options: options) { image,  _ in
+                DispatchQueue.main.async {
+                    homeButtonLessPhotoFrameTypeViewController.selectedImage = image
+                    self.navigationController?.pushViewController(homeButtonLessPhotoFrameTypeViewController, animated: true)
+                }
+            }
+
         }
         
     }
