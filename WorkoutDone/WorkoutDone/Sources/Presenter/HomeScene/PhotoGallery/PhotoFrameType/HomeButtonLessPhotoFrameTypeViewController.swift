@@ -167,6 +167,10 @@ class HomeButtonLessPhotoFrameTypeViewController : BaseViewController {
     // MARK: - ACTIONS
     override func actions() {
         super.actions()
+        defaultFrameButton.addTarget(self, action: #selector(defaultFrameButtonTapped), for: .touchUpInside)
+    }
+    @objc func defaultFrameButtonTapped() {
+        print("ㄴㄴ")
     }
 }
 // MARK: - EXTENSIONs

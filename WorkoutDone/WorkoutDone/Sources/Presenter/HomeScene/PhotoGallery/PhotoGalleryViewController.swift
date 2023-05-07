@@ -20,7 +20,10 @@ class PhotoGalleryViewController : BaseViewController {
     
     private var viewModel = PhotoGalleryViewModel()
     private var didLoad = PublishSubject<Void>()
-    private lazy var input = PhotoGalleryViewModel.Input(loadView: didLoad.asDriver(onErrorJustReturn: ()))
+    private var selectedPhoto = BehaviorSubject(value: false)
+    private lazy var input = PhotoGalleryViewModel.Input(
+        loadView: didLoad.asDriver(onErrorJustReturn: ()),
+        selectedPhoto: selectedPhoto.asDriver(onErrorJustReturn: false))
     private lazy var output = viewModel.transform(input: input)
     
     // MARK: - PROPERTIES
@@ -76,7 +79,18 @@ class PhotoGalleryViewController : BaseViewController {
         })
         .disposed(by: disposeBag)
         
+        output.nextButtonStatus.drive(onNext: { [self] value in
+            photoSelectButton.isEnabled = value ? true : false
+            photoSelectButton.setTitleColor(value ? .color363636 : .colorCCCCCC, for: .normal)
+            
+        })
+        .disposed(by: disposeBag)
         
+        authorizedPhotoGalleryView.photoCollectionView.rx.itemSelected
+            .bind { _ in
+                self.selectedPhoto.onNext(true)
+            }
+            .disposed(by: disposeBag)
         didLoad.onNext(())
     }
     
