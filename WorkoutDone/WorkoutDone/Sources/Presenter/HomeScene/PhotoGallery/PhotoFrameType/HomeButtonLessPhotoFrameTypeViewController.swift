@@ -9,6 +9,7 @@ import UIKit
 
 
 class HomeButtonLessPhotoFrameTypeViewController : BaseViewController {
+    var selectedImage : UIImage?
     
     // MARK: - PROPERTIES
     private let saveButton = GradientButton(colors: [UIColor.color7442FF.cgColor, UIColor.color8E36FF.cgColor]).then {
@@ -161,6 +162,12 @@ class HomeButtonLessPhotoFrameTypeViewController : BaseViewController {
         }
         womanWholeBodyFrameButton.snp.makeConstraints {
             $0.height.width.equalTo(75)
+        }
+    }
+    
+    func setImage() {
+        if let image = selectedImage {
+            selectedImageView.image = image
         }
     }
     

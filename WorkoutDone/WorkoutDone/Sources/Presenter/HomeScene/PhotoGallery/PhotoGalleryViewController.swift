@@ -21,6 +21,7 @@ class PhotoGalleryViewController : BaseViewController {
     private var viewModel = PhotoGalleryViewModel()
     private var didLoad = PublishSubject<Void>()
     private var selectedPhoto = BehaviorSubject(value: false)
+    private var selectedIndexPath = BehaviorRelay<IndexPath?>(value: nil)
     private lazy var input = PhotoGalleryViewModel.Input(
         loadView: didLoad.asDriver(onErrorJustReturn: ()),
         selectedPhoto: selectedPhoto.asDriver(onErrorJustReturn: false))
@@ -80,8 +81,14 @@ class PhotoGalleryViewController : BaseViewController {
         .disposed(by: disposeBag)
         
         output.nextButtonStatus.drive(onNext: { [self] value in
-            photoSelectButton.isEnabled = value ? true : false
-            photoSelectButton.setTitleColor(value ? .color363636 : .colorCCCCCC, for: .normal)
+            if value {
+                photoSelectButton.isEnabled = true
+                photoSelectButton.setTitleColor(.color363636, for: .normal)
+            }
+            else {
+                photoSelectButton.isEnabled = false
+                photoSelectButton.setTitleColor(.colorCCCCCC, for: .normal)
+            }
             
         })
         .disposed(by: disposeBag)
@@ -91,6 +98,19 @@ class PhotoGalleryViewController : BaseViewController {
                 self.selectedPhoto.onNext(true)
             }
             .disposed(by: disposeBag)
+//        authorizedPhotoGalleryView.photoCollectionView.rx.itemSelected
+//            .bind { [weak self] indexPath in
+//                guard let self = self else { return }
+//                
+//                if let selectedIndexPath = self.selectedIndexPath.value, selectedIndexPath == indexPath {
+//                    self.selectedPhoto.onNext(false)
+//                    self.selectedIndexPath.accept(nil)
+//                } else {
+//                    self.selectedPhoto.onNext(true)
+//                    self.selectedIndexPath.accept(indexPath)
+//                }
+//            }
+//            .disposed(by: disposeBag)
         didLoad.onNext(())
     }
     
@@ -104,6 +124,7 @@ class PhotoGalleryViewController : BaseViewController {
         let barButton = UIBarButtonItem()
         barButton.customView = photoSelectButton
         navigationItem.rightBarButtonItem = barButton
+        navigationItem.rightBarButtonItem?.isEnabled = false
     }
     override func setupConstraints() {
         photoSelectButton.snp.makeConstraints {
@@ -129,6 +150,7 @@ class PhotoGalleryViewController : BaseViewController {
             ///홈버튼 없는 기종
             let homeButtonLessPhotoFrameTypeViewController = HomeButtonLessPhotoFrameTypeViewController()
             navigationController?.pushViewController(homeButtonLessPhotoFrameTypeViewController, animated: true)
+//            homeButtonLessPhotoFrameTypeViewController.selectedImage = 
         }
         
     }
