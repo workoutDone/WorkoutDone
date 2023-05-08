@@ -16,7 +16,9 @@ struct MonthImages {
 
 class GalleryViewController : BaseViewController {
     let MonthImagesSampleData = [MonthImages(month: 3, image: Array(repeating: "", count: 9)), MonthImages(month: 2, image: Array(repeating: "", count: 11)), MonthImages(month: 1, image: Array(repeating: "", count: 12))]
-    
+
+    var galleryViewModel = GalleryViewModel()
+    var images : [Data] = []
     var sortFrame : Bool = false
     
     private let imageCollectionView : UICollectionView = {
@@ -66,13 +68,21 @@ class GalleryViewController : BaseViewController {
     }
 }
 
-extension GalleryViewController : SortButtonTappedDelegate {
+extension GalleryViewController : SortButtonTappedDelegate, FrameDelegate {
     func sortButtonTapped(sortDelegate: Bool) {
         sortFrame = sortDelegate
-
+        if sortFrame {
+            images = galleryViewModel.loadImagesForFrame(frameIndex: 0)
+        }
+        imageCollectionView.reloadData()
+    }
+    
+    func didSelectFrame(frameIndex: Int) {
+        images = galleryViewModel.loadImagesForFrame(frameIndex: frameIndex)
         imageCollectionView.reloadData()
     }
 }
+
 
 extension GalleryViewController : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -92,7 +102,7 @@ extension GalleryViewController : UICollectionViewDelegate, UICollectionViewData
         }
         guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "frameHeaderView", for: indexPath) as? FrameHeaderView else { return FrameHeaderView()
         }
-        
+        header.delegate = self
         return header
     }
     
@@ -113,16 +123,21 @@ extension GalleryViewController : UICollectionViewDelegate, UICollectionViewData
         if !sortFrame {
             return MonthImagesSampleData[section - 1].image.count
         }
-        return 18
+        return images.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if indexPath.section == 0 {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "sortButtonCell", for: indexPath) as? SortButtonCell else { return UICollectionViewCell() }
             cell.delegate = self
+            
             return cell
         }
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "imageCell", for: indexPath) as? ImageCell else { return UICollectionViewCell() }
+        if sortFrame {
+            cell.image = UIImageView(image:  UIImage(data: images[indexPath.row]) ?? UIImage(named: ""))
+        }
+    
         return cell
     }
     
@@ -165,4 +180,3 @@ extension GalleryViewController : UICollectionViewDelegate, UICollectionViewData
         
     }
 }
-

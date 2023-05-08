@@ -156,7 +156,6 @@ class HomeViewController : BaseViewController {
             guard let intDateValue = Int(dateValue) else { return }
             self.selectedDate.onNext(intDateValue)
         }
-        print(calendarView.selectDate)
     }
     @objc func workoutRoutineChoiceButtonTapped() {
         let workoutViewController = WorkoutViewController()

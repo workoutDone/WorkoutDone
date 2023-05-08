@@ -10,7 +10,7 @@ import SnapKit
 import Then
 
 class ImageCell : UICollectionViewCell {
-    let image = UIImageView().then {
+    var image = UIImageView().then {
         $0.image = UIImage(named: "testImage")
         $0.layer.cornerRadius = 5
     }

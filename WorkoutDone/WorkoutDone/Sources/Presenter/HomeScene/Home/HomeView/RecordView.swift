@@ -154,8 +154,7 @@ class RecordView : BaseUIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
-        //setWorkOutDoneImage()
+   
     }
     
     required init?(coder: NSCoder) {
