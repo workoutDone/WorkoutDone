@@ -9,6 +9,10 @@ import UIKit
 import SnapKit
 import Then
 
+protocol CalendarViewDelegate: AnyObject {
+    func didSelectedCalendarDate()
+}
+
 struct WorkOutDone {
     var date: Date
     var image: String
@@ -18,7 +22,7 @@ var sampleData = [WorkOutDone(date: Calendar.current.date(from: DateComponents(y
 
 class CalendarView : BaseUIView {
     // MARK: - PROPERTIES
-    var selectDate = ""
+    var selectDate : Date?
     
     var calendar = Calendar.current
     let formatter = DateFormatter()
@@ -29,6 +33,8 @@ class CalendarView : BaseUIView {
     var previousDays : Int = 0
     var days: [String] = []
     var dayoftheweek = ["월", "화", "수", "목", "금", "토", "일"]
+
+    var delegate: CalendarViewDelegate?
     
     private let previousMonthButton = UIButton()
     
@@ -351,11 +357,11 @@ class CalendarView : BaseUIView {
         }
     }
     
-    func setSelectDateFormatter(selectDate : DateComponents) -> String {
+    func setSelectDateFormatter(selectDate : DateComponents) -> Date {
         let selecteDateFormatter = DateFormatter()
         selecteDateFormatter.dateFormat = "yyyyMMdd"
         
-        return selecteDateFormatter.string(from: calendar.date(from: selectDate)!)
+        return calendar.date(from: selectDate)!
     }
 }
 
@@ -464,6 +470,8 @@ extension CalendarView: UICollectionViewDelegate, UICollectionViewDataSource, UI
         }
     
         collectionView.reloadData()
-        print(selectDate, "ss")
+        print(selectDate, "선택날짜")
+       
+        delegate?.didSelectedCalendarDate()
     }
 }

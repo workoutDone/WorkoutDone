@@ -20,6 +20,7 @@ class HomeButtonCameraViewController : BaseViewController {
     let captureSettion = AVCaptureSession()
     var videoDeviceInput : AVCaptureDeviceInput!
     let photoOutput = AVCapturePhotoOutput()
+    var isBack : Bool = true
     
     let sesstionQueue = DispatchQueue(label: "sesstion Queue")
     let videoDeviceDiscoverySession = AVCaptureDevice.DiscoverySession(deviceTypes: [.builtInDualCamera, .builtInTrueDepthCamera, .builtInTrueDepthCamera], mediaType: .video, position: .unspecified)
@@ -167,7 +168,6 @@ class HomeButtonCameraViewController : BaseViewController {
     }
 
     @objc func captureButtonTapped(sender: UIButton!) {
-        //takePicture = true
         let videoPreviewLayerOrientaion = self.previewView.previewLayer.connection?.videoOrientation
         sesstionQueue.async {
             let connection = self.photoOutput.connection(with: .video)
@@ -185,8 +185,8 @@ class HomeButtonCameraViewController : BaseViewController {
         sesstionQueue.async {
             let currentVideoDevice = self.videoDeviceInput.device
             let currentPosition = currentVideoDevice.position
-            let isFront = currentPosition == .front
-            let preferredPosition : AVCaptureDevice.Position = isFront ? .back : .front
+            self.isBack = currentPosition == .front
+            let preferredPosition : AVCaptureDevice.Position = self.isBack ? .back : .front
             let devices = self.videoDeviceDiscoverySession.devices
             var newVideoDevice : AVCaptureDevice?
             
@@ -200,7 +200,6 @@ class HomeButtonCameraViewController : BaseViewController {
                     self.captureSettion.beginConfiguration()
                     self.captureSettion.removeInput(self.videoDeviceInput)
                     
-                    //add new Device input
                     if self.captureSettion.canAddInput(videoDeviceInput) {
                         self.captureSettion.addInput(videoDeviceInput)
                         self.videoDeviceInput = videoDeviceInput
@@ -209,12 +208,14 @@ class HomeButtonCameraViewController : BaseViewController {
                     }
                     self.captureSettion.commitConfiguration()
                     
+                    DispatchQueue.main.async {
+                        self.previewView.session = self.captureSettion
+                    }
                     
                 } catch let error  {
                     print("error occured while creating device input : \(error.localizedDescription)")
                 }
             }
-            
         }
     }
 }
@@ -271,7 +272,6 @@ extension HomeButtonCameraViewController : UICollectionViewDelegate, UICollectio
 
 extension HomeButtonCameraViewController {
     func setupSession() {
-
         captureSettion.sessionPreset = .photo
         captureSettion.beginConfiguration()
         
@@ -289,7 +289,7 @@ extension HomeButtonCameraViewController {
                 captureSettion.commitConfiguration()
                 return
             }
-        } catch let error {
+        } catch _ {
             captureSettion.commitConfiguration()
             return
         }
@@ -327,10 +327,12 @@ extension HomeButtonCameraViewController: AVCapturePhotoCaptureDelegate {
         guard error == nil else { return }
         guard let imageData = photo.fileDataRepresentation() else { return }
         guard let image = UIImage(data: imageData) else { return }
+        let flippedImage = UIImage(cgImage: image.cgImage!, scale: image.scale, orientation: .leftMirrored)
        
         DispatchQueue.main.async {
             let pressShutterVC = PressShutterViewController()
-            pressShutterVC.captureImage = image
+            pressShutterVC.captureImage = self.isBack ? image : flippedImage
+            pressShutterVC.isSelectFrame = self.isSelectFrameImagesIndex
             self.navigationController?.pushViewController(pressShutterVC, animated: false)
         }
     }
