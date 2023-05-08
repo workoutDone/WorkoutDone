@@ -48,11 +48,7 @@ class MyRecordViewController : BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setDelegateDataSource()
-    }
-    func setDelegateDataSource() {
-        myRecordPageViewController.dataSource = self
-        myRecordPageViewController.delegate = self
+
     }
     override func setComponents() {
         super.setComponents()
@@ -132,82 +128,61 @@ class MyRecordViewController : BaseViewController {
         super.actions()
         galleryPageButton.addTarget(self, action: #selector(galleryButtonTapped), for: .touchUpInside)
         analyzePageButton.addTarget(self, action: #selector(analyzeButtonTapped), for: .touchUpInside)
+        let swipeLeftGesture = UISwipeGestureRecognizer(target: self, action: #selector(swipeActions(_:)))
+        let swipeRightGesture = UISwipeGestureRecognizer(target: self, action: #selector(swipeActions(_:)))
+        swipeLeftGesture.direction = .left
+        swipeRightGesture.direction = .right
+        view.addGestureRecognizer(swipeLeftGesture)
+        view.addGestureRecognizer(swipeRightGesture)
     }
     @objc func galleryButtonTapped() {
-        galleryButtonTappedAnimation()
+        swipeToggleAnimation(left: true)
         myRecordPageViewController.setViewControllers([viewControllers[0]], direction: .reverse, animated: true)
     }
     @objc func analyzeButtonTapped() {
-        analyzeButtonTappedAniamtion()
+        swipeToggleAnimation(left: false)
         myRecordPageViewController.setViewControllers([viewControllers[1]], direction: .forward, animated: true)
     }
-    func analyzeButtonTappedAniamtion() {
-        analyzePageButton.titleLabel?.font = .pretendard(.semiBold, size: 18)
-        galleryPageButton.titleLabel?.font = .pretendard(.regular, size: 18)
-        analyzePageButton.setTitleColor(.color121212, for: .normal)
-        galleryPageButton.setTitleColor(.color929292, for: .normal)
-        
-        self.pagerBarView.snp.remakeConstraints {
-            $0.centerX.equalTo(self.analyzePageButton.snp.centerX)
-            $0.height.equalTo(2)
-            $0.centerY.equalTo(self.pagerBarBackView)
-            $0.width.equalTo(108)
+    @objc func swipeActions(_ sender : UISwipeGestureRecognizer) {
+        if sender.direction == .right {
+            swipeToggleAnimation(left: true)
+            myRecordPageViewController.setViewControllers([viewControllers[0]], direction: .reverse, animated: true)
         }
-        UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
-            self.pagerBarView.superview?.layoutIfNeeded()
-        })
-    }
-    func galleryButtonTappedAnimation() {
-        galleryPageButton.titleLabel?.font = .pretendard(.semiBold, size: 18)
-        galleryPageButton.setTitleColor(.color121212, for: .normal)
-        analyzePageButton.setTitleColor(.color929292, for: .normal)
-        analyzePageButton.titleLabel?.font = .pretendard(.regular, size: 18)
-        pagerBarView.snp.remakeConstraints {
-            $0.centerX.equalTo(galleryPageButton.snp.centerX)
-            $0.height.equalTo(2)
-            $0.centerY.equalTo(pagerBarBackView)
-            $0.width.equalTo(108)
-        }
-        UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
-            self.pagerBarView.superview?.layoutIfNeeded()
-        })
-    }
-}
-
-extension MyRecordViewController : UIPageViewControllerDataSource, UIPageViewControllerDelegate {
-
-    func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
-        guard let index = viewControllers.firstIndex(of: viewController) else { return nil }
-        let previousIndex = index - 1
-        if previousIndex < 0 {
-            return nil
-        }
-        return viewControllers[previousIndex]
-        
-    }
-    func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
-        guard let index = viewControllers.firstIndex(of: viewController) else { return nil }
-        let nextIndex = index + 1
-        if nextIndex == viewControllers.count {
-            return nil
-        }
-        return viewControllers[nextIndex]
-    }
-    func pageViewController(_ pageViewController: UIPageViewController, willTransitionTo pendingViewControllers: [UIViewController]) {
-        if myRecordPageViewController.viewControllers?[0] is GalleryViewController {
-            analyzeButtonTappedAniamtion()
-        }
-        else {
-            galleryButtonTappedAnimation()
+        else if sender.direction == .left {
+            swipeToggleAnimation(left: false)
+            myRecordPageViewController.setViewControllers([viewControllers[1]], direction: .forward, animated: true)
         }
     }
-//    func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
-//        if myRecordPageViewController.viewControllers?[0] is GalleryViewController {
-//            analyzeButtonTappedAniamtion()
-//        }
-//        else {
-//            galleryButtonTappedAnimation()
-//        }
-//    }
-
+    func swipeToggleAnimation(left : Bool) {
+        if left {
+            galleryPageButton.titleLabel?.font = .pretendard(.semiBold, size: 18)
+            galleryPageButton.setTitleColor(.color121212, for: .normal)
+            analyzePageButton.setTitleColor(.color929292, for: .normal)
+            analyzePageButton.titleLabel?.font = .pretendard(.regular, size: 18)
+            pagerBarView.snp.remakeConstraints {
+                $0.centerX.equalTo(galleryPageButton.snp.centerX)
+                $0.height.equalTo(2)
+                $0.centerY.equalTo(pagerBarBackView)
+                $0.width.equalTo(108)
+            }
+            UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseInOut, animations: {
+                self.pagerBarView.superview?.layoutIfNeeded()
+            })
+        } else {
+            analyzePageButton.titleLabel?.font = .pretendard(.semiBold, size: 18)
+            galleryPageButton.titleLabel?.font = .pretendard(.regular, size: 18)
+            analyzePageButton.setTitleColor(.color121212, for: .normal)
+            galleryPageButton.setTitleColor(.color929292, for: .normal)
+            
+            self.pagerBarView.snp.remakeConstraints {
+                $0.centerX.equalTo(self.analyzePageButton.snp.centerX)
+                $0.height.equalTo(2)
+                $0.centerY.equalTo(self.pagerBarBackView)
+                $0.width.equalTo(108)
+            }
+            UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
+                self.pagerBarView.superview?.layoutIfNeeded()
+            })
+        }
+    }
 }
