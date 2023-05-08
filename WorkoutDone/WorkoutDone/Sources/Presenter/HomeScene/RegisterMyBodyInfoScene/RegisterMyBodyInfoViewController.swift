@@ -274,7 +274,7 @@ class RegisterMyBodyInfoViewController : BaseViewController {
             else {
                 print("클릭 x")
                 self.saveButton.isEnabled = false
-                self.saveButton.backgroundColor = .gray
+                self.saveButton.backgroundColor = .colorCCCCCC
             }
         })
             .disposed(by: disposeBag)
