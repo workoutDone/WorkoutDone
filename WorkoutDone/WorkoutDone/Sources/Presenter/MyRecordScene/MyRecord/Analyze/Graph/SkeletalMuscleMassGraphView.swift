@@ -56,7 +56,8 @@ struct SkeletalMuscleMassGraphView: View {
                         }
                         .shadow(color: Color(UIColor.color7442FF), radius: 2)
                     }
-                    if let currentActiveItem, currentActiveItem.date == data.date {
+                    if let skeletalMusleMass = currentActiveItem?.bodyInfo?.skeletalMuscleMass,
+                       let currentActiveItem, currentActiveItem.date == data.date {
                         RuleMark(x: .value("Month", data.date))
                             .foregroundStyle(Color(UIColor.color7442FF))
                             .lineStyle(.init(lineWidth: 1, lineCap: .round, miterLimit: 2, dash: [2], dashPhase: 5))
@@ -70,8 +71,7 @@ struct SkeletalMuscleMassGraphView: View {
                                         .foregroundColor(Color(UIColor.color7442FF))
                                         .font(Font(UIFont.pretendard(.semiBold, size: 14)))
                                 }
-                                // MARK: - offset
-//                                .offset(x: 0, y: -data.skeletalMusleMass + 200 - 20)
+                                .offset(x: 0, y: 25)
                             }
                     }
                 }

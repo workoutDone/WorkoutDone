@@ -9,17 +9,16 @@ import UIKit
 import RxCocoa
 import RxSwift
 
-
-
 class HomeViewController : BaseViewController {
     //MARK: - ViewModel
-    var viewModel = HomeViewModel()
+    var homeViewModel = HomeViewModel()
+    let frameImageViewModel = FrameImageViewModel()
     
     var selectedDate = BehaviorSubject(value: Date().dateToInt())
     
     private lazy var input = HomeViewModel.Input(selectedDate: selectedDate.asDriver(onErrorJustReturn: Date().dateToInt()))
     
-    private lazy var output = viewModel.transform(input: input)
+    private lazy var output = homeViewModel.transform(input: input)
     
     
     // MARK: - PROPERTIES
@@ -37,7 +36,7 @@ class HomeViewController : BaseViewController {
     
     private let calendarView = CalendarView()
     ///기록하기
-    private let recordBaseView = RecordView().then {
+    let recordBaseView = RecordView().then {
         $0.backgroundColor = .colorFFFFFF
     }
     ///운동하기
@@ -54,7 +53,9 @@ class HomeViewController : BaseViewController {
         
         view.backgroundColor = .color7442FF
         contentScrollView.delegate = self
-     
+        calendarView.delegate = self
+        
+        setWorkOutDoneImage()
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -71,7 +72,7 @@ class HomeViewController : BaseViewController {
     }
     override func setComponents() {
         super.setComponents()
-        view.backgroundColor = .colorFFFFFF
+        
         contentScrollView.translatesAutoresizingMaskIntoConstraints = false
         contentScrollView.isUserInteractionEnabled = true
         contentScrollView.isScrollEnabled = true
@@ -124,7 +125,7 @@ class HomeViewController : BaseViewController {
         
         calendarView.collectionView.rx.itemSelected
             .bind { _ in
-                guard let intDate = Int(self.calendarView.selectDate) else { return }
+                guard let intDate = Int(self.calendarView.selectDate?.yyyyMMddToString() ?? Date().yyyyMMddToString()) else { return }
                 self.selectedDate.onNext(intDate)
             }
             .disposed(by: disposeBag)
@@ -145,7 +146,7 @@ class HomeViewController : BaseViewController {
     }
     @objc func bodyDataEntryButtonTapped() {
         let registerMyBodyInfoViewController = RegisterMyBodyInfoViewController()
-        registerMyBodyInfoViewController.selectedData = calendarView.selectDate
+        registerMyBodyInfoViewController.selectedData = calendarView.selectDate?.yyyyMMddToString() ?? Date().yyyyMMddToString()
         print(registerMyBodyInfoViewController.selectedData, "눌린 데이터")
         registerMyBodyInfoViewController.modalTransitionStyle = .crossDissolve
         registerMyBodyInfoViewController.modalPresentationStyle = .overFullScreen
@@ -161,7 +162,10 @@ class HomeViewController : BaseViewController {
         let workoutViewController = WorkoutViewController()
         navigationController?.pushViewController(workoutViewController, animated: true)
     }
- 
+    
+    func setWorkOutDoneImage() {
+        recordBaseView.bodyImageView.image = frameImageViewModel.loadImageFromRealm(date: calendarView.selectDate ?? Date())
+    }
 }
 
 extension HomeViewController : UIScrollViewDelegate {
@@ -179,5 +183,11 @@ extension HomeViewController : UIScrollViewDelegate {
                 view.backgroundColor = .color7442FF
             }
         }
+    }
+}
+
+extension HomeViewController : CalendarViewDelegate {
+    func didSelectedCalendarDate() {
+        setWorkOutDoneImage()
     }
 }

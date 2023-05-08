@@ -14,8 +14,6 @@ import DeviceKit
 //Todo: - 몸무게, 체지방량, 근골격량 길이 길어질 때 처리하기
 
 class RecordView : BaseUIView {
-    let calenderView = CalendarView()
-    let frameImageViewModel = FrameImageViewModel()
     // MARK: - PROPERTIES
     private let recordLabel = UILabel().then {
         $0.text = "기록하기"
@@ -49,11 +47,12 @@ class RecordView : BaseUIView {
         $0.font = .pretendard(.regular, size: 16)
     }
     
-    private let bodyImageView = UIImageView().then {
+    let bodyImageView = UIImageView().then {
         $0.clipsToBounds = true
         $0.layer.cornerRadius = 10
         $0.layer.borderWidth = 0.5
         $0.layer.borderColor = UIColor.color7442FF.cgColor
+        $0.contentMode = .scaleAspectFill
     }
     let workoutDoneCameraButton = UIButton()
     
@@ -156,8 +155,7 @@ class RecordView : BaseUIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        bodyImageView.image = frameImageViewModel.loadImageFromRealm(date: calenderView.selectDate)
-
+        //setWorkOutDoneImage()
     }
     
     required init?(coder: NSCoder) {
@@ -300,6 +298,5 @@ class RecordView : BaseUIView {
             $0.centerY.equalTo(bodyInfoView)
             $0.trailing.equalTo(bodyInfoView.snp.trailing).offset(-19)
         }
-        
     }
 }

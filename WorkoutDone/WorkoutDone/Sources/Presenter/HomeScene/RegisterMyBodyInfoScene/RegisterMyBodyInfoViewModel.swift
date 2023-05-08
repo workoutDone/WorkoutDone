@@ -32,7 +32,6 @@ class RegisterMyBodyInfoViewModel {
         let skeletalMusleMassOutputText : Driver<String>
         let fatPercentageOutputText : Driver<String>
         let saveData : Driver<Void>
-        let isConfirmEnabled : Driver<Bool>
         let readWeightData : Driver<String>
         let readSkeletalMusleMassData : Driver<String>
         let readFatPercentageData : Driver<String>
@@ -86,17 +85,21 @@ class RegisterMyBodyInfoViewModel {
     }
     ///Realm Update
     func updateBodyInfoData(weight: Double?, skeletalMusleMass : Double?, fatPercentage : Double?, date : String, id : Int) {
-        do {
-            try realm.write {
-                let workoutDoneData = WorkOutDoneData(id: id, date: date)
-                let bodyInfo = BodyInfo(value: ["weight" : weight, "skeletalMuscleMass" : skeletalMusleMass, "fatPercentage" : fatPercentage])
-                workoutDoneData.bodyInfo = bodyInfo
-                realm.add(workoutDoneData, update: .modified)
-            }
-        }
-        catch {
-            print("Error updating \(error)")
-        }
+        let workoutDoneData = WorkOutDoneData(id: id, date: date)
+        let bodyInfo = BodyInfo(value: ["weight" : weight, "skeletalMuscleMass" : skeletalMusleMass, "fatPercentage" : fatPercentage])
+        workoutDoneData.bodyInfo = bodyInfo
+        RealmManager.shared.updateData(data: workoutDoneData)
+//        do {
+//            try realm.write {
+//                let workoutDoneData = WorkOutDoneData(id: id, date: date)
+//                let bodyInfo = BodyInfo(value: ["weight" : weight, "skeletalMuscleMass" : skeletalMusleMass, "fatPercentage" : fatPercentage])
+//                workoutDoneData.bodyInfo = bodyInfo
+//                realm.add(workoutDoneData, update: .modified)
+//            }
+//        }
+//        catch {
+//            print("Error updating \(error)")
+//        }
     }
     ///id값으로 데이터가 있는지 판별
     func validBodyInfoData(id : Int) -> Bool {
@@ -105,8 +108,16 @@ class RegisterMyBodyInfoViewModel {
     }
     ///id값으로 BodyInfoData 가져오기
     func readBodyInfoData(id : Int) -> WorkOutDoneData?  {
-        let selectedBodyInfoData = realm.object(ofType: WorkOutDoneData.self, forPrimaryKey: id)
-        return selectedBodyInfoData
+//        let selectedBodyInfoData = realm.object(ofType: WorkOutDoneData.self, forPrimaryKey: id)
+//        return selectedBodyInfoData
+        let workoutDoneData = RealmManager.shared.readData(id: id, type: WorkOutDoneData.self)
+        return workoutDoneData
+    }
+    func deleteBodyInfoData(id : Int) {
+        if let workOutDoneData = realm.object(ofType: WorkOutDoneData.self, forPrimaryKey: id) {
+            RealmManager.shared.deleteData(workOutDoneData.bodyInfo!)
+        }
+
     }
     ///id 값(string) -> Date(string)으로 변경
     func convertIDToDateString(dateString : String) -> String? {
@@ -142,14 +153,14 @@ class RegisterMyBodyInfoViewModel {
         }
         
         ///버튼 활성화. 상태
-        let buttonEnabled = Driver<Bool>.combineLatest(input.weightInputText, skeletalMusleMassText, fatPercentageText, resultSelector: { (weight, skeletalMusle, fatPercenatage) in
-            if weight.count + skeletalMusle.count + fatPercenatage.count > 0 {
-                return true
-            }
-            else {
-                return false
-            }
-        })
+//        let buttonEnabled = Driver<Bool>.combineLatest(input.weightInputText, skeletalMusleMassText, fatPercentageText, resultSelector: { (weight, skeletalMusle, fatPercenatage) in
+//            if weight.count + skeletalMusle.count + fatPercenatage.count > 0 {
+//                return true
+//            }
+//            else {
+//                return false
+//            }
+//        })
         ///몸무게 데이터 확인(read)
         let readWeightData = Driver<String>.combineLatest(input.loadView, input.selectedDate, resultSelector: { (load, date) in
             guard let idDate = Int(date) else { return "" }
@@ -206,14 +217,29 @@ class RegisterMyBodyInfoViewModel {
             guard let idValue = Int(date) else { return }
             let convertDate = self.convertIDToDateString(dateString: date)
             guard let dateValue = convertDate else { return }
+            print(inputData.weight ?? "", inputData.skeletalMusleMass ?? "", inputData.fatPercentage ?? "", "입력 값")
             if self.validBodyInfoData(id: idValue) {
                 ///값이 존재하는 경우
+                ///데이터 업데이트
                 self.updateBodyInfoData(
                     weight: Double(inputData.weight ?? ""),
                     skeletalMusleMass: Double(inputData.skeletalMusleMass ?? ""),
                     fatPercentage: Double(inputData.fatPercentage ?? ""),
                     date: dateValue,
                     id: idValue)
+//                if let weightData = Double(inputData.weight ?? ""),
+//                    let skeletalMusleMassData = Double(inputData.skeletalMusleMass ?? ""),
+//                    let fatPercentageData = Double(inputData.fatPercentage ?? "") {
+//                    ///데이터 업데이트
+//                    self.updateBodyInfoData(
+//                        weight: weightData,
+//                        skeletalMusleMass: skeletalMusleMassData,
+//                        fatPercentage: fatPercentageData,
+//                        date: dateValue,
+//                        id: idValue)
+//                }
+                
+                
             }
             else {
                 ///값이 존재하지 않는 경우
@@ -234,7 +260,6 @@ class RegisterMyBodyInfoViewModel {
             skeletalMusleMassOutputText: skeletalMusleMassText,
             fatPercentageOutputText: fatPercentageText,
             saveData: inputData,
-            isConfirmEnabled: buttonEnabled,
             readWeightData: readWeightData,
             readSkeletalMusleMassData: readSkeletalMusleMassData,
             readFatPercentageData: readFatPercentageData)

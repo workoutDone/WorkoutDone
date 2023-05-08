@@ -57,7 +57,8 @@ struct WeightGraphView: View {
                         }
                         .shadow(color: Color(UIColor.color7442FF), radius: 2)
                     }
-                    if let currentActiveItem, currentActiveItem.date == data.date {
+                    if let weight = currentActiveItem?.bodyInfo?.weight,
+                       let currentActiveItem, currentActiveItem.date == data.date {
                         RuleMark(x: .value("Month", data.date))
                             .foregroundStyle(Color(UIColor.color7442FF))
                             .lineStyle(.init(lineWidth: 1, lineCap: .round, miterLimit: 2, dash: [2], dashPhase: 5))
@@ -71,18 +72,11 @@ struct WeightGraphView: View {
                                         .foregroundColor(Color(UIColor.color7442FF))
                                         .font(Font(UIFont.pretendard(.semiBold, size: 14)))
                                 }
-//                                .offset(x: 0, y: -data.bodyInfo?.weight ?? 0 + 200 - 20)
-//                                .offset(x: 0, y: (max / min > 100 ? -(200 - data.weight) : max - data.weight + 40 ))
-//                                .offset(x: 0, y: -data.weight + max + 40)
-//                                .offset(x: 0, y: (max - data.weight + 40))
-//                                .offset(x: 0, y: 220 - data.weight - max) // + 밑, - 위
+                                .offset(x: 0, y: 25)
+
                             }
                     }
                 }
-                
-    //            .chartXAxis {
-    //                AxisMarks(preset: <#T##AxisMarkPreset#>)
-    //            }
                 .chartYAxis {
                     AxisMarks(position: .trailing)
                 }
