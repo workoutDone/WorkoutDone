@@ -19,21 +19,50 @@ import Photos
 //    case authorized
 //    case limited
 //}
-
-class PhotoGalleryViewModel {
-    enum PhotoGalleryAccessStatusType {
+enum frameType : Int {
+    case defaultFrame = 0
+    case manUpperFrame = 1
+    func getFrameType() -> Int {
+        switch self {
+        case .defaultFrame:
+            return frameType.defaultFrame.rawValue
+        case .manUpperFrame:
+            return frameType.manUpperFrame.rawValue
+        }
+    }
+}
+class PhotoGalleryViewModel : ViewModelType {
+    enum PhotoGalleryAccessStatusType : String {
         case notDetermined
         case restricted
         case denied
         case authorized
         case limited
+        
+        func getStatusType() -> PhotoGalleryAccessStatusType {
+            switch self {
+            case .notDetermined:
+                return PhotoGalleryAccessStatusType.notDetermined
+            case .restricted:
+                return PhotoGalleryAccessStatusType.restricted
+            case .denied:
+                return PhotoGalleryAccessStatusType.denied
+            case .authorized:
+                return PhotoGalleryAccessStatusType.authorized
+            case .limited:
+                return PhotoGalleryAccessStatusType.limited
+            }
+        }
     }
     
     struct Input {
         let loadView : Driver<Void>
+        let selectedPhotoStatus : Driver<Bool>
+//        let selectedImage : Driver<UIImage>
     }
     struct Output{
         let photoAuthority : Driver<PhotoGalleryAccessStatusType>
+        let nextButtonStatus : Driver<Bool>
     }
     func requestPhotoAccessStatus() -> PhotoGalleryAccessStatusType {
 
@@ -60,7 +89,9 @@ class PhotoGalleryViewModel {
         let photoAuth = input.loadView.map { _ in
             return self.requestPhotoAccessStatus()
         }
-        return Output(photoAuthority: photoAuth)
+        let buttonEnabled = input.selectedPhotoStatus
+        return Output(photoAuthority: photoAuth,
+                      nextButtonStatus: buttonEnabled)
     }
 }
 //        let photoAuthorizationStatus = PHPhotoLibrary.authorizationStatus()

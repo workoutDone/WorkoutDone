@@ -13,11 +13,11 @@ import UIKit
 class RegisterMyBodyInfoViewModel {
     let realm = try! Realm()
     let realmManager = RealmManager.shared
-    var workOutDoneData : Results<WorkOutDoneData>?
-    init(workOutDoneData: Results<WorkOutDoneData>? = nil) {
-        self.workOutDoneData = realm.objects(WorkOutDoneData.self)
-    
-    }
+//    var workOutDoneData : Results<WorkOutDoneData>?
+//    init(workOutDoneData: Results<WorkOutDoneData>? = nil) {
+//        self.workOutDoneData = realm.objects(WorkOutDoneData.self)
+//    
+//    }
 
     struct Input {
         let loadView : Driver<Void>
