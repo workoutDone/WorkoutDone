@@ -25,7 +25,7 @@ class CalendarView : BaseUIView {
     var daysCount : Int = 0
     var previousDays : Int = 0
     var days: [String] = []
-    var dayoftheweek = ["월", "화", "수", "목", "금", "토", "일"]
+    var dayoftheweek = ["일", "월", "화", "수", "목", "금", "토"]
 
     var delegate: CalendarViewDelegate?
     
@@ -220,7 +220,7 @@ class CalendarView : BaseUIView {
         selectComponents.month = calendar.component(.month, from: Date())
         selectComponents.day = calendar.component(.day, from: Date())
         
-        selectDate = setSelectDateFormatter(selectDate: selectComponents)
+        selectDate = setSelectDateFormatter(dateComponents: selectComponents)
     }
     
     func setAction() {
@@ -322,7 +322,7 @@ class CalendarView : BaseUIView {
         let endOfWeek = calendar.date(byAdding: .day, value: 7, to: startOfWeek)!
         
         formatter.dateFormat = "dd"
-        let startDayOfWeek = (Int(formatter.string(from: startOfWeek)) ?? 0) + 1
+        let startDayOfWeek = (Int(formatter.string(from: startOfWeek)) ?? 0)
         let endDayOfWeek = Int(formatter.string(from: endOfWeek)) ?? 0
         
         formatter.dateFormat = "yyyy년 M월"
@@ -334,21 +334,24 @@ class CalendarView : BaseUIView {
             for day in startDayOfWeek..<startDayOfWeek + (7 - endDayOfWeek) {
                 days.append(String(day))
             }
-            for day in 1...endDayOfWeek {
+            for day in 1..<endDayOfWeek {
                 days.append(String(day))
             }
         } else {
-            for day in startDayOfWeek...endDayOfWeek {
+            for day in startDayOfWeek..<endDayOfWeek {
                 days.append(String(day))
             }
         }
     }
     
-    func setSelectDateFormatter(selectDate : DateComponents) -> Date {
-        let selecteDateFormatter = DateFormatter()
-        selecteDateFormatter.dateFormat = "yyyyMMdd"
+    func setSelectDateFormatter(dateComponents : DateComponents) -> Date {
+        var dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyyMMdd"
         
-        return calendar.date(from: selectDate)!
+        let date = calendar.date(from: dateComponents)!
+        let nextDate = calendar.date(byAdding: .day, value: 1, to: date)!
+        let nextDateString = dateFormatter.string(from: nextDate)
+        return dateFormatter.date(from: nextDateString)!
     }
 }
 
@@ -443,14 +446,16 @@ extension CalendarView: UICollectionViewDelegate, UICollectionViewDataSource, UI
                 selectComponents.year = components.year
                 selectComponents.month = components.month
                 selectComponents.day = Int(days[indexPath.row])
-                selectDate = setSelectDateFormatter(selectDate: selectComponents)
+                
+                selectDate = setSelectDateFormatter(dateComponents: selectComponents)
             }
         } else {
             if components.month ?? 1 == calendar.component(.month, from: Date()) {
                 selectComponents.year = components.year
                 selectComponents.month = components.month
                 selectComponents.day = Int(days[indexPath.row])
-                selectDate = setSelectDateFormatter(selectDate: selectComponents)
+                
+                selectDate = setSelectDateFormatter(dateComponents: selectComponents)
             }
         }
     
@@ -460,3 +465,4 @@ extension CalendarView: UICollectionViewDelegate, UICollectionViewDataSource, UI
         delegate?.didSelectedCalendarDate()
     }
 }
+
