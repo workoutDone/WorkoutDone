@@ -17,10 +17,14 @@ class HomeButtonLessPhotoFrameTypeViewController : BaseViewController {
     private var viewModel = PhotoFrameTypeViewModel()
     private var selectedFrameType = PublishSubject<Int>()
     private var selectedFrameTypeButtonStatus = BehaviorSubject(value: false)
+    private var selectedPhoto = PublishSubject<UIImage>()
+    private var selectedDate = PublishSubject<String>()
     
     private lazy var input = PhotoFrameTypeViewModel.Input(
         frameTypeButtonStatus: selectedFrameTypeButtonStatus.asDriver(onErrorJustReturn: false),
-        selectedFrameType: selectedFrameType.asDriver(onErrorJustReturn: 0))
+        selectedFrameType: selectedFrameType.asDriver(onErrorJustReturn: 0),
+        selectedPhoto: selectedPhoto.asDriver(onErrorJustReturn: UIImage()),
+        selectedDate: selectedDate.asDriver(onErrorJustReturn: ""))
     private lazy var output = viewModel.transform(input: input)
     
     // MARK: - PROPERTIES
@@ -117,6 +121,10 @@ class HomeButtonLessPhotoFrameTypeViewController : BaseViewController {
             }
         })
         .disposed(by: disposeBag)
+        
+        guard let image = selectedImage else { return }
+        let resizedImage = resizeImage(image: image, newSize: CGSize(width: view.frame.width, height: view.frame.width * 4 / 3))
+        selectedPhoto.onNext(resizedImage)
     }
     
     override func setComponents() {
@@ -275,6 +283,14 @@ class HomeButtonLessPhotoFrameTypeViewController : BaseViewController {
         default:
             print("?/")
         }
+    }
+    
+    func resizeImage(image: UIImage, newSize: CGSize) -> UIImage {
+        UIGraphicsBeginImageContextWithOptions(newSize, false, 0.0)
+        image.draw(in: CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height))
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return newImage!
     }
 }
 // MARK: - EXTENSIONs
