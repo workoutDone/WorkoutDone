@@ -146,17 +146,16 @@ class HomeViewController : BaseViewController {
     }
     @objc func bodyDataEntryButtonTapped() {
         let registerMyBodyInfoViewController = RegisterMyBodyInfoViewController()
-        registerMyBodyInfoViewController.selectedData = calendarView.selectDate?.yyyyMMddToString() ?? Date().yyyyMMddToString()
-        print(registerMyBodyInfoViewController.selectedData, "눌린 데이터")
+        registerMyBodyInfoViewController.selectedDate = calendarView.selectDate?.dateToInt()
+        print(registerMyBodyInfoViewController.selectedDate, "눌린 데이터")
         registerMyBodyInfoViewController.modalTransitionStyle = .crossDissolve
         registerMyBodyInfoViewController.modalPresentationStyle = .overFullScreen
         present(registerMyBodyInfoViewController, animated: true)
         registerMyBodyInfoViewController.completionHandler = { [weak self] dateValue in
             guard let self else { return }
-            guard let intDateValue = Int(dateValue) else { return }
-            self.selectedDate.onNext(intDateValue)
+//            guard let intDateValue = Int(dateValue) else { return }
+            self.selectedDate.onNext(dateValue)
         }
-        print(calendarView.selectDate)
     }
     @objc func workoutRoutineChoiceButtonTapped() {
         let workoutViewController = WorkoutViewController()

@@ -23,7 +23,7 @@ class RegisterMyBodyInfoViewController : BaseViewController {
     private var viewModel = RegisterMyBodyInfoViewModel()
     
     private var bodyInputData = PublishSubject<BodyInputData>()
-    var selectedData : String = Date().yyyyMMddToString()
+    var selectedDate : Int?
     private var didLoad = PublishSubject<Void>()
     private lazy var input = RegisterMyBodyInfoViewModel.Input(
         loadView: didLoad.asDriver(onErrorJustReturn: ()),
@@ -31,12 +31,12 @@ class RegisterMyBodyInfoViewController : BaseViewController {
         skeletalMusleMassInputText: skeletalMuscleMassTextField.rx.text.orEmpty.asDriver(),
         fatPercentageInputText: fatPercentageTextField.rx.text.orEmpty.asDriver(),
         saveButtonTapped: bodyInputData.asDriver(onErrorJustReturn: BodyInputData(weight: "", skeletalMusleMass: "", fatPercentage: "")),
-        selectedDate: Driver.just(selectedData)
+        selectedDate: Driver.just(selectedDate!)
     )
     private lazy var output = viewModel.transform(input: input)
     
     ///dismiss 시 사용될 CompletionHandler
-    var completionHandler : ((String) -> Void)?
+    var completionHandler : ((Int) -> Void)?
     
     // MARK: - PROPERTIES
     private let baseView = UIView().then {
@@ -280,7 +280,7 @@ class RegisterMyBodyInfoViewController : BaseViewController {
 //            .disposed(by: disposeBag)
         output.saveData.drive(onNext: {
             self.dismiss(animated: true)
-            self.completionHandler?(self.selectedData)
+            self.completionHandler?(self.selectedDate!)
         })
             .disposed(by: disposeBag)
         
@@ -295,6 +295,7 @@ class RegisterMyBodyInfoViewController : BaseViewController {
         didLoad.onNext(())
         saveButton.rx.tap
             .bind { value in
+                print(value, "버튼 탭")
                 self.bodyInputData.onNext(BodyInputData(
                     weight: self.weightTextField.text ?? "",
                     skeletalMusleMass: self.skeletalMuscleMassTextField.text ?? "",
