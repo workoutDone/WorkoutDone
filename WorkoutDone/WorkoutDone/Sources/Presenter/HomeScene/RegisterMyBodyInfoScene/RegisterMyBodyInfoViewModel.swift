@@ -196,8 +196,6 @@ class RegisterMyBodyInfoViewModel {
             }
 
         })
-        
-
         return Output(
             weightOutputText: weightText,
             skeletalMusleMassOutputText: skeletalMusleMassText,
