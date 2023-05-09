@@ -18,13 +18,13 @@ class HomeButtonLessPhotoFrameTypeViewController : BaseViewController {
     private var selectedFrameType = PublishSubject<Int>()
     private var selectedFrameTypeButtonStatus = BehaviorSubject(value: false)
     private var selectedPhoto = PublishSubject<UIImage>()
-    private var selectedDate = PublishSubject<String>()
+    private var selectedDate = PublishSubject<Int>()
     
     private lazy var input = PhotoFrameTypeViewModel.Input(
         frameTypeButtonStatus: selectedFrameTypeButtonStatus.asDriver(onErrorJustReturn: false),
         selectedFrameType: selectedFrameType.asDriver(onErrorJustReturn: 0),
         selectedPhoto: selectedPhoto.asDriver(onErrorJustReturn: UIImage()),
-        selectedDate: selectedDate.asDriver(onErrorJustReturn: ""))
+        selectedDate: selectedDate.asDriver(onErrorJustReturn: 0))
     private lazy var output = viewModel.transform(input: input)
     
     // MARK: - PROPERTIES

@@ -18,7 +18,7 @@ class PhotoFrameTypeViewModel {
         let frameTypeButtonStatus : Driver<Bool>
         let selectedFrameType : Driver<Int>
         let selectedPhoto : Driver<UIImage>
-        let selectedDate : Driver<String>
+        let selectedDate : Driver<Int>
 //        let saveButtonTapped : Driver<FrameImage>
 //        let selectedData : Driver<String>
     }
@@ -44,10 +44,10 @@ class PhotoFrameTypeViewModel {
     }
     
     ///id 값(string) -> Date(string)으로 변경
-    func convertIDToDateString(dateString : String) -> String? {
+    func convertIDToDateString(dateInt : Int) -> String? {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyyMMdd"
-        if let date = dateFormatter.date(from: dateString) {
+        if let date = dateFormatter.date(from: String(dateInt)) {
             dateFormatter.dateFormat = "yyyy.MM.dd"
             return dateFormatter.string(from: date)
         }
@@ -59,18 +59,18 @@ class PhotoFrameTypeViewModel {
     func transform(input : Input) -> Output {
         
         let inputData = Driver<Void>.combineLatest(input.selectedPhoto, input.selectedFrameType, input.selectedDate, resultSelector: { (image, frame, date) in
-            guard let idValue = Int(date) else { return }
-            let convertData = self.convertIDToDateString(dateString: date)
+//            guard let idValue =  else { return }
+            let convertData = self.convertIDToDateString(dateInt: date)
             guard let dateValue = convertData else { return }
             
-            if self.validBodyInfoData(id: idValue) {
+            if self.validBodyInfoData(id: date) {
                 ///값이 존재하는 경우
             }
             else {
                 ///값이 존재하지 않는 경우
                 self.createFrameImageData(
                     image: image,
-                    id: idValue,
+                    id: date,
                     date: dateValue,
                     frameType: frame)
             }

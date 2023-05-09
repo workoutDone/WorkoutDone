@@ -125,8 +125,8 @@ class HomeViewController : BaseViewController {
         
         calendarView.collectionView.rx.itemSelected
             .bind { _ in
-                guard let intDate = Int(self.calendarView.selectDate?.yyyyMMddToString() ?? Date().yyyyMMddToString()) else { return }
-                self.selectedDate.onNext(intDate)
+                guard let dateInt = self.calendarView.selectDate?.dateToInt() else { return }
+                self.selectedDate.onNext(dateInt)
             }
             .disposed(by: disposeBag)
     }
@@ -147,13 +147,11 @@ class HomeViewController : BaseViewController {
     @objc func bodyDataEntryButtonTapped() {
         let registerMyBodyInfoViewController = RegisterMyBodyInfoViewController()
         registerMyBodyInfoViewController.selectedDate = calendarView.selectDate?.dateToInt()
-        print(registerMyBodyInfoViewController.selectedDate, "눌린 데이터")
         registerMyBodyInfoViewController.modalTransitionStyle = .crossDissolve
         registerMyBodyInfoViewController.modalPresentationStyle = .overFullScreen
         present(registerMyBodyInfoViewController, animated: true)
         registerMyBodyInfoViewController.completionHandler = { [weak self] dateValue in
             guard let self else { return }
-//            guard let intDateValue = Int(dateValue) else { return }
             self.selectedDate.onNext(dateValue)
         }
     }
