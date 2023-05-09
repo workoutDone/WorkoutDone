@@ -155,14 +155,15 @@ class PhotoGalleryViewController : BaseViewController {
             let manager = PHImageManager.default()
             let options = PHImageRequestOptions()
             options.deliveryMode = .highQualityFormat
+            options.resizeMode = .exact
             guard let phAsset = authorizedPhotoGalleryView.selectedImage else { return }
-            manager.requestImage(for: phAsset, targetSize: CGSize(width: width, height: height), contentMode: .aspectFill, options: options) { image,  _ in
-                DispatchQueue.main.async {
+            manager.requestImageDataAndOrientation(
+                for: phAsset,
+                options: options) { data, _, _, _ in
+                    guard let imageData = data, let image = UIImage(data: imageData) else { return }
                     homeButtonLessPhotoFrameTypeViewController.selectedImage = image
                     self.navigationController?.pushViewController(homeButtonLessPhotoFrameTypeViewController, animated: true)
                 }
-            }
-
         }
         
     }
@@ -173,4 +174,3 @@ class PhotoGalleryViewController : BaseViewController {
 private extension PhotoGalleryViewController {
     
 }
-
