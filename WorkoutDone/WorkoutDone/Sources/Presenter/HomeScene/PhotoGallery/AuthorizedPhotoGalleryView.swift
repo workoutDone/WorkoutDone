@@ -66,11 +66,20 @@ extension AuthorizedPhotoGalleryView : UICollectionViewDelegate, UICollectionVie
         let frameSize = (collectionView.frame.width - 12) / 3
         let options = PHImageRequestOptions()
         options.deliveryMode = .highQualityFormat
-        manager.requestImage(for: asset, targetSize: CGSize(width: frameSize, height: frameSize), contentMode: .aspectFit, options: options) { image, _ in
-            DispatchQueue.main.async {
-                cell.photoImageView.image = image
+        options.resizeMode = .exact
+//        manager.requestImage(for: asset, targetSize: CGSize(width: frameSize, height: frameSize), contentMode: .aspectFit, options: options) { image, _ in
+//            DispatchQueue.main.async {
+//                cell.photoImageView.image = image
+//            }
+//        }
+        manager.requestImageDataAndOrientation(
+            for: asset,
+            options: options) { data, _, _, _ in
+                DispatchQueue.main.async {
+                    guard let imageData = data, let image = UIImage(data: imageData) else { return }
+                    cell.photoImageView.image = image
+                }
             }
-        }
         return cell
     }
     ///옆 간격
