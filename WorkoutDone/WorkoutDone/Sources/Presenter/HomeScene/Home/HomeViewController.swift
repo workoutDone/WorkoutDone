@@ -14,9 +14,11 @@ class HomeViewController : BaseViewController {
     var homeViewModel = HomeViewModel()
     let frameImageViewModel = FrameImageViewModel()
     
+    private var didLoad = PublishSubject<Void>()
     var selectedDate = BehaviorSubject(value: Date().dateToInt())
-    
-    private lazy var input = HomeViewModel.Input(selectedDate: selectedDate.asDriver(onErrorJustReturn: Date().dateToInt()))
+    private lazy var input = HomeViewModel.Input(
+        selectedDate: selectedDate.asDriver(onErrorJustReturn: Date().dateToInt()),
+        loadView: didLoad.asDriver(onErrorJustReturn: ()))
     
     private lazy var output = homeViewModel.transform(input: input)
     
@@ -50,17 +52,22 @@ class HomeViewController : BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        view.backgroundColor = .color7442FF
         contentScrollView.delegate = self
         calendarView.delegate = self
-        
         setWorkOutDoneImage()
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.isNavigationBarHidden = true
+        
     }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        let dateInt = calendarView.selectDate?.dateToInt()
+        print(dateInt ?? Date().dateToInt(), "dd")
+
+    }
+
     override func setupLayout() {
         super.setupLayout()
 
@@ -72,7 +79,7 @@ class HomeViewController : BaseViewController {
     }
     override func setComponents() {
         super.setComponents()
-        
+        view.backgroundColor = .color7442FF
         contentScrollView.translatesAutoresizingMaskIntoConstraints = false
         contentScrollView.isUserInteractionEnabled = true
         contentScrollView.isScrollEnabled = true
@@ -125,10 +132,12 @@ class HomeViewController : BaseViewController {
         
         calendarView.collectionView.rx.itemSelected
             .bind { _ in
-                guard let intDate = Int(self.calendarView.selectDate?.yyyyMMddToString() ?? Date().yyyyMMddToString()) else { return }
-                self.selectedDate.onNext(intDate)
+                guard let dateInt = self.calendarView.selectDate?.dateToInt() else { return }
+                self.selectedDate.onNext(dateInt)
             }
             .disposed(by: disposeBag)
+        didLoad.onNext(())
+        selectedDate.onNext(Date().dateToInt())
     }
     
     override func actions() {
@@ -146,17 +155,14 @@ class HomeViewController : BaseViewController {
     }
     @objc func bodyDataEntryButtonTapped() {
         let registerMyBodyInfoViewController = RegisterMyBodyInfoViewController()
-        registerMyBodyInfoViewController.selectedData = calendarView.selectDate?.yyyyMMddToString() ?? Date().yyyyMMddToString()
-        print(registerMyBodyInfoViewController.selectedData, "눌린 데이터")
+        registerMyBodyInfoViewController.selectedDate = calendarView.selectDate?.dateToInt()
         registerMyBodyInfoViewController.modalTransitionStyle = .crossDissolve
         registerMyBodyInfoViewController.modalPresentationStyle = .overFullScreen
         present(registerMyBodyInfoViewController, animated: true)
         registerMyBodyInfoViewController.completionHandler = { [weak self] dateValue in
             guard let self else { return }
-            guard let intDateValue = Int(dateValue) else { return }
-            self.selectedDate.onNext(intDateValue)
+            self.selectedDate.onNext(dateValue)
         }
-        print(calendarView.selectDate)
     }
     @objc func workoutRoutineChoiceButtonTapped() {
         let workoutViewController = WorkoutViewController()

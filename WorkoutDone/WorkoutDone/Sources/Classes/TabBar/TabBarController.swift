@@ -15,8 +15,20 @@ class TabBarController : UITabBarController {
     let homeTabBarItem = UITabBarItem(title: "오늘의 운동", image: UIImage(named: "homeIcon"), tag: 0)
     let routineTabBarItem = UITabBarItem(title: "운동 루틴", image: UIImage(named: "routineIcon"), tag: 1)
     let myRecordTabBarItem = UITabBarItem(title: "나의 기록", image: UIImage(named: "myRecordIcon"), tag: 2)
+    
+//    let testBar = UIView().then {
+//        $0.backgroundColor = .red
+//    }
     override func viewDidLoad() {
         super.viewDidLoad()
+//        view.addSubview(testBar)
+//        testBar.snp.makeConstraints {
+//            $0.leading.trailing.equalToSuperview()
+//            $0.height.equalTo(40)
+//            let tabBarHeight = tabBar.frame.size.height
+////            $0.bottom.equalToSuperview().inset(tabBarHeight)
+//            $0.bottom.equalTo(view.safeAreaLayoutGuide).offset(-tabBarHeight)
+//        }
         homeTab.tabBarItem = homeTabBarItem
         routineTab.tabBarItem = routineTabBarItem
         myRecordTab.tabBarItem = myRecordTabBarItem

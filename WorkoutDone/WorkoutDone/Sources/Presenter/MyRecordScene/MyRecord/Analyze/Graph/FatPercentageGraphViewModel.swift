@@ -14,6 +14,6 @@ class FatPercentageGraphViewModel : ObservableObject {
     
     func readFatPercentageData() {
         let objects = realm.objects(WorkOutDoneData.self)
-        fatPercentageData = Array(objects)
+        fatPercentageData = Array(objects).sorted(by: { $0.date.yyMMddToDate() ?? Date() < $1.date.yyMMddToDate() ?? Date() })
     }
 }
