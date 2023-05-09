@@ -14,9 +14,11 @@ class HomeViewController : BaseViewController {
     var homeViewModel = HomeViewModel()
     let frameImageViewModel = FrameImageViewModel()
     
+    private var didLoad = PublishSubject<Void>()
     var selectedDate = BehaviorSubject(value: Date().dateToInt())
-    
-    private lazy var input = HomeViewModel.Input(selectedDate: selectedDate.asDriver(onErrorJustReturn: Date().dateToInt()))
+    private lazy var input = HomeViewModel.Input(
+        selectedDate: selectedDate.asDriver(onErrorJustReturn: Date().dateToInt()),
+        loadView: didLoad.asDriver(onErrorJustReturn: ()))
     
     private lazy var output = homeViewModel.transform(input: input)
     
@@ -50,17 +52,22 @@ class HomeViewController : BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        view.backgroundColor = .color7442FF
         contentScrollView.delegate = self
         calendarView.delegate = self
-        
         setWorkOutDoneImage()
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.isNavigationBarHidden = true
+        
     }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        let dateInt = calendarView.selectDate?.dateToInt()
+        print(dateInt ?? Date().dateToInt(), "dd")
+
+    }
+
     override func setupLayout() {
         super.setupLayout()
 
@@ -72,7 +79,7 @@ class HomeViewController : BaseViewController {
     }
     override func setComponents() {
         super.setComponents()
-        
+        view.backgroundColor = .color7442FF
         contentScrollView.translatesAutoresizingMaskIntoConstraints = false
         contentScrollView.isUserInteractionEnabled = true
         contentScrollView.isScrollEnabled = true
@@ -129,6 +136,8 @@ class HomeViewController : BaseViewController {
                 self.selectedDate.onNext(dateInt)
             }
             .disposed(by: disposeBag)
+        didLoad.onNext(())
+        selectedDate.onNext(Date().dateToInt())
     }
     
     override func actions() {

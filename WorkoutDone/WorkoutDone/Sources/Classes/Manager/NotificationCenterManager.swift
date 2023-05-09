@@ -15,12 +15,12 @@ class NotificationCenterManager {
     private init() {}
     
     func addObserver(_ observer : Any, _ selector : Selector, _ name : NSNotification.Name?, _ object : Any?) {
-        notificationCenter.addObserver(observer, selector: selector, name: name, object: object)
+        NotificationCenter.default.addObserver(observer, selector: selector, name: name, object: object)
     }
     func removeObserver(_ observer : Any, _ name : NSNotification.Name?, _ objecy : Any?) {
         notificationCenter.removeObserver(observer, name: name, object: objecy)
     }
     func post(_ name : NSNotification.Name, _ object : Any?, _ userInto : [AnyHashable : Any]?) {
-        notificationCenter.post(name: name, object: object, userInfo: userInto)
+        NotificationCenter.default.post(name: name, object: object, userInfo: userInto)
     }
 }

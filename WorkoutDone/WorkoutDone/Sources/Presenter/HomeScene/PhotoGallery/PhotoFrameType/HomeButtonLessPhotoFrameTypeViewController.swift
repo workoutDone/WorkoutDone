@@ -104,10 +104,8 @@ class HomeButtonLessPhotoFrameTypeViewController : BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setImage()
-        
     }
     override func setupBinding() {
-        super.setupBinding()
         output.saveButtonStatus.drive(onNext: { value in
             if value {
                 self.saveButton.isHidden = false
@@ -128,7 +126,6 @@ class HomeButtonLessPhotoFrameTypeViewController : BaseViewController {
     }
     
     override func setComponents() {
-        super.setComponents()
         view.backgroundColor = .colorFFFFFF
         navigationItem.title = "프레임 선택"
         navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.color121212]
@@ -146,7 +143,6 @@ class HomeButtonLessPhotoFrameTypeViewController : BaseViewController {
     }
     
     override func setupLayout() {
-        super.setupLayout()
         view.addSubviews(selectedImageView, separateView, saveButtonAreaBackView, photoFrameBackView)
         saveButtonAreaBackView.addSubviews(saveButton, disEnabledSaveButton)
         photoFrameBackView.addSubview(photoFrameButtonsScrollView)
@@ -156,7 +152,6 @@ class HomeButtonLessPhotoFrameTypeViewController : BaseViewController {
     }
     
     override func setupConstraints() {
-        super.setupConstraints()
         selectedImageView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
             $0.leading.trailing.equalToSuperview()

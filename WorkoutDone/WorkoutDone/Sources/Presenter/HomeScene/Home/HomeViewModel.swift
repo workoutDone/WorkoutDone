@@ -19,6 +19,7 @@ class HomeViewModel {
     }
     struct Input {
         let selectedDate : Driver<Int>
+        let loadView : Driver<Void>
     }
     struct Output {
         let weightData : Driver<String>
@@ -33,18 +34,17 @@ class HomeViewModel {
     
     
     func transform(input : Input) -> Output {
-        
-        let weightData = input.selectedDate.map { value in
-            let weight = self.readBodyInfoData(id: value)?.bodyInfo?.weight
-            if let stringWeight = weight {
-                return String(stringWeight)
+        let weightData = Driver<String>.combineLatest(input.loadView, input.selectedDate, resultSelector: { (load, date) in
+            let weight = self.readBodyInfoData(id: date)?.bodyInfo?.weight
+            if let weight = weight {
+                return String(weight)
             }
             else {
                 return "-"
             }
-        }
-        let skeletalMusleMassData = input.selectedDate.map { value in
-            let skeletalMusleMass = self.readBodyInfoData(id: value)?.bodyInfo?.skeletalMuscleMass
+        })
+        let skeletalMusleMassData = Driver<String>.combineLatest(input.loadView, input.selectedDate, resultSelector: { (load, date) in
+            let skeletalMusleMass = self.readBodyInfoData(id: date)?.bodyInfo?.skeletalMuscleMass
             if let stringSkeletalMusleMass = skeletalMusleMass {
                 return String(stringSkeletalMusleMass)
             }
@@ -52,16 +52,16 @@ class HomeViewModel {
                 return "-"
             }
             
-        }
-        let fatPercentageData = input.selectedDate.map { value in
-            let fatPercentage = self.readBodyInfoData(id: value)?.bodyInfo?.fatPercentage
+        })
+        let fatPercentageData = Driver<String>.combineLatest(input.loadView, input.selectedDate, resultSelector: { (load, date) in
+            let fatPercentage = self.readBodyInfoData(id: date)?.bodyInfo?.fatPercentage
             if let stringFatPercentage = fatPercentage {
                 return String(stringFatPercentage)
             }
             else {
                 return "-"
             }
-        }
+        })
         
         return Output(
             weightData: weightData,
