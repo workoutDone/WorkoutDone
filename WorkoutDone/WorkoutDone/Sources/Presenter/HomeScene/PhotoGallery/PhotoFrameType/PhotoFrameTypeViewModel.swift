@@ -59,7 +59,6 @@ class PhotoFrameTypeViewModel {
     func transform(input : Input) -> Output {
         
         let inputData = Driver<Void>.combineLatest(input.selectedPhoto, input.selectedFrameType, input.selectedDate, resultSelector: { (image, frame, date) in
-//            guard let idValue =  else { return }
             let convertData = self.convertIDToDateString(dateInt: date)
             guard let dateValue = convertData else { return }
             

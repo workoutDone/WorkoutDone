@@ -266,18 +266,6 @@ class RegisterMyBodyInfoViewController : BaseViewController {
         output.fatPercentageOutputText.drive(fatPercentageTextField.rx.text)
             .disposed(by: disposeBag)
         
-//        output.isConfirmEnabled.drive(onNext: { value in
-//            if value {
-//                print("클릭")
-//                self.saveButton.isEnabled = true
-//            }
-//            else {
-//                print("클릭 x")
-//                self.saveButton.isEnabled = false
-//                self.saveButton.backgroundColor = .colorCCCCCC
-//            }
-//        })
-//            .disposed(by: disposeBag)
         output.saveData.drive(onNext: {
             self.dismiss(animated: true)
             self.completionHandler?(self.selectedDate!)
