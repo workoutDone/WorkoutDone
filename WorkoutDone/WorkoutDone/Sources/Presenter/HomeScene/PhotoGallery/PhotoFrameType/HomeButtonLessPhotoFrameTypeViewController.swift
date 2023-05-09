@@ -41,7 +41,9 @@ class HomeButtonLessPhotoFrameTypeViewController : BaseViewController {
         $0.backgroundColor = .colorCCCCCC
         $0.setTitleColor(UIColor.colorFFFFFF, for: .normal)
     }
-    private let selectedImageView = UIImageView()
+    private let selectedImageView = UIImageView().then {
+        $0.contentMode = .scaleAspectFit
+    }
     
     private let photoFrameBackView = UIView()
     private let saveButtonAreaBackView = UIView()
