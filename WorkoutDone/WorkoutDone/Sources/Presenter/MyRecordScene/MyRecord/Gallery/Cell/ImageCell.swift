@@ -12,7 +12,8 @@ import Then
 class ImageCell : UICollectionViewCell {
     var image = UIImageView().then {
         $0.layer.cornerRadius = 5
-        $0.contentMode = .scaleAspectFit
+        $0.contentMode = .scaleAspectFill
+        $0.clipsToBounds = true
     }
     
     // MARK: - LIFECYCLE
