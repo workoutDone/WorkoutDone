@@ -15,6 +15,9 @@ class HomeButtonLessPhotoFrameTypeViewController : BaseViewController {
     var selectedImage : UIImage?
     
     private var viewModel = PhotoFrameTypeViewModel()
+    
+
+    private var saveData = PublishSubject<Void>()
     private var selectedFrameType = PublishSubject<Int>()
     private var selectedFrameTypeButtonStatus = BehaviorSubject(value: false)
     private var selectedPhoto = PublishSubject<UIImage>()
@@ -24,7 +27,8 @@ class HomeButtonLessPhotoFrameTypeViewController : BaseViewController {
         frameTypeButtonStatus: selectedFrameTypeButtonStatus.asDriver(onErrorJustReturn: false),
         selectedFrameType: selectedFrameType.asDriver(onErrorJustReturn: 0),
         selectedPhoto: selectedPhoto.asDriver(onErrorJustReturn: UIImage()),
-        selectedDate: selectedDate.asDriver(onErrorJustReturn: 0))
+        selectedDate: selectedDate.asDriver(onErrorJustReturn: 0),
+        saveButtonTapped: saveData.asDriver(onErrorJustReturn: ()))
     private lazy var output = viewModel.transform(input: input)
     
     // MARK: - PROPERTIES
@@ -108,6 +112,11 @@ class HomeButtonLessPhotoFrameTypeViewController : BaseViewController {
         setImage()
     }
     override func setupBinding() {
+        output.saveData.drive(onNext: {
+//            self.navigationController?.popToRootViewController(animated: true)
+        })
+        .disposed(by: disposeBag)
+        
         output.saveButtonStatus.drive(onNext: { value in
             if value {
                 self.saveButton.isHidden = false
@@ -122,9 +131,21 @@ class HomeButtonLessPhotoFrameTypeViewController : BaseViewController {
         })
         .disposed(by: disposeBag)
         
+        
+        
+        saveButton.rx.tap
+            .bind { value in
+                self.saveData.onNext(())
+                print("눌려따")
+            }
+            .disposed(by: disposeBag)
+        
+
+        
         guard let image = selectedImage else { return }
         let resizedImage = resizeImage(image: image, newSize: CGSize(width: view.frame.width, height: view.frame.width * 4 / 3))
         selectedPhoto.onNext(resizedImage)
+        selectedDate.onNext(20230511)
     }
     
     override func setComponents() {
@@ -231,14 +252,9 @@ class HomeButtonLessPhotoFrameTypeViewController : BaseViewController {
     // MARK: - ACTIONS
     override func actions() {
         super.actions()
-//        defaultFrameButton.addTarget(self, action: #selector(defaultFrameButtonTapped), for: .touchUpInside)
         frameButtons.forEach {
             $0.addTarget(self, action: #selector(frameButtonTapped(sender: )), for: .touchUpInside)
-            saveButton.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
         }
-    }
-    @objc func saveButtonTapped() {
-        print("앙")
     }
     @objc func frameButtonTapped(sender : UIButton) {
         for button in frameButtons {
