@@ -27,9 +27,10 @@ struct GalleryViewModel {
     func loadImagesForFrame(frameIndex: Int) -> [UIImage] {
         let realm = try! Realm()
         
-        let imagesData : [Data] = realm.objects(FrameImage.self).filter("frameType == %@", frameIndex).map{$0.image}.compactMap{$0}
-        let images = imagesData.compactMap { UIImage(data: $0) }
-
+        let workOutDoneData = realm.objects(WorkOutDoneData.self).sorted(byKeyPath: "date", ascending: false).filter("frameImage.frameType == %@", frameIndex)
+        let imagesData : [Data] = workOutDoneData.map{$0.frameImage?.image}.compactMap{$0}
+         let images = imagesData.compactMap { UIImage(data: $0) }
+        
         return images
     }
 }
