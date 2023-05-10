@@ -36,7 +36,7 @@ class HomeViewController : BaseViewController {
         $0.backgroundColor = .colorFFFFFF
     }
     
-    private let calendarView = CalendarView()
+    let calendarView = CalendarView()
     ///기록하기
     let recordBaseView = RecordView().then {
         $0.backgroundColor = .colorFFFFFF
