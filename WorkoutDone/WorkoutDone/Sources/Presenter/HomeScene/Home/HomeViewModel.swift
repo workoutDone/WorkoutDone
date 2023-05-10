@@ -25,6 +25,7 @@ class HomeViewModel {
         let weightData : Driver<String>
         let skeletalMusleMassData : Driver<String>
         let fatPercentageData : Driver<String>
+        let imageData : Driver<UIImage>
     }
     
     func readBodyInfoData(id : Int) -> WorkOutDoneData?  {
@@ -36,8 +37,8 @@ class HomeViewModel {
     func transform(input : Input) -> Output {
         let weightData = Driver<String>.combineLatest(input.loadView, input.selectedDate, resultSelector: { (load, date) in
             let weight = self.readBodyInfoData(id: date)?.bodyInfo?.weight
-            if let weight = weight {
-                return String(weight)
+            if let validWeight = weight {
+                return String(validWeight)
             }
             else {
                 return "-"
@@ -45,8 +46,8 @@ class HomeViewModel {
         })
         let skeletalMusleMassData = Driver<String>.combineLatest(input.loadView, input.selectedDate, resultSelector: { (load, date) in
             let skeletalMusleMass = self.readBodyInfoData(id: date)?.bodyInfo?.skeletalMuscleMass
-            if let stringSkeletalMusleMass = skeletalMusleMass {
-                return String(stringSkeletalMusleMass)
+            if let validSkeletalMusleMass = skeletalMusleMass {
+                return String(validSkeletalMusleMass)
             }
             else {
                 return "-"
@@ -55,17 +56,27 @@ class HomeViewModel {
         })
         let fatPercentageData = Driver<String>.combineLatest(input.loadView, input.selectedDate, resultSelector: { (load, date) in
             let fatPercentage = self.readBodyInfoData(id: date)?.bodyInfo?.fatPercentage
-            if let stringFatPercentage = fatPercentage {
-                return String(stringFatPercentage)
+            if let validFatPercentage = fatPercentage {
+                return String(validFatPercentage)
             }
             else {
                 return "-"
+            }
+        })
+        let imageData = Driver<UIImage>.combineLatest(input.loadView, input.selectedDate, resultSelector: { (load, date) in
+            let imageData = self.readBodyInfoData(id: date)?.frameImage?.image
+            if let validImageData = imageData {
+                return UIImage(data: validImageData)!
+            }
+            else {
+                return UIImage()
             }
         })
         
         return Output(
             weightData: weightData,
             skeletalMusleMassData: skeletalMusleMassData,
-            fatPercentageData: fatPercentageData)
+            fatPercentageData: fatPercentageData,
+            imageData: imageData)
     }
 }

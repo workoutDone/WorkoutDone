@@ -54,11 +54,12 @@ class HomeViewController : BaseViewController {
         super.viewDidLoad()
         contentScrollView.delegate = self
         calendarView.delegate = self
-        setWorkOutDoneImage()
+//        setWorkOutDoneImage()
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.isNavigationBarHidden = true
+        didLoad.onNext(())
         
     }
     override func viewWillDisappear(_ animated: Bool) {
@@ -129,6 +130,8 @@ class HomeViewController : BaseViewController {
             .disposed(by: disposeBag)
         output.fatPercentageData.drive(recordBaseView.fatPercentageInputLabel.rx.text)
             .disposed(by: disposeBag)
+        output.imageData.drive(recordBaseView.bodyImageView.rx.image)
+            .disposed(by: disposeBag)
         
         calendarView.collectionView.rx.itemSelected
             .bind { _ in
@@ -136,7 +139,7 @@ class HomeViewController : BaseViewController {
                 self.selectedDate.onNext(dateInt)
             }
             .disposed(by: disposeBag)
-        didLoad.onNext(())
+
         selectedDate.onNext(Date().dateToInt())
     }
     
@@ -169,9 +172,9 @@ class HomeViewController : BaseViewController {
         navigationController?.pushViewController(workoutViewController, animated: true)
     }
     
-    func setWorkOutDoneImage() {
-        recordBaseView.bodyImageView.image = frameImageViewModel.loadImageFromRealm(date: calendarView.selectDate ?? Date())
-    }
+//    func setWorkOutDoneImage() {
+//        recordBaseView.bodyImageView.image = frameImageViewModel.loadImageFromRealm(date: calendarView.selectDate ?? Date())
+//    }
 }
 
 extension HomeViewController : UIScrollViewDelegate {
@@ -194,6 +197,6 @@ extension HomeViewController : UIScrollViewDelegate {
 
 extension HomeViewController : CalendarViewDelegate {
     func didSelectedCalendarDate() {
-        setWorkOutDoneImage()
+//        setWorkOutDoneImage()
     }
 }
