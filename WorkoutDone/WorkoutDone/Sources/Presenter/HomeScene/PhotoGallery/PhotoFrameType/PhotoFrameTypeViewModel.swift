@@ -35,10 +35,6 @@ class PhotoFrameTypeViewModel {
         frameImage.frameType = frameType
         workoutDoneData.frameImage = frameImage
         realmManager.createData(data: workoutDoneData)
-//        try! realm.write {
-//            realm.add(workoutDoneData)
-//            workoutDoneData.frameImage?.insert
-//        }
     }
     ///Realm Read
     func readWorkoutDoneData(id : Int) -> WorkOutDoneData? {
@@ -48,19 +44,11 @@ class PhotoFrameTypeViewModel {
     
     ///Realm Update
     func updateFrameImageData(image : UIImage, id : Int, date : String, frameType : Int) {
-//        let workoutDoneData = WorkOutDoneData(id: id, date: date)
-//        let frameImage = FrameImage()
-//        frameImage.image = image.pngData()
-//        frameImage.frameType = frameType
-//        realmManager.updateData(data: workoutDoneData)
-        try! realm.write {
-            let workoutDoneData = WorkOutDoneData(id: id, date: date)
-            let frameImage = FrameImage()
-            frameImage.image = image.pngData()
-            frameImage.frameType = frameType
-            workoutDoneData.frameImage = frameImage
-            print("UPdated person: \(workoutDoneData)")
-        }
+        let workoutDoneData = WorkOutDoneData(id: id, date: date)
+        let frameImage = FrameImage()
+        frameImage.image = image.pngData()
+        frameImage.frameType = frameType
+        realmManager.updateData(data: workoutDoneData)
     }
     
     ///id값으로 데이터가 있는지 판별
