@@ -25,4 +25,9 @@ extension Date {
         guard let data = Int(intDateFormatter) else { return 0 }
         return data
     }
+    func MToString() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "M"
+        return dateFormatter.string(from: self)
+    }
 }
