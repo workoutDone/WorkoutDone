@@ -12,7 +12,7 @@ import Then
 class PhotosCollectionViewCell : UICollectionViewCell {
     let photoImageView = UIImageView().then {
         $0.layer.cornerRadius = 5
-        $0.contentMode = .scaleToFill
+        $0.contentMode = .scaleAspectFill
         $0.layer.masksToBounds = true
     }
     let selectedButtonImage = UIImageView()
