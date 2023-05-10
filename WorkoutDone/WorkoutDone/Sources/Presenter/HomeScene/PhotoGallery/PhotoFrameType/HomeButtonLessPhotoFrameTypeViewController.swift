@@ -113,7 +113,7 @@ class HomeButtonLessPhotoFrameTypeViewController : BaseViewController {
     }
     override func setupBinding() {
         output.saveData.drive(onNext: {
-//            self.navigationController?.popToRootViewController(animated: true)
+            self.navigationController?.popToRootViewController(animated: true)
         })
         .disposed(by: disposeBag)
         
@@ -145,7 +145,9 @@ class HomeButtonLessPhotoFrameTypeViewController : BaseViewController {
         guard let image = selectedImage else { return }
         let resizedImage = resizeImage(image: image, newSize: CGSize(width: view.frame.width, height: view.frame.width * 4 / 3))
         selectedPhoto.onNext(resizedImage)
-        selectedDate.onNext(20230511)
+        guard let homeVC = self.navigationController?.viewControllers.first as? HomeViewController else { return }
+        let homeVCDate = homeVC.calendarView.selectDate ?? Date()
+        selectedDate.onNext(homeVCDate.dateToInt())
     }
     
     override func setComponents() {

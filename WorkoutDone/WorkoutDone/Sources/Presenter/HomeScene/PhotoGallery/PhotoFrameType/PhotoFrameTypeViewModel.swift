@@ -35,37 +35,30 @@ class PhotoFrameTypeViewModel {
         frameImage.frameType = frameType
         workoutDoneData.frameImage = frameImage
         realmManager.createData(data: workoutDoneData)
-//        try! realm.write {
-//            realm.add(workoutDoneData)
-//            workoutDoneData.frameImage?.insert
-//        }
+    }
+    ///Realm Read
+    func readWorkoutDoneData(id : Int) -> WorkOutDoneData? {
+        let selectedWorkoutDoneData = realmManager.readData(id: id, type: WorkOutDoneData.self)
+        return selectedWorkoutDoneData
     }
     
     ///Realm Update
     func updateFrameImageData(image : UIImage, id : Int, date : String, frameType : Int) {
-//        let workoutDoneData = WorkOutDoneData(id: id, date: date)
-//        let frameImage = FrameImage()
-//        frameImage.image = image.pngData()
-//        frameImage.frameType = frameType
-//        realmManager.updateData(data: workoutDoneData)
-        try! realm.write {
-            let workoutDoneData = WorkOutDoneData(id: id, date: date)
-            let frameImage = FrameImage()
-            frameImage.image = image.pngData()
-            frameImage.frameType = frameType
-            workoutDoneData.frameImage = frameImage
-            print("UPdated person: \(workoutDoneData)")
-        }
+        let workoutDoneData = WorkOutDoneData(id: id, date: date)
+        let frameImage = FrameImage()
+        frameImage.image = image.pngData()
+        frameImage.frameType = frameType
+        realmManager.updateData(data: workoutDoneData)
     }
     
     ///id값으로 데이터가 있는지 판별
     func validFrameImageData(id : Int) -> Bool {
         let selectedBodyInfoData = realm.object(ofType: WorkOutDoneData.self, forPrimaryKey: id)
-        return selectedBodyInfoData?.frameImage == nil ? true : false
+        return selectedBodyInfoData?.frameImage == nil ? false : true
     }
     func validBodyInfoData(id : Int) -> Bool {
         let selectedBodyInfoData = realm.object(ofType: WorkOutDoneData.self, forPrimaryKey: id)
-        return selectedBodyInfoData == nil ? true : false
+        return selectedBodyInfoData == nil ? false : true
     }
     
     ///id 값(string) -> Date(string)으로 변경
@@ -87,36 +80,37 @@ class PhotoFrameTypeViewModel {
             let convertData = self.convertIDToDateString(dateInt: id)
             guard let dateValue = convertData else { return }
             print("됐나????")
+            ///데이터가 존재하는 경우
             if self.validBodyInfoData(id: id) {
-                print("데이터 전혀 없는 경우")
-                ///데이터가 전혀 없는 경우
-                self.updateFrameImageData(
+                ///FrameImage 데이터 존재하는 경우 - update
+                if self.validFrameImageData(id: id) {
+                    print("FrameImage 데이터 존재하는 경우 - update")
+                    let workoutDoneData = self.readWorkoutDoneData(id: id)
+                    try! self.realm.write {
+                        workoutDoneData?.frameImage?.image = image.pngData()
+                        workoutDoneData?.frameImage?.frameType = frame
+                    }
+                }
+                ///FrameImage 데이터 존재하는 않는 경우 - create
+                else {
+                    print("FrameImage 데이터 존재하는 않는 경우 - create")
+                    guard let workoutDoneData = self.readWorkoutDoneData(id: id) else { return }
+                    let frameImage = FrameImage()
+                    frameImage.frameType = frame
+                    frameImage.image = image.pngData()
+                    try! self.realm.write {
+                        workoutDoneData.frameImage = frameImage
+                        self.realm.add(workoutDoneData)
+                    }
+                }
+            }
+            ///데이터가 존재하지 않는 경우 - create
+            else {
+                self.createFrameImageData(
                     image: image,
                     id: id,
                     date: dateValue,
                     frameType: frame)
-            }
-            else {
-                /// BodyInfo 에 값이 있는 경우
-                if self.validBodyInfoData(id: id) {
-                    
-                    print("크리에이트")
-                    ///값이 존재하지 않는 경우
-                    self.createFrameImageData(
-                        image: image,
-                        id: id,
-                        date: dateValue,
-                        frameType: frame)
-                }
-                else {
-                    print("업데이트")
-                    ///값이 존재하는 경우
-                    self.updateFrameImageData(
-                        image: image,
-                        id: id,
-                        date: dateValue,
-                        frameType: frame)
-                }
             }
         })
 
@@ -126,16 +120,3 @@ class PhotoFrameTypeViewModel {
             saveData: inputData)
     }
 }
-//let resizedImage = resizeImage(image: captureImage!, newSize: CGSize(width: view.frame.width, height: view.frame.width * (4 / 3)))
-//frameImageViewModel.saveImageToRealm(date: Date(), frameType: 0, image: resizedImage)
-//func saveImageToRealm(date: Date, frameType: Int, image: UIImage) {
-//    guard let imageData = image.pngData() else { return }
-//
-//    let workOutDone = WorkOutDoneData(id: date.dateToInt(), date: date.yyyyMMddToString())
-//    workOutDone.frameImage = FrameImage(frameType: frameType, image: imageData)
-//
-//    let realm = try! Realm()
-//    try! realm.write {
-//        realm.add(workOutDone)
-//    }
-//}
