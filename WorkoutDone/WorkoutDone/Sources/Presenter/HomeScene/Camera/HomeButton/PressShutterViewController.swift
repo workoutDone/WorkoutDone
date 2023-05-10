@@ -189,9 +189,9 @@ class PressShutterViewController: BaseViewController {
                 }
                 self.navigationController?.popToRootViewController(animated: true)
                 
-                if let homeVC = self.navigationController?.viewControllers.first as? HomeViewController {
-                    homeVC.setWorkOutDoneImage()
-                }
+//                if let homeVC = self.navigationController?.viewControllers.first as? HomeViewController {
+//                    homeVC.setWorkOutDoneImage()
+//                }
             }
         }
     }
