@@ -12,7 +12,6 @@ import Then
 class FrameCategoryCell : UICollectionViewCell {
     let frameImage = UIImageView().then {
         $0.contentMode = .scaleAspectFill
-        $0.backgroundColor = .yellow
     }
     
     // MARK: - LIFECYCLE

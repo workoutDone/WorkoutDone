@@ -10,9 +10,9 @@ import SnapKit
 import Then
 
 class ImageCell : UICollectionViewCell {
-    let image = UIImageView().then {
-        $0.image = UIImage(named: "testImage")
+    var image = UIImageView().then {
         $0.layer.cornerRadius = 5
+        $0.contentMode = .scaleAspectFit
     }
     
     // MARK: - LIFECYCLE

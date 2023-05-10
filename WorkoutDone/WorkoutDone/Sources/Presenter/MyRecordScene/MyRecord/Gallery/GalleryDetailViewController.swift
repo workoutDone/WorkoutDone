@@ -19,9 +19,7 @@ class GalleryDetailViewController: BaseViewController {
     
     var deltaValue: CGFloat = 0
     
-    private let image = UIImageView().then {
-        $0.image = UIImage(named: "testImage")
-    }
+    var image = UIImageView()
 
     override func viewDidLoad() {
         super.viewDidLoad()

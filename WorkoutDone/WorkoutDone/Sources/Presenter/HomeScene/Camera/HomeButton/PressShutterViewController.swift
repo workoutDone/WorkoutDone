@@ -10,7 +10,6 @@ import Photos
 
 class PressShutterViewController: BaseViewController {
     let frameImageViewModel = FrameImageViewModel()
-    let calendarView = CalendarView()
     
     var isSelectFrame: Int = 0
     var captureImage: UIImage?
@@ -68,6 +67,7 @@ class PressShutterViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+
     }
     
     override func setComponents() {
@@ -169,7 +169,11 @@ class PressShutterViewController: BaseViewController {
         getGalleryAuthorization()
         
         let resizedImage = resizeImage(image: captureImage!, newSize: CGSize(width: view.frame.width, height: view.frame.width * (4 / 3)))
-        frameImageViewModel.saveImageToRealm(date: calendarView.selectDate ?? Date(), frameType: isSelectFrame, image: resizedImage)
+        
+        if let homeVC = self.navigationController?.viewControllers.first as? HomeViewController {
+
+            frameImageViewModel.saveImageToRealm(date: homeVC.calendarView.selectDate ?? Date(), frameType: isSelectFrame, image: resizedImage)
+        }
     }
     
     func showToastMessage() {

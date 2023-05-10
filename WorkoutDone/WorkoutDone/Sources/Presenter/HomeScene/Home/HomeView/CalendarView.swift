@@ -345,13 +345,10 @@ class CalendarView : BaseUIView {
     }
     
     func setSelectDateFormatter(dateComponents : DateComponents) -> Date {
-        var dateFormatter = DateFormatter()
+        let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyyMMdd"
         
-        let date = calendar.date(from: dateComponents)!
-        let nextDate = calendar.date(byAdding: .day, value: 1, to: date)!
-        let nextDateString = dateFormatter.string(from: nextDate)
-        return dateFormatter.date(from: nextDateString)!
+        return calendar.date(from: dateComponents)!
     }
 }
 
@@ -460,7 +457,6 @@ extension CalendarView: UICollectionViewDelegate, UICollectionViewDataSource, UI
         }
     
         collectionView.reloadData()
-        print(selectDate, "선택날짜")
        
         delegate?.didSelectedCalendarDate()
     }
