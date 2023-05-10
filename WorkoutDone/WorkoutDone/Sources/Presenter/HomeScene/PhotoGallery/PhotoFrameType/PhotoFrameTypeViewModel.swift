@@ -98,14 +98,10 @@ class PhotoFrameTypeViewModel {
                 if self.validFrameImageData(id: id) {
                     print("FrameImage 데이터 존재하는 경우 - update")
                     let workoutDoneData = self.readWorkoutDoneData(id: id)
-                    print(workoutDoneData, "?????/")
                     try! self.realm.write {
                         workoutDoneData?.frameImage?.image = image.pngData()
                         workoutDoneData?.frameImage?.frameType = frame
                     }
-//                    workoutDoneData?.frameImage?.frameType = frame
-//                    workoutDoneData?.frameImage?.image = image.pngData()
-//                    self.realmManager.updateData(data: workoutDoneData)
                 }
                 ///FrameImage 데이터 존재하는 않는 경우 - create
                 else {
@@ -118,35 +114,6 @@ class PhotoFrameTypeViewModel {
                         workoutDoneData.frameImage = frameImage
                         self.realm.add(workoutDoneData)
                     }
-//                    print(workoutDoneData, "?????/")
-////                    try! self.realm.write {
-////                        workoutDoneData?.frameImage?.image = image.pngData()
-////                        workoutDoneData?.frameImage?.frameType = frame
-////                    }
-//                    workoutDoneData?.frameImage?.frameType = frame
-//                    workoutDoneData?.frameImage?.image = image.pngData()
-//                    self.realmManager.createData(data: workoutDoneData?.frameImage)
-                    
-                    
-//                    if let workoutDoneData = self.readWorkoutDoneData(id: id) {
-//                        if let frameImage = workoutDoneData.frameImage {
-//                            try! self.realm.write {
-//                                frameImage.frameType = frame
-//                                frameImage.image = image.pngData()
-//                            }
-//                        }
-//                    }
-//                    if let workoutDoneData = self.readWorkoutDoneData(id: id), !workoutDoneData.isInvalidated {
-//                        workoutDoneData.frameImage?.image = image.pngData()
-//                        workoutDoneData.frameImage?.frameType = frame
-//
-//                        if !workoutDoneData.isValid {
-//                            try! self.realm.write {
-//                                realm.add(workoutDoneData)
-//                            }
-//                        }
-//                    }
-                    
                 }
             }
             ///데이터가 존재하지 않는 경우 - create
@@ -157,38 +124,6 @@ class PhotoFrameTypeViewModel {
                     date: dateValue,
                     frameType: frame)
             }
-                
-//            if self.validBodyInfoData(id: id) {
-//                print("데이터 전혀 없는 경우")
-//                ///데이터가 전혀 없는 경우
-//                self.updateFrameImageData(
-//                    image: image,
-//                    id: id,
-//                    date: dateValue,
-//                    frameType: frame)
-//            }
-//            else {
-//                /// BodyInfo 에 값이 있는 경우
-//                if self.validBodyInfoData(id: id) {
-//
-//                    print("크리에이트")
-//                    ///값이 존재하지 않는 경우
-//                    self.createFrameImageData(
-//                        image: image,
-//                        id: id,
-//                        date: dateValue,
-//                        frameType: frame)
-//                }
-//                else {
-//                    print("업데이트")
-//                    ///값이 존재하는 경우
-//                    self.updateFrameImageData(
-//                        image: image,
-//                        id: id,
-//                        date: dateValue,
-//                        frameType: frame)
-//                }
-//            }
         })
 
         
@@ -197,16 +132,3 @@ class PhotoFrameTypeViewModel {
             saveData: inputData)
     }
 }
-//let resizedImage = resizeImage(image: captureImage!, newSize: CGSize(width: view.frame.width, height: view.frame.width * (4 / 3)))
-//frameImageViewModel.saveImageToRealm(date: Date(), frameType: 0, image: resizedImage)
-//func saveImageToRealm(date: Date, frameType: Int, image: UIImage) {
-//    guard let imageData = image.pngData() else { return }
-//
-//    let workOutDone = WorkOutDoneData(id: date.dateToInt(), date: date.yyyyMMddToString())
-//    workOutDone.frameImage = FrameImage(frameType: frameType, image: imageData)
-//
-//    let realm = try! Realm()
-//    try! realm.write {
-//        realm.add(workOutDone)
-//    }
-//}
