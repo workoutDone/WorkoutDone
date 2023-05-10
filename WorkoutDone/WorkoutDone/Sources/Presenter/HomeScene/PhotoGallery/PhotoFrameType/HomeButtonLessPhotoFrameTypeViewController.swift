@@ -145,7 +145,7 @@ class HomeButtonLessPhotoFrameTypeViewController : BaseViewController {
         guard let image = selectedImage else { return }
         let resizedImage = resizeImage(image: image, newSize: CGSize(width: view.frame.width, height: view.frame.width * 4 / 3))
         selectedPhoto.onNext(resizedImage)
-        selectedDate.onNext(20230511)
+        selectedDate.onNext(20230510)
     }
     
     override func setComponents() {
