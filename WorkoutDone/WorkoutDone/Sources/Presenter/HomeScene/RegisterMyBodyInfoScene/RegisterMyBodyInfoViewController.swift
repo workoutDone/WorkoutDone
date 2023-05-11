@@ -270,9 +270,17 @@ class RegisterMyBodyInfoViewController : BaseViewController {
         output.fatPercentageOutputText.drive(fatPercentageTextField.rx.text)
             .disposed(by: disposeBag)
         
-        output.saveData.drive(onNext: {
-            self.dismiss(animated: true)
-            self.completionHandler?(self.selectedDate!)
+        output.saveData.drive(onNext: { value in
+            if value {
+                ///옳바른 형식
+                self.dismiss(animated: true)
+                self.completionHandler?(self.selectedDate!)
+            }
+            else {
+                print("응 안돼~")
+                self.showToastMessage()
+                
+            }
         })
             .disposed(by: disposeBag)
         
@@ -320,6 +328,22 @@ class RegisterMyBodyInfoViewController : BaseViewController {
     }
     @objc func keyboardDown() {
         self.baseView.transform = .identity
+    }
+    
+    func showToastMessage() {
+        let saveImageToastMessageVC = SaveImageToastMessageViewController()
+        saveImageToastMessageVC.toastMesssageLabel.text = "뭐 하려고 하는지 알겠는데 하지마"
+        saveImageToastMessageVC.modalPresentationStyle = .overFullScreen
+        
+        UIView.animate(withDuration: 0.7, delay: 0.0, options: .curveEaseOut, animations: {
+            self.present(saveImageToastMessageVC, animated: false)
+        }) { (completed) in
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1) {
+                UIView.animate(withDuration: 0.5, delay: 0.0, options: .curveEaseOut) {
+                saveImageToastMessageVC.dismiss(animated: false)
+                }
+            }
+        }
     }
     
 }
