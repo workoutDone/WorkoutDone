@@ -176,30 +176,6 @@ class RegisterMyBodyInfoViewModel {
         })
 
         ///데이터 입력(update or create)
-//        let inputData = Driver<Void>.combineLatest(input.saveButtonTapped, input.selectedDate, resultSelector: { (inputData, date) in
-//            let convertDate = self.convertIDToDateString(dateInt: date)
-//            guard let dateValue = convertDate else { return }
-//            if self.validBodyInfoData(id: date) {
-//                ///값이 존재하는 경우
-//                ///데이터 업데이트
-//                self.updateBodyInfoData(
-//                    weight: Double(inputData.weight ?? ""),
-//                    skeletalMusleMass: Double(inputData.skeletalMusleMass ?? ""),
-//                    fatPercentage: Double(inputData.fatPercentage ?? ""),
-//                    date: dateValue,
-//                    id: date)
-//            }
-//            else {
-//                ///값이 존재하지 않는 경우
-//                self.createBodyInfoData(
-//                    weight: Double(inputData.weight ?? ""),
-//                    skeletalMusleMass: Double(inputData.skeletalMusleMass ?? ""),
-//                    fatPercentage: Double(inputData.fatPercentage ?? ""),
-//                    date: dateValue,
-//                    id: date)
-//            }
-//
-//        })
         let inputData = Driver<Void>.combineLatest(input.saveButtonTapped, input.selectedDate, resultSelector: { (inputData, id) in
             let convertData = self.convertIDToDateString(dateInt: id)
             guard let dateValue = convertData else { return }
