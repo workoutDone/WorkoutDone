@@ -32,6 +32,14 @@ class GalleryViewController : BaseViewController {
         return collectionView
     }()
     
+    override func viewWillAppear(_ animated: Bool) {
+        monthImages = galleryViewModel.loadImagesForMonth()
+        month = monthImages.keys.sorted(by: >)
+
+        frameImages = galleryViewModel.loadImagesForFrame(frameIndex: 0)
+        imageCollectionView.reloadData()
+    }
+    
     override func setupLayout() {
         super.setupLayout()
         
@@ -43,11 +51,6 @@ class GalleryViewController : BaseViewController {
         
         imageCollectionView.delegate = self
         imageCollectionView.dataSource = self
-        
-        monthImages = galleryViewModel.loadImagesForMonth()
-        month = monthImages.keys.sorted(by: >)
-        
-        frameImages = galleryViewModel.loadImagesForFrame(frameIndex: 0)
     }
     
     override func setupConstraints() {
@@ -178,7 +181,7 @@ extension GalleryViewController : UICollectionViewDelegate, UICollectionViewData
         }
         
         if sortFrame && frameImages.count == 0 {
-            return CGSize(width: collectionView.frame.width, height: collectionView.frame.height - 119)
+            return CGSize(width: collectionView.frame.width, height: collectionView.frame.height - 177)
         }
         
         let width : CGFloat = (view.frame.width - 42) / 3
