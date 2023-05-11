@@ -79,6 +79,10 @@ class RegisterMyBodyInfoViewModel {
         let selectedBodyInfoData = realm.object(ofType: WorkOutDoneData.self, forPrimaryKey: id)
         return selectedBodyInfoData?.bodyInfo == nil ? false : true
     }
+    func validWorkoutDoneData(id : Int) -> Bool {
+        let selectedWorkoutDoneData = realm.object(ofType: WorkOutDoneData.self, forPrimaryKey: id)
+        return selectedWorkoutDoneData == nil ? false : true
+    }
     ///id값으로 BodyInfoData 가져오기
     func readBodyInfoData(id : Int) -> WorkOutDoneData?  {
         let workoutDoneData = RealmManager.shared.readData(id: id, type: WorkOutDoneData.self)
@@ -172,29 +176,67 @@ class RegisterMyBodyInfoViewModel {
         })
 
         ///데이터 입력(update or create)
-        let inputData = Driver<Void>.combineLatest(input.saveButtonTapped, input.selectedDate, resultSelector: { (inputData, date) in
-            let convertDate = self.convertIDToDateString(dateInt: date)
-            guard let dateValue = convertDate else { return }
-            if self.validBodyInfoData(id: date) {
-                ///값이 존재하는 경우
-                ///데이터 업데이트
-                self.updateBodyInfoData(
-                    weight: Double(inputData.weight ?? ""),
-                    skeletalMusleMass: Double(inputData.skeletalMusleMass ?? ""),
-                    fatPercentage: Double(inputData.fatPercentage ?? ""),
-                    date: dateValue,
-                    id: date)
+//        let inputData = Driver<Void>.combineLatest(input.saveButtonTapped, input.selectedDate, resultSelector: { (inputData, date) in
+//            let convertDate = self.convertIDToDateString(dateInt: date)
+//            guard let dateValue = convertDate else { return }
+//            if self.validBodyInfoData(id: date) {
+//                ///값이 존재하는 경우
+//                ///데이터 업데이트
+//                self.updateBodyInfoData(
+//                    weight: Double(inputData.weight ?? ""),
+//                    skeletalMusleMass: Double(inputData.skeletalMusleMass ?? ""),
+//                    fatPercentage: Double(inputData.fatPercentage ?? ""),
+//                    date: dateValue,
+//                    id: date)
+//            }
+//            else {
+//                ///값이 존재하지 않는 경우
+//                self.createBodyInfoData(
+//                    weight: Double(inputData.weight ?? ""),
+//                    skeletalMusleMass: Double(inputData.skeletalMusleMass ?? ""),
+//                    fatPercentage: Double(inputData.fatPercentage ?? ""),
+//                    date: dateValue,
+//                    id: date)
+//            }
+//
+//        })
+        let inputData = Driver<Void>.combineLatest(input.saveButtonTapped, input.selectedDate, resultSelector: { (inputData, id) in
+            let convertData = self.convertIDToDateString(dateInt: id)
+            guard let dateValue = convertData else { return }
+            ///데이터가 존재하는 경우
+            if self.validWorkoutDoneData(id: id) {
+                ///BodyInfo 데이터 존재하는 경우 - update
+                if self.validBodyInfoData(id: id) {
+                    let workoutDoneData = self.readBodyInfoData(id: id)
+                    try! self.realm.write {
+                        workoutDoneData?.bodyInfo?.weight = Double(inputData.weight ?? "")
+                        workoutDoneData?.bodyInfo?.fatPercentage = Double(inputData.fatPercentage ?? "")
+                        workoutDoneData?.bodyInfo?.skeletalMuscleMass = Double(inputData.skeletalMusleMass ?? "")
+                    }
+                }
+                ///BodyInfo 데이터 존재하지 않는 경우 - create
+                else {
+                    guard let workOutDoneData = self.readBodyInfoData(id: id) else { return }
+                    let bodyInfo = BodyInfo()
+                    bodyInfo.weight = Double(inputData.weight ?? "")
+                    bodyInfo.skeletalMuscleMass = Double(inputData.skeletalMusleMass ?? "")
+                    bodyInfo.fatPercentage = Double(inputData.fatPercentage ?? "")
+                    try! self.realm.write {
+                        workOutDoneData.bodyInfo = bodyInfo
+                        self.realm.add(workOutDoneData)
+                    }
+                }
             }
+            ///데이터가 존재하지 않는 경우 - create
             else {
-                ///값이 존재하지 않는 경우
                 self.createBodyInfoData(
                     weight: Double(inputData.weight ?? ""),
                     skeletalMusleMass: Double(inputData.skeletalMusleMass ?? ""),
                     fatPercentage: Double(inputData.fatPercentage ?? ""),
                     date: dateValue,
-                    id: date)
+                    id: id)
             }
-
+            
         })
         return Output(
             weightOutputText: weightText,
