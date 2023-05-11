@@ -27,7 +27,12 @@ extension Date {
     }
     func MToString() -> String {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "M"
+        dateFormatter.dateFormat = "M월"
+        return dateFormatter.string(from: self)
+    }
+    func yyyyMMToString() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy년 MM월"
         return dateFormatter.string(from: self)
     }
 }

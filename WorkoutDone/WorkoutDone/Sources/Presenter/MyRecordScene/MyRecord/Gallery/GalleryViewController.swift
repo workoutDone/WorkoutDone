@@ -99,7 +99,7 @@ extension GalleryViewController : UICollectionViewDelegate, UICollectionViewData
             guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "monthHeaderView", for: indexPath) as? MonthHeaderView else { return MonthHeaderView()
             }
             if indexPath.section > 0 && monthImages.count > 0 {
-                header.monthLabel.text = "\(month[indexPath.section - 1])월"
+                header.monthLabel.text = "\(month[indexPath.section - 1])"
             }
             
             return header
