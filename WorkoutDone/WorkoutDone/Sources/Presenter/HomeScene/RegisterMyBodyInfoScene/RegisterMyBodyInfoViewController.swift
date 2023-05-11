@@ -69,7 +69,7 @@ class RegisterMyBodyInfoViewController : BaseViewController {
         // MARK: - TODO 기본설정 잡기
         $0.layer.cornerRadius = 8
         $0.textAlignment = .right
-        $0.keyboardType = .numberPad
+        $0.keyboardType = .decimalPad
     }
     private let weightUnitLabel = UILabel().then {
         $0.text = "KG"
@@ -88,7 +88,7 @@ class RegisterMyBodyInfoViewController : BaseViewController {
         // MARK: - TODO 기본설정 잡기
         $0.layer.cornerRadius = 8
         $0.textAlignment = .right
-        $0.keyboardType = .numberPad
+        $0.keyboardType = .decimalPad
     }
     private let skeletalMuscleMassUnitLabel = UILabel().then {
         $0.text = "KG"
@@ -108,7 +108,7 @@ class RegisterMyBodyInfoViewController : BaseViewController {
         // MARK: - TODO 기본설정 잡기
         $0.layer.cornerRadius = 8
         $0.textAlignment = .right
-        $0.keyboardType = .numberPad
+        $0.keyboardType = .decimalPad
     }
     private let fatPercentageUnitLabel = UILabel().then {
         $0.text = "%"
