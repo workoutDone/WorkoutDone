@@ -56,9 +56,9 @@ class PhotoFrameTypeViewModel {
         let selectedBodyInfoData = realm.object(ofType: WorkOutDoneData.self, forPrimaryKey: id)
         return selectedBodyInfoData?.frameImage == nil ? false : true
     }
-    func validBodyInfoData(id : Int) -> Bool {
-        let selectedBodyInfoData = realm.object(ofType: WorkOutDoneData.self, forPrimaryKey: id)
-        return selectedBodyInfoData == nil ? false : true
+    func validWorkoutDoneData(id : Int) -> Bool {
+        let selectedWorkoutDoneData = realm.object(ofType: WorkOutDoneData.self, forPrimaryKey: id)
+        return selectedWorkoutDoneData == nil ? false : true
     }
     
     ///id 값(string) -> Date(string)으로 변경
@@ -81,7 +81,7 @@ class PhotoFrameTypeViewModel {
             guard let dateValue = convertData else { return }
             print("됐나????")
             ///데이터가 존재하는 경우
-            if self.validBodyInfoData(id: id) {
+            if self.validWorkoutDoneData(id: id) {
                 ///FrameImage 데이터 존재하는 경우 - update
                 if self.validFrameImageData(id: id) {
                     print("FrameImage 데이터 존재하는 경우 - update")

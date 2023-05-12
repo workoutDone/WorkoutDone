@@ -154,6 +154,7 @@ class HomeViewController : BaseViewController {
         imageSelectionViewController.rootView = self
         imageSelectionViewController.modalTransitionStyle = .crossDissolve
         imageSelectionViewController.modalPresentationStyle = .overFullScreen
+        imageSelectionViewController.selectedDate = calendarView.selectDate?.dateToInt()
         present(imageSelectionViewController, animated: true)
     }
     @objc func bodyDataEntryButtonTapped() {
