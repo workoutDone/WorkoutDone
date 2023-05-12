@@ -11,8 +11,10 @@ import RealmSwift
 class WorkOutDoneData : Object {
     @Persisted dynamic var id : Int = 0
     @Persisted dynamic var date : String = Date().yyyyMMddToString()
-    @Persisted dynamic var frameImage: FrameImage?
-    @Persisted dynamic var bodyInfo: BodyInfo?
+    @Persisted dynamic var frameImage : FrameImage?
+    @Persisted dynamic var bodyInfo : BodyInfo?
+    @Persisted dynamic var workOutTime : Date?
+    @Persisted dynamic var routine : Routine?
     
     convenience init(id: Int, date: String) {
         self.init()
