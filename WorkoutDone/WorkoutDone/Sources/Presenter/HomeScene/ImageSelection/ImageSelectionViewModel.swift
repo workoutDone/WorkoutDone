@@ -27,6 +27,10 @@ class ImageSelectionViewModel {
         return selectedBodyInfoData?.frameImage == nil ? false : true
     }
     
+    func deleteFrameImageData(id : Int) {
+        guard let workoutDoneData = realm.object(ofType: WorkOutDoneData.self, forPrimaryKey: id) else { return }
+        RealmManager.shared.deleteData(workoutDoneData.frameImage!)
+    }
     func transform(input : Input) -> Output {
         
         let validFrameImageData = Driver<Bool>.combineLatest(input.loadView, input.selectedDate, resultSelector: { (_, id) in
@@ -38,8 +42,13 @@ class ImageSelectionViewModel {
             }
         })
         
+        let deleteData = Driver<Void>.combineLatest(input.selectedDate, input.defaultImageButtonTapped, input.loadView , resultSelector: { (id, _, _) in
+            print("ddd")
+            self.deleteFrameImageData(id: id)
+        })
+        
         return Output(
             checkFrameImageData: validFrameImageData,
-            deleteData: input.loadView)
+            deleteData: deleteData)
     }
 }

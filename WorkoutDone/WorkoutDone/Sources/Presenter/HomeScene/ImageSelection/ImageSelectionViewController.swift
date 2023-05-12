@@ -99,6 +99,7 @@ class ImageSelectionViewController : BaseViewController {
     }
     override func setupBinding() {
         super.setupBinding()
+        didLoad.onNext(())
         
         output.checkFrameImageData.drive(onNext: { value in
             if value {
@@ -110,8 +111,13 @@ class ImageSelectionViewController : BaseViewController {
         })
         .disposed(by: disposeBag)
         
+        defaultImageButton.rx.tap
+            .bind { _ in
+                print("ddddddddd")
+                self.defaultImageButtonEvent.onNext(())
+            }
+            .disposed(by: disposeBag)
         
-        didLoad.onNext(())
     }
     override func actions() {
         super.actions()
@@ -121,7 +127,7 @@ class ImageSelectionViewController : BaseViewController {
         cancelButton.addTarget(self, action: #selector(cancelButtonTapped), for: .touchUpInside)
     }
     @objc func defaultImageButtonTapped() {
-        
+        dismiss(animated: true)
     }
     @objc func cameraButtonTapped() {
         let device = Device.current
