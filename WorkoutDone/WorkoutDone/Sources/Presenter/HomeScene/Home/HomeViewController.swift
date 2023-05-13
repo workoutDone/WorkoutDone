@@ -148,6 +148,7 @@ class HomeViewController : BaseViewController {
         recordBaseView.workoutDoneCameraButton.addTarget(self, action: #selector(workoutDoneCameraButtonTapped), for: .touchUpInside)
         recordBaseView.bodyDataEntryButton.addTarget(self, action: #selector(bodyDataEntryButtonTapped), for: .touchUpInside)
         workoutBaseView.workoutRoutineChoiceButton.addTarget(self, action: #selector(workoutRoutineChoiceButtonTapped), for: .touchUpInside)
+        workoutResultBaseView.workoutResultButton.addTarget(self, action: #selector(workoutResultButtonTapped), for: .touchUpInside)
     }
     @objc func workoutDoneCameraButtonTapped() {
         let imageSelectionViewController = ImageSelectionViewController()
@@ -175,6 +176,10 @@ class HomeViewController : BaseViewController {
     @objc func workoutRoutineChoiceButtonTapped() {
         let workoutViewController = WorkoutViewController()
         navigationController?.pushViewController(workoutViewController, animated: true)
+    }
+    @objc func workoutResultButtonTapped() {
+        let workoutResultViewController = WorkoutResultViewController()
+        navigationController?.pushViewController(workoutResultViewController, animated: true)
     }
     
 //    func setWorkOutDoneImage() {
