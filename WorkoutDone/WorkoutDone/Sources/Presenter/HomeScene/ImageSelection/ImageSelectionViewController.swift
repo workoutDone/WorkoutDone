@@ -24,6 +24,9 @@ class ImageSelectionViewController : BaseViewController {
         defaultImageButtonTapped: defaultImageButtonEvent.asDriver(onErrorJustReturn: ()))
     private lazy var output = viewModel.transform(input: input)
     
+    ///dismiss 시 사용될 CompletionHandler
+    var completionHandler : ((Int) -> Void)?
+    
     
     // MARK: - PROPERTIES
     private let cancelButton = UIButton().then {
@@ -99,11 +102,11 @@ class ImageSelectionViewController : BaseViewController {
     }
     override func setupBinding() {
         super.setupBinding()
-        didLoad.onNext(())
         
         output.checkFrameImageData.drive(onNext: { value in
             if value {
                 self.defaultImageButton.isHidden = false
+                print("데이터 x")
             }
             else {
                 self.defaultImageButton.isHidden = true
@@ -111,23 +114,24 @@ class ImageSelectionViewController : BaseViewController {
         })
         .disposed(by: disposeBag)
         
+        output.deleteData.drive(onNext: {
+            self.completionHandler?(self.selectedDate!)
+            self.dismiss(animated: true)
+        })
+        .disposed(by: disposeBag)
+        
         defaultImageButton.rx.tap
             .bind { _ in
-                print("ddddddddd")
                 self.defaultImageButtonEvent.onNext(())
             }
             .disposed(by: disposeBag)
-        
+        didLoad.onNext(())
     }
     override func actions() {
         super.actions()
-        defaultImageButton.addTarget(self, action: #selector(defaultImageButtonTapped), for: .touchUpInside)
         cameraButton.addTarget(self, action: #selector(cameraButtonTapped), for: .touchUpInside)
         galleryButton.addTarget(self, action: #selector(galleryButtonTapped), for: .touchUpInside)
         cancelButton.addTarget(self, action: #selector(cancelButtonTapped), for: .touchUpInside)
-    }
-    @objc func defaultImageButtonTapped() {
-        dismiss(animated: true)
     }
     @objc func cameraButtonTapped() {
         let device = Device.current

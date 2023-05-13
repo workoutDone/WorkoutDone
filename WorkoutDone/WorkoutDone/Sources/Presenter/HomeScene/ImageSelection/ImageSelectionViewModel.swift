@@ -42,9 +42,8 @@ class ImageSelectionViewModel {
             }
         })
         
-        let deleteData = Driver<Void>.combineLatest(input.selectedDate, input.defaultImageButtonTapped, input.loadView , resultSelector: { (id, _, _) in
-            print("ddd")
-            self.deleteFrameImageData(id: id)
+        let deleteData = Driver<Void>.combineLatest(input.selectedDate, input.defaultImageButtonTapped, resultSelector: { [weak self] (id, _) in
+            self?.deleteFrameImageData(id: id)
         })
         
         return Output(
