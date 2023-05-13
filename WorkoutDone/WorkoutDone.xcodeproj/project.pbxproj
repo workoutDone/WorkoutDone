@@ -53,6 +53,7 @@
 		9264A58429BA22FE0010856F /* DayOfTheWeekCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9264A58329BA22FE0010856F /* DayOfTheWeekCell.swift */; };
 		9264A5EC29C4B0610010856F /* HomeButtonCameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9264A5EB29C4B0610010856F /* HomeButtonCameraViewController.swift */; };
 		9264A5EE29C550220010856F /* FrameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9264A5ED29C550220010856F /* FrameCell.swift */; };
+		926998102A0C6375003DDAD2 /* EmptyImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9269980F2A0C6375003DDAD2 /* EmptyImageCell.swift */; };
 		926998142A0DAB5C003DDAD2 /* WeightTrainingInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 926998132A0DAB5C003DDAD2 /* WeightTrainingInfo.swift */; };
 		926998162A0E093E003DDAD2 /* WeightTraining.swift in Sources */ = {isa = PBXBuildFile; fileRef = 926998152A0E093E003DDAD2 /* WeightTraining.swift */; };
 		926998182A0E120B003DDAD2 /* BodyPart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 926998172A0E120B003DDAD2 /* BodyPart.swift */; };
@@ -171,6 +172,7 @@
 		9264A58329BA22FE0010856F /* DayOfTheWeekCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayOfTheWeekCell.swift; sourceTree = "<group>"; };
 		9264A5EB29C4B0610010856F /* HomeButtonCameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeButtonCameraViewController.swift; sourceTree = "<group>"; };
 		9264A5ED29C550220010856F /* FrameCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameCell.swift; sourceTree = "<group>"; };
+		9269980F2A0C6375003DDAD2 /* EmptyImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyImageCell.swift; sourceTree = "<group>"; };
 		926998132A0DAB5C003DDAD2 /* WeightTrainingInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeightTrainingInfo.swift; sourceTree = "<group>"; };
 		926998152A0E093E003DDAD2 /* WeightTraining.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeightTraining.swift; sourceTree = "<group>"; };
 		926998172A0E120B003DDAD2 /* BodyPart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyPart.swift; sourceTree = "<group>"; };
@@ -536,6 +538,7 @@
 				92DCF54929D6BD8200F90002 /* SortButtonCell.swift */,
 				92DCF4D129D1B64100F90002 /* FrameCategoryCell.swift */,
 				92DCF4D329D1B66F00F90002 /* ImageCell.swift */,
+				9269980F2A0C6375003DDAD2 /* EmptyImageCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -833,6 +836,7 @@
 				9264A58429BA22FE0010856F /* DayOfTheWeekCell.swift in Sources */,
 				9200604729B1ACF400586063 /* WorkoutResultView.swift in Sources */,
 				9200604329B1ACBF00586063 /* RecordView.swift in Sources */,
+				926998102A0C6375003DDAD2 /* EmptyImageCell.swift in Sources */,
 				92DCF48029D0846B00F90002 /* BodyInfo.swift in Sources */,
 				A57061D129CD6A840083ECDD /* AnalyzeViewController.swift in Sources */,
 				A52573EC29EDB928004FBAC0 /* UIStackView.swift in Sources */,
