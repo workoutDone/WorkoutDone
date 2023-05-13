@@ -19,7 +19,6 @@ class WorkoutResultViewController : BaseViewController {
         $0.backgroundColor = UIColor.colorFFEDF0
         $0.layer.cornerRadius = 5
     }
-    
     // MARK: - LIFECYCLE
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -41,6 +40,10 @@ class WorkoutResultViewController : BaseViewController {
         let barButton = UIBarButtonItem()
         barButton.customView = deleteRecordButton
         navigationItem.rightBarButtonItem = barButton
+        
+    }
+    override func setupLayout() {
+        
     }
     override func setupConstraints() {
         deleteRecordButton.snp.makeConstraints {
@@ -48,11 +51,15 @@ class WorkoutResultViewController : BaseViewController {
             $0.width.equalTo(80)
         }
     }
+    
     override func actions() {
         deleteRecordButton.addTarget(self, action: #selector(deleteRecordButtonTapped), for: .touchUpInside)
     }
     @objc func deleteRecordButtonTapped() {
-        
+        let deleteRecordAlertViewController = DeleteRecordAlertViewController()
+        deleteRecordAlertViewController.modalTransitionStyle = .crossDissolve
+        deleteRecordAlertViewController.modalPresentationStyle = .overFullScreen
+        present(deleteRecordAlertViewController, animated: true)
     }
     
     // MARK: - ACTIONS
