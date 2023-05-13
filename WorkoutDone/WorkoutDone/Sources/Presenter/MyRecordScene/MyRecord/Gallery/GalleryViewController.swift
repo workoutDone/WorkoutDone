@@ -26,10 +26,19 @@ class GalleryViewController : BaseViewController {
         collectionView.register(FrameHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "frameHeaderView")
         collectionView.register(SortButtonCell.self, forCellWithReuseIdentifier: "sortButtonCell")
         collectionView.register(ImageCell.self, forCellWithReuseIdentifier: "imageCell")
+        collectionView.register(EmptyImageCell.self, forCellWithReuseIdentifier: "emptyImageCell")
         collectionView.showsHorizontalScrollIndicator = false
         
         return collectionView
     }()
+    
+    override func viewWillAppear(_ animated: Bool) {
+        monthImages = galleryViewModel.loadImagesForMonth()
+        month = monthImages.keys.sorted(by: >)
+
+        frameImages = galleryViewModel.loadImagesForFrame(frameIndex: 0)
+        imageCollectionView.reloadData()
+    }
     
     override func setupLayout() {
         super.setupLayout()
@@ -42,11 +51,6 @@ class GalleryViewController : BaseViewController {
         
         imageCollectionView.delegate = self
         imageCollectionView.dataSource = self
-        
-        monthImages = galleryViewModel.loadImagesForMonth()
-        month = monthImages.keys.sorted(by: >)
-        
-        frameImages = galleryViewModel.loadImagesForFrame(frameIndex: 0)
     }
     
     override func setupConstraints() {
@@ -85,9 +89,8 @@ extension GalleryViewController : SortButtonTappedDelegate, FrameDelegate {
 extension GalleryViewController : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         if !sortFrame {
-            return monthImages.count + 1
+            return monthImages.count == 0 ? 2 : monthImages.count + 1
         }
-        
         return 2
     }
     
@@ -95,8 +98,8 @@ extension GalleryViewController : UICollectionViewDelegate, UICollectionViewData
         if !sortFrame {
             guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "monthHeaderView", for: indexPath) as? MonthHeaderView else { return MonthHeaderView()
             }
-            if indexPath.section > 0 {
-                header.monthLabel.text = "\(month[indexPath.section - 1])월"
+            if indexPath.section > 0 && monthImages.count > 0 {
+                header.monthLabel.text = "\(month[indexPath.section - 1])"
             }
             
             return header
@@ -114,7 +117,7 @@ extension GalleryViewController : UICollectionViewDelegate, UICollectionViewData
             return CGSize(width: 0, height: 0)
         }
         if !sortFrame {
-            return CGSize(width: view.frame.size.width, height: 18)
+            return monthImages.count == 0 ? CGSize(width: 0, height: 0) : CGSize(width: view.frame.size.width, height: 18)
         }
         return CGSize(width: view.frame.size.width, height: 99)
     }
@@ -125,27 +128,37 @@ extension GalleryViewController : UICollectionViewDelegate, UICollectionViewData
         }
        
         if !sortFrame {
-            return monthImages[month[section-1]]?.count ?? 0
+            return monthImages.count == 0 ? 1 : monthImages[month[section-1]]?.count ?? 0
         }
         
-        return frameImages.count
+        return frameImages.count == 0 ? 1 : frameImages.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let sortButtonCell = collectionView.dequeueReusableCell(withReuseIdentifier: "sortButtonCell", for: indexPath) as? SortButtonCell else { return UICollectionViewCell() }
+        guard let emptyImagecell = collectionView.dequeueReusableCell(withReuseIdentifier: "emptyImageCell", for: indexPath) as? EmptyImageCell else { return UICollectionViewCell() }
+        guard let imageCell = collectionView.dequeueReusableCell(withReuseIdentifier: "imageCell", for: indexPath) as? ImageCell else { return UICollectionViewCell() }
+        
         if indexPath.section == 0 {
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "sortButtonCell", for: indexPath) as? SortButtonCell else { return UICollectionViewCell() }
-            cell.delegate = self
+            sortButtonCell.delegate = self
             
-            return cell
+            return sortButtonCell
         }
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "imageCell", for: indexPath) as? ImageCell else { return UICollectionViewCell() }
         if !sortFrame {
-            cell.image.image = monthImages[month[indexPath.section-1]]?[indexPath.row]
-        } else {
-            cell.image.image = frameImages[indexPath.row]
+            if monthImages.count == 0 {
+                return emptyImagecell
+            }
+            imageCell.image.image = monthImages[month[indexPath.section-1]]?[indexPath.row]
+            
+            return imageCell
         }
+        
+        if frameImages.count == 0 {
+            return emptyImagecell
+        }
+        imageCell.image.image = frameImages[indexPath.row]
     
-        return cell
+        return imageCell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
@@ -153,15 +166,22 @@ extension GalleryViewController : UICollectionViewDelegate, UICollectionViewData
             return UIEdgeInsets(top: 19, left: 15, bottom: 11, right: 15)
         }
         if !sortFrame {
-            return UIEdgeInsets(top: 14, left: 15, bottom: 34, right: 15)
+            return monthImages.count == 0 ? UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0) : UIEdgeInsets(top: 14, left: 15, bottom: 34, right: 15)
         }
         
-        return UIEdgeInsets(top: 30, left: 15, bottom: 40, right: 15)
+        return frameImages.count == 0 ? UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0) : UIEdgeInsets(top: 30, left: 15, bottom: 40, right: 15)
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if indexPath.section == 0 {
             return CGSize(width: collectionView.frame.width - 30, height: 30)
+        }
+        if !sortFrame && monthImages.count == 0 {
+            return CGSize(width: collectionView.frame.width, height: collectionView.frame.height - 60)
+        }
+        
+        if sortFrame && frameImages.count == 0 {
+            return CGSize(width: collectionView.frame.width, height: collectionView.frame.height - 177)
         }
         
         let width : CGFloat = (view.frame.width - 42) / 3

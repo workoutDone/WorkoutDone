@@ -16,8 +16,8 @@ struct GalleryViewModel {
         var monthImages = [String: [UIImage]]()
         
         for workOutDone in workOutDoneData {
-            if let date = workOutDone.date.yyMMddToDate()?.MToString(), let imageData = workOutDone.frameImage?.image, let image = UIImage(data: imageData) {
-                monthImages[date, default: []].append(image)
+            if let date = workOutDone.date.yyMMddToDate(), let imageData = workOutDone.frameImage?.image, let image = UIImage(data: imageData) {
+                monthImages[isCurrentYear(date: date) ? date.MToString() : date.yyyyMMToString(), default: []].append(image)
             }
         }
         
@@ -27,9 +27,18 @@ struct GalleryViewModel {
     func loadImagesForFrame(frameIndex: Int) -> [UIImage] {
         let realm = try! Realm()
         
-        let imagesData : [Data] = realm.objects(FrameImage.self).filter("frameType == %@", frameIndex).map{$0.image}.compactMap{$0}
-        let images = imagesData.compactMap { UIImage(data: $0) }
-
+        let workOutDoneData = realm.objects(WorkOutDoneData.self).sorted(byKeyPath: "date", ascending: false).filter("frameImage.frameType == %@", frameIndex)
+        let imagesData : [Data] = workOutDoneData.map{$0.frameImage?.image}.compactMap{$0}
+         let images = imagesData.compactMap { UIImage(data: $0) }
+        
         return images
+    }
+    
+    func isCurrentYear(date: Date) -> Bool {
+        let calendar = Calendar.current
+        let year = calendar.component(.year, from: date)
+        let currentYear = calendar.component(.year, from: Date())
+        
+        return year == currentYear
     }
 }

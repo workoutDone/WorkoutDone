@@ -1,19 +1,19 @@
 //
-//  FrameImageCell.swift
+//  EmptyImageCell.swift
 //  WorkoutDone
 //
-//  Created by hyemi on 2023/03/27.
+//  Created by hyemi on 2023/05/11.
 //
 
 import UIKit
 import SnapKit
 import Then
 
-class ImageCell : UICollectionViewCell {
-    var image = UIImageView().then {
-        $0.layer.cornerRadius = 5
-        $0.contentMode = .scaleAspectFill
-        $0.clipsToBounds = true
+class EmptyImageCell: UICollectionViewCell {
+    private let emptyImageLabel = UILabel().then {
+        $0.text = "아직 저장된 사진이 없습니다."
+        $0.textColor = .color929292
+        $0.font = .pretendard(.regular, size: 16)
     }
     
     // MARK: - LIFECYCLE
@@ -30,12 +30,12 @@ class ImageCell : UICollectionViewCell {
     
     // MARK: - ACTIONS
     func setupLayout() {
-        contentView.addSubview(image)
+        contentView.addSubview(emptyImageLabel)
     }
     
     func setupConstraints() {
-        image.snp.makeConstraints {
-            $0.top.leading.trailing.bottom.equalToSuperview()
+        emptyImageLabel.snp.makeConstraints {
+            $0.centerX.centerY.equalToSuperview()
         }
     }
 }

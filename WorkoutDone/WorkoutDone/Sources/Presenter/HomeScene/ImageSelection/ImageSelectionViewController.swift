@@ -9,11 +9,37 @@ import UIKit
 import SnapKit
 import Then
 import DeviceKit
+import RxSwift
+import RxCocoa
 
 class ImageSelectionViewController : BaseViewController {
+    private var viewModel = ImageSelectionViewModel()
+    private var didLoad = PublishSubject<Void>()
+    var selectedDate : Int?
+    private var defaultImageButtonEvent = PublishSubject<Void>()
+    
+    private lazy var input = ImageSelectionViewModel.Input(
+        loadView: didLoad.asDriver(onErrorJustReturn: ()),
+        selectedDate: Driver.just(selectedDate!).asDriver(onErrorJustReturn: 0),
+        defaultImageButtonTapped: defaultImageButtonEvent.asDriver(onErrorJustReturn: ()))
+    private lazy var output = viewModel.transform(input: input)
+    
+    ///dismiss 시 사용될 CompletionHandler
+    var completionHandler : ((Int) -> Void)?
+    
+    
     // MARK: - PROPERTIES
     private let cancelButton = UIButton().then {
         $0.setImage(UIImage(named: "cancelImage"), for: .normal)
+    }
+    private let defaultImageButton = UIButton().then {
+        $0.setTitle("기본이미지로 ", for: .normal)
+        $0.setImage(UIImage(named: "defaultPhotoImage"), for: .normal)
+        $0.titleEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: -10)
+        $0.backgroundColor = .colorFFFFFF
+        $0.setTitleColor(UIColor.color121212, for: .normal)
+        $0.titleLabel?.font = .pretendard(.medium, size: 20)
+        $0.layer.cornerRadius = 15
     }
     private let galleryButton = UIButton().then {
         $0.setTitle("갤러리에서 가져오기", for: .normal)
@@ -22,7 +48,7 @@ class ImageSelectionViewController : BaseViewController {
         $0.backgroundColor = .colorFFFFFF
         $0.setTitleColor(UIColor.color121212, for: .normal)
         $0.titleLabel?.font = .pretendard(.medium, size: 20)
-        $0.layer.cornerRadius = 12
+        $0.layer.cornerRadius = 15
     }
     private let cameraButton = UIButton().then {
         $0.setTitle("사진 촬영하기", for: .normal)
@@ -32,11 +58,13 @@ class ImageSelectionViewController : BaseViewController {
         $0.backgroundColor = .colorFFFFFF
         $0.setTitleColor(UIColor.color121212, for: .normal)
         $0.titleLabel?.font = .pretendard(.medium, size: 20)
-        $0.layer.cornerRadius = 12
+        $0.layer.cornerRadius = 15
     }
     var rootView : HomeViewController?
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+    override func setComponents() {
     }
     override func setupLayout() {
         super.setupLayout()
@@ -44,32 +72,60 @@ class ImageSelectionViewController : BaseViewController {
         let visualEffetView = UIVisualEffectView(effect: blurEffect)
         view.backgroundColor = UIColor(hex: 0x000000, alpha: 0.15)
         visualEffetView.frame = view.frame
-        [visualEffetView, cancelButton, galleryButton, cameraButton].forEach {
-            view.addSubview($0)
-        }
+        view.addSubviews(visualEffetView, cancelButton, galleryButton, cameraButton, defaultImageButton)
     }
     override func setupConstraints() {
         super.setupConstraints()
         cancelButton.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.bottom.equalToSuperview().offset(-43)
-            $0.height.width.equalTo(42)
+            $0.height.width.equalTo(55)
         }
         galleryButton.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.leading.equalToSuperview().offset(20)
-            $0.bottom.equalTo(cancelButton.snp.top).offset(-18)
+            $0.leading.equalToSuperview().inset(20)
+            $0.bottom.equalTo(cancelButton.snp.top).offset(-45)
             $0.height.equalTo(70)
         }
         cameraButton.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.leading.equalToSuperview().offset(20)
-            $0.bottom.equalTo(galleryButton.snp.top).offset(-10)
+            $0.leading.equalToSuperview().inset(20)
+            $0.bottom.equalTo(galleryButton.snp.top).offset(-9)
             $0.height.equalTo(70)
+        }
+        defaultImageButton.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.leading.equalToSuperview().inset(20)
+            $0.height.equalTo(70)
+            $0.bottom.equalTo(cameraButton.snp.top).offset(-9)
         }
     }
     override func setupBinding() {
         super.setupBinding()
+        
+        output.checkFrameImageData.drive(onNext: { value in
+            if value {
+                self.defaultImageButton.isHidden = false
+                print("데이터 x")
+            }
+            else {
+                self.defaultImageButton.isHidden = true
+            }
+        })
+        .disposed(by: disposeBag)
+        
+        output.deleteData.drive(onNext: {
+            self.completionHandler?(self.selectedDate!)
+            self.dismiss(animated: true)
+        })
+        .disposed(by: disposeBag)
+        
+        defaultImageButton.rx.tap
+            .bind { _ in
+                self.defaultImageButtonEvent.onNext(())
+            }
+            .disposed(by: disposeBag)
+        didLoad.onNext(())
     }
     override func actions() {
         super.actions()
