@@ -144,14 +144,25 @@ class PhotoGalleryViewController : BaseViewController {
         if DeviceManager.shared.isHomeButtonDevice() || DeviceManager.shared.isSimulatorIsHomeButtonDevice() {
             ///홈버튼 있는 기종
             let homeButtonPhotoFrameTypeViewController = HomeButtonPhotoFrameTypeViewController()
-            navigationController?.pushViewController(homeButtonPhotoFrameTypeViewController, animated: true)
+            let manager = PHImageManager.default()
+            let options = PHImageRequestOptions()
+            options.deliveryMode = .highQualityFormat
+            options.resizeMode = .exact
+            guard let phAsset = authorizedPhotoGalleryView.selectedImage else { return }
+            manager.requestImageDataAndOrientation(
+                for: phAsset,
+                options: options) { data, _, _, _ in
+                    guard let imageData = data, let image = UIImage(data: imageData) else { return }
+                    homeButtonPhotoFrameTypeViewController.selectedImage = image
+                    self.navigationController?.pushViewController(homeButtonPhotoFrameTypeViewController, animated: true)
+                }
         }
         else {
             ///홈버튼 없는 기종
             let homeButtonLessPhotoFrameTypeViewController = HomeButtonLessPhotoFrameTypeViewController()
 
-            let width = view.frame.width
-            let height = width * 4 / 3
+//            let width = view.frame.width
+//            let height = width * 4 / 3
             let manager = PHImageManager.default()
             let options = PHImageRequestOptions()
             options.deliveryMode = .highQualityFormat
