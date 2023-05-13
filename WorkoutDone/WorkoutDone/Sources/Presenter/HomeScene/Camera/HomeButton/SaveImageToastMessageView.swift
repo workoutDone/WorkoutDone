@@ -19,7 +19,7 @@ class SaveImageToastMessageViewController: BaseViewController {
         $0.layer.shadowRadius = 4
     }
     
-    private let toastMesssageLabel = UILabel().then {
+    let toastMesssageLabel = UILabel().then {
         $0.text = "갤러리에 저장되었습니다"
         $0.font = .pretendard(.medium, size: 14)
     }
@@ -37,7 +37,8 @@ class SaveImageToastMessageViewController: BaseViewController {
         toastMessageView.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.bottom.equalToSuperview().offset(-46)
-            $0.width.equalTo(167)
+            $0.leading.equalTo(toastMesssageLabel.snp.leading).offset(-15)
+            $0.trailing.equalTo(toastMesssageLabel.snp.trailing).offset(15)
             $0.height.equalTo(30)
         }
         
