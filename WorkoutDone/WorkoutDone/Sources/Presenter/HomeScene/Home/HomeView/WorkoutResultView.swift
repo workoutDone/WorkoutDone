@@ -30,11 +30,12 @@ class WorkoutResultView : BaseUIView {
         $0.text = "운동 종목"
         $0.font = .pretendard(.semiBold, size: 12)
     }
+    let workoutResultButton = UIButton()
     
     override func setupLayout() {
         super.setupLayout()
-        addSubview(workoutResultLabel)
-        addSubview(workoutResultBaseView)
+        self.addSubviews(workoutResultLabel, workoutResultBaseView)
+        workoutResultBaseView.addSubview(workoutResultButton)
     }
     override func setupConstraints() {
         super.setupConstraints()
@@ -48,6 +49,9 @@ class WorkoutResultView : BaseUIView {
             $0.centerX.equalToSuperview()
             $0.leading.equalToSuperview().offset(18)
             $0.height.equalTo(82)
+        }
+        workoutResultButton.snp.makeConstraints {
+            $0.edges.equalToSuperview()
         }
     }
 }
