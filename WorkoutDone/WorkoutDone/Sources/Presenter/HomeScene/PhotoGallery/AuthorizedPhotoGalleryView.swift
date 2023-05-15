@@ -67,11 +67,7 @@ extension AuthorizedPhotoGalleryView : UICollectionViewDelegate, UICollectionVie
         let options = PHImageRequestOptions()
         options.deliveryMode = .highQualityFormat
         options.resizeMode = .exact
-//        manager.requestImage(for: asset, targetSize: CGSize(width: frameSize, height: frameSize), contentMode: .aspectFit, options: options) { image, _ in
-//            DispatchQueue.main.async {
-//                cell.photoImageView.image = image
-//            }
-//        }
+
         manager.requestImageDataAndOrientation(
             for: asset,
             options: options) { data, _, _, _ in
