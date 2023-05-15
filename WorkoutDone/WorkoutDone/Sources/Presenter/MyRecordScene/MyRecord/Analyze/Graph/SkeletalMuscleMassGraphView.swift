@@ -35,13 +35,13 @@ struct SkeletalMuscleMassGraphView: View {
             ScrollView(.horizontal) {
                 Chart(skeletalMusleMassGraphViewModel.skeletalMusleMassData, id: \.id) { data in
                     LineMark(
-                        x: .value("Month", transformDate(date: data.date)),
+                        x: .value("Month", data.date.transformDate()),
                         y: .value("SkeletalMuclsMass", animate ? data.bodyInfo?.skeletalMuscleMass ?? 0 : 0)
                     )
                     .interpolationMethod(.cardinal)
                     .foregroundStyle(Color(UIColor.color7442FF))
                     PointMark(
-                        x: .value("Month", transformDate(date: data.date)),
+                        x: .value("Month", data.date.transformDate()),
                         y: .value("SkeletalMuclsMass", animate ? data.bodyInfo?.skeletalMuscleMass ?? 0 : 0)
                     )
                     ///커스텀 포인트 마크
@@ -59,7 +59,7 @@ struct SkeletalMuscleMassGraphView: View {
                     if let skeletalMusleMass = currentActiveItem?.bodyInfo?.skeletalMuscleMass,
                        let currentActiveItem, currentActiveItem.date == data.date {
                         PointMark(
-                            x: .value("Month", transformDate(date: data.date)),
+                            x: .value("Month", data.date.transformDate()),
                             y: .value("FatPercentage", data.bodyInfo?.skeletalMuscleMass ?? 0)
                         )
                             .foregroundStyle(Color(UIColor.color7442FF))
@@ -69,7 +69,7 @@ struct SkeletalMuscleMassGraphView: View {
                                         .resizable()
                                         .frame(width: 50, height: 42)
                                         .offset(y: 6)
-                                    Text("\(currentActiveItem.bodyInfo?.skeletalMuscleMass ?? 0)kg")
+                                    Text((currentActiveItem.bodyInfo?.skeletalMuscleMass ?? 0).truncateDecimalPoint() + "kg")
                                         .foregroundColor(Color(UIColor.color7442FF))
                                         .font(Font(UIFont.pretendard(.semiBold, size: 14)))
                                 }
@@ -88,7 +88,7 @@ struct SkeletalMuscleMassGraphView: View {
                             .onTapGesture { value in
                                 if let date : String = proxy.value(atX: value.x) {
                                     if let currentItem = skeletalMusleMassGraphViewModel.skeletalMusleMassData.first(where: { item in
-                                        transformDate(date: item.date) == date
+                                        item.date.transformDate() == date
                                     }) {
                                         self.currentActiveItem = currentItem
                                         self.plotWidth = proxy.plotAreaSize.width
@@ -131,11 +131,6 @@ struct SkeletalMuscleMassGraphView: View {
         static let dataPointWidth: CGFloat = 60
         static let chartHeight: CGFloat = 400
         static let chartWidth: CGFloat = 350
-    }
-    func transformDate(date : String) -> String {
-        let startIndex = date.index(date.startIndex, offsetBy: 2)
-        let transformDate = date[startIndex...]
-        return String(transformDate)
     }
 }
         

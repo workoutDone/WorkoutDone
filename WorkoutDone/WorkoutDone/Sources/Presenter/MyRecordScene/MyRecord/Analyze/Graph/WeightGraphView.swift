@@ -70,7 +70,7 @@ struct WeightGraphView: View {
                                         .resizable()
                                         .frame(width: 50, height: 42)
                                         .offset(y: 6)
-                                    Text("\(currentActiveItem.bodyInfo?.weight ?? 0)kg")
+                                    Text((currentActiveItem.bodyInfo?.weight ?? 0).truncateDecimalPoint() + "kg")
                                         .foregroundColor(Color(UIColor.color7442FF))
                                         .font(Font(UIFont.pretendard(.semiBold, size: 14)))
                                 }

@@ -32,13 +32,13 @@ struct FatPercentageGraphView: View {
             ScrollView(.horizontal) {
                 Chart(fatPercentageViewModel.fatPercentageData, id: \.id) { data in
                     LineMark(
-                        x: .value("Month", transformDate(date: data.date)),
+                        x: .value("Month", data.date.transformDate()),
                         y: .value("FatPercentage", animate ? data.bodyInfo?.fatPercentage ?? 0 : 0)
                     )
                     .interpolationMethod(.cardinal)
                     .foregroundStyle(Color(UIColor.color7442FF))
                     PointMark(
-                        x: .value("Month", transformDate(date: data.date)),
+                        x: .value("Month", data.date.transformDate()),
                         y: .value("FatPercentage", animate ? data.bodyInfo?.fatPercentage ?? 0 : 0)
                     )
                     ///커스텀 포인트 마크
@@ -54,9 +54,9 @@ struct FatPercentageGraphView: View {
                         .shadow(color: Color(UIColor.color7442FF), radius: 2)
                     }
                     if let fatPercentage = currentActiveItem?.bodyInfo?.fatPercentage,
-                       let currentActiveItem, transformDate(date: currentActiveItem.date) == transformDate(date: data.date) {
+                       let currentActiveItem, currentActiveItem.date == data.date {
                         PointMark(
-                            x: .value("Month", transformDate(date: data.date)),
+                            x: .value("Month", data.date.transformDate()),
                             y: .value("FatPercentage", data.bodyInfo?.fatPercentage ?? 0)
                         )
                             .foregroundStyle(Color(UIColor.color7442FF))
@@ -66,7 +66,7 @@ struct FatPercentageGraphView: View {
                                         .resizable()
                                         .frame(width: 50, height: 42)
                                         .offset(y: 6)
-                                    Text("\(currentActiveItem.bodyInfo?.fatPercentage ?? 0)%")
+                                    Text((currentActiveItem.bodyInfo?.fatPercentage ?? 0).truncateDecimalPoint() + "kg")
                                         .foregroundColor(Color(UIColor.color7442FF))
                                         .font(Font(UIFont.pretendard(.semiBold, size: 14)))
                                 }
@@ -85,7 +85,7 @@ struct FatPercentageGraphView: View {
                             .onTapGesture { value in
                                 if let date : String = proxy.value(atX: value.x) {
                                     if let currentItem = fatPercentageViewModel.fatPercentageData.first(where: { item in
-                                        transformDate(date: item.date) == date
+                                        item.date.transformDate() == date
                                     }) {
                                         self.currentActiveItem = currentItem
                                         self.plotWidth = proxy.plotAreaSize.width
@@ -129,11 +129,7 @@ struct FatPercentageGraphView: View {
         static let chartHeight: CGFloat = 400
         static let chartWidth: CGFloat = 350
     }
-    func transformDate(date : String) -> String {
-        let startIndex = date.index(date.startIndex, offsetBy: 2)
-        let transformDate = date[startIndex...]
-        return String(transformDate)
-    }
+
 }
 
 struct FatPercentageGraphView_Previews: PreviewProvider {
