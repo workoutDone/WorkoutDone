@@ -36,13 +36,13 @@ struct WeightGraphView: View {
             ScrollView(.horizontal) {
                 Chart(weightGraphViewModel.weightData, id: \.id) { data in
                     LineMark(
-                        x: .value("Month", transformDate(date: data.date)),
+                        x: .value("Month", data.date.transformDate()),
                         y: .value("Weight", animate ? data.bodyInfo?.weight ?? 0 : 0)
                     )
                     .interpolationMethod(.cardinal)
                     .foregroundStyle(Color(UIColor.color7442FF))
                     PointMark(
-                        x: .value("Month", transformDate(date: data.date)),
+                        x: .value("Month", data.date.transformDate()),
                         y: .value("Weight", animate ? data.bodyInfo?.weight ?? 0 : 0)
                     )
                     ///커스텀 포인트 마크
@@ -60,7 +60,7 @@ struct WeightGraphView: View {
                     if let weight = currentActiveItem?.bodyInfo?.weight,
                        let currentActiveItem, currentActiveItem.date == data.date {
                         PointMark(
-                            x: .value("Month", transformDate(date: data.date)),
+                            x: .value("Month", data.date.transformDate()),
                             y: .value("FatPercentage", data.bodyInfo?.weight ?? 0)
                         )
                         .foregroundStyle(Color(UIColor.color7442FF))
@@ -70,7 +70,7 @@ struct WeightGraphView: View {
                                         .resizable()
                                         .frame(width: 50, height: 42)
                                         .offset(y: 6)
-                                    Text("\(Int(currentActiveItem.bodyInfo?.weight ?? 0))kg")
+                                    Text("\(currentActiveItem.bodyInfo?.weight ?? 0)kg")
                                         .foregroundColor(Color(UIColor.color7442FF))
                                         .font(Font(UIFont.pretendard(.semiBold, size: 14)))
                                 }
@@ -82,7 +82,7 @@ struct WeightGraphView: View {
                 .chartYAxis {
                     AxisMarks(position: .trailing)
                 }
-                .chartYScale(domain: max > 100 ? 0...(max + 100) : 0...(max + 40))
+                .chartYScale(domain: max > 100 ? min...(max + 100) : min...(max + 40))
                 .chartOverlay(content: { proxy in
                     GeometryReader { innerProxy in
                         Rectangle()
@@ -90,7 +90,7 @@ struct WeightGraphView: View {
                             .onTapGesture { value in
                                 if let date : String = proxy.value(atX: value.x) {
                                     if let currentItem = weightGraphViewModel.weightData.first(where: { item in
-                                        transformDate(date: item.date) == date
+                                        item.date.transformDate() == date
                                     }) {
                                         self.currentActiveItem = currentItem
                                         self.plotWidth = proxy.plotAreaSize.width
@@ -135,11 +135,6 @@ struct WeightGraphView: View {
         static let dataPointWidth: CGFloat = 60
         static let chartHeight: CGFloat = 400
         static let chartWidth: CGFloat = 350
-    }
-    func transformDate(date : String) -> String {
-        let startIndex = date.index(date.startIndex, offsetBy: 2)
-        let transformDate = date[startIndex...]
-        return String(transformDate)
     }
 }
 

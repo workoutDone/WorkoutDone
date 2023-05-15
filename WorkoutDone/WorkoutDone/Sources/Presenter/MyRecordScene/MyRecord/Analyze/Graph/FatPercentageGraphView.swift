@@ -66,7 +66,7 @@ struct FatPercentageGraphView: View {
                                         .resizable()
                                         .frame(width: 50, height: 42)
                                         .offset(y: 6)
-                                    Text("\(Int(currentActiveItem.bodyInfo?.fatPercentage ?? 0))%")
+                                    Text("\(currentActiveItem.bodyInfo?.fatPercentage ?? 0)%")
                                         .foregroundColor(Color(UIColor.color7442FF))
                                         .font(Font(UIFont.pretendard(.semiBold, size: 14)))
                                 }
@@ -77,7 +77,7 @@ struct FatPercentageGraphView: View {
                 .chartYAxis {
                     AxisMarks(position: .trailing)
                 }
-                .chartYScale(domain: max > 100 ? 0...(max + 100) : 0...(max + 40))
+                .chartYScale(domain: max > 100 ? min...(max + 100) : min...(max + 40))
                 .chartOverlay(content: { proxy in
                     GeometryReader { innerProxy in
                         Rectangle()
