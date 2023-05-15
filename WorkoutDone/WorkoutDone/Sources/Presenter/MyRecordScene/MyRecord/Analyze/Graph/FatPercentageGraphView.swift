@@ -32,13 +32,13 @@ struct FatPercentageGraphView: View {
             ScrollView(.horizontal) {
                 Chart(fatPercentageViewModel.fatPercentageData, id: \.id) { data in
                     LineMark(
-                        x: .value("Month", data.date),
+                        x: .value("Month", transformDate(date: data.date)),
                         y: .value("FatPercentage", animate ? data.bodyInfo?.fatPercentage ?? 0 : 0)
                     )
                     .interpolationMethod(.cardinal)
                     .foregroundStyle(Color(UIColor.color7442FF))
                     PointMark(
-                        x: .value("Month", data.date),
+                        x: .value("Month", transformDate(date: data.date)),
                         y: .value("FatPercentage", animate ? data.bodyInfo?.fatPercentage ?? 0 : 0)
                     )
                     ///커스텀 포인트 마크
@@ -54,11 +54,13 @@ struct FatPercentageGraphView: View {
                         .shadow(color: Color(UIColor.color7442FF), radius: 2)
                     }
                     if let fatPercentage = currentActiveItem?.bodyInfo?.fatPercentage,
-                       let currentActiveItem, currentActiveItem.date == data.date {
-                        RuleMark(x: .value("Month", data.date))
+                       let currentActiveItem, transformDate(date: currentActiveItem.date) == transformDate(date: data.date) {
+                        PointMark(
+                            x: .value("Month", transformDate(date: data.date)),
+                            y: .value("FatPercentage", data.bodyInfo?.fatPercentage ?? 0)
+                        )
                             .foregroundStyle(Color(UIColor.color7442FF))
-                            .lineStyle(.init(lineWidth: 1, lineCap: .round, miterLimit: 2, dash: [2], dashPhase: 5))
-                            .annotation(position: .top) {
+                            .annotation(position: .overlay) {
                                 ZStack {
                                     Image("speechBubble")
                                         .resizable()
@@ -68,7 +70,7 @@ struct FatPercentageGraphView: View {
                                         .foregroundColor(Color(UIColor.color7442FF))
                                         .font(Font(UIFont.pretendard(.semiBold, size: 14)))
                                 }
-                                .offset(x: 0, y: 25)
+                                .offset(x: 0, y: -37)
                             }
                     }
                 }
@@ -83,7 +85,7 @@ struct FatPercentageGraphView: View {
                             .onTapGesture { value in
                                 if let date : String = proxy.value(atX: value.x) {
                                     if let currentItem = fatPercentageViewModel.fatPercentageData.first(where: { item in
-                                        item.date == date
+                                        transformDate(date: item.date) == date
                                     }) {
                                         self.currentActiveItem = currentItem
                                         self.plotWidth = proxy.plotAreaSize.width
@@ -126,6 +128,11 @@ struct FatPercentageGraphView: View {
         static let dataPointWidth: CGFloat = 60
         static let chartHeight: CGFloat = 400
         static let chartWidth: CGFloat = 350
+    }
+    func transformDate(date : String) -> String {
+        let startIndex = date.index(date.startIndex, offsetBy: 2)
+        let transformDate = date[startIndex...]
+        return String(transformDate)
     }
 }
 
