@@ -51,6 +51,13 @@ class AuthorizedPhotoGalleryView : BaseUIView {
 }
 
 extension AuthorizedPhotoGalleryView : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+//    func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
+//        if let indexPaths = collectionView.indexPathsForSelectedItems, indexPaths.contains(indexPath) {
+//            collectionView.deselectItem(at: indexPath, animated: true)
+//            return false
+//        }
+//        return true
+//    }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         selectedImage = images[indexPath.row]
         

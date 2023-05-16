@@ -19,7 +19,6 @@ class PhotoGalleryViewController : BaseViewController {
     
     private var viewModel = PhotoGalleryViewModel()
     private var selectedPhoto = BehaviorSubject(value: false)
-    private var selectedIndexPath = BehaviorRelay<IndexPath?>(value: nil)
     private lazy var input = PhotoGalleryViewModel.Input(
         selectedPhotoStatus: selectedPhoto.asDriver(onErrorJustReturn: false))
     private lazy var output = viewModel.transform(input: input)
