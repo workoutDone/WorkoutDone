@@ -60,66 +60,27 @@ class RecordView : BaseUIView {
         $0.layer.cornerRadius = 10
         $0.backgroundColor = .colorFFFFFF
     }
-    let bodyDataEntryButton = UIButton().then {
-        $0.layer.cornerRadius = 10
-        $0.setImage(UIImage(named: "pencil"), for: .normal)
-        $0.contentMode = .scaleAspectFill
-        $0.backgroundColor = .colorFFFFFF
-        $0.layer.borderWidth = 1
-        $0.layer.borderColor = UIColor.color7442FF.cgColor
-    }
+    
     private let bodyInfoView = UIView().then {
         $0.backgroundColor = .colorFFFFFF
         $0.layer.cornerRadius = 10
     }
-    private let separateView = UIView().then {
-        $0.backgroundColor = .colorC884FF
-    }
+
     private let weightLabel = UILabel().then {
         $0.text = "체중"
         $0.textColor = .color121212
-        $0.font = .pretendard(.semiBold, size: 22)
+        $0.font = .pretendard(.semiBold, size: 20)
     }
     let weightInputLabel = UILabel().then {
-        $0.text = "1200"
+        $0.text = "-"
         $0.textColor = .color7442FF
-        $0.font = .pretendard(.semiBold, size: 22)
+        $0.font = .pretendard(.medium, size: 20)
         $0.lineBreakMode = .byTruncatingHead
     }
     private let weightUnitLabel = UILabel().then {
-        $0.text = " kg"
+        $0.text = "  kg"
         $0.textColor = .color121212
-        $0.font = .pretendard(.semiBold, size: 22)
-    }
-    private let skeletalMuscleMassLabel = UILabel().then {
-        $0.text = "골격근량"
-        $0.textColor = .color121212
-        $0.font = .pretendard(.semiBold, size: 16)
-    }
-    private let skeletalMuscleMassUnitLabel = UILabel().then {
-        $0.text = " kg"
-        $0.textColor = .color121212
-        $0.font = .pretendard(.medium, size: 16)
-    }
-    let skeletalMuscleMassInputLabel = UILabel().then {
-        $0.text = "28"
-        $0.textColor = .color7442FF
-        $0.font = .pretendard(.medium, size: 16)
-    }
-    private let fatPercentageLabel = UILabel().then {
-        $0.text = "체지방량"
-        $0.textColor = .color121212
-        $0.font = .pretendard(.semiBold, size: 16)
-    }
-    private let fatPercentageUnitLabel = UILabel().then {
-        $0.text = "%"
-        $0.textColor = .color121212
-        $0.font = .pretendard(.medium, size: 16)
-    }
-    let fatPercentageInputLabel = UILabel().then {
-        $0.text = "20"
-        $0.textColor = .color7442FF
-        $0.font = .pretendard(.medium, size: 16)
+        $0.font = .pretendard(.medium, size: 20)
     }
     private let weightStackView = UIStackView().then {
         $0.axis = .horizontal
@@ -127,11 +88,26 @@ class RecordView : BaseUIView {
         $0.distribution = .fill
         $0.spacing = 0
     }
-    private let skelatalMuscleMassAndFatPercentageLabelStackView = UIStackView().then {
-        $0.axis = .vertical
-        $0.alignment = .fill
-        $0.distribution = .fill
-        $0.spacing = 0
+    private let weightSeparateView = UIView().then {
+        $0.backgroundColor = .colorE6E0FF
+    }
+    private let skeletalMuscleMassLabel = UILabel().then {
+        $0.text = "골격근량"
+        $0.textColor = .color121212
+        $0.font = .pretendard(.semiBold, size: 20)
+    }
+    private let skeletalMuscleMassUnitLabel = UILabel().then {
+        $0.text = "  kg"
+        $0.textColor = .color121212
+        $0.font = .pretendard(.medium, size: 20)
+    }
+    let skeletalMuscleMassInputLabel = UILabel().then {
+        $0.text = "-"
+        $0.textColor = .color7442FF
+        $0.font = .pretendard(.medium, size: 20)
+    }
+    private let skeletalMusleMassSeparateView = UIView().then {
+        $0.backgroundColor = .colorE6E0FF
     }
     private let skelatalMuscleMassStackView = UIStackView().then {
         $0.axis = .horizontal
@@ -139,18 +115,34 @@ class RecordView : BaseUIView {
         $0.distribution = .fill
         $0.spacing = 0
     }
+    
+    private let fatPercentageLabel = UILabel().then {
+        $0.text = "체지방량"
+        $0.textColor = .color121212
+        $0.font = .pretendard(.semiBold, size: 20)
+    }
+    private let fatPercentageUnitLabel = UILabel().then {
+        $0.text = "  %"
+        $0.textColor = .color121212
+        $0.font = .pretendard(.medium, size: 20)
+    }
+    let fatPercentageInputLabel = UILabel().then {
+        $0.text = "-"
+        $0.textColor = .color7442FF
+        $0.font = .pretendard(.medium, size: 20)
+    }
     private let fatPercentageStackView = UIStackView().then {
         $0.axis = .horizontal
         $0.alignment = .fill
         $0.distribution = .fill
         $0.spacing = 0
     }
-    private let skelatalMuscleMassAndFatPercentageValueStackView = UIStackView().then {
-        $0.axis = .vertical
-        $0.alignment = .fill
-        $0.distribution = .fill
-        $0.spacing = 0
+    private let fatPercentageSeparateView = UIView().then {
+        $0.backgroundColor = .colorE6E0FF
     }
+    
+    let bodyDataEntryButton = UIButton()
+
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -163,38 +155,36 @@ class RecordView : BaseUIView {
 
     override func setupLayout() {
         super.setupLayout()
-        [recordLabel, recordView, workoutImageBaseView, workoutNotDoneInfoLabel, clickImage, clickAlertLabel, bodyInfoView, workoutDoneCameraButton, bodyDataBaseView, bodyDataEntryButton, bodyInfoView, separateView, weightLabel, weightStackView, skelatalMuscleMassAndFatPercentageLabelStackView, skelatalMuscleMassAndFatPercentageValueStackView, bodyImageView].forEach {
-            addSubview($0)
-        }
+        self.addSubviews(recordLabel, recordView)
+        recordView.addSubviews(workoutImageBaseView, bodyInfoView)
+        workoutImageBaseView.addSubviews(workoutNotDoneInfoLabel, clickImage, clickAlertLabel, bodyImageView, workoutDoneCameraButton)
+        bodyInfoView.addSubviews(weightLabel, weightStackView, weightSeparateView, skeletalMuscleMassLabel, skelatalMuscleMassStackView, skeletalMusleMassSeparateView, fatPercentageLabel, fatPercentageStackView, fatPercentageSeparateView, bodyDataEntryButton)
+
         [weightInputLabel, weightUnitLabel].forEach {
             weightStackView.addArrangedSubview($0)
-        }
-        [fatPercentageLabel, skeletalMuscleMassLabel].forEach {
-            skelatalMuscleMassAndFatPercentageLabelStackView.addArrangedSubview($0)
         }
         [skeletalMuscleMassInputLabel, skeletalMuscleMassUnitLabel].forEach {
             skelatalMuscleMassStackView.addArrangedSubview($0)
         }
+
         [fatPercentageInputLabel, fatPercentageUnitLabel].forEach {
             fatPercentageStackView.addArrangedSubview($0)
         }
-        [fatPercentageStackView, skelatalMuscleMassStackView].forEach {
-            skelatalMuscleMassAndFatPercentageValueStackView.addArrangedSubview($0)
-        }
+
     }
     override func setupConstraints() {
         super.setupConstraints()
-        [weightUnitLabel, weightInputLabel, weightLabel].forEach {
-            if DeviceManager.shared.isHomeButtonDevice() || DeviceManager.shared.isSimulatorIsHomeButtonDevice() {
-                $0.font = .pretendard(.semiBold, size: 16)
-            }
-        }
-        [skeletalMuscleMassLabel, fatPercentageLabel, skeletalMuscleMassInputLabel, skeletalMuscleMassUnitLabel, fatPercentageInputLabel, fatPercentageUnitLabel].forEach {
-            if DeviceManager.shared.isHomeButtonDevice() || DeviceManager.shared.isSimulatorIsHomeButtonDevice() {
-                $0.font = .pretendard(.semiBold, size: 13)
-            }
-        }
-        
+//        [weightUnitLabel, weightInputLabel, weightLabel].forEach {
+//            if DeviceManager.shared.isHomeButtonDevice() || DeviceManager.shared.isSimulatorIsHomeButtonDevice() {
+//                $0.font = .pretendard(.semiBold, size: 16)
+//            }
+//        }
+//        [skeletalMuscleMassLabel, fatPercentageLabel, skeletalMuscleMassInputLabel, skeletalMuscleMassUnitLabel, fatPercentageInputLabel, fatPercentageUnitLabel].forEach {
+//            if DeviceManager.shared.isHomeButtonDevice() || DeviceManager.shared.isSimulatorIsHomeButtonDevice() {
+//                $0.font = .pretendard(.semiBold, size: 13)
+//            }
+//        }
+//
         recordLabel.snp.makeConstraints {
             $0.top.equalToSuperview()
             $0.leading.equalToSuperview().offset(30)
@@ -204,7 +194,7 @@ class RecordView : BaseUIView {
             $0.centerX.equalToSuperview()
             $0.leading.equalToSuperview().offset(18)
             $0.top.equalTo(recordLabel.snp.bottom).offset(8)
-            $0.height.equalTo(445)
+            $0.height.equalTo(515)
         }
         workoutImageBaseView.snp.makeConstraints {
             $0.centerX.equalToSuperview()
@@ -228,74 +218,67 @@ class RecordView : BaseUIView {
             $0.top.equalTo(clickImage.snp.bottom).offset(7)
         }
         bodyImageView.snp.makeConstraints {
-            $0.top.equalTo(workoutImageBaseView.snp.top).offset(0)
-            $0.leading.equalTo(workoutImageBaseView.snp.leading).offset(0)
-            $0.trailing.equalTo(workoutImageBaseView.snp.trailing).offset(0)
-            $0.bottom.equalTo(workoutImageBaseView.snp.bottom).offset(0)
+            $0.top.bottom.leading.trailing.equalToSuperview()
         }
         workoutDoneCameraButton.snp.makeConstraints {
-            $0.top.equalTo(bodyImageView.snp.top).offset(0)
-            $0.leading.equalTo(bodyImageView.snp.leading).offset(0)
-            $0.trailing.equalTo(bodyImageView.snp.trailing).offset(0)
-            $0.bottom.equalTo(bodyImageView.snp.bottom).offset(0)
+            $0.top.bottom.leading.trailing.equalToSuperview()
         }
-        
-        ///바디 정보 입력 뷰
         bodyInfoView.snp.makeConstraints {
+            $0.height.equalTo(156)
             $0.top.equalTo(workoutImageBaseView.snp.bottom).offset(16)
-            $0.leading.equalTo(recordView.snp.leading).offset(12)
-            $0.bottom.equalTo(recordView.snp.bottom).offset(-13)
-            $0.trailing.equalTo(bodyDataEntryButton.snp.leading).offset(-9)
+            $0.leading.equalToSuperview().inset(12)
+            $0.bottom.equalToSuperview().inset(12)
+            $0.centerX.equalToSuperview()
         }
-        ///바디 정보 구분 선 뷰
-        separateView.snp.makeConstraints {
-            $0.top.equalTo(bodyInfoView.snp.top).offset(8)
-            $0.centerX.centerY.equalTo(bodyInfoView)
-            $0.width.equalTo(0.5)
-        }
-        bodyDataEntryButton.snp.makeConstraints {
-            $0.top.equalTo(workoutImageBaseView.snp.bottom).offset(16)
-            $0.trailing.equalTo(recordView.snp.trailing).offset(-12)
-            $0.bottom.equalTo(recordView.snp.bottom).offset(-13)
-            $0.width.equalTo(51)
-        }
-        ///체중 라벨
         weightLabel.snp.makeConstraints {
-            $0.centerY.equalTo(bodyInfoView)
-            $0.leading.equalTo(bodyInfoView.snp.leading).offset(20)
+            $0.height.equalTo(26)
+            $0.width.equalTo(35)
+            $0.top.equalToSuperview().inset(23)
+            $0.leading.equalToSuperview().inset(30)
         }
-        ///체중 입력
         weightStackView.snp.makeConstraints {
-            $0.centerY.equalTo(bodyInfoView)
-            $0.trailing.equalTo(separateView.snp.leading).offset(-8)
-            $0.leading.greaterThanOrEqualTo(weightLabel.snp.trailing).offset(8)
+            $0.height.equalTo(26)
+            $0.trailing.equalToSuperview().inset(30)
+            $0.top.equalToSuperview().inset(23)
+        }
+        weightSeparateView.snp.makeConstraints {
+            $0.height.equalTo(1)
+            $0.leading.equalToSuperview().inset(20)
+            $0.trailing.equalToSuperview().inset(20)
+            $0.top.equalTo(weightLabel.snp.bottom).offset(3)
         }
         skeletalMuscleMassLabel.snp.makeConstraints {
             $0.height.equalTo(26)
+            $0.leading.equalToSuperview().inset(30)
+            $0.top.equalTo(weightSeparateView.snp.bottom).offset(13)
         }
-        skeletalMuscleMassInputLabel.snp.makeConstraints {
+        skelatalMuscleMassStackView.snp.makeConstraints {
+            $0.trailing.equalToSuperview().inset(30)
             $0.height.equalTo(26)
+            $0.top.equalTo(weightSeparateView.snp.bottom).offset(13)
         }
-        skeletalMuscleMassUnitLabel.snp.makeConstraints {
-            $0.height.equalTo(26)
+        skeletalMusleMassSeparateView.snp.makeConstraints {
+            $0.height.equalTo(1)
+            $0.leading.trailing.equalToSuperview().inset(20)
+            $0.top.equalTo(skeletalMuscleMassLabel.snp.bottom).offset(3)
         }
         fatPercentageLabel.snp.makeConstraints {
             $0.height.equalTo(26)
+            $0.leading.equalToSuperview().inset(30)
+            $0.top.equalTo(skeletalMusleMassSeparateView.snp.bottom).offset(13)
         }
-        fatPercentageInputLabel.snp.makeConstraints {
+        fatPercentageStackView.snp.makeConstraints {
+            $0.trailing.equalToSuperview().inset(30)
             $0.height.equalTo(26)
+            $0.top.equalTo(skeletalMusleMassSeparateView.snp.bottom).offset(13)
         }
-        fatPercentageUnitLabel.snp.makeConstraints {
-            $0.height.equalTo(26)
+        fatPercentageSeparateView.snp.makeConstraints {
+            $0.height.equalTo(1)
+            $0.leading.trailing.equalToSuperview().inset(20)
+            $0.top.equalTo(fatPercentageLabel.snp.bottom).offset(3)
         }
-        skelatalMuscleMassAndFatPercentageLabelStackView.snp.makeConstraints {
-            $0.centerY.equalTo(bodyInfoView)
-            $0.leading.equalTo(separateView.snp.trailing).offset(14)
-            
-        }
-        skelatalMuscleMassAndFatPercentageValueStackView.snp.makeConstraints {
-            $0.centerY.equalTo(bodyInfoView)
-            $0.trailing.equalTo(bodyInfoView.snp.trailing).offset(-19)
+        bodyDataEntryButton.snp.makeConstraints {
+            $0.top.bottom.leading.trailing.equalToSuperview()
         }
     }
 }
