@@ -18,11 +18,8 @@ class PhotoGalleryViewController : BaseViewController {
     //MARK: - ViewModel
     
     private var viewModel = PhotoGalleryViewModel()
-    private var didLoad = PublishSubject<Void>()
     private var selectedPhoto = BehaviorSubject(value: false)
-    private var selectedIndexPath = BehaviorRelay<IndexPath?>(value: nil)
     private lazy var input = PhotoGalleryViewModel.Input(
-        loadView: didLoad.asDriver(onErrorJustReturn: ()),
         selectedPhotoStatus: selectedPhoto.asDriver(onErrorJustReturn: false))
     private lazy var output = viewModel.transform(input: input)
     
@@ -37,6 +34,8 @@ class PhotoGalleryViewController : BaseViewController {
     }
     
     private let authorizedPhotoGalleryView = AuthorizedPhotoGalleryView()
+    private let deniedPhotoGalleryView = DeniedPhotoGalleryView()
+    private let limitedPhotoGalleryView = LimitedPhotoGalleryView()
     
     
     // MARK: - LIFECYCLE
@@ -50,34 +49,10 @@ class PhotoGalleryViewController : BaseViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        requestAuth()
     }
     override func setupBinding() {
         super.setupBinding()
-        
-        output.photoAuthority.drive(onNext: { value in
-            switch value {
-            case .notDetermined:
-                print("notDetermined")
-            case .restricted:
-                print("restricted")
-            case .denied:
-                print("denied")
-            case .authorized:
-                print("authorized")
-                let assets = PHAsset.fetchAssets(with: PHAssetMediaType.image, options: nil)
-                assets.enumerateObjects { (object, count, stop) in
-                    self.authorizedPhotoGalleryView.images.append(object)
-                }
-                self.authorizedPhotoGalleryView.images.reverse()
-                DispatchQueue.main.async {
-                    self.authorizedPhotoGalleryView.photoCollectionView.reloadData()
-                }
-            case .limited:
-                print("limited")
-            }
-        })
-        .disposed(by: disposeBag)
         
         output.nextButtonStatus.drive(onNext: { [self] value in
             if value {
@@ -94,29 +69,19 @@ class PhotoGalleryViewController : BaseViewController {
         
         authorizedPhotoGalleryView.photoCollectionView.rx.itemSelected
             .bind { _ in
-//                guard let selectedImage = self.authorizedPhotoGalleryView.selectedImage else { return }
-                self.selectedPhoto.onNext(true)
+                if self.authorizedPhotoGalleryView.selectedIndexPath != nil {
+                    self.selectedPhoto.onNext(true)
+                }
+                else {
+                    self.selectedPhoto.onNext(false)
+                }
             }
             .disposed(by: disposeBag)
-//        authorizedPhotoGalleryView.photoCollectionView.rx.itemSelected
-//            .bind { [weak self] indexPath in
-//                guard let self = self else { return }
-//                
-//                if let selectedIndexPath = self.selectedIndexPath.value, selectedIndexPath == indexPath {
-//                    self.selectedPhoto.onNext(false)
-//                    self.selectedIndexPath.accept(nil)
-//                } else {
-//                    self.selectedPhoto.onNext(true)
-//                    self.selectedIndexPath.accept(indexPath)
-//                }
-//            }
-//            .disposed(by: disposeBag)
-        didLoad.onNext(())
     }
     
     
     override func setupLayout() {
-        view.addSubviews(authorizedPhotoGalleryView)
+        view.addSubviews(authorizedPhotoGalleryView, limitedPhotoGalleryView, deniedPhotoGalleryView)
     }
     override func setComponents() {
         view.backgroundColor = .colorFFFFFF
@@ -125,6 +90,10 @@ class PhotoGalleryViewController : BaseViewController {
         barButton.customView = photoSelectButton
         navigationItem.rightBarButtonItem = barButton
         navigationItem.rightBarButtonItem?.isEnabled = false
+        
+        authorizedPhotoGalleryView.isHidden = true
+        deniedPhotoGalleryView.isHidden = true
+        limitedPhotoGalleryView.isHidden = true
     }
     override func setupConstraints() {
         photoSelectButton.snp.makeConstraints {
@@ -134,6 +103,70 @@ class PhotoGalleryViewController : BaseViewController {
         authorizedPhotoGalleryView.snp.makeConstraints {
             $0.top.bottom.equalTo(view.safeAreaLayoutGuide)
             $0.leading.trailing.equalToSuperview()
+        }
+        deniedPhotoGalleryView.snp.makeConstraints {
+            $0.top.bottom.equalTo(view.safeAreaLayoutGuide)
+            $0.leading.trailing.equalToSuperview()
+        }
+        limitedPhotoGalleryView.snp.makeConstraints {
+            $0.top.bottom.equalTo(view.safeAreaLayoutGuide)
+            $0.leading.trailing.equalToSuperview()
+        }
+    }
+    private func requestAuth() {
+        PHPhotoLibrary.requestAuthorization(for: .readWrite) { [weak self] status in
+            guard let self = self else { return }
+            switch status {
+            case .notDetermined:
+                print("notDetermined")
+            case .restricted:
+                print("restricted")
+            case .denied:
+                print("denied")
+                self.requestAuthResponseView(status: status, completion: { _ in
+                self.authorizedPhotoGalleryView.isHidden = true
+                self.limitedPhotoGalleryView.isHidden = false
+                self.deniedPhotoGalleryView.isHidden = true
+                })
+            case .authorized:
+                print("authorized")
+                self.requestAuthResponseView(status: status) { _ in
+                    DispatchQueue.main.async { [weak self] in
+                        guard let self = self else { return }
+                        self.authorizedPhotoGalleryView.isHidden = false
+                        self.limitedPhotoGalleryView.isHidden = true
+                        self.deniedPhotoGalleryView.isHidden = true
+                        self.authorizedPhotoGalleryView.loadPHCachingImage()
+                        self.authorizedPhotoGalleryView.photoCollectionView.reloadData()
+                    }
+                }
+            case .limited:
+                print("limited")
+                self.requestAuthResponseView(status: .limited) { _ in
+                    print("")
+                }
+                
+            @unknown default:
+                fatalError()
+            }
+        }
+    }
+
+    func requestAuthResponseView(status : PHAuthorizationStatus, completion : @escaping ((PHAuthorizationStatus) -> Void)) {
+        switch status {
+        case .notDetermined:
+            completion(.notDetermined)
+        case .restricted:
+            completion(.restricted)
+        case .denied:
+            completion(.denied)
+        case .authorized:
+            completion(.authorized)
+            print("허용")
+        case .limited:
+            completion(.limited)
+        @unknown default:
+            fatalError()
         }
     }
     override func actions() {
@@ -161,8 +194,6 @@ class PhotoGalleryViewController : BaseViewController {
             ///홈버튼 없는 기종
             let homeButtonLessPhotoFrameTypeViewController = HomeButtonLessPhotoFrameTypeViewController()
 
-//            let width = view.frame.width
-//            let height = width * 4 / 3
             let manager = PHImageManager.default()
             let options = PHImageRequestOptions()
             options.deliveryMode = .highQualityFormat

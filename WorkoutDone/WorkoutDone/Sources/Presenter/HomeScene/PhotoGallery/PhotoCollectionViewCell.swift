@@ -15,9 +15,12 @@ class PhotosCollectionViewCell : UICollectionViewCell {
         $0.contentMode = .scaleAspectFill
         $0.layer.masksToBounds = true
     }
-    let selectedButtonImage = UIImageView()
+    let selectedButtonImage = UIImageView().then {
+        $0.image = UIImage(named: "notSelectedPhoto")
+    }
     let selectedEffectView = UIView()
     
+
     override var isSelected: Bool {
         didSet {
             if isSelected {
@@ -26,7 +29,7 @@ class PhotosCollectionViewCell : UICollectionViewCell {
                 photoImageView.layer.borderColor = UIColor.color7442FF.cgColor
                 selectedEffectView.backgroundColor = UIColor(hex: 0x000000, alpha: 0.2)
                 selectedButtonImage.image = UIImage(named: "selectedPhoto")
-                
+
             }
             else {
                 photoImageView.layer.borderWidth = 0
@@ -38,7 +41,8 @@ class PhotosCollectionViewCell : UICollectionViewCell {
     }
     override func layoutSubviews() {
         super.layoutSubviews()
-        contentView.addSubviews(photoImageView, selectedEffectView, selectedButtonImage)
+        contentView.addSubviews(photoImageView)
+        photoImageView.addSubviews(selectedEffectView, selectedButtonImage)
         setLayout()
     }
     
