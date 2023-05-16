@@ -14,6 +14,10 @@ class SkeletalMuslemassGraphViewModel : ObservableObject {
     
     func readSkeletalMusleMassData() {
         let objects = realm.objects(WorkOutDoneData.self)
-        skeletalMusleMassData = Array(objects).sorted(by: { $0.date.yyMMddToDate() ?? Date() < $1.date.yyMMddToDate() ?? Date() })
+        skeletalMusleMassData = Array(objects)
+            .sorted(by: { $0.date.yyMMddToDate() ?? Date() < $1.date.yyMMddToDate() ?? Date() })
+            .filter({
+                $0.bodyInfo?.skeletalMuscleMass != nil && $0.bodyInfo?.skeletalMuscleMass ?? 0 >= 0
+            })
     }
 }

@@ -14,6 +14,10 @@ class WeightGraphViewModel : ObservableObject {
     
     func readWeightData() {
         let objects = realm.objects(WorkOutDoneData.self)
-        weightData = Array(objects).sorted(by: { $0.date.yyMMddToDate() ?? Date() < $1.date.yyMMddToDate() ?? Date() })
+        weightData = Array(objects)
+            .sorted(by: { $0.date.yyMMddToDate() ?? Date() < $1.date.yyMMddToDate() ?? Date() })
+            .filter({
+                $0.bodyInfo?.weight != nil && $0.bodyInfo?.weight ?? 0 >= 0
+            })
     }
 }
