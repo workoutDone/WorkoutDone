@@ -11,6 +11,7 @@ import Then
 import Photos
 
 class AuthorizedPhotoGalleryView : BaseUIView {
+    var selectedIndexPath : IndexPath?
     var selectedImage : PHAsset?
     var images = [PHAsset]()
     let photoCollectionView: UICollectionView = {
@@ -51,15 +52,16 @@ class AuthorizedPhotoGalleryView : BaseUIView {
 }
 
 extension AuthorizedPhotoGalleryView : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-//    func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-//        if let indexPaths = collectionView.indexPathsForSelectedItems, indexPaths.contains(indexPath) {
-//            collectionView.deselectItem(at: indexPath, animated: true)
-//            return false
-//        }
-//        return true
-//    }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        selectedImage = images[indexPath.row]
+        selectedImage = images[indexPath.item]
+        
+        if selectedIndexPath == indexPath {
+            collectionView.deselectItem(at: indexPath, animated: true)
+            selectedIndexPath = nil
+        }
+        else {
+            selectedIndexPath = indexPath
+        }
         
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -68,6 +70,8 @@ extension AuthorizedPhotoGalleryView : UICollectionViewDelegate, UICollectionVie
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PhotosCollectionViewCell", for: indexPath) as? PhotosCollectionViewCell else { fatalError("not found") }
+        
+        
         let asset = self.images[indexPath.row]
         let manager = PHImageManager.default()
         let frameSize = (collectionView.frame.width - 12) / 3

@@ -69,7 +69,12 @@ class PhotoGalleryViewController : BaseViewController {
         
         authorizedPhotoGalleryView.photoCollectionView.rx.itemSelected
             .bind { _ in
-                self.selectedPhoto.onNext(true)
+                if self.authorizedPhotoGalleryView.selectedIndexPath != nil {
+                    self.selectedPhoto.onNext(true)
+                }
+                else {
+                    self.selectedPhoto.onNext(false)
+                }
             }
             .disposed(by: disposeBag)
     }
