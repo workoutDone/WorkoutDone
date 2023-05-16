@@ -115,6 +115,7 @@ class PhotoGalleryViewController : BaseViewController {
     }
     private func requestAuth() {
         PHPhotoLibrary.requestAuthorization(for: .readWrite) { [weak self] status in
+            guard let self = self else { return }
             switch status {
             case .notDetermined:
                 print("notDetermined")
@@ -122,42 +123,49 @@ class PhotoGalleryViewController : BaseViewController {
                 print("restricted")
             case .denied:
                 print("denied")
-                self?.requestAuthResponseView(status: .denied)
+                self.requestAuthResponseView(status: status, completion: { _ in
+                self.authorizedPhotoGalleryView.isHidden = true
+                self.limitedPhotoGalleryView.isHidden = false
+                self.deniedPhotoGalleryView.isHidden = true
+                })
             case .authorized:
                 print("authorized")
-                self?.requestAuthResponseView(status: .authorized)
+                self.requestAuthResponseView(status: status) { _ in
+                    DispatchQueue.main.async { [weak self] in
+                        guard let self = self else { return }
+                        self.authorizedPhotoGalleryView.isHidden = false
+                        self.limitedPhotoGalleryView.isHidden = true
+                        self.deniedPhotoGalleryView.isHidden = true
+                        self.authorizedPhotoGalleryView.loadPHCachingImage()
+                        self.authorizedPhotoGalleryView.photoCollectionView.reloadData()
+                    }
+                }
             case .limited:
                 print("limited")
-                self?.requestAuthResponseView(status: .limited)
+                self.requestAuthResponseView(status: .limited) { _ in
+                    print("")
+                }
                 
             @unknown default:
                 fatalError()
             }
         }
     }
-    private func requestAuthResponseView(status : PHAuthorizationStatus) {
+
+    func requestAuthResponseView(status : PHAuthorizationStatus, completion : @escaping ((PHAuthorizationStatus) -> Void)) {
         switch status {
-        case .authorized:
-            let assets = PHAsset.fetchAssets(with: PHAssetMediaType.image, options: nil)
-            assets.enumerateObjects { (object, count, stop) in
-                self.authorizedPhotoGalleryView.images.append(object)
-            }
-            self.authorizedPhotoGalleryView.images.reverse()
-            DispatchQueue.main.async { [weak self] in
-                self?.authorizedPhotoGalleryView.isHidden = false
-                self?.limitedPhotoGalleryView.isHidden = true
-                self?.deniedPhotoGalleryView.isHidden = true
-                self?.authorizedPhotoGalleryView.photoCollectionView.reloadData()
-            }
-        case .limited:
-            authorizedPhotoGalleryView.isHidden = true
-            limitedPhotoGalleryView.isHidden = false
-            deniedPhotoGalleryView.isHidden = true
+        case .notDetermined:
+            completion(.notDetermined)
+        case .restricted:
+            completion(.restricted)
         case .denied:
-            authorizedPhotoGalleryView.isHidden = true
-            limitedPhotoGalleryView.isHidden = false
-            deniedPhotoGalleryView.isHidden = true
-        default:
+            completion(.denied)
+        case .authorized:
+            completion(.authorized)
+            print("허용")
+        case .limited:
+            completion(.limited)
+        @unknown default:
             fatalError()
         }
     }
