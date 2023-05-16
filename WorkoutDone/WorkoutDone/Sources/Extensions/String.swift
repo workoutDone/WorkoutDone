@@ -17,5 +17,10 @@ extension String {
             return nil
         }
     }
+    func transformDate() -> String {
+        let startIndex = index(startIndex, offsetBy: 2)
+        let transformedDate = self[startIndex...]
+        return String(transformedDate)
+    }
 }
 

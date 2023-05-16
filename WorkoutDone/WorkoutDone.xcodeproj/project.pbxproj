@@ -90,6 +90,7 @@
 		A5550A9229F302DC00CBD1BF /* AuthorizedPhotoGalleryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5550A9129F302DC00CBD1BF /* AuthorizedPhotoGalleryView.swift */; };
 		A5550A9429F3092600CBD1BF /* PhotoGalleryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5550A9329F3092600CBD1BF /* PhotoGalleryViewModel.swift */; };
 		A5550A9629F310D500CBD1BF /* PhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5550A9529F310D500CBD1BF /* PhotoCollectionViewCell.swift */; };
+		A5552D312A121D4600835B40 /* Double.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5552D302A121D4600835B40 /* Double.swift */; };
 		A5632CD82A0E2C08007EC335 /* ImageSelectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5632CD72A0E2C08007EC335 /* ImageSelectionViewModel.swift */; };
 		A5632CDA2A0E30F5007EC335 /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5632CD92A0E30F5007EC335 /* UIImage.swift */; };
 		A56D904229E08604009FD0B2 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A56D904129E08604009FD0B2 /* HomeViewModel.swift */; };
@@ -215,6 +216,7 @@
 		A5550A9129F302DC00CBD1BF /* AuthorizedPhotoGalleryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizedPhotoGalleryView.swift; sourceTree = "<group>"; };
 		A5550A9329F3092600CBD1BF /* PhotoGalleryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoGalleryViewModel.swift; sourceTree = "<group>"; };
 		A5550A9529F310D500CBD1BF /* PhotoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCollectionViewCell.swift; sourceTree = "<group>"; };
+		A5552D302A121D4600835B40 /* Double.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Double.swift; sourceTree = "<group>"; };
 		A5632CD72A0E2C08007EC335 /* ImageSelectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSelectionViewModel.swift; sourceTree = "<group>"; };
 		A5632CD92A0E30F5007EC335 /* UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
 		A56D904129E08604009FD0B2 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
@@ -447,6 +449,7 @@
 				A52F65F92A0A015F00D398DF /* NotificationName.swift */,
 				A55149192A0FE64900222A72 /* UILabel.swift */,
 				A5632CD92A0E30F5007EC335 /* UIImage.swift */,
+				A5552D302A121D4600835B40 /* Double.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -897,6 +900,7 @@
 				A59EF6E529C0CE22005DE9B5 /* HomeButtonLessCameraViewController.swift in Sources */,
 				A57FCCDD2A0828C600576812 /* PhotoFrameTypeViewModel.swift in Sources */,
 				9200604529B1ACD900586063 /* WorkoutView.swift in Sources */,
+				A5552D312A121D4600835B40 /* Double.swift in Sources */,
 				A59EF6E229C0B69C005DE9B5 /* WorkoutViewController.swift in Sources */,
 				A59A3DDE29C9F76200126ECE /* RegisterMyBodyInfoViewModel.swift in Sources */,
 				926998162A0E093E003DDAD2 /* WeightTraining.swift in Sources */,
