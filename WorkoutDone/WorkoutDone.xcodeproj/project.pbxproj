@@ -61,6 +61,13 @@
 		9269981C2A0EBD22003DDAD2 /* MyRoutine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9269981B2A0EBD22003DDAD2 /* MyRoutine.swift */; };
 		926998202A0EBD7D003DDAD2 /* MyBodyPart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9269981F2A0EBD7D003DDAD2 /* MyBodyPart.swift */; };
 		926998222A0EC4A8003DDAD2 /* MyWeightTraining.swift in Sources */ = {isa = PBXBuildFile; fileRef = 926998212A0EC4A8003DDAD2 /* MyWeightTraining.swift */; };
+		926998602A118906003DDAD2 /* RoutineCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9269985F2A118906003DDAD2 /* RoutineCell.swift */; };
+		926998642A11D06B003DDAD2 /* RoutineHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 926998632A11D06B003DDAD2 /* RoutineHeaderView.swift */; };
+		926998E02A145250003DDAD2 /* EmptyRoutineCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 926998DF2A145250003DDAD2 /* EmptyRoutineCell.swift */; };
+		926998E22A1473FA003DDAD2 /* CreateRoutineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 926998E12A1473FA003DDAD2 /* CreateRoutineViewController.swift */; };
+		926998E52A147740003DDAD2 /* BodyPartHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 926998E42A147740003DDAD2 /* BodyPartHeaderView.swift */; };
+		926998E72A147918003DDAD2 /* BodyPartCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 926998E62A147918003DDAD2 /* BodyPartCell.swift */; };
+		926998E92A1494EE003DDAD2 /* WeightTrainingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 926998E82A1494EE003DDAD2 /* WeightTrainingCell.swift */; };
 		926DBC9229DDC905007BE22A /* PressShutterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 926DBC9129DDC905007BE22A /* PressShutterViewController.swift */; };
 		926DBC9429DEA31C007BE22A /* SaveImageToastMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 926DBC9329DEA31C007BE22A /* SaveImageToastMessageView.swift */; };
 		92DCF3EC29CDB38300F90002 /* BackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DCF3EB29CDB38300F90002 /* BackButton.swift */; };
@@ -186,6 +193,13 @@
 		9269981B2A0EBD22003DDAD2 /* MyRoutine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyRoutine.swift; sourceTree = "<group>"; };
 		9269981F2A0EBD7D003DDAD2 /* MyBodyPart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyBodyPart.swift; sourceTree = "<group>"; };
 		926998212A0EC4A8003DDAD2 /* MyWeightTraining.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyWeightTraining.swift; sourceTree = "<group>"; };
+		9269985F2A118906003DDAD2 /* RoutineCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineCell.swift; sourceTree = "<group>"; };
+		926998632A11D06B003DDAD2 /* RoutineHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineHeaderView.swift; sourceTree = "<group>"; };
+		926998DF2A145250003DDAD2 /* EmptyRoutineCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyRoutineCell.swift; sourceTree = "<group>"; };
+		926998E12A1473FA003DDAD2 /* CreateRoutineViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRoutineViewController.swift; sourceTree = "<group>"; };
+		926998E42A147740003DDAD2 /* BodyPartHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyPartHeaderView.swift; sourceTree = "<group>"; };
+		926998E62A147918003DDAD2 /* BodyPartCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyPartCell.swift; sourceTree = "<group>"; };
+		926998E82A1494EE003DDAD2 /* WeightTrainingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeightTrainingCell.swift; sourceTree = "<group>"; };
 		926DBC9129DDC905007BE22A /* PressShutterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PressShutterViewController.swift; sourceTree = "<group>"; };
 		926DBC9329DEA31C007BE22A /* SaveImageToastMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveImageToastMessageView.swift; sourceTree = "<group>"; };
 		92DCF3EB29CDB38300F90002 /* BackButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackButton.swift; sourceTree = "<group>"; };
@@ -547,6 +561,17 @@
 			path = MyRoutine;
 			sourceTree = "<group>";
 		};
+		926998E32A1473FD003DDAD2 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				9269985F2A118906003DDAD2 /* RoutineCell.swift */,
+				926998DF2A145250003DDAD2 /* EmptyRoutineCell.swift */,
+				926998E62A147918003DDAD2 /* BodyPartCell.swift */,
+				926998E82A1494EE003DDAD2 /* WeightTrainingCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
 		92DCF4EF29D2CD2E00F90002 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
@@ -655,6 +680,10 @@
 			isa = PBXGroup;
 			children = (
 				A59ACB7929B4BC740084C73E /* RoutineViewController.swift */,
+				926998632A11D06B003DDAD2 /* RoutineHeaderView.swift */,
+				926998E12A1473FA003DDAD2 /* CreateRoutineViewController.swift */,
+				926998E42A147740003DDAD2 /* BodyPartHeaderView.swift */,
+				926998E32A1473FD003DDAD2 /* Cell */,
 			);
 			path = Routine;
 			sourceTree = "<group>";
@@ -857,6 +886,7 @@
 			files = (
 				9200602429B1A7CC00586063 /* BaseViewController.swift in Sources */,
 				926998142A0DAB5C003DDAD2 /* WeightTrainingInfo.swift in Sources */,
+				926998602A118906003DDAD2 /* RoutineCell.swift in Sources */,
 				A5550A9629F310D500CBD1BF /* PhotoCollectionViewCell.swift in Sources */,
 				9264A5EE29C550220010856F /* FrameCell.swift in Sources */,
 				9264A58429BA22FE0010856F /* DayOfTheWeekCell.swift in Sources */,
@@ -877,11 +907,13 @@
 				926DBC9229DDC905007BE22A /* PressShutterViewController.swift in Sources */,
 				A54C486129FFA176004CEE3D /* HomeButtonLessPhotoFrameTypeViewController.swift in Sources */,
 				A5A10CA929D59ED600E45FC8 /* String.swift in Sources */,
+				926998E22A1473FA003DDAD2 /* CreateRoutineViewController.swift in Sources */,
 				9200604B29B1ADA500586063 /* BaseUIView.swift in Sources */,
 				A55149182A0FCAD200222A72 /* DeleteRecordAlertViewController.swift in Sources */,
 				92DCF4D229D1B64100F90002 /* FrameCategoryCell.swift in Sources */,
 				A5FD469829DDDB4C003AC96E /* SkeletalMuslemassViewModel.swift in Sources */,
 				A55149142A0FBE9D00222A72 /* WorkoutResultViewController.swift in Sources */,
+				926998E92A1494EE003DDAD2 /* WeightTrainingCell.swift in Sources */,
 				A57061D429D045690083ECDD /* WeightGraphView.swift in Sources */,
 				924E56B229CCB9EA00AA73A2 /* GridToggleButton.swift in Sources */,
 				A52573F529F2F478004FBAC0 /* PhotoGalleryViewController.swift in Sources */,
@@ -890,6 +922,7 @@
 				9269981A2A0EB052003DDAD2 /* Routine.swift in Sources */,
 				A59ACBC029B6E2310084C73E /* DeviceManager.swift in Sources */,
 				9204827F29FF0D230015A02F /* FrameImageViewModel.swift in Sources */,
+				926998E72A147918003DDAD2 /* BodyPartCell.swift in Sources */,
 				A59EF6F129C4C909005DE9B5 /* PreviewView.swift in Sources */,
 				A5550A9229F302DC00CBD1BF /* AuthorizedPhotoGalleryView.swift in Sources */,
 				A5550A9429F3092600CBD1BF /* PhotoGalleryViewModel.swift in Sources */,
@@ -917,6 +950,7 @@
 				A57061CF29CD6A5E0083ECDD /* GalleryViewController.swift in Sources */,
 				920060E229B63C1500586063 /* CalendarView.swift in Sources */,
 				A57061D829D09AD40083ECDD /* FatPercentageGraphView.swift in Sources */,
+				926998E52A147740003DDAD2 /* BodyPartHeaderView.swift in Sources */,
 				A59ACB7E29B4BCF70084C73E /* MyRecordViewController.swift in Sources */,
 				A56D904229E08604009FD0B2 /* HomeViewModel.swift in Sources */,
 				926998222A0EC4A8003DDAD2 /* MyWeightTraining.swift in Sources */,
@@ -928,7 +962,9 @@
 				A55149162A0FBEA800222A72 /* WorkoutResultViewModel.swift in Sources */,
 				A57061DA29D09D5C0083ECDD /* WeightGraphViewModel.swift in Sources */,
 				926998182A0E120B003DDAD2 /* BodyPart.swift in Sources */,
+				926998642A11D06B003DDAD2 /* RoutineHeaderView.swift in Sources */,
 				92005FC629B1A49400586063 /* AppDelegate.swift in Sources */,
+				926998E02A145250003DDAD2 /* EmptyRoutineCell.swift in Sources */,
 				92005FC829B1A49400586063 /* SceneDelegate.swift in Sources */,
 				9200601D29B1A74300586063 /* OnboardingViewController.swift in Sources */,
 				9264A5EC29C4B0610010856F /* HomeButtonCameraViewController.swift in Sources */,
@@ -1110,7 +1146,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = JB8T59WMFR;
+				DEVELOPMENT_TEAM = U4YRB4XYPR;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = WorkoutDone/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "";
@@ -1140,7 +1176,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = JB8T59WMFR;
+				DEVELOPMENT_TEAM = U4YRB4XYPR;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = WorkoutDone/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "";

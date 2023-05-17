@@ -41,7 +41,7 @@ class OnboardingViewController : BaseViewController {
         $0.numberOfPages = numberOfPages
         $0.currentPage = currentPage
 
-        //$0.setCurrentPageIndicatorImage(UIImage(named: "currentPage"), forPage: currentPage)
+        $0.setCurrentPageIndicatorImage(UIImage(named: "currentPage"), forPage: currentPage)
         $0.preferredIndicatorImage = UIImage(named: "page")
         
         $0.pageIndicatorTintColor = .colorD6C8FF
@@ -137,7 +137,7 @@ extension OnboardingViewController : UICollectionViewDelegate, UICollectionViewD
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         currentPage = Int(scrollView.contentOffset.x / scrollView.frame.width)
         self.pageControl.currentPage = currentPage
-        //pageControl.setCurrentPageIndicatorImage(UIImage(named: "currentPage"), forPage: currentPage)
+        pageControl.setCurrentPageIndicatorImage(UIImage(named: "currentPage"), forPage: currentPage)
     }
 }
 
