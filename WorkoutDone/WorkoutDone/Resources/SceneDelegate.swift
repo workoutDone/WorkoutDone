@@ -59,7 +59,6 @@ extension SceneDelegate {
         } else {
             setRootViewController(scene, viewController: TabBarController())
         }
-        //setRootViewController(scene, viewController: HomeButtonCameraViewController())
     }
     
     private func setRootViewController(_ scene: UIScene, viewController: UIViewController) {
