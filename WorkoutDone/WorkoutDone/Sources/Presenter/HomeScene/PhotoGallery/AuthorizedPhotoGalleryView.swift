@@ -9,7 +9,6 @@ import UIKit
 import SnapKit
 import Then
 import Photos
-import Kingfisher
 
 class AuthorizedPhotoGalleryView : BaseUIView {
     private let imageManager:PHCachingImageManager = PHCachingImageManager()
