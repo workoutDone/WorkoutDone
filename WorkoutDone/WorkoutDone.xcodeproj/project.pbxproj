@@ -43,7 +43,6 @@
 		9200604929B1AD7200586063 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9200604829B1AD7200586063 /* HomeViewController.swift */; };
 		9200604B29B1ADA500586063 /* BaseUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9200604A29B1ADA500586063 /* BaseUIView.swift */; };
 		920060CF29B37C9F00586063 /* GradientButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 920060CE29B37C9F00586063 /* GradientButton.swift */; };
-		920060E029B63C0D00586063 /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 920060DF29B63C0C00586063 /* TestViewController.swift */; };
 		920060E229B63C1500586063 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 920060E129B63C1500586063 /* CalendarView.swift */; };
 		920060E429B71D7400586063 /* DayCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 920060E329B71D7400586063 /* DayCell.swift */; };
 		9204827F29FF0D230015A02F /* FrameImageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9204827E29FF0D230015A02F /* FrameImageViewModel.swift */; };
@@ -97,10 +96,9 @@
 		A5550A9229F302DC00CBD1BF /* AuthorizedPhotoGalleryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5550A9129F302DC00CBD1BF /* AuthorizedPhotoGalleryView.swift */; };
 		A5550A9429F3092600CBD1BF /* PhotoGalleryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5550A9329F3092600CBD1BF /* PhotoGalleryViewModel.swift */; };
 		A5550A9629F310D500CBD1BF /* PhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5550A9529F310D500CBD1BF /* PhotoCollectionViewCell.swift */; };
-		A5552D342A126B1000835B40 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = A5552D332A126B1000835B40 /* Kingfisher */; };
+		A5552D312A121D4600835B40 /* Double.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5552D302A121D4600835B40 /* Double.swift */; };
 		A5552D362A12834D00835B40 /* LimitedPhotoGalleryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5552D352A12834D00835B40 /* LimitedPhotoGalleryView.swift */; };
 		A5552D382A12836B00835B40 /* DeniedPhotoGalleryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5552D372A12836B00835B40 /* DeniedPhotoGalleryView.swift */; };
-		A5552D312A121D4600835B40 /* Double.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5552D302A121D4600835B40 /* Double.swift */; };
 		A5632CD82A0E2C08007EC335 /* ImageSelectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5632CD72A0E2C08007EC335 /* ImageSelectionViewModel.swift */; };
 		A5632CDA2A0E30F5007EC335 /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5632CD92A0E30F5007EC335 /* UIImage.swift */; };
 		A56D904229E08604009FD0B2 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A56D904129E08604009FD0B2 /* HomeViewModel.swift */; };
@@ -179,7 +177,6 @@
 		9200604829B1AD7200586063 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		9200604A29B1ADA500586063 /* BaseUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseUIView.swift; sourceTree = "<group>"; };
 		920060CE29B37C9F00586063 /* GradientButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientButton.swift; sourceTree = "<group>"; };
-		920060DF29B63C0C00586063 /* TestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
 		920060E129B63C1500586063 /* CalendarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		920060E329B71D7400586063 /* DayCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DayCell.swift; path = WorkoutDone/Sources/Presenter/HomeScene/Home/HomeView/Cell/DayCell.swift; sourceTree = SOURCE_ROOT; };
 		9204827E29FF0D230015A02F /* FrameImageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameImageViewModel.swift; sourceTree = "<group>"; };
@@ -233,9 +230,9 @@
 		A5550A9129F302DC00CBD1BF /* AuthorizedPhotoGalleryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizedPhotoGalleryView.swift; sourceTree = "<group>"; };
 		A5550A9329F3092600CBD1BF /* PhotoGalleryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoGalleryViewModel.swift; sourceTree = "<group>"; };
 		A5550A9529F310D500CBD1BF /* PhotoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCollectionViewCell.swift; sourceTree = "<group>"; };
+		A5552D302A121D4600835B40 /* Double.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Double.swift; sourceTree = "<group>"; };
 		A5552D352A12834D00835B40 /* LimitedPhotoGalleryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LimitedPhotoGalleryView.swift; sourceTree = "<group>"; };
 		A5552D372A12836B00835B40 /* DeniedPhotoGalleryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeniedPhotoGalleryView.swift; sourceTree = "<group>"; };
-		A5552D302A121D4600835B40 /* Double.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Double.swift; sourceTree = "<group>"; };
 		A5632CD72A0E2C08007EC335 /* ImageSelectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSelectionViewModel.swift; sourceTree = "<group>"; };
 		A5632CD92A0E30F5007EC335 /* UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
 		A56D904129E08604009FD0B2 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
@@ -272,7 +269,6 @@
 				9200600929B1A55A00586063 /* RealmSwift in Frameworks */,
 				9200600729B1A55A00586063 /* Realm in Frameworks */,
 				92005FFD29B1A51F00586063 /* RxCocoa in Frameworks */,
-				A5552D342A126B1000835B40 /* Kingfisher in Frameworks */,
 				92005FF729B1A4C700586063 /* SnapKit in Frameworks */,
 				9200600129B1A51F00586063 /* RxSwift in Frameworks */,
 				92005FFF29B1A51F00586063 /* RxRelay in Frameworks */,
@@ -487,7 +483,6 @@
 			children = (
 				9200604829B1AD7200586063 /* HomeViewController.swift */,
 				A56D904129E08604009FD0B2 /* HomeViewModel.swift */,
-				920060DF29B63C0C00586063 /* TestViewController.swift */,
 				9200604129B1AC8900586063 /* HomeView */,
 			);
 			path = Home;
@@ -764,7 +759,6 @@
 				9200600329B1A53A00586063 /* DeviceKit */,
 				9200600629B1A55A00586063 /* Realm */,
 				9200600829B1A55A00586063 /* RealmSwift */,
-				A5552D332A126B1000835B40 /* Kingfisher */,
 			);
 			productName = WorkoutDone;
 			productReference = 92005FC229B1A49400586063 /* WorkoutDone.app */;
@@ -844,7 +838,6 @@
 				92005FFB29B1A51F00586063 /* XCRemoteSwiftPackageReference "RxSwift" */,
 				9200600229B1A53A00586063 /* XCRemoteSwiftPackageReference "DeviceKit" */,
 				9200600529B1A55A00586063 /* XCRemoteSwiftPackageReference "realm-swift" */,
-				A5552D322A126B1000835B40 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 			);
 			productRefGroup = 92005FC329B1A49400586063 /* Products */;
 			projectDirPath = "";
@@ -984,7 +977,6 @@
 				92005FC829B1A49400586063 /* SceneDelegate.swift in Sources */,
 				9200601D29B1A74300586063 /* OnboardingViewController.swift in Sources */,
 				9264A5EC29C4B0610010856F /* HomeButtonCameraViewController.swift in Sources */,
-				920060E029B63C0D00586063 /* TestViewController.swift in Sources */,
 				92DCF54229D5B41700F90002 /* MonthHeaderView.swift in Sources */,
 				926998202A0EBD7D003DDAD2 /* MyBodyPart.swift in Sources */,
 				92DCF61229DCAE3D00F90002 /* GridView.swift in Sources */,
@@ -1369,14 +1361,6 @@
 				kind = branch;
 			};
 		};
-		A5552D322A126B1000835B40 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
-			requirement = {
-				branch = master;
-				kind = branch;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1419,11 +1403,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 9200600529B1A55A00586063 /* XCRemoteSwiftPackageReference "realm-swift" */;
 			productName = RealmSwift;
-		};
-		A5552D332A126B1000835B40 /* Kingfisher */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = A5552D322A126B1000835B40 /* XCRemoteSwiftPackageReference "Kingfisher" */;
-			productName = Kingfisher;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
