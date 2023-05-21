@@ -49,7 +49,7 @@ class RegisterMyBodyInfoViewController : BaseViewController {
         $0.layer.cornerRadius = 6
     }
     private let saveButton = GradientButton(colors: [UIColor.color7442FF.cgColor, UIColor.color8E36FF.cgColor]).then {
-        $0.setTitle("저장히기", for: .normal)
+        $0.setTitle("저장하기", for: .normal)
         $0.setTitleColor(.colorFFFFFF, for: .normal)
         $0.titleLabel?.font = .pretendard(.semiBold, size: 20)
     }
