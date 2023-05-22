@@ -80,6 +80,7 @@
 		92DCF54C29D6D15600F90002 /* FrameHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DCF54B29D6D15600F90002 /* FrameHeaderView.swift */; };
 		92DCF55A29D878FB00F90002 /* GalleryDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DCF55929D878FB00F90002 /* GalleryDetailViewController.swift */; };
 		92DCF61229DCAE3D00F90002 /* GridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DCF61129DCAE3D00F90002 /* GridView.swift */; };
+		A5021EEC2A1A8AF4007DE096 /* PermissionDeniedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5021EEB2A1A8AF4007DE096 /* PermissionDeniedView.swift */; };
 		A5021EE82A1906EB007DE096 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5021EE72A1906EB007DE096 /* Constants.swift */; };
 		A5021EEA2A194E78007DE096 /* RightBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5021EE92A194E78007DE096 /* RightBarButtonItem.swift */; };
 		A51B6F4E2A17B0C000FB7A16 /* DuringWorkoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51B6F4D2A17B0C000FB7A16 /* DuringWorkoutView.swift */; };
@@ -87,6 +88,8 @@
 		A52573EC29EDB928004FBAC0 /* UIStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52573EB29EDB928004FBAC0 /* UIStackView.swift */; };
 		A52573EE29EDB9B9004FBAC0 /* ViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52573ED29EDB9B9004FBAC0 /* ViewModelType.swift */; };
 		A52573F529F2F478004FBAC0 /* PhotoGalleryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52573F429F2F478004FBAC0 /* PhotoGalleryViewController.swift */; };
+		A526C1272A1B433600DAC0EF /* DeleteAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A526C1262A1B433600DAC0EF /* DeleteAlertView.swift */; };
+		A526C1292A1B4ACC00DAC0EF /* DeleteRecordAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A526C1282A1B4ACC00DAC0EF /* DeleteRecordAlertView.swift */; };
 		A52F65F82A09FE9D00D398DF /* NotificationCenterManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52F65F72A09FE9D00D398DF /* NotificationCenterManager.swift */; };
 		A52F65FA2A0A015F00D398DF /* NotificationName.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52F65F92A0A015F00D398DF /* NotificationName.swift */; };
 		A54C485E29FF9FB1004CEE3D /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54C485D29FF9FB1004CEE3D /* RealmManager.swift */; };
@@ -218,6 +221,7 @@
 		92DCF54B29D6D15600F90002 /* FrameHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameHeaderView.swift; sourceTree = "<group>"; };
 		92DCF55929D878FB00F90002 /* GalleryDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryDetailViewController.swift; sourceTree = "<group>"; };
 		92DCF61129DCAE3D00F90002 /* GridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridView.swift; sourceTree = "<group>"; };
+		A5021EEB2A1A8AF4007DE096 /* PermissionDeniedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionDeniedView.swift; sourceTree = "<group>"; };
 		A5021EE72A1906EB007DE096 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		A5021EE92A194E78007DE096 /* RightBarButtonItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RightBarButtonItem.swift; sourceTree = "<group>"; };
 		A51B6F4D2A17B0C000FB7A16 /* DuringWorkoutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuringWorkoutView.swift; sourceTree = "<group>"; };
@@ -225,6 +229,8 @@
 		A52573EB29EDB928004FBAC0 /* UIStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIStackView.swift; sourceTree = "<group>"; };
 		A52573ED29EDB9B9004FBAC0 /* ViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelType.swift; sourceTree = "<group>"; };
 		A52573F429F2F478004FBAC0 /* PhotoGalleryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoGalleryViewController.swift; sourceTree = "<group>"; };
+		A526C1262A1B433600DAC0EF /* DeleteAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAlertView.swift; sourceTree = "<group>"; };
+		A526C1282A1B4ACC00DAC0EF /* DeleteRecordAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteRecordAlertView.swift; sourceTree = "<group>"; };
 		A52F65F72A09FE9D00D398DF /* NotificationCenterManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCenterManager.swift; sourceTree = "<group>"; };
 		A52F65F92A0A015F00D398DF /* NotificationName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationName.swift; sourceTree = "<group>"; };
 		A54C485D29FF9FB1004CEE3D /* RealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
@@ -523,6 +529,8 @@
 			isa = PBXGroup;
 			children = (
 				920060CE29B37C9F00586063 /* GradientButton.swift */,
+				A5021EEB2A1A8AF4007DE096 /* PermissionDeniedView.swift */,
+				A526C1262A1B433600DAC0EF /* DeleteAlertView.swift */,
 				A5021EE92A194E78007DE096 /* RightBarButtonItem.swift */,
 			);
 			path = UIComponent;
@@ -629,6 +637,7 @@
 				A55149132A0FBE9D00222A72 /* WorkoutResultViewController.swift */,
 				A55149152A0FBEA800222A72 /* WorkoutResultViewModel.swift */,
 				A55149172A0FCAD200222A72 /* DeleteRecordAlertViewController.swift */,
+				A526C1282A1B4ACC00DAC0EF /* DeleteRecordAlertView.swift */,
 			);
 			path = WorkoutResutl;
 			sourceTree = "<group>";
@@ -936,11 +945,13 @@
 				926998E22A1473FA003DDAD2 /* CreateRoutineViewController.swift in Sources */,
 				9200604B29B1ADA500586063 /* BaseUIView.swift in Sources */,
 				A55149182A0FCAD200222A72 /* DeleteRecordAlertViewController.swift in Sources */,
+				A5021EEC2A1A8AF4007DE096 /* PermissionDeniedView.swift in Sources */,
 				92DCF4D229D1B64100F90002 /* FrameCategoryCell.swift in Sources */,
 				A5FD469829DDDB4C003AC96E /* SkeletalMuslemassViewModel.swift in Sources */,
 				A55149142A0FBE9D00222A72 /* WorkoutResultViewController.swift in Sources */,
 				926998E92A1494EE003DDAD2 /* WeightTrainingCell.swift in Sources */,
 				A57061D429D045690083ECDD /* WeightGraphView.swift in Sources */,
+				A526C1272A1B433600DAC0EF /* DeleteAlertView.swift in Sources */,
 				924E56B229CCB9EA00AA73A2 /* GridToggleButton.swift in Sources */,
 				A52573F529F2F478004FBAC0 /* PhotoGalleryViewController.swift in Sources */,
 				9264A58229B8735C0010856F /* UserDefaultsManager.swift in Sources */,
@@ -965,6 +976,7 @@
 				A54C485E29FF9FB1004CEE3D /* RealmManager.swift in Sources */,
 				920060CF29B37C9F00586063 /* GradientButton.swift in Sources */,
 				A54C486329FFA1A0004CEE3D /* HomeButtonPhotoFrameTypeViewController.swift in Sources */,
+				A526C1292A1B4ACC00DAC0EF /* DeleteRecordAlertView.swift in Sources */,
 				92005FCA29B1A49400586063 /* ViewController.swift in Sources */,
 				9269981C2A0EBD22003DDAD2 /* MyRoutine.swift in Sources */,
 				92DCF54C29D6D15600F90002 /* FrameHeaderView.swift in Sources */,
