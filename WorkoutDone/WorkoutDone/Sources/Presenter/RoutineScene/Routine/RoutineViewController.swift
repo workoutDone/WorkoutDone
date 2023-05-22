@@ -10,6 +10,7 @@ import UIKit
 struct MyRoutineData {
     var title : String
     var category : [CategoryData]
+    var opend : Bool
 }
 
 struct CategoryData {
@@ -18,31 +19,29 @@ struct CategoryData {
 }
 
 class RoutineViewController : BaseViewController {
-    let sampleData = [
-        MyRoutineData(title: "오늘은 등 운동!", category: [CategoryData(categoryName: "냠냠", training: "냠냠")]),
-        MyRoutineData(title: "어깨 몸짱 가보자고", category: [CategoryData(categoryName: "어깨", training: "배틀 로프"), CategoryData(categoryName: "어깨", training: "클린 앤 저크"), CategoryData(categoryName: "어깨", training: "플란체")]),
-        MyRoutineData(title: "바프를 향해 데일리루틴", category: [CategoryData(categoryName: "냠냠", training: "냠냠")])
+    var sampleData =
+    [
+        MyRoutineData(title: "오늘은 등 운동!", category: [CategoryData(categoryName: "어깨", training: "배틀 로프")], opend: false),
+        MyRoutineData(title: "어깨 몸짱 가보자고", category: [CategoryData(categoryName: "어깨", training: "배틀 로프"), CategoryData(categoryName: "어깨", training: "클린 앤 저크"), CategoryData(categoryName: "어깨", training: "플란체")], opend: false),
+        MyRoutineData(title: "바프를 향해 데일리루틴", category: [CategoryData(categoryName: "냠냠", training: "냠냠")], opend: false)
     ]
-
-    var selectedIndex : Int = -1
+    
+    private let routineTableView = UITableView(frame: .zero, style: .grouped).then {
+        $0.register(RoutineCell.self, forCellReuseIdentifier: "routineCell")
+        $0.register(RoutineDetailCell.self, forCellReuseIdentifier: "routineDetailCell")
+        $0.register(EmptyRoutineCell.self, forCellReuseIdentifier: "emptyRoutineCell")
+        $0.separatorStyle = .none
+        $0.sectionHeaderHeight = 0
+        $0.sectionFooterHeight = 0
+        $0.backgroundColor = .colorFFFFFF
+    }
+    
+    let tableViewContainerView = UIView(frame:.zero)
     
     private let createdButton = GradientButton(colors: [UIColor.color8E36FF.cgColor, UIColor.color7442FF.cgColor]).then {
         $0.setTitle("루틴 만들기", for: .normal)
         $0.titleLabel?.font = .pretendard(.semiBold, size: 20)
     }
-    
-    private var routineCollectionView : UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .vertical
-
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.register(RoutineHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "routineHeaderView")
-        collectionView.register(RoutineCell.self, forCellWithReuseIdentifier: "routineCell")
-        collectionView.register(EmptyRoutineCell.self, forCellWithReuseIdentifier: "emptyRoutineCell")
-        collectionView.showsHorizontalScrollIndicator = false
-        
-        return collectionView
-    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,12 +51,12 @@ class RoutineViewController : BaseViewController {
     }
     
     override func setupLayout() {
-        view.addSubview(routineCollectionView)
+        view.addSubview(routineTableView)
         view.addSubview(createdButton)
     }
     
     override func setupConstraints() {
-        routineCollectionView.snp.makeConstraints {
+        routineTableView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(120)
             $0.leading.trailing.equalToSuperview()
             $0.bottom.equalTo(createdButton.snp.top)
@@ -72,8 +71,8 @@ class RoutineViewController : BaseViewController {
     }
     
     override func setComponents() {
-        routineCollectionView.delegate = self
-        routineCollectionView.dataSource = self
+        routineTableView.delegate = self
+        routineTableView.dataSource = self
     }
     
     override func actions() {
@@ -87,65 +86,112 @@ class RoutineViewController : BaseViewController {
     }
 }
 
-extension RoutineViewController : RoutineDelegate {
-    func didSelectRoutine(index: Int) {
-        if selectedIndex == index {
-            selectedIndex = -1
-        } else {
-            selectedIndex = index
-        }
-
-        routineCollectionView.reloadData()
-    }
-}
-
-extension RoutineViewController : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
+extension RoutineViewController : UITableViewDelegate, UITableViewDataSource {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return sampleData.count == 0 ? 1 : sampleData.count
     }
     
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return sampleData.count == 0 ? 1 : (selectedIndex == section ? sampleData[section].category.count : 0)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "routineHeaderView", for: indexPath) as? RoutineHeaderView else { return RoutineHeaderView() }
-        header.delegate = self
-        header.editButton.isHidden = true
-        header.backgroundButton.layer.borderColor = UIColor.colorCCCCCC.cgColor
-        
-        if indexPath.section == selectedIndex {
-            header.editButton.isHidden = false
-            header.backgroundButton.layer.borderColor = UIColor.color7442FF.cgColor
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if sampleData.count > 0 && sampleData[section].opend == true {
+            return sampleData[section].category.count + 1
         }
-        header.seletedIndex = indexPath.section
-        
-        return header
+        return 1
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         if sampleData.count == 0 {
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "emptyRoutineCell", for: indexPath) as? EmptyRoutineCell else { return UICollectionViewCell() }
+            return 0
+        }
+        if section == 0 {
+            return 0.1
+        }
+        return 14
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if sampleData.count == 0 {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "emptyRoutineCell", for: indexPath) as? EmptyRoutineCell else { return UITableViewCell() }
+            cell.selectionStyle = .none
+            
             return cell
         }
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "routineCell", for: indexPath) as? RoutineCell else { return UICollectionViewCell() }
+        if indexPath.row == 0 {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "routineCell", for: indexPath) as? RoutineCell else { return UITableViewCell() }
+            cell.selectionStyle = .none
+            cell.routineTitleLabel.text = sampleData[indexPath.section].title
+            
+            cell.outerView.backgroundColor = .colorCCCCCC
+            if sampleData[indexPath.section].opend {
+                cell.outerView.backgroundColor = .color7442FF
+            }
+            
+            return cell
+        }
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "routineDetailCell", for: indexPath) as? RoutineDetailCell else { return UITableViewCell() }
+        cell.selectionStyle = .none
+        
+        cell.bodyPartLabel.text = sampleData[indexPath.section].category[indexPath.row - 1].categoryName
+        cell.weightTrainingLabel.text = sampleData[indexPath.section].category[indexPath.row - 1].training
+        
+        cell.outerView.backgroundColor = .colorCCCCCC
+        if sampleData[indexPath.section].opend {
+            cell.outerView.backgroundColor = .color7442FF
+        }
+        
         return cell
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return sampleData.count == 0 ? CGSize(width: 0, height: 0) : CGSize(width: collectionView.frame.width, height: 70)
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if sampleData.count == 0 {
+            return tableView.frame.height
+        }
+        
+        if indexPath.row == 0 {
+            return sampleData[indexPath.section].opend == true ? 65 : 53
+        }
+        return 58
     }
     
-
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 0, left: 20, bottom: 14, right: 20)
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        let footer = UIView()
+        
+        let outerView = UIView(frame: .init(x: 20, y: 0, width: tableView.bounds.width - 40, height: 20))
+        let innerView = UIButton(frame: .init(x: 1, y: -1, width: outerView.bounds.width - 2, height: outerView.bounds.height))
+        footer.addSubview(outerView)
+        outerView.addSubview(innerView)
+        
+        innerView.backgroundColor = .colorFFFFFF
+        innerView.layer.cornerRadius = 10
+        innerView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+        
+        outerView.backgroundColor = .colorCCCCCC
+        outerView.layer.cornerRadius = 10
+        outerView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+        
+        if sampleData[section].opend {
+            outerView.backgroundColor = .color7442FF
+        }
+    
+        
+        return footer
     }
-
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return sampleData.count == 0 ? CGSize(width: collectionView.frame.width - 80, height: collectionView.frame.height) : CGSize(width: collectionView.frame.width - 80, height: 50)
+    
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return sampleData[section].opend == true ? 19 : 17
     }
-
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 8
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if sampleData.count > 0 && indexPath.row == 0 {
+            if sampleData[indexPath.section].opend {
+                guard let cell = tableView.cellForRow(at: indexPath) as? RoutineCell else {
+                    return
+                }
+                print("x")
+            }
+            
+            sampleData[indexPath.section].opend = !sampleData[indexPath.section].opend
+            
+            tableView.reloadSections([indexPath.section], with: .none)
+        }
     }
 }

@@ -61,12 +61,12 @@
 		926998202A0EBD7D003DDAD2 /* MyBodyPart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9269981F2A0EBD7D003DDAD2 /* MyBodyPart.swift */; };
 		926998222A0EC4A8003DDAD2 /* MyWeightTraining.swift in Sources */ = {isa = PBXBuildFile; fileRef = 926998212A0EC4A8003DDAD2 /* MyWeightTraining.swift */; };
 		926998602A118906003DDAD2 /* RoutineCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9269985F2A118906003DDAD2 /* RoutineCell.swift */; };
-		926998642A11D06B003DDAD2 /* RoutineHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 926998632A11D06B003DDAD2 /* RoutineHeaderView.swift */; };
 		926998E02A145250003DDAD2 /* EmptyRoutineCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 926998DF2A145250003DDAD2 /* EmptyRoutineCell.swift */; };
 		926998E22A1473FA003DDAD2 /* CreateRoutineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 926998E12A1473FA003DDAD2 /* CreateRoutineViewController.swift */; };
 		926998E52A147740003DDAD2 /* BodyPartHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 926998E42A147740003DDAD2 /* BodyPartHeaderView.swift */; };
 		926998E72A147918003DDAD2 /* BodyPartCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 926998E62A147918003DDAD2 /* BodyPartCell.swift */; };
 		926998E92A1494EE003DDAD2 /* WeightTrainingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 926998E82A1494EE003DDAD2 /* WeightTrainingCell.swift */; };
+		926999502A172F4E003DDAD2 /* RoutineDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9269994F2A172F4E003DDAD2 /* RoutineDetailCell.swift */; };
 		926DBC9229DDC905007BE22A /* PressShutterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 926DBC9129DDC905007BE22A /* PressShutterViewController.swift */; };
 		926DBC9429DEA31C007BE22A /* SaveImageToastMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 926DBC9329DEA31C007BE22A /* SaveImageToastMessageView.swift */; };
 		92DCF3EC29CDB38300F90002 /* BackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DCF3EB29CDB38300F90002 /* BackButton.swift */; };
@@ -199,12 +199,12 @@
 		9269981F2A0EBD7D003DDAD2 /* MyBodyPart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyBodyPart.swift; sourceTree = "<group>"; };
 		926998212A0EC4A8003DDAD2 /* MyWeightTraining.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyWeightTraining.swift; sourceTree = "<group>"; };
 		9269985F2A118906003DDAD2 /* RoutineCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineCell.swift; sourceTree = "<group>"; };
-		926998632A11D06B003DDAD2 /* RoutineHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineHeaderView.swift; sourceTree = "<group>"; };
 		926998DF2A145250003DDAD2 /* EmptyRoutineCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyRoutineCell.swift; sourceTree = "<group>"; };
 		926998E12A1473FA003DDAD2 /* CreateRoutineViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRoutineViewController.swift; sourceTree = "<group>"; };
 		926998E42A147740003DDAD2 /* BodyPartHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyPartHeaderView.swift; sourceTree = "<group>"; };
 		926998E62A147918003DDAD2 /* BodyPartCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyPartCell.swift; sourceTree = "<group>"; };
 		926998E82A1494EE003DDAD2 /* WeightTrainingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeightTrainingCell.swift; sourceTree = "<group>"; };
+		9269994F2A172F4E003DDAD2 /* RoutineDetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineDetailCell.swift; sourceTree = "<group>"; };
 		926DBC9129DDC905007BE22A /* PressShutterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PressShutterViewController.swift; sourceTree = "<group>"; };
 		926DBC9329DEA31C007BE22A /* SaveImageToastMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveImageToastMessageView.swift; sourceTree = "<group>"; };
 		92DCF3EB29CDB38300F90002 /* BackButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackButton.swift; sourceTree = "<group>"; };
@@ -580,6 +580,7 @@
 			isa = PBXGroup;
 			children = (
 				9269985F2A118906003DDAD2 /* RoutineCell.swift */,
+				9269994F2A172F4E003DDAD2 /* RoutineDetailCell.swift */,
 				926998DF2A145250003DDAD2 /* EmptyRoutineCell.swift */,
 				926998E62A147918003DDAD2 /* BodyPartCell.swift */,
 				926998E82A1494EE003DDAD2 /* WeightTrainingCell.swift */,
@@ -697,7 +698,6 @@
 			isa = PBXGroup;
 			children = (
 				A59ACB7929B4BC740084C73E /* RoutineViewController.swift */,
-				926998632A11D06B003DDAD2 /* RoutineHeaderView.swift */,
 				926998E12A1473FA003DDAD2 /* CreateRoutineViewController.swift */,
 				926998E42A147740003DDAD2 /* BodyPartHeaderView.swift */,
 				926998E32A1473FD003DDAD2 /* Cell */,
@@ -986,6 +986,7 @@
 				926998222A0EC4A8003DDAD2 /* MyWeightTraining.swift in Sources */,
 				A57061D629D09AC40083ECDD /* SkeletalMuscleMassGraphView.swift in Sources */,
 				A5021EEA2A194E78007DE096 /* RightBarButtonItem.swift in Sources */,
+				926999502A172F4E003DDAD2 /* RoutineDetailCell.swift in Sources */,
 				A551491A2A0FE64900222A72 /* UILabel.swift in Sources */,
 				A576693B29B6EB4900673DFE /* ImageSelectionViewController.swift in Sources */,
 				A52F65FA2A0A015F00D398DF /* NotificationName.swift in Sources */,
@@ -994,7 +995,6 @@
 				A55149162A0FBEA800222A72 /* WorkoutResultViewModel.swift in Sources */,
 				A57061DA29D09D5C0083ECDD /* WeightGraphViewModel.swift in Sources */,
 				926998182A0E120B003DDAD2 /* BodyPart.swift in Sources */,
-				926998642A11D06B003DDAD2 /* RoutineHeaderView.swift in Sources */,
 				92005FC629B1A49400586063 /* AppDelegate.swift in Sources */,
 				926998E02A145250003DDAD2 /* EmptyRoutineCell.swift in Sources */,
 				92005FC829B1A49400586063 /* SceneDelegate.swift in Sources */,

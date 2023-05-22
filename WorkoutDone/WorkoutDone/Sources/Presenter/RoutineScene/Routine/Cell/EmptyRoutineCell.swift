@@ -7,7 +7,7 @@
 
 import UIKit
 
-class EmptyRoutineCell : UICollectionViewCell {
+class EmptyRoutineCell : UITableViewCell {
     private let emptyRoutineLabel = UILabel().then {
         $0.text = "나의 루틴 목록이 비어있어요.\n새로운 루틴을 만들어보세요!"
         $0.textColor = .color929292
@@ -16,13 +16,13 @@ class EmptyRoutineCell : UICollectionViewCell {
     }
     
     // MARK: - LIFECYCLE
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         setupLayout()
         setupConstraints()
     }
-
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
