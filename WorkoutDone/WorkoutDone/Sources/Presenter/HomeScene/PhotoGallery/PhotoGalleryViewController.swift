@@ -34,7 +34,7 @@ class PhotoGalleryViewController : BaseViewController {
     }
     
     private let authorizedPhotoGalleryView = AuthorizedPhotoGalleryView()
-    private let deniedPhotoGalleryView = DeniedPhotoGalleryView()
+    private let deniedPhotoGalleryView = PermissionDeniedView(permissionTitle: "갤러리")
     private let limitedPhotoGalleryView = LimitedPhotoGalleryView()
     
     
@@ -124,9 +124,11 @@ class PhotoGalleryViewController : BaseViewController {
             case .denied:
                 print("denied")
                 self.requestAuthResponseView(status: status, completion: { _ in
-                self.authorizedPhotoGalleryView.isHidden = true
-                self.limitedPhotoGalleryView.isHidden = false
-                self.deniedPhotoGalleryView.isHidden = true
+                    DispatchQueue.main.async {
+                        self.authorizedPhotoGalleryView.isHidden = true
+                        self.limitedPhotoGalleryView.isHidden = true
+                        self.deniedPhotoGalleryView.isHidden = false
+                    }
                 })
             case .authorized:
                 print("authorized")
@@ -172,6 +174,11 @@ class PhotoGalleryViewController : BaseViewController {
     override func actions() {
         super.actions()
         photoSelectButton.addTarget(self, action: #selector(photoSelectionButtonTapped), for: .touchUpInside)
+        deniedPhotoGalleryView.permisstionButton.addTarget(self, action: #selector(permisstionButtonTapped), for: .touchUpInside)
+    }
+    @objc func permisstionButtonTapped() {
+        UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
+
     }
     @objc func photoSelectionButtonTapped() {
         if DeviceManager.shared.isHomeButtonDevice() || DeviceManager.shared.isSimulatorIsHomeButtonDevice() {
