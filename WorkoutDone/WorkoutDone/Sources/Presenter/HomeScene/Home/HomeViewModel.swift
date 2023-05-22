@@ -38,7 +38,7 @@ class HomeViewModel {
         let weightData = Driver<String>.combineLatest(input.loadView, input.selectedDate, resultSelector: { (load, date) in
             let weight = self.readBodyInfoData(id: date)?.bodyInfo?.weight
             if let validWeight = weight {
-                return String(validWeight)
+                return String(validWeight.truncateDecimalPoint())
             }
             else {
                 return "-"
@@ -47,7 +47,7 @@ class HomeViewModel {
         let skeletalMusleMassData = Driver<String>.combineLatest(input.loadView, input.selectedDate, resultSelector: { (load, date) in
             let skeletalMusleMass = self.readBodyInfoData(id: date)?.bodyInfo?.skeletalMuscleMass
             if let validSkeletalMusleMass = skeletalMusleMass {
-                return String(validSkeletalMusleMass)
+                return String(validSkeletalMusleMass.truncateDecimalPoint())
             }
             else {
                 return "-"
@@ -57,7 +57,7 @@ class HomeViewModel {
         let fatPercentageData = Driver<String>.combineLatest(input.loadView, input.selectedDate, resultSelector: { (load, date) in
             let fatPercentage = self.readBodyInfoData(id: date)?.bodyInfo?.fatPercentage
             if let validFatPercentage = fatPercentage {
-                return String(validFatPercentage)
+                return String(validFatPercentage.truncateDecimalPoint())
             }
             else {
                 return "-"

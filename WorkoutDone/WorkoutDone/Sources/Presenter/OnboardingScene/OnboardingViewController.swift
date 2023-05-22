@@ -10,8 +10,8 @@ import SnapKit
 import Then
 
 struct Onboarding {
-    var image: String
-    var text: String
+    var image : String
+    var text : String
 }
 
 class OnboardingViewController : BaseViewController {
@@ -138,6 +138,11 @@ extension OnboardingViewController : UICollectionViewDelegate, UICollectionViewD
         currentPage = Int(scrollView.contentOffset.x / scrollView.frame.width)
         self.pageControl.currentPage = currentPage
         pageControl.setCurrentPageIndicatorImage(UIImage(named: "currentPage"), forPage: currentPage)
+        if currentPage == numberOfPages - 1 {
+            nextButton.setTitle("시작하기", for: .normal)
+        } else {
+            nextButton.setTitle("다음으로", for: .normal)
+        }
     }
 }
 

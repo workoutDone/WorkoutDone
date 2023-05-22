@@ -84,7 +84,7 @@ extension CreateRoutineViewController : UICollectionViewDelegate, UICollectionVi
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "bodyPartHeaderView", for: indexPath) as? BodyPartHeaderView else { return RoutineHeaderView() }
+        guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "bodyPartHeaderView", for: indexPath) as? BodyPartHeaderView else { return BodyPartHeaderView() }
         
         return header
     }

@@ -10,6 +10,16 @@ import RxCocoa
 import RxSwift
 
 class HomeViewController : BaseViewController {
+    
+    
+    private let duringWorkoutViewController : DuringWorkoutViewController = {
+       let duringWorkoutViewController = DuringWorkoutViewController()
+        duringWorkoutViewController.view.tag = 992
+//        duringWorkoutViewController.expandedViewHeight = self.view.frame.size.height
+        return duringWorkoutViewController
+    }()
+    
+    
     //MARK: - ViewModel
     var homeViewModel = HomeViewModel()
     let frameImageViewModel = FrameImageViewModel()
@@ -26,6 +36,8 @@ class HomeViewController : BaseViewController {
     // MARK: - PROPERTIES
     let monthlyCalendarHeight: Int = 289
     let weeklyCalendarHeight: Int = 115
+    
+//    private let duringWorkoutView = DuringWorkoutView()
     
     private let contentScrollView = UIScrollView().then {
         $0.translatesAutoresizingMaskIntoConstraints = false
@@ -55,6 +67,14 @@ class HomeViewController : BaseViewController {
         contentScrollView.delegate = self
         calendarView.delegate = self
 //        setWorkOutDoneImage()
+        duringWorkoutViewController.expandedViewHeight = self.view.frame.size.height
+
+//        duringWorkoutViewController.didMove(toParent: self)
+//        duringWorkoutViewController.view.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: view.bounds.height)
+//        duringWorkoutViewController.view.backgroundColor = UIColor.red
+//        print(duringWorkoutViewController.view.backgroundColor! as UIColor, "얍")
+        
+//        NotificationCenter.default.addObserver(self, selector: #selector(showDuringWorkoutViewController(_:)), name: NSNotification.Name(duringWorkoutVcVisibility), object: nil)
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -72,7 +92,8 @@ class HomeViewController : BaseViewController {
     override func setupLayout() {
         super.setupLayout()
 
-        view.addSubview(contentScrollView)
+        view.addSubviews(contentScrollView)
+//        view.insertSubview(duringWorkoutViewController.view, at: 1)
         contentScrollView.addSubview(contentView)
         [calendarView, recordBaseView, workoutBaseView, workoutResultBaseView].forEach {
             contentView.addSubview($0)
@@ -88,6 +109,12 @@ class HomeViewController : BaseViewController {
     }
     override func setupConstraints() {
         super.setupConstraints()
+        
+//        duringWorkoutView.snp.makeConstraints {
+//            $0.leading.trailing.equalToSuperview()
+//            $0.bottom.equalTo(view.safeAreaLayoutGuide)
+//            $0.height.equalTo(70)
+//        }
         
         contentScrollView.snp.makeConstraints {
             $0.edges.equalTo(view.safeAreaLayoutGuide)
@@ -184,6 +211,10 @@ class HomeViewController : BaseViewController {
     
 //    func setWorkOutDoneImage() {
 //        recordBaseView.bodyImageView.image = frameImageViewModel.loadImageFromRealm(date: calendarView.selectDate ?? Date())
+//    }
+//    @objc func showDuringWorkoutViewController(_ notification: Notification) {
+//        print("showDuringWorkoutViewController")
+//        self.tabBarController?.tabBar.isHidden.toggle()
 //    }
 }
 
