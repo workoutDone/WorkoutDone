@@ -13,6 +13,7 @@ import RxCocoa
 class HomeButtonLessPhotoFrameTypeViewController : BaseViewController {
     typealias frame = PhotoFrameType
     var selectedImage : UIImage?
+    private var doubleCheckButtonStatus : Int?
     
     private var viewModel = PhotoFrameTypeViewModel()
     
@@ -261,42 +262,25 @@ class HomeButtonLessPhotoFrameTypeViewController : BaseViewController {
     @objc func frameButtonTapped(sender : UIButton) {
         for button in frameButtons {
             if button == sender {
-//                button.isSelected = !button.isSelected
-                selectedFrameTypeButtonStatus.onNext(true)
-                button.layer.borderColor = UIColor.color7442FF.cgColor
-                button.layer.borderWidth = 2
-                
+                if doubleCheckButtonStatus == sender.tag {
+                    button.layer.borderColor = .none
+                    button.layer.borderWidth = 0
+                    doubleCheckButtonStatus = nil
+                    selectedFrameTypeButtonStatus.onNext(false)
+                }
+                else {
+                    button.layer.borderColor = UIColor.color7442FF.cgColor
+                    button.layer.borderWidth = 2
+                    doubleCheckButtonStatus = sender.tag
+                    selectedFrameTypeButtonStatus.onNext(true)
+                    selectedFrameType.onNext(sender.tag)
+                    print(sender.tag, "ddd")
+                }
             }
             else {
                 button.layer.borderColor = .none
                 button.layer.borderWidth = 0
             }
-        }
-        switch sender.tag {
-        case frame.defaultFrame.rawValue:
-            print(frame.defaultFrame.getFrameType())
-            self.selectedFrameType.onNext(frame.defaultFrame.getFrameType())
-        case frame.manFirstUpperBodyFrame.rawValue:
-            print(frame.manFirstUpperBodyFrame.getFrameType())
-            self.selectedFrameType.onNext(frame.manFirstUpperBodyFrame.getFrameType())
-        case frame.manSecondUpperBodyFrame.rawValue:
-            print(frame.manSecondUpperBodyFrame.getFrameType())
-            self.selectedFrameType.onNext(frame.manSecondUpperBodyFrame.getFrameType())
-        case frame.manWholeBodyFrame.rawValue:
-            print(frame.manWholeBodyFrame.getFrameType())
-            self.selectedFrameType.onNext(frame.manWholeBodyFrame.getFrameType())
-        case frame.womanFirstUpperBodyFrame.rawValue:
-            print(frame.womanFirstUpperBodyFrame.getFrameType())
-            self.selectedFrameType.onNext(frame.womanFirstUpperBodyFrame.getFrameType())
-        case frame.womanSecondUpperBodyFrame.rawValue:
-            print(frame.womanSecondUpperBodyFrame.getFrameType())
-            self.selectedFrameType.onNext(frame.womanSecondUpperBodyFrame.getFrameType())
-        case frame.womanWholeBodyFrame.rawValue:
-            print(frame.womanWholeBodyFrame.getFrameType())
-            self.selectedFrameType.onNext(frame.womanWholeBodyFrame.getFrameType())
-            
-        default:
-            print("?/")
         }
     }
     
