@@ -49,7 +49,7 @@ class RegisterMyBodyInfoViewController : BaseViewController {
         $0.layer.cornerRadius = 6
     }
     private let saveButton = GradientButton(colors: [UIColor.color7442FF.cgColor, UIColor.color8E36FF.cgColor]).then {
-        $0.setTitle("저장히기", for: .normal)
+        $0.setTitle("저장하기", for: .normal)
         $0.setTitleColor(.colorFFFFFF, for: .normal)
         $0.titleLabel?.font = .pretendard(.semiBold, size: 20)
     }
@@ -332,7 +332,7 @@ class RegisterMyBodyInfoViewController : BaseViewController {
     
     func showToastMessage() {
         let saveImageToastMessageVC = SaveImageToastMessageViewController()
-        saveImageToastMessageVC.toastMesssageLabel.text = "뭐 하려고 하는지 알겠는데 하지마"
+        saveImageToastMessageVC.toastMesssageLabel.text = "지금보다 더 큰 수는 입력할 수 없어요!"
         saveImageToastMessageVC.modalPresentationStyle = .overFullScreen
         
         UIView.animate(withDuration: 0.7, delay: 0.0, options: .curveEaseOut, animations: {

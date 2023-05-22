@@ -64,7 +64,7 @@ struct FatPercentageGraphView: View {
                                 ZStack {
                                     Image("speechBubble")
                                         .resizable()
-                                        .frame(width: 50, height: 42)
+                                        .frame(width: 64, height: 39)
                                         .offset(y: 6)
                                     Text((currentActiveItem.bodyInfo?.fatPercentage ?? 0).truncateDecimalPoint() + "kg")
                                         .foregroundColor(Color(UIColor.color7442FF))
