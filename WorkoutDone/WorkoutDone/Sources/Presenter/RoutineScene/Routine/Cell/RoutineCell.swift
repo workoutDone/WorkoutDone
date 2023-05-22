@@ -12,7 +12,19 @@ import Then
 class RoutineCell : UITableViewCell {
     var seletedIndex = -1
     
-    private let routineIndexLabel = UILabel().then {
+    let outerView = UIView().then {
+        $0.backgroundColor = .colorCCCCCC
+        $0.layer.cornerRadius = 10
+        $0.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+    }
+    
+    let innerView = UIView().then {
+        $0.backgroundColor = .colorFFFFFF
+        $0.layer.cornerRadius = 10
+        $0.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+    }
+    
+    let routineIndexLabel = UILabel().then {
         $0.text = "routine A"
         $0.textColor = .color7442FF
         $0.font = .pretendard(.regular, size: 12)
@@ -39,6 +51,10 @@ class RoutineCell : UITableViewCell {
         
          setupLayout()
          setupConstraints()
+        
+        innerView.backgroundColor = .white
+        innerView.layer.cornerRadius = 10
+        
     }
     
     required init?(coder: NSCoder) {
@@ -48,25 +64,38 @@ class RoutineCell : UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-            
     }
     
     // MARK: - ACTIONS
     func setupLayout() {
-        self.addSubview(routineIndexLabel)
-        self.addSubview(routineTitleLabel)
-        self.addSubview(editButton)
+        self.addSubview(outerView)
+        outerView.addSubviews(innerView)
+        [routineIndexLabel, routineTitleLabel, editButton].forEach {
+            innerView.addSubviews($0)
+        }
     }
     
     func setupConstraints() {
+        outerView.snp.makeConstraints {
+            $0.top.bottom.equalToSuperview()
+            $0.leading.equalToSuperview().offset(20)
+            $0.trailing.equalToSuperview().offset(-20)
+        }
+        
+        innerView.snp.makeConstraints {
+            $0.top.leading.equalTo(outerView).offset(1)
+            $0.trailing.equalTo(outerView).offset(-1)
+            $0.bottom.equalTo(outerView)
+        }
+        
         routineIndexLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(11)
-            $0.leading.equalToSuperview().offset(39)
+            $0.top.equalToSuperview().offset(15)
+            $0.leading.equalToSuperview().offset(19)
         }
         
         routineTitleLabel.snp.makeConstraints {
-            $0.top.equalTo(routineIndexLabel.snp.bottom)
-            $0.leading.equalToSuperview().offset(39)
+            $0.leading.equalToSuperview().offset(19)
+            $0.top.equalToSuperview().offset(30)
         }
         
         editButton.snp.makeConstraints {
@@ -74,6 +103,14 @@ class RoutineCell : UITableViewCell {
             $0.trailing.equalToSuperview().offset(-20)
             $0.width.equalTo(65)
             $0.height.equalTo(27)
+        }
+    }
+    
+    func opendRoutine() {
+        innerView.snp.remakeConstraints {
+            $0.top.leading.equalTo(outerView).offset(1)
+            $0.trailing.equalTo(outerView).offset(-1)
+            $0.bottom.equalTo(outerView)
         }
     }
 }

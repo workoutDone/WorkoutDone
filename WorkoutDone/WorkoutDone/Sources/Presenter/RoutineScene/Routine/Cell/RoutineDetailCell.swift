@@ -10,6 +10,14 @@ import SnapKit
 import Then
 
 class RoutineDetailCell : UITableViewCell {
+    let outerView = UIView().then {
+        $0.backgroundColor = .colorCCCCCC
+    }
+    
+    let innerView = UIView().then {
+        $0.backgroundColor = .colorFFFFFF
+    }
+
     private let routineView = UIView().then {
         $0.backgroundColor = .colorF3F3F3
         $0.layer.cornerRadius = 8
@@ -47,25 +55,38 @@ class RoutineDetailCell : UITableViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        
-        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 0, left: 20, bottom: 8, right: 20))
-            
+    
     }
     
     // MARK: - ACTIONS
     func setupLayout() {
-        contentView.addSubview(routineView)
+        contentView.addSubview(outerView)
+        outerView.addSubview(innerView)
+        innerView.addSubview(routineView)
+        
         routineView.addSubview(bodyPartView)
         bodyPartView.addSubview(bodyPartLabel)
-        
         routineView.addSubview(weightTrainingLabel)
     }
     
     func setupConstraints() {
-        routineView.snp.makeConstraints {
+        outerView.snp.makeConstraints {
             $0.top.bottom.equalToSuperview()
             $0.leading.equalToSuperview().offset(20)
             $0.trailing.equalToSuperview().offset(-20)
+        }
+        
+        innerView.snp.makeConstraints {
+            $0.top.bottom.equalTo(outerView)
+            $0.leading.equalTo(outerView).offset(1)
+            $0.trailing.equalTo(outerView).offset(-1)
+        }
+        
+        routineView.snp.makeConstraints {
+            $0.top.equalTo(outerView)
+            $0.leading.equalTo(outerView).offset(20)
+            $0.trailing.equalTo(outerView).offset(-20)
+            $0.bottom.equalTo(outerView).offset(-8)
         }
         
         bodyPartView.snp.makeConstraints {
