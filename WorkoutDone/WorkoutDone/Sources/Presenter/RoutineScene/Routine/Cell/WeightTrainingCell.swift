@@ -8,6 +8,12 @@
 import UIKit
 
 class WeightTrainingCell : UICollectionViewCell {
+    var weightTraingView = UIView().then {
+        $0.layer.cornerRadius = 8
+        $0.layer.borderWidth = 1
+        $0.layer.borderColor = UIColor.colorCCCCCC.cgColor
+    }
+    
     var weightTrainingLabel = UILabel().then {
         $0.text = "벤치 프레스"
         $0.textColor = .color363636
@@ -30,13 +36,10 @@ class WeightTrainingCell : UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        contentView.layer.cornerRadius = 8
-        contentView.layer.borderWidth = 1
-        contentView.layer.borderColor = UIColor.colorCCCCCC.cgColor
-        
         setupLayout()
         setupConstraints()
-
+        
+        selectedIndexView.isHidden = true
     }
     
     required init?(coder: NSCoder) {
@@ -45,19 +48,26 @@ class WeightTrainingCell : UICollectionViewCell {
     
     // MARK: - ACTIONS
     func setupLayout() {
-        contentView.addSubview(weightTrainingLabel)
+        contentView.addSubview(weightTraingView)
+        weightTraingView.addSubview(weightTrainingLabel)
         contentView.addSubview(selectedIndexView)
         selectedIndexView.addSubview(selectedIndexLabel)
     }
     
     func setupConstraints() {
+        weightTraingView.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(8)
+            $0.leading.bottom.equalToSuperview()
+            $0.trailing.equalToSuperview().offset(-8)
+        }
+        
         weightTrainingLabel.snp.makeConstraints {
-            $0.centerX.centerY.equalToSuperview()
+            $0.centerX.centerY.equalTo(weightTraingView)
         }
         
         selectedIndexView.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(-8)
-            $0.trailing.equalToSuperview().offset(8)
+            $0.top.equalToSuperview()
+            $0.trailing.equalToSuperview()
             $0.width.height.equalTo(24)
         }
         

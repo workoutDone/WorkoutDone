@@ -9,7 +9,7 @@ import UIKit
 
 class BodyPartCell: UICollectionViewCell {
     var bodyPartLabel = UILabel().then {
-        $0.text = "히히"
+        $0.text = ""
         $0.textColor = .colorC8B4FF
         $0.textAlignment = .center
         $0.font = .pretendard(.regular, size: 16)

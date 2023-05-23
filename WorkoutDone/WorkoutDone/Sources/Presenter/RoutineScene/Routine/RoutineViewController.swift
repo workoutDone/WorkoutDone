@@ -119,10 +119,11 @@ extension RoutineViewController : UITableViewDelegate, UITableViewDataSource {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "routineCell", for: indexPath) as? RoutineCell else { return UITableViewCell() }
             cell.selectionStyle = .none
             cell.routineTitleLabel.text = sampleData[indexPath.section].title
+            cell.editButton.isHidden = true
             
             cell.outerView.backgroundColor = .colorCCCCCC
             if sampleData[indexPath.section].opend {
-                cell.outerView.backgroundColor = .color7442FF
+                cell.editButton.isHidden = false
             }
             
             return cell
@@ -134,10 +135,7 @@ extension RoutineViewController : UITableViewDelegate, UITableViewDataSource {
         cell.weightTrainingLabel.text = sampleData[indexPath.section].category[indexPath.row - 1].training
         
         cell.outerView.backgroundColor = .colorCCCCCC
-        if sampleData[indexPath.section].opend {
-            cell.outerView.backgroundColor = .color7442FF
-        }
-        
+
         return cell
     }
     
@@ -167,12 +165,7 @@ extension RoutineViewController : UITableViewDelegate, UITableViewDataSource {
         outerView.backgroundColor = .colorCCCCCC
         outerView.layer.cornerRadius = 10
         outerView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
-        
-        if sampleData[section].opend {
-            outerView.backgroundColor = .color7442FF
-        }
-    
-        
+
         return footer
     }
     
@@ -182,12 +175,6 @@ extension RoutineViewController : UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if sampleData.count > 0 && indexPath.row == 0 {
-            if sampleData[indexPath.section].opend {
-                guard let cell = tableView.cellForRow(at: indexPath) as? RoutineCell else {
-                    return
-                }
-                print("x")
-            }
             
             sampleData[indexPath.section].opend = !sampleData[indexPath.section].opend
             
