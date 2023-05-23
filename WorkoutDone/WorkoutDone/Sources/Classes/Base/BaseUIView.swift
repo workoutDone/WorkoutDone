@@ -12,12 +12,14 @@ class BaseUIView : UIView {
         super.init(frame: frame)
         setupLayout()
         setupConstraints()
+        setUI()
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         setupLayout()
         setupConstraints()
+        setUI()
     }
     
     // MARK: - 서브뷰 추가 함수
@@ -29,6 +31,9 @@ class BaseUIView : UIView {
     func setupConstraints() {
         /// Override Constraints
         /// snapkit
+    }
+    func setUI() {
+        
     }
 }
 

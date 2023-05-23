@@ -70,14 +70,16 @@ extension TabBarController : UITabBarControllerDelegate {
             }
         }
         if let selectedIndex = tabBarController.viewControllers?.firstIndex(of: viewController) {
-            if selectedIndex == 0 {
-                duringWorkoutViewController.view.isHidden = false
-                duringWorkoutViewController.view.isUserInteractionEnabled = true
-            }
-            else {
-                duringWorkoutViewController.view.isHidden = true
-                duringWorkoutViewController.view.isUserInteractionEnabled = false
-            }
+            duringWorkoutViewController.view.isHidden = true
+            duringWorkoutViewController.view.isUserInteractionEnabled = false
+//            if selectedIndex == 0 {
+//                duringWorkoutViewController.view.isHidden = false
+//                duringWorkoutViewController.view.isUserInteractionEnabled = true
+//            }
+//            else {
+//                duringWorkoutViewController.view.isHidden = true
+//                duringWorkoutViewController.view.isUserInteractionEnabled = false
+//            }
         }
     }
 }
