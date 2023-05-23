@@ -63,7 +63,6 @@
 		926998602A118906003DDAD2 /* RoutineCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9269985F2A118906003DDAD2 /* RoutineCell.swift */; };
 		926998E02A145250003DDAD2 /* EmptyRoutineCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 926998DF2A145250003DDAD2 /* EmptyRoutineCell.swift */; };
 		926998E22A1473FA003DDAD2 /* CreateRoutineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 926998E12A1473FA003DDAD2 /* CreateRoutineViewController.swift */; };
-		926998E52A147740003DDAD2 /* BodyPartHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 926998E42A147740003DDAD2 /* BodyPartHeaderView.swift */; };
 		926998E72A147918003DDAD2 /* BodyPartCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 926998E62A147918003DDAD2 /* BodyPartCell.swift */; };
 		926998E92A1494EE003DDAD2 /* WeightTrainingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 926998E82A1494EE003DDAD2 /* WeightTrainingCell.swift */; };
 		926999502A172F4E003DDAD2 /* RoutineDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9269994F2A172F4E003DDAD2 /* RoutineDetailCell.swift */; };
@@ -204,7 +203,6 @@
 		9269985F2A118906003DDAD2 /* RoutineCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineCell.swift; sourceTree = "<group>"; };
 		926998DF2A145250003DDAD2 /* EmptyRoutineCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyRoutineCell.swift; sourceTree = "<group>"; };
 		926998E12A1473FA003DDAD2 /* CreateRoutineViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRoutineViewController.swift; sourceTree = "<group>"; };
-		926998E42A147740003DDAD2 /* BodyPartHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyPartHeaderView.swift; sourceTree = "<group>"; };
 		926998E62A147918003DDAD2 /* BodyPartCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyPartCell.swift; sourceTree = "<group>"; };
 		926998E82A1494EE003DDAD2 /* WeightTrainingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeightTrainingCell.swift; sourceTree = "<group>"; };
 		9269994F2A172F4E003DDAD2 /* RoutineDetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineDetailCell.swift; sourceTree = "<group>"; };
@@ -708,7 +706,6 @@
 			children = (
 				A59ACB7929B4BC740084C73E /* RoutineViewController.swift */,
 				926998E12A1473FA003DDAD2 /* CreateRoutineViewController.swift */,
-				926998E42A147740003DDAD2 /* BodyPartHeaderView.swift */,
 				926998E32A1473FD003DDAD2 /* Cell */,
 			);
 			path = Routine;
@@ -992,7 +989,6 @@
 				920060E229B63C1500586063 /* CalendarView.swift in Sources */,
 				A5552D362A12834D00835B40 /* LimitedPhotoGalleryView.swift in Sources */,
 				A57061D829D09AD40083ECDD /* FatPercentageGraphView.swift in Sources */,
-				926998E52A147740003DDAD2 /* BodyPartHeaderView.swift in Sources */,
 				A59ACB7E29B4BCF70084C73E /* MyRecordViewController.swift in Sources */,
 				A56D904229E08604009FD0B2 /* HomeViewModel.swift in Sources */,
 				926998222A0EC4A8003DDAD2 /* MyWeightTraining.swift in Sources */,
