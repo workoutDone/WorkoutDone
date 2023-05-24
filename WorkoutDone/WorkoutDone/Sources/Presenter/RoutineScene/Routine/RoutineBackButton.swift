@@ -37,6 +37,11 @@ class RoutineBackButton: UIButton {
     }
     
     func setConstraints() {
+        self.snp.makeConstraints {
+            $0.width.equalTo(80)
+            $0.height.equalTo(22)
+        }
+        
         backButtonImage.snp.makeConstraints {
             $0.centerY.equalToSuperview()
             $0.leading.equalToSuperview().offset(-7)

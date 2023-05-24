@@ -200,8 +200,8 @@ class RegisterMyBodyInfoViewController : BaseViewController {
     override func setupConstraints() {
         super.setupConstraints()
         [weightTextField, fatPercentageTextField, skeletalMuscleMassTextField].forEach {
-            $0.addRightPadding()
-            $0.addLeftPadding()
+            $0.addRightPadding(padding: 10)
+            $0.addLeftPadding(padding: 10)
         }
         baseView.snp.makeConstraints {
             $0.centerY.centerX.equalToSuperview()
