@@ -62,6 +62,8 @@ class CreateRoutineViewController : BaseViewController {
         title = "루틴 만들기"
         
         isSelectWeightTraings = Array(repeating: [], count: sampleData.count)
+
+        setBackButton()
     }
     
     override func setupLayout() {
@@ -104,7 +106,6 @@ class CreateRoutineViewController : BaseViewController {
             $0.centerY.equalTo(selectCompleteButton)
             $0.trailing.equalTo(selectCompleteButtonLabel.snp.leading).offset(-5)
         }
-        
     }
     
     override func setComponents() {
@@ -113,9 +114,28 @@ class CreateRoutineViewController : BaseViewController {
         
         bodyPartCollectionView.delegate = self
         bodyPartCollectionView.dataSource = self
+    }
+    
+    func setBackButton() {
+        let backButton = RoutineBackButton()
+        backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
+    }
 
+    @objc func backButtonTapped() {
+        let routineAlertVC = RoutineAlertViewController()
+        routineAlertVC.modalPresentationStyle = .overCurrentContext
+        routineAlertVC.delegate = self
+        self.present(routineAlertVC, animated: false)
     }
 }
+
+extension CreateRoutineViewController : RoutineAlertDelegate {
+    func routineDeleteButtonTapped() {
+        navigationController?.popViewController(animated: false)
+    }
+}
+
 
 extension CreateRoutineViewController : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -153,7 +173,7 @@ extension CreateRoutineViewController : UICollectionViewDelegate, UICollectionVi
         cell.selectedIndexView.isHidden = true
      
         if let index = isSelectWeightTraings[isSelectBodyPartIndex].firstIndex(of: sampleData[isSelectBodyPartIndex].weigthTraing[indexPath.row]) {
-            cell.selectedIndexLabel.text = "\(index)"
+            cell.selectedIndexLabel.text = "\(index + 1)"
             cell.selectedIndexView.isHidden = false
             
             cell.weightTraingView.layer.borderColor = UIColor.color7442FF.cgColor
