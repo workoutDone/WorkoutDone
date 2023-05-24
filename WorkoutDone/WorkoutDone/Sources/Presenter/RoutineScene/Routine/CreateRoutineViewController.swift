@@ -136,7 +136,6 @@ extension CreateRoutineViewController : RoutineAlertDelegate {
     }
 }
 
-
 extension CreateRoutineViewController : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == bodyPartCollectionView  {
@@ -173,6 +172,7 @@ extension CreateRoutineViewController : UICollectionViewDelegate, UICollectionVi
         cell.selectedIndexView.isHidden = true
      
         if let index = isSelectWeightTraings[isSelectBodyPartIndex].firstIndex(of: sampleData[isSelectBodyPartIndex].weigthTraing[indexPath.row]) {
+
             cell.selectedIndexLabel.text = "\(index + 1)"
             cell.selectedIndexView.isHidden = false
             
