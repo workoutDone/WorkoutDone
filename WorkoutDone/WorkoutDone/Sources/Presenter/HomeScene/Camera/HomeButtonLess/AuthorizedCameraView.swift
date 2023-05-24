@@ -9,49 +9,45 @@ import UIKit
 
 class AuthorizedCameraView : BaseUIView {
     // MARK: - PROPERTIES
-    private lazy var previewView = PreviewView()
+    lazy var previewView = PreviewView()
 
 
-    let frameImageView = UIImageView().then {
+    let gridImageView = UIImageView().then {
         $0.image = UIImage(named: "cameraFrameImage")
     }
-    
-    private let gridImageView = UIImageView()
 
+    let frameImageView = UIImageView()
 
     private let frameTypeBaseView = UIView()
 
     ///프레임 타입 버튼
-    private let defaultFrameButton = UIButton().then {
+    let defaultFrameButton = UIButton().then {
         $0.layer.cornerRadius = 10
     }
 
-    private let manFirstUpperBodyFrameButton = UIButton().then {
+    let manFirstUpperBodyFrameButton = UIButton().then {
         $0.layer.cornerRadius = 10
     }
 
-    private let manSecondUpperBodyFrameButton = UIButton().then {
+    let manSecondUpperBodyFrameButton = UIButton().then {
         $0.layer.cornerRadius = 10
     }
 
-    private let manWholeBodyFrameButton = UIButton().then {
+    let manWholeBodyFrameButton = UIButton().then {
         $0.layer.cornerRadius = 10
     }
 
-    private let womanFirstUpperBodyFrameButton = UIButton().then {
+    let womanFirstUpperBodyFrameButton = UIButton().then {
         $0.layer.cornerRadius = 10
     }
 
-    private let womanSecondUpperBodyFrameButton = UIButton().then {
+    let womanSecondUpperBodyFrameButton = UIButton().then {
         $0.layer.cornerRadius = 10
     }
 
-    private let womanWholeBodyFrameButton = UIButton().then {
+    let womanWholeBodyFrameButton = UIButton().then {
         $0.layer.cornerRadius = 10
     }
-
-    private var frameButtons = [UIButton]()
-
     private let frameScrollBackView = UIView().then {
         $0.backgroundColor = .colorFFFFFF
     }
@@ -78,14 +74,13 @@ class AuthorizedCameraView : BaseUIView {
         $0.setImage(UIImage(named: "homeButtonLessCaptureButton"), for: .normal)
     }
 
-    private let switchCameraButton = UIButton().then {
+    let switchCameraButton = UIButton().then {
         $0.setImage(UIImage(named: "switchCamera"), for: .normal)
     }
     
     override func setUI() {
         super.setUI()
-        previewView.backgroundColor = .blue
-        frameImageView.isHidden = true
+        gridImageView.isHidden = true
         [defaultFrameButton, manFirstUpperBodyFrameButton, manSecondUpperBodyFrameButton, manWholeBodyFrameButton, womanFirstUpperBodyFrameButton, womanSecondUpperBodyFrameButton, womanWholeBodyFrameButton].forEach {
             $0.backgroundColor = .colorE2E2E2
         }
@@ -94,7 +89,7 @@ class AuthorizedCameraView : BaseUIView {
     override func setupLayout() {
         super.setupLayout()
         self.addSubviews(previewView, frameScrollBackView, separateView, captureBackView)
-        previewView.addSubviews(frameImageView)
+        previewView.addSubviews(gridImageView, frameImageView)
         frameScrollBackView.addSubview(frameScrollView)
         frameScrollView.addSubview(frameScrollContentView)
         frameScrollContentView.addSubview(frameStackView)
@@ -110,6 +105,9 @@ class AuthorizedCameraView : BaseUIView {
             $0.top.equalToSuperview().inset(20)
             $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(UIScreen.main.bounds.size.width * 4 / 3)
+        }
+        gridImageView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
         }
         frameImageView.snp.makeConstraints {
             $0.edges.equalToSuperview()
@@ -159,12 +157,3 @@ class AuthorizedCameraView : BaseUIView {
         }
     }
 }
-//[previewView, frameImageView, frameScrollBackView, separateView, captureBackView, captureButton, switchCameraButton].forEach {
-//    view.addSubview($0)
-//}
-//frameScrollBackView.addSubview(frameScrollView)
-//frameScrollView.addSubview(frameScrollContentView)
-//frameScrollContentView.addSubview(frameStackView)
-//[defaultFrameButton, manFirstUpperBodyFrameButton, manSecondUpperBodyFrameButton, manWholeBodyFrameButton, womanFirstUpperBodyFrameButton, womanSecondUpperBodyFrameButton, womanWholeBodyFrameButton].forEach {
-//    frameStackView.addArrangedSubview($0)
-//}

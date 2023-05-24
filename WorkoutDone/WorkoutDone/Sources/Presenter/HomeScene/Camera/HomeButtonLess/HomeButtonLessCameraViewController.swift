@@ -12,6 +12,20 @@ import AVFoundation
 
 class HomeButtonLessCameraViewController : BaseViewController {
     
+
+    var isSelectFrameImagesIndex = 0
+    var backCameraOn: Bool = true
+    var takePicture = false
+    let captureSettion = AVCaptureSession()
+    var videoDeviceInput : AVCaptureDeviceInput!
+    let photoOutput = AVCapturePhotoOutput()
+    var isBack : Bool = true
+    
+    let sesstionQueue = DispatchQueue(label: "sesstion Queue")
+    let videoDeviceDiscoverySession = AVCaptureDevice.DiscoverySession(deviceTypes: [.builtInWideAngleCamera, .builtInTelephotoCamera], mediaType: .video, position: .unspecified)
+    
+///https://medium.com/@barbulescualex/making-a-custom-camera-in-ios-ea44e3087563
+    
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
             hidesBottomBarWhenPushed = true
@@ -25,14 +39,10 @@ class HomeButtonLessCameraViewController : BaseViewController {
     
     private let gridToggleButton = GridToggleButton()
 
-
+    private var frameButtons = [UIButton]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        previewView.backgroundColor = .red
-//        [defaultFrameButton, manFirstUpperBodyFrameButton, manSecondUpperBodyFrameButton, manWholeBodyFrameButton, womanFirstUpperBodyFrameButton, womanSecondUpperBodyFrameButton, womanWholeBodyFrameButton].forEach {
-//            $0.backgroundColor = .systemPink
-//        }
         requestAuth()
     }
     override func setupLayout() {
@@ -48,6 +58,22 @@ class HomeButtonLessCameraViewController : BaseViewController {
         navigationController?.isNavigationBarHidden = false
         deniedCameraView.isHidden = true
         authorizedCameraView.isHidden = true
+        
+
+        [authorizedCameraView.defaultFrameButton, authorizedCameraView.manFirstUpperBodyFrameButton, authorizedCameraView.manSecondUpperBodyFrameButton, authorizedCameraView.manWholeBodyFrameButton, authorizedCameraView.womanFirstUpperBodyFrameButton, authorizedCameraView.womanSecondUpperBodyFrameButton, authorizedCameraView.womanWholeBodyFrameButton].forEach {
+            frameButtons.append($0)
+        }
+        
+        authorizedCameraView.defaultFrameButton.tag = 0
+        authorizedCameraView.manFirstUpperBodyFrameButton.tag = 1
+        authorizedCameraView.manSecondUpperBodyFrameButton.tag = 2
+        authorizedCameraView.manWholeBodyFrameButton.tag = 3
+        authorizedCameraView.womanFirstUpperBodyFrameButton.tag = 4
+        authorizedCameraView.womanSecondUpperBodyFrameButton.tag = 5
+        authorizedCameraView.womanWholeBodyFrameButton.tag = 6
+        
+        authorizedCameraView.defaultFrameButton.layer.borderWidth = 2
+        authorizedCameraView.defaultFrameButton.layer.borderColor = UIColor.color7442FF.cgColor
     }
     override func setupConstraints() {
         super.setupConstraints()
@@ -61,45 +87,77 @@ class HomeButtonLessCameraViewController : BaseViewController {
         }
     }
 
-//    override func setupLayout() {
-//        super.setupLayout()
-//        view.addSubviews(previewView, frameImageView, frameScrollBackView, separateView, captureBackView, captureButton, switchCameraButton)
-//        frameScrollBackView.addSubview(frameScrollView)
-//        frameScrollView.addSubview(frameScrollContentView)
-//        frameScrollContentView.addSubview(frameStackView)
-//        [defaultFrameButton, manFirstUpperBodyFrameButton, manSecondUpperBodyFrameButton, manWholeBodyFrameButton, womanFirstUpperBodyFrameButton, womanSecondUpperBodyFrameButton, womanWholeBodyFrameButton].forEach {
-//            frameStackView.addArrangedSubview($0)
-//        }
-//    }
-//    override func setComponents() {
-//        super.setComponents()
-//
-//
-//        navigationController?.isNavigationBarHidden = false
-//        [defaultFrameButton, manFirstUpperBodyFrameButton, manSecondUpperBodyFrameButton, manWholeBodyFrameButton, womanFirstUpperBodyFrameButton, womanSecondUpperBodyFrameButton, womanWholeBodyFrameButton].forEach {
-//            frameButtons.append($0)
-//        }
-//        frameScrollView.showsVerticalScrollIndicator = false
-//        defaultFrameButton.tag = FrameButtonType.defaultFrame.rawValue
-//        manFirstUpperBodyFrameButton.tag = FrameButtonType.manFirstUpperBodyFrame.rawValue
-//
-//    }
-//    override func setupConstraints() {
-//        super.setupConstraints()
-//        gridToggleButton.snp.makeConstraints {
-//            $0.height.equalTo(29)
-//            $0.width.equalTo(84)
-//        }
 
-
-//
-//
-//    }
     override func actions() {
         super.actions()
         deniedCameraView.permisstionButton.addTarget(self, action: #selector(permisstionButtonTapped), for: .touchUpInside)
         gridToggleButton.addTarget(self, action: #selector(gridToggleButtonTapped), for: .touchUpInside)
         authorizedCameraView.captureButton.addTarget(self, action: #selector(captureButtonTapped), for: .touchUpInside)
+        frameButtons.forEach {
+            $0.addTarget(self, action: #selector(frameButtonTapped(sender: )), for: .touchUpInside)
+        }
+        authorizedCameraView.switchCameraButton.addTarget(self, action: #selector(switchCameraButtonTapped), for: .touchUpInside)
+    }
+    @objc func switchCameraButtonTapped() {
+        print("dddd")
+        guard videoDeviceDiscoverySession.devices.count > 1 else {
+            return
+        }
+        
+        sesstionQueue.async {
+            let currentVideoDevice = self.videoDeviceInput.device
+            let currentPosition = currentVideoDevice.position
+            self.isBack = currentPosition == .front
+            let preferredPosition : AVCaptureDevice.Position = self.isBack ? .back : .front
+            let devices = self.videoDeviceDiscoverySession.devices
+            var newVideoDevice : AVCaptureDevice?
+            
+            newVideoDevice = devices.first(where: { device in
+                return preferredPosition == device.position
+            })
+            
+            if let newDevice = newVideoDevice {
+                do {
+                    let videoDeviceInput = try AVCaptureDeviceInput(device: newDevice)
+                    self.captureSettion.beginConfiguration()
+                    self.captureSettion.removeInput(self.videoDeviceInput)
+                    
+                    if self.captureSettion.canAddInput(videoDeviceInput) {
+                        self.captureSettion.addInput(videoDeviceInput)
+                        self.videoDeviceInput = videoDeviceInput
+                    } else {
+                        self.captureSettion.addInput(self.videoDeviceInput)
+                    }
+                    self.captureSettion.commitConfiguration()
+                    
+                    DispatchQueue.main.async {
+                        self.authorizedCameraView.previewView.session = self.captureSettion
+                    }
+                    
+                } catch let error  {
+                    print("error occured while creating device input : \(error.localizedDescription)")
+                }
+            }
+        }
+    }
+    @objc func frameButtonTapped(sender: UIButton) {
+        for button in frameButtons {
+            if button == sender {
+                print(button.tag)
+                if button.tag == 0 {
+                    authorizedCameraView.frameImageView.image = .none
+                }
+                else {
+                    authorizedCameraView.frameImageView.image = UIImage(named: "frame\(button.tag)")
+                }
+                button.layer.borderWidth = 2
+                button.layer.borderColor = UIColor.color7442FF.cgColor
+            }
+            else {
+                button.layer.borderColor = .none
+                button.layer.borderWidth = 0
+            }
+        }
     }
     @objc func captureButtonTapped() {
         let homeButtonLessPressShutterViewController = HomeButtonLessPressShutterViewController()
@@ -111,51 +169,14 @@ class HomeButtonLessCameraViewController : BaseViewController {
     }
     @objc func gridToggleButtonTapped(sender: UIButton!) {
         if gridToggleButton.isOnToggle {
-            authorizedCameraView.frameImageView.isHidden = true
+            authorizedCameraView.gridImageView.isHidden = true
         }
         else {
-            authorizedCameraView.frameImageView.isHidden = false
+            authorizedCameraView.gridImageView.isHidden = false
         }
         gridToggleButton.changeToggle()
         gridToggleButton.isOnToggle = !gridToggleButton.isOnToggle
     }
-//    override func actions() {
-//        super.actions()
-//        [defaultFrameButton, manFirstUpperBodyFrameButton, manSecondUpperBodyFrameButton, manWholeBodyFrameButton, womanFirstUpperBodyFrameButton, womanSecondUpperBodyFrameButton, womanWholeBodyFrameButton].forEach {
-//            $0.addTarget(self, action: #selector(frameButtonsTapped(sender: )), for: .touchUpInside)
-//        }
-//    }
-    /// frameButton Tap
-//    @objc func frameButtonsTapped(sender: UIButton) {
-//        for button in frameButtons {
-//            if button == sender {
-//                button.layer.borderWidth = 1
-//                button.layer.borderColor = UIColor.color7442FF.cgColor
-//            }
-//            else {
-//                button.layer.borderColor = .none
-//                button.layer.borderWidth = 0
-//            }
-//        }
-//        switch sender.tag {
-//        case FrameButtonType.defaultFrame.rawValue:
-//            print("defalut")
-//        case FrameButtonType.manFirstUpperBodyFrame.rawValue:
-//            print("manFirst")
-//        case FrameButtonType.manSecondUpperBodyFrame.rawValue:
-//            print("manSecond")
-//        case FrameButtonType.manWholeBodyFrame.rawValue:
-//            print("manWhole")
-//        case FrameButtonType.womanFirstUpperBodyFrame.rawValue:
-//            print("womanFirst")
-//        case FrameButtonType.womanSecondUpperBodyFrame.rawValue:
-//            print("womanSecond")
-//        case FrameButtonType.womanWholeBodyFraame.rawValue:
-//            print("womanWhole")
-//        default:
-//            print("default")
-//        }
-//    }
     private func requestAuth() {
         AVCaptureDevice.requestAccess(for: .video) { [weak self] granted in
             guard let self = self else { return }
@@ -165,7 +186,12 @@ class HomeButtonLessCameraViewController : BaseViewController {
                     DispatchQueue.main.async {
                         self.deniedCameraView.isHidden = true
                         self.authorizedCameraView.isHidden = false
+                        self.authorizedCameraView.previewView.session = self.captureSettion
                         print(self.authorizedCameraView.isHidden, "dd")
+                    }
+                    self.sesstionQueue.async {
+                        self.setupSession()
+                        self.startSession()
                     }
                 }
             }
@@ -190,15 +216,82 @@ class HomeButtonLessCameraViewController : BaseViewController {
         }
     }
 }
-
+//
+//extension HomeButtonLessCameraViewController {
+//    enum FrameButtonType : Int {
+//        case defaultFrame = 1
+//        case manFirstUpperBodyFrame = 2
+//        case manSecondUpperBodyFrame = 3
+//        case manWholeBodyFrame = 4
+//        case womanFirstUpperBodyFrame = 5
+//        case womanSecondUpperBodyFrame = 6
+//        case womanWholeBodyFraame = 7
+//    }
+//}
 extension HomeButtonLessCameraViewController {
-    enum FrameButtonType : Int {
-        case defaultFrame = 1
-        case manFirstUpperBodyFrame = 2
-        case manSecondUpperBodyFrame = 3
-        case manWholeBodyFrame = 4
-        case womanFirstUpperBodyFrame = 5
-        case womanSecondUpperBodyFrame = 6
-        case womanWholeBodyFraame = 7
+    func setupSession() {
+        captureSettion.sessionPreset = .photo
+        captureSettion.beginConfiguration()
+        
+        guard let camera = videoDeviceDiscoverySession.devices.first else {
+            captureSettion.commitConfiguration()
+            return
+        }
+        do {
+            let videoDeviceInput = try AVCaptureDeviceInput(device: camera)
+            
+            if captureSettion.canAddInput(videoDeviceInput) {
+                captureSettion.addInput(videoDeviceInput)
+                self.videoDeviceInput = videoDeviceInput
+            } else {
+                captureSettion.commitConfiguration()
+                return
+            }
+        } catch _ {
+            captureSettion.commitConfiguration()
+            return
+        }
+        
+        photoOutput.setPreparedPhotoSettingsArray([AVCapturePhotoSettings(format: [AVVideoCodecKey: AVVideoCodecType.jpeg])], completionHandler: nil)
+        if captureSettion.canAddOutput(photoOutput) {
+            captureSettion.addOutput(photoOutput)
+        } else {
+            captureSettion.commitConfiguration()
+            return
+        }
+        captureSettion.commitConfiguration()
+    }
+    
+    func startSession() {
+        sesstionQueue.async {
+            if !self.captureSettion.isRunning {
+                self.captureSettion.startRunning()
+            }
+        }
+    }
+    
+    func stopSession() {
+        sesstionQueue.async {
+            if self.captureSettion.isRunning {
+                self.captureSettion.stopRunning()
+            }
+        }
+    }
+}
+
+extension HomeButtonLessCameraViewController: AVCapturePhotoCaptureDelegate {
+    func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
+
+        guard error == nil else { return }
+        guard let imageData = photo.fileDataRepresentation() else { return }
+        guard let image = UIImage(data: imageData) else { return }
+        let flippedImage = UIImage(cgImage: image.cgImage!, scale: image.scale, orientation: .leftMirrored)
+       
+        DispatchQueue.main.async {
+            let pressShutterVC = PressShutterViewController()
+            pressShutterVC.captureImage = self.isBack ? image : flippedImage
+            pressShutterVC.isSelectFrame = self.isSelectFrameImagesIndex
+            self.navigationController?.pushViewController(pressShutterVC, animated: false)
+        }
     }
 }

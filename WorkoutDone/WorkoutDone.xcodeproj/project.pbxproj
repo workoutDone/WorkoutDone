@@ -119,6 +119,7 @@
 		A576693E29BB06CB00673DFE /* RegisterMyBodyInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A576693D29BB06CB00673DFE /* RegisterMyBodyInfoViewController.swift */; };
 		A576694029BF1A9900673DFE /* UITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = A576693F29BF1A9900673DFE /* UITextField.swift */; };
 		A57FCCDD2A0828C600576812 /* PhotoFrameTypeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57FCCDC2A0828C600576812 /* PhotoFrameTypeViewModel.swift */; };
+		A583276F2A1DEC82002F8F6E /* HomeButtonLessPressShutterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A583276E2A1DEC82002F8F6E /* HomeButtonLessPressShutterViewModel.swift */; };
 		A59A3DDC29C977BC00126ECE /* HomeButtonLessCameraViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59A3DDB29C977BC00126ECE /* HomeButtonLessCameraViewModel.swift */; };
 		A59A3DDE29C9F76200126ECE /* RegisterMyBodyInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59A3DDD29C9F76200126ECE /* RegisterMyBodyInfoViewModel.swift */; };
 		A59ACB7829B46DEB0084C73E /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59ACB7729B46DEB0084C73E /* TabBarController.swift */; };
@@ -261,6 +262,7 @@
 		A576693D29BB06CB00673DFE /* RegisterMyBodyInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterMyBodyInfoViewController.swift; sourceTree = "<group>"; };
 		A576693F29BF1A9900673DFE /* UITextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextField.swift; sourceTree = "<group>"; };
 		A57FCCDC2A0828C600576812 /* PhotoFrameTypeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoFrameTypeViewModel.swift; sourceTree = "<group>"; };
+		A583276E2A1DEC82002F8F6E /* HomeButtonLessPressShutterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeButtonLessPressShutterViewModel.swift; sourceTree = "<group>"; };
 		A59A3DDB29C977BC00126ECE /* HomeButtonLessCameraViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeButtonLessCameraViewModel.swift; sourceTree = "<group>"; };
 		A59A3DDD29C9F76200126ECE /* RegisterMyBodyInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterMyBodyInfoViewModel.swift; sourceTree = "<group>"; };
 		A59ACB7729B46DEB0084C73E /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
@@ -627,6 +629,7 @@
 				A59EF6E429C0CE22005DE9B5 /* HomeButtonLessCameraViewController.swift */,
 				A526C12D2A1BC5A600DAC0EF /* AuthorizedCameraView.swift */,
 				A526C12F2A1C783A00DAC0EF /* HomeButtonLessPressShutterViewController.swift */,
+				A583276E2A1DEC82002F8F6E /* HomeButtonLessPressShutterViewModel.swift */,
 			);
 			path = HomeButtonLess;
 			sourceTree = "<group>";
@@ -1003,6 +1006,7 @@
 				A57061CF29CD6A5E0083ECDD /* GalleryViewController.swift in Sources */,
 				920060E229B63C1500586063 /* CalendarView.swift in Sources */,
 				A5552D362A12834D00835B40 /* LimitedPhotoGalleryView.swift in Sources */,
+				A583276F2A1DEC82002F8F6E /* HomeButtonLessPressShutterViewModel.swift in Sources */,
 				A57061D829D09AD40083ECDD /* FatPercentageGraphView.swift in Sources */,
 				926998E52A147740003DDAD2 /* BodyPartHeaderView.swift in Sources */,
 				A59ACB7E29B4BCF70084C73E /* MyRecordViewController.swift in Sources */,
