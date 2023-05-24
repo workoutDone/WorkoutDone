@@ -91,6 +91,7 @@
 		A526C1272A1B433600DAC0EF /* DeleteAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A526C1262A1B433600DAC0EF /* DeleteAlertView.swift */; };
 		A526C1292A1B4ACC00DAC0EF /* DeleteRecordAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A526C1282A1B4ACC00DAC0EF /* DeleteRecordAlertView.swift */; };
 		A526C12E2A1BC5A600DAC0EF /* AuthorizedCameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A526C12D2A1BC5A600DAC0EF /* AuthorizedCameraView.swift */; };
+		A526C1302A1C783A00DAC0EF /* HomeButtonLessPressShutterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A526C12F2A1C783A00DAC0EF /* HomeButtonLessPressShutterViewController.swift */; };
 		A52F65F82A09FE9D00D398DF /* NotificationCenterManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52F65F72A09FE9D00D398DF /* NotificationCenterManager.swift */; };
 		A52F65FA2A0A015F00D398DF /* NotificationName.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52F65F92A0A015F00D398DF /* NotificationName.swift */; };
 		A54C485E29FF9FB1004CEE3D /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54C485D29FF9FB1004CEE3D /* RealmManager.swift */; };
@@ -232,6 +233,7 @@
 		A526C1262A1B433600DAC0EF /* DeleteAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAlertView.swift; sourceTree = "<group>"; };
 		A526C1282A1B4ACC00DAC0EF /* DeleteRecordAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteRecordAlertView.swift; sourceTree = "<group>"; };
 		A526C12D2A1BC5A600DAC0EF /* AuthorizedCameraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizedCameraView.swift; sourceTree = "<group>"; };
+		A526C12F2A1C783A00DAC0EF /* HomeButtonLessPressShutterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeButtonLessPressShutterViewController.swift; sourceTree = "<group>"; };
 		A52F65F72A09FE9D00D398DF /* NotificationCenterManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCenterManager.swift; sourceTree = "<group>"; };
 		A52F65F92A0A015F00D398DF /* NotificationName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationName.swift; sourceTree = "<group>"; };
 		A54C485D29FF9FB1004CEE3D /* RealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
@@ -624,6 +626,7 @@
 			children = (
 				A59EF6E429C0CE22005DE9B5 /* HomeButtonLessCameraViewController.swift */,
 				A526C12D2A1BC5A600DAC0EF /* AuthorizedCameraView.swift */,
+				A526C12F2A1C783A00DAC0EF /* HomeButtonLessPressShutterViewController.swift */,
 			);
 			path = HomeButtonLess;
 			sourceTree = "<group>";
@@ -935,6 +938,7 @@
 				9264A58429BA22FE0010856F /* DayOfTheWeekCell.swift in Sources */,
 				9200604729B1ACF400586063 /* WorkoutResultView.swift in Sources */,
 				9200604329B1ACBF00586063 /* RecordView.swift in Sources */,
+				A526C1302A1C783A00DAC0EF /* HomeButtonLessPressShutterViewController.swift in Sources */,
 				926998102A0C6375003DDAD2 /* EmptyImageCell.swift in Sources */,
 				92DCF48029D0846B00F90002 /* BodyInfo.swift in Sources */,
 				A57061D129CD6A840083ECDD /* AnalyzeViewController.swift in Sources */,

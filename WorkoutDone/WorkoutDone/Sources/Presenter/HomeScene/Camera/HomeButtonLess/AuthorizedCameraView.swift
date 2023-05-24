@@ -74,7 +74,7 @@ class AuthorizedCameraView : BaseUIView {
     private let captureBackView = UIView()
     
     
-    private let captureButton = UIButton().then {
+    let captureButton = UIButton().then {
         $0.setImage(UIImage(named: "homeButtonLessCaptureButton"), for: .normal)
     }
 

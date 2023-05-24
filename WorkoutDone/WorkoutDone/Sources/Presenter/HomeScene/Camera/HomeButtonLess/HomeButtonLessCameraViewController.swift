@@ -23,21 +23,6 @@ class HomeButtonLessCameraViewController : BaseViewController {
     private let deniedCameraView = PermissionDeniedView(permissionTitle: "카메라")
     private let authorizedCameraView = AuthorizedCameraView()
     
-    
-//    private let previewView = PreviewView()
-//
-//    private let captureButton = UIButton().then {
-//        $0.setImage(UIImage(named: "homeButtonLessCaptureButton"), for: .normal)
-//    }
-//
-//    private let switchCameraButton = UIButton().then {
-//        $0.setImage(UIImage(named: "switchCamera"), for: .normal)
-//    }
-//
-//    private let captureAgainButton = UIButton()
-//
-//    private let frameImageView = UIImageView()
-//
     private let gridToggleButton = GridToggleButton()
 
 
@@ -88,10 +73,6 @@ class HomeButtonLessCameraViewController : BaseViewController {
 //    }
 //    override func setComponents() {
 //        super.setComponents()
-//        view.backgroundColor = .colorFFFFFF
-//        let barButton = UIBarButtonItem()
-//        barButton.customView = gridToggleButton
-//        navigationItem.rightBarButtonItem = barButton
 //
 //
 //        navigationController?.isNavigationBarHidden = false
@@ -109,29 +90,8 @@ class HomeButtonLessCameraViewController : BaseViewController {
 //            $0.height.equalTo(29)
 //            $0.width.equalTo(84)
 //        }
-//        previewView.snp.makeConstraints {
-//            $0.top.equalTo(view.safeAreaLayoutGuide)
-//            $0.leading.trailing.equalToSuperview()
-//            $0.height.equalTo(view.frame.width * 4 / 3)
-//        }
 
-//        separateView.snp.makeConstraints {
-//            $0.height.equalTo(1)
-//            $0.top.equalTo(frameScrollBackView.snp.bottom)
-//            $0.leading.trailing.equalToSuperview()
-//        }
-//        captureBackView.snp.makeConstraints {
-//            $0.top.equalTo(separateView.snp.bottom)
-//            $0.leading.trailing.equalToSuperview()
-//            $0.bottom.equalTo(view.safeAreaLayoutGuide)
-//        }
-//        captureButton.snp.makeConstraints {
-//            $0.centerY.centerX.equalTo(captureBackView)
-//        }
-//        switchCameraButton.snp.makeConstraints {
-//            $0.centerY.equalTo(captureBackView)
-//            $0.trailing.equalToSuperview().offset(-26)
-//        }
+
 //
 //
 //    }
@@ -139,6 +99,11 @@ class HomeButtonLessCameraViewController : BaseViewController {
         super.actions()
         deniedCameraView.permisstionButton.addTarget(self, action: #selector(permisstionButtonTapped), for: .touchUpInside)
         gridToggleButton.addTarget(self, action: #selector(gridToggleButtonTapped), for: .touchUpInside)
+        authorizedCameraView.captureButton.addTarget(self, action: #selector(captureButtonTapped), for: .touchUpInside)
+    }
+    @objc func captureButtonTapped() {
+        let homeButtonLessPressShutterViewController = HomeButtonLessPressShutterViewController()
+        self.navigationController?.pushViewController(homeButtonLessPressShutterViewController, animated: false)
     }
     @objc func permisstionButtonTapped() {
         UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
