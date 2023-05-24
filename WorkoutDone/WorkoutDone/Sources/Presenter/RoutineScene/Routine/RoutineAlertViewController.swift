@@ -8,7 +8,7 @@
 import UIKit
 
 protocol RoutineAlertDelegate: AnyObject {
-    func routineDeleteButtonTapped()
+    func returnToRoot()
 }
 
 class RoutineAlertViewController: BaseViewController {
@@ -42,6 +42,6 @@ class RoutineAlertViewController: BaseViewController {
     
     @objc func deleteButtonTapped() {
         dismiss(animated: false)
-        delegate?.routineDeleteButtonTapped()
+        delegate?.returnToRoot()
     }
 }

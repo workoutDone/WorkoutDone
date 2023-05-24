@@ -116,6 +116,11 @@ class CreateRoutineViewController : BaseViewController {
         bodyPartCollectionView.dataSource = self
     }
     
+    override func actions() {
+        selectCompleteButton.addTarget(self, action: #selector(selectCompleteButtonTapped), for: .touchUpInside)
+    }
+    
+    
     func setBackButton() {
         let backButton = RoutineBackButton()
         backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
@@ -123,15 +128,25 @@ class CreateRoutineViewController : BaseViewController {
     }
 
     @objc func backButtonTapped() {
-        let routineAlertVC = RoutineAlertViewController()
-        routineAlertVC.modalPresentationStyle = .overCurrentContext
-        routineAlertVC.delegate = self
-        self.present(routineAlertVC, animated: false)
+        if selectedCount > 0 {
+            let routineAlertVC = RoutineAlertViewController()
+            routineAlertVC.modalPresentationStyle = .overCurrentContext
+            routineAlertVC.delegate = self
+            self.present(routineAlertVC, animated: false)
+        } else {
+            returnToRoot()
+        }
+    }
+    
+    @objc func selectCompleteButtonTapped(sender: UIButton!) {
+        let routineEditorVC = RoutineEditorViewController()
+        routineEditorVC.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(routineEditorVC, animated: false)
     }
 }
 
 extension CreateRoutineViewController : RoutineAlertDelegate {
-    func routineDeleteButtonTapped() {
+    func returnToRoot() {
         navigationController?.popViewController(animated: false)
     }
 }
@@ -206,7 +221,7 @@ extension CreateRoutineViewController : UICollectionViewDelegate, UICollectionVi
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
-          return CGSize(width: collectionView.bounds.width, height: 100)
+          return CGSize(width: collectionView.bounds.width, height: 90)
       }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
