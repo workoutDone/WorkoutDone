@@ -221,9 +221,12 @@ extension CreateRoutineViewController : UICollectionViewDelegate, UICollectionVi
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
-          return CGSize(width: collectionView.bounds.width, height: 90)
+        if collectionView == bodyPartCollectionView {
+            return CGSize(width: 0, height: 0)
+        }
+        return CGSize(width: collectionView.bounds.width, height: 90)
       }
-    
+
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if collectionView == bodyPartCollectionView {
             isSelectBodyPartIndex = indexPath.row
