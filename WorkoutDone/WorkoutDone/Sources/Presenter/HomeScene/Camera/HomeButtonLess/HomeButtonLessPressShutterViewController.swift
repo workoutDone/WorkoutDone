@@ -33,6 +33,7 @@ class HomeButtonLessPressShutterViewController : BaseViewController {
     
     
     // MARK: - PROPERTIES
+
     
     var captureImageView = UIImageView().then {
         $0.contentMode = .scaleAspectFit
@@ -94,7 +95,7 @@ class HomeButtonLessPressShutterViewController : BaseViewController {
     }
     
     private let instaLabel = UILabel().then {
-        $0.text = "인스타 업로드"
+        $0.text = "스토리 업로드"
         $0.font = .pretendard(.medium, size: 14)
         $0.textColor = .color121212
     }
@@ -200,7 +201,44 @@ class HomeButtonLessPressShutterViewController : BaseViewController {
     
     // MARK: - ACTIONS
     override func actions() {
-        
+        instaButton.addTarget(self, action: #selector(instaButtonTapped), for: .touchUpInside)
+        againButton.addTarget(self, action: #selector(againButtonTapped), for: .touchUpInside)
+    }
+    @objc func instaButtonTapped() {
+        if let storyShareURL = URL(string: "instagram-stories://share") {
+            if UIApplication.shared.canOpenURL(storyShareURL) {
+                let targetSize = CGSize(width: captureImageView.frame.width, height: captureImageView.frame.height)
+                let renderer = UIGraphicsImageRenderer(size: targetSize)
+
+                let renderImage = renderer.image { _ in
+                    captureImageView.drawHierarchy(in: (captureImageView.bounds), afterScreenUpdates: true)
+                }
+                guard let imageData = renderImage.pngData() else { return }
+                let pasteboardItems : [String:Any] = [
+                          "com.instagram.sharedSticker.backgroundImage": imageData,
+                          "com.instagram.sharedSticker.backgroundTopColor" : "#636e72",
+                          "com.instagram.sharedSticker.backgroundBottomColor" : "#b2bec3",
+                      ]
+                let pasteboardOptions = [
+                     UIPasteboard.OptionsKey.expirationDate : Date().addingTimeInterval(300)
+                 ]
+                 
+                 UIPasteboard.general.setItems([pasteboardItems], options: pasteboardOptions)
+                 
+                 
+                 UIApplication.shared.open(storyShareURL, options: [:], completionHandler: nil)
+            }
+            else {
+                
+                            let alert = UIAlertController(title: "알림", message: "인스타그램이 필요합니다", preferredStyle: .alert)
+                            let ok = UIAlertAction(title: "확인", style: .default, handler: nil)
+                            alert.addAction(ok)
+                            self.present(alert, animated: true, completion: nil)
+            }
+        }
+    }
+    @objc func againButtonTapped() {
+        navigationController?.popViewController(animated: true)
     }
     
     private func resizeImage(image: UIImage, newSize: CGSize) -> UIImage {
