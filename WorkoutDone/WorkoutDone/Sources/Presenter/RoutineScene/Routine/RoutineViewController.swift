@@ -26,6 +26,8 @@ class RoutineViewController : BaseViewController {
         MyRoutineData(title: "바프를 향해 데일리루틴", category: [CategoryData(categoryName: "냠냠", training: "냠냠")], opend: false)
     ]
     
+    var preSelectedIndex : Int = -1
+    
     private let routineTableView = UITableView(frame: .zero, style: .grouped).then {
         $0.register(RoutineCell.self, forCellReuseIdentifier: "routineCell")
         $0.register(RoutineDetailCell.self, forCellReuseIdentifier: "routineDetailCell")
@@ -175,9 +177,16 @@ extension RoutineViewController : UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if sampleData.count > 0 && indexPath.row == 0 {
+            if !sampleData[indexPath.section].opend {
+                if preSelectedIndex >= 0 {
+                    sampleData[preSelectedIndex].opend = false
+                    tableView.reloadSections([preSelectedIndex], with: .none)
+                }
+                
+                preSelectedIndex = indexPath.section
+            }
             
             sampleData[indexPath.section].opend = !sampleData[indexPath.section].opend
-            
             tableView.reloadSections([indexPath.section], with: .none)
         }
     }
