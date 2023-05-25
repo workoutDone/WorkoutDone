@@ -156,18 +156,22 @@ extension RoutineViewController : UITableViewDelegate, UITableViewDataSource {
         let footer = UIView()
         
         let outerView = UIView(frame: .init(x: 20, y: 0, width: tableView.bounds.width - 40, height: 20))
-        let innerView = UIButton(frame: .init(x: 1, y: -1, width: outerView.bounds.width - 2, height: outerView.bounds.height))
+        let innerView = UIView(frame: .init(x: 1, y: -1, width: outerView.bounds.width - 2, height: outerView.bounds.height))
         footer.addSubview(outerView)
         outerView.addSubview(innerView)
-        
-        innerView.backgroundColor = .colorFFFFFF
-        innerView.layer.cornerRadius = 10
-        innerView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         
         outerView.backgroundColor = .colorCCCCCC
         outerView.layer.cornerRadius = 10
         outerView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+        
+        innerView.backgroundColor = .colorFFFFFF
+        innerView.layer.cornerRadius = 10
+        innerView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
 
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(routineCellTapped))
+        innerView.addGestureRecognizer(tapGesture)
+        innerView.tag = section
+       
         return footer
     }
     
@@ -189,5 +193,22 @@ extension RoutineViewController : UITableViewDelegate, UITableViewDataSource {
             sampleData[indexPath.section].opend = !sampleData[indexPath.section].opend
             tableView.reloadSections([indexPath.section], with: .none)
         }
+    }
+    
+    @objc func routineCellTapped(_ gestureRecognizer: UITapGestureRecognizer) {
+        guard let footerView = gestureRecognizer.view else { return }
+        let section = footerView.tag
+
+        if !sampleData[section].opend {
+            if preSelectedIndex >= 0 {
+                sampleData[preSelectedIndex].opend = false
+                routineTableView.reloadSections([preSelectedIndex], with: .none)
+            }
+            
+            preSelectedIndex = section
+        }
+        
+        sampleData[section].opend = !sampleData[section].opend
+        routineTableView.reloadSections([section], with: .none)
     }
 }
