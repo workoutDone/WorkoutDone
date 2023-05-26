@@ -92,6 +92,7 @@ class RoutineEditorViewController: BaseViewController {
     
     override func actions() {
         nameTextField.addTarget(self, action: #selector(self.didChangeTextField), for: .editingChanged)
+        saveButton.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
     }
     
     @objc func didChangeTextField(_ sender: Any?) {
@@ -105,6 +106,12 @@ class RoutineEditorViewController: BaseViewController {
             nameTextField.font = .pretendard(.regular, size: 16)
             
             saveButton.gradient.colors = [UIColor.colorCCCCCC.cgColor, UIColor.colorCCCCCC.cgColor]
+        }
+    }
+    
+    @objc func saveButtonTapped() {
+        if nameTextField.text != "" && stampView.isSelectStampIndex >= 0 {
+            self.navigationController?.popToRootViewController(animated: true)
         }
     }
 }
@@ -129,6 +136,10 @@ extension RoutineEditorViewController : UITableViewDelegate, UITableViewDataSour
         cell.selectionStyle = .none
         
         cell.weightTrainingLabel.text = sampleData[indexPath.row]
+        cell.layer.borderWidth = 1
+        cell.layer.borderColor = UIColor.colorC8B4FF.cgColor
+        cell.layer.cornerRadius = 8
+        cell.backgroundColor = .colorFFFFFF
         
         return cell
     }

@@ -9,8 +9,14 @@ import UIKit
 import SnapKit
 import Then
 
+protocol EditDelegate : AnyObject {
+    func editButtonTapped()
+}
+
 class RoutineCell : UITableViewCell {
     var seletedIndex = -1
+    
+    weak var delegate: EditDelegate?
     
     let outerView = UIView().then {
         $0.backgroundColor = .colorCCCCCC
@@ -42,7 +48,7 @@ class RoutineCell : UITableViewCell {
         $0.setTitle("수정하기", for: .normal)
         $0.setTitleColor(UIColor.color363636, for: .normal)
         $0.titleLabel?.font = .pretendard(.semiBold, size: 14)
-        $0.isHidden = true
+        //$0.isHidden = true
     }
     
     // MARK: - LIFECYCLE
@@ -54,6 +60,8 @@ class RoutineCell : UITableViewCell {
         
         innerView.backgroundColor = .white
         innerView.layer.cornerRadius = 10
+        
+        editButton.addTarget(self, action: #selector(editButtonTapped), for: .touchUpInside)
         
     }
     
@@ -68,7 +76,7 @@ class RoutineCell : UITableViewCell {
     
     // MARK: - ACTIONS
     func setupLayout() {
-        self.addSubview(outerView)
+        contentView.addSubview(outerView)
         outerView.addSubviews(innerView)
         [routineIndexLabel, routineTitleLabel, editButton].forEach {
             innerView.addSubviews($0)
@@ -112,6 +120,10 @@ class RoutineCell : UITableViewCell {
             $0.trailing.equalTo(outerView).offset(-1)
             $0.bottom.equalTo(outerView)
         }
+    }
+    
+    @objc func editButtonTapped() {
+        delegate?.editButtonTapped()
     }
 }
 

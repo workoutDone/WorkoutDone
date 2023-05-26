@@ -88,6 +88,14 @@ class RoutineViewController : BaseViewController {
     }
 }
 
+extension RoutineViewController : EditDelegate {
+    func editButtonTapped() {
+        let createRoutineVC = CreateRoutineViewController()
+        createRoutineVC.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(createRoutineVC, animated: false)
+    }
+}
+
 extension RoutineViewController : UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return sampleData.count == 0 ? 1 : sampleData.count
@@ -120,6 +128,7 @@ extension RoutineViewController : UITableViewDelegate, UITableViewDataSource {
         if indexPath.row == 0 {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "routineCell", for: indexPath) as? RoutineCell else { return UITableViewCell() }
             cell.selectionStyle = .none
+            cell.delegate = self
             cell.routineTitleLabel.text = sampleData[indexPath.section].title
             cell.editButton.isHidden = true
             
