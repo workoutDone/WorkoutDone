@@ -34,7 +34,7 @@ class DuringWorkoutViewController : BaseViewController {
         }
     
         private let totalWorkoutTimeLabel = UILabel().then {
-            $0.text = "00:08:34"
+            $0.text = "00:08:00"
             $0.textColor = .color121212
             $0.font = .pretendard(.semiBold, size: 20)
         }
@@ -127,7 +127,8 @@ class DuringWorkoutViewController : BaseViewController {
     // MARK: - LIFECYCLE
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        timerCounting = true
+        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(timerCounter), userInfo: nil, repeats: true)
     }
     override func setupBinding() {
         
