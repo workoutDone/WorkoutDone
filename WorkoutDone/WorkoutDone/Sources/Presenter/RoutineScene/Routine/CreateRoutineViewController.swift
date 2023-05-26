@@ -139,9 +139,11 @@ class CreateRoutineViewController : BaseViewController {
     }
     
     @objc func selectCompleteButtonTapped(sender: UIButton!) {
-        let routineEditorVC = RoutineEditorViewController()
-        routineEditorVC.hidesBottomBarWhenPushed = true
-        navigationController?.pushViewController(routineEditorVC, animated: false)
+        if selectedCount > 0 {
+            let routineEditorVC = RoutineEditorViewController()
+            routineEditorVC.hidesBottomBarWhenPushed = true
+            navigationController?.pushViewController(routineEditorVC, animated: false)
+        }
     }
 }
 

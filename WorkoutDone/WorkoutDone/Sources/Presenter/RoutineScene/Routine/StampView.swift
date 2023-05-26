@@ -7,7 +7,15 @@
 
 import UIKit
 
+protocol StampDelegate : AnyObject {
+    func stampTapped()
+}
+
 class StampView: BaseUIView {
+    var isSelectStampIndex = -1
+    
+    weak var delegate: StampDelegate?
+    
     private let stampTitleLabel = UILabel().then {
         $0.text = "오운완 도장 선택"
         $0.font = .pretendard(.semiBold, size: 16)
@@ -52,7 +60,8 @@ class StampView: BaseUIView {
         }
         
         stampCollectionView.snp.makeConstraints {
-            $0.top.equalTo(stampTitleLabel.snp.bottom).offset(14)
+            $0.top.equalTo(stampTitleLabel.snp.bottom).offset(11)
+            $0.height.equalTo(46)
             $0.leading.trailing.bottom.equalToSuperview()
         }
     }
@@ -65,18 +74,38 @@ extension StampView : UICollectionViewDelegate, UICollectionViewDataSource, UICo
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "stampCell", for: indexPath) as? StampCell else { return UICollectionViewCell() }
+        cell.contentView.layer.cornerRadius = cell.frame.height / 2
+        cell.contentView.layer.borderWidth = 1
+        cell.contentView.layer.borderColor = UIColor.clear.cgColor
+        
+        if isSelectStampIndex == indexPath.row {
+            cell.contentView.layer.borderColor = UIColor.color7442FF.cgColor
+        }
+    
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 0, left: 42, bottom: 0, right: 42)
+        return UIEdgeInsets(top: 0, left: 39, bottom: 0, right: 39)
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 40, height: 40)
+        return CGSize(width: 46, height: 46)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 13
+        return 10
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if indexPath.row == isSelectStampIndex {
+            isSelectStampIndex = -1
+        } else {
+            isSelectStampIndex = indexPath.row
+        }
+        
+        collectionView.reloadData()
+        
+        delegate?.stampTapped()
     }
 }
