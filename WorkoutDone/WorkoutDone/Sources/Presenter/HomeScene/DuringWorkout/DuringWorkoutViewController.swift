@@ -6,11 +6,16 @@
 //
 
 import UIKit
+import AVFoundation
 
 class DuringWorkoutViewController : BaseViewController {
     private var timer : Timer = Timer()
     private var count : Int = 0
     private var timerCounting : Bool = false
+    
+    private var countdownTimerCounting : Bool = false
+    private var countdowmTimer : DispatchSourceTimer?
+    private var currentCountdownSecond : Int = 0
 
     // MARK: - PROPERTIES
     private let endWorkoutButton = RightBarButtonItem(title: "운동 종료", buttonBackgroundColor: .colorFFEDF0, titleColor: .colorF54968).then {
@@ -34,7 +39,7 @@ class DuringWorkoutViewController : BaseViewController {
         }
     
         private let totalWorkoutTimeLabel = UILabel().then {
-            $0.text = "00:08:00"
+            $0.text = "00:00:00"
             $0.textColor = .color121212
             $0.font = .pretendard(.semiBold, size: 20)
         }
@@ -67,7 +72,7 @@ class DuringWorkoutViewController : BaseViewController {
         $0.textColor = .colorF54968
     }
     private let restTimerLabel = UILabel().then {
-        $0.text = "01:29"
+        $0.text = "00:00"
         $0.font = .pretendard(.semiBold, size: 32)
         $0.textColor = .colorF54968
     }
@@ -322,10 +327,25 @@ class DuringWorkoutViewController : BaseViewController {
     }
     
     @objc func restButtonTapped() {
-        let duringWorkoutTimerViewController = DuringWorkoutTimerViewController()
-        duringWorkoutTimerViewController.modalTransitionStyle = .crossDissolve
-        duringWorkoutTimerViewController.modalPresentationStyle = .overFullScreen
-        present(duringWorkoutTimerViewController, animated: true)
+        if countdownTimerCounting {
+            stopCountdownTimer()
+        }
+        else {
+            let duringWorkoutTimerViewController = DuringWorkoutTimerViewController()
+            duringWorkoutTimerViewController.modalTransitionStyle = .crossDissolve
+            duringWorkoutTimerViewController.modalPresentationStyle = .overFullScreen
+            duringWorkoutTimerViewController.completionHandler = { [weak self] timer in
+                guard let self else { return }
+                if timer > 0 {
+                    self.currentCountdownSecond = timer
+                    print(self.currentCountdownSecond, "???????")
+                    self.startCountdowmTimer()
+                    self.countdownTimerCounting = true
+                }
+                
+            }
+            present(duringWorkoutTimerViewController, animated: true)
+        }
     }
     
     @objc func swipeAction(_ sender : UISwipeGestureRecognizer) {
@@ -335,6 +355,36 @@ class DuringWorkoutViewController : BaseViewController {
         else if sender.direction == .left {
             pageViewController.setViewControllers([viewControllers[1]], direction: .forward, animated: true)
         }
+    }
+    
+    
+    private func startCountdowmTimer() {
+        if countdowmTimer == nil {
+            restButton.setTitle("휴식종료", for: .normal)
+            countdowmTimer = DispatchSource.makeTimerSource(flags: [], queue: .main)
+            countdowmTimer?.schedule(deadline: .now(), repeating: 1)
+            countdowmTimer?.setEventHandler(handler: {
+                self.currentCountdownSecond -= 1
+                let minutes = (self.currentCountdownSecond % 3600) / 60
+                let seconds = (self.currentCountdownSecond % 3600) % 60
+                self.restTimerLabel.text = String(format: "%02d:%02d", minutes, seconds)
+                debugPrint(self.currentCountdownSecond)
+                if self.currentCountdownSecond <= 0 {
+                    //타이머 종료
+                    self.stopCountdownTimer()
+                    AudioServicesPlaySystemSound(1005)
+                }
+            })
+            countdowmTimer?.resume()
+        }
+    }
+    
+    private func stopCountdownTimer() {
+        countdownTimerCounting = false
+        restButton.setTitle("휴식하기", for: .normal)
+        countdowmTimer?.cancel()
+        countdowmTimer = nil
+        restTimerLabel.text = "00:00"
     }
 }
 // MARK: - EXTENSIONs

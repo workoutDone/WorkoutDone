@@ -9,8 +9,11 @@ import UIKit
 
 class DuringWorkoutTimerViewController : BaseViewController {
     let timeArray = Array(0...59)
+    var countdownSeconds : Int = 0
+    var countdownMinutes : Int = 0
+    var countDownTimeValue : Int = 0
     
-    
+    var completionHandler : ((Int) -> (Void))?
     // MARK: - PROPERTIES
     private let timerBackView = UIView().then {
         $0.backgroundColor = .colorFFFFFF
@@ -41,7 +44,7 @@ class DuringWorkoutTimerViewController : BaseViewController {
     private let secondsPickerView = UIPickerView()
     
     let cancelButton = UIButton().then {
-        $0.setTitle("아니요", for: .normal)
+        $0.setTitle("취소", for: .normal)
         $0.setTitleColor(UIColor.color5E5E5E, for: .normal)
         $0.layer.cornerRadius = 10
         $0.layer.borderColor = UIColor.color929292.cgColor
@@ -49,8 +52,8 @@ class DuringWorkoutTimerViewController : BaseViewController {
         $0.titleLabel?.font = UIFont.pretendard(.semiBold, size: 16)
     }
     
-    let deleteButton = UIButton().then {
-        $0.setTitle("지울래요", for: .normal)
+    let okayButton = UIButton().then {
+        $0.setTitle("확인", for: .normal)
         $0.setTitleColor(UIColor.colorFFFFFF, for: .normal)
         $0.layer.cornerRadius = 10
         $0.layer.borderColor = UIColor.colorF54968.cgColor
@@ -84,7 +87,7 @@ class DuringWorkoutTimerViewController : BaseViewController {
     }
     override func setupLayout() {
         view.addSubviews(visualEffectView, timerBackView)
-        timerBackView.addSubviews(minutesLabel, secondsLabel, cancelButton, deleteButton, pickerBackView)
+        timerBackView.addSubviews(minutesLabel, secondsLabel, cancelButton, okayButton, pickerBackView)
         pickerBackView.addSubviews(minutesPickerView, secondsPickerView, dotLabel)
     }
     override func setupConstraints() {
@@ -99,7 +102,7 @@ class DuringWorkoutTimerViewController : BaseViewController {
             $0.bottom.equalToSuperview().inset(15)
             $0.leading.equalToSuperview().inset(14)
         }
-        deleteButton.snp.makeConstraints {
+        okayButton.snp.makeConstraints {
             $0.height.equalTo(57)
             $0.width.equalTo(114)
             $0.bottom.equalToSuperview().inset(15)
@@ -110,12 +113,11 @@ class DuringWorkoutTimerViewController : BaseViewController {
             $0.top.equalToSuperview().inset(20)
         }
         secondsLabel.snp.makeConstraints {
-            $0.centerX.equalTo(deleteButton.snp.centerX)
+            $0.centerX.equalTo(okayButton.snp.centerX)
             $0.top.equalToSuperview().inset(20)
         }
         pickerBackView.snp.makeConstraints {
             $0.top.equalToSuperview().inset(40)
-//            $0.top.equalTo(secondsLabel.snp.bottom)
             $0.leading.trailing.equalToSuperview()
             $0.bottom.equalTo(cancelButton.snp.top)
         }
@@ -129,7 +131,7 @@ class DuringWorkoutTimerViewController : BaseViewController {
         }
         secondsPickerView.snp.makeConstraints {
             $0.top.bottom.equalToSuperview()
-            $0.centerX.equalTo(deleteButton.snp.centerX)
+            $0.centerX.equalTo(okayButton.snp.centerX)
             $0.centerY.equalToSuperview()
             $0.width.equalTo(114)
             $0.height.equalTo(60)
@@ -141,6 +143,22 @@ class DuringWorkoutTimerViewController : BaseViewController {
     }
     
     // MARK: - ACTIONS
+    override func actions() {
+        super.actions()
+        cancelButton.addTarget(self, action: #selector(cancelButtonTapped), for: .touchUpInside)
+        okayButton.addTarget(self, action: #selector(okayButtonTapped), for: .touchUpInside)
+    }
+    @objc func cancelButtonTapped() {
+        dismiss(animated: true)
+    }
+    @objc func okayButtonTapped() {
+        dismiss(animated: true)
+        print(countdownMinutes, "분")
+        print(countdownSeconds, "초")
+        countDownTimeValue = countdownMinutes * 60 + countdownSeconds
+        print(countDownTimeValue, "이걸루")
+        completionHandler?(countDownTimeValue)
+    }
 }
 // MARK: - EXTENSIONs
 extension DuringWorkoutTimerViewController : UIPickerViewDelegate, UIPickerViewDataSource {
@@ -156,6 +174,17 @@ extension DuringWorkoutTimerViewController : UIPickerViewDelegate, UIPickerViewD
     }
     func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
         return 40
+    }
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        switch pickerView {
+        case minutesPickerView:
+            countdownMinutes = Int(timeArray[row])
+        case secondsPickerView:
+            countdownSeconds = Int(timeArray[row])
+        default:
+            countdownMinutes = 0
+            countdownSeconds = 0
+        }
     }
 
 
