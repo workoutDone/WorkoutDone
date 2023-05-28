@@ -134,6 +134,7 @@ class DuringWorkoutViewController : BaseViewController {
         super.viewDidLoad()
         timerCounting = true
         timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(timerCounter), userInfo: nil, repeats: true)
+        setNotifications()
     }
     override func setupBinding() {
         
@@ -277,8 +278,30 @@ class DuringWorkoutViewController : BaseViewController {
             $0.bottom.equalTo(restBackView.snp.top)
         }
     }
-    
+    func setNotifications() {
+            //백그라운드에서 포어그라운드로 돌아올때
+            NotificationCenter.default.addObserver(self, selector: #selector(addbackGroundTime(_:)), name: NSNotification.Name("sceneWillEnterForeground"), object: nil)
+            //포어그라운드에서 백그라운드로 갈때
+            NotificationCenter.default.addObserver(self, selector: #selector(stopTimer), name: NSNotification.Name("sceneDidEnterBackground"), object: nil)
+        }
 
+    @objc func addbackGroundTime(_ notification:Notification) {
+        let time = notification.userInfo?["time"] as? Int ?? 0
+
+        count += time
+        print(count, "이걸로 되어야하는데?")
+        let updatedTime = secondsToHoursMinutesSeconds(seconds: count)
+        let updatedTimeString = makeTimeString(hours: updatedTime.0, minutes: updatedTime.1, seconds: updatedTime.2)
+        totalWorkoutTimeLabel.text = updatedTimeString
+        timerCounting = true
+        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(timerCounter), userInfo: nil, repeats: true)
+    }
+
+
+        @objc func stopTimer() {
+            timer.invalidate()
+            totalWorkoutTimeLabel.text = ""
+        }
     
     // MARK: - ACTIONS
     override func actions() {
