@@ -1241,6 +1241,7 @@
 				DEVELOPMENT_TEAM = JB8T59WMFR;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = WorkoutDone/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_NSCameraUsageDescription = "카메라좀 쓰자!";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "사진 저장";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -1272,6 +1273,7 @@
 				DEVELOPMENT_TEAM = JB8T59WMFR;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = WorkoutDone/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_NSCameraUsageDescription = "카메라좀 쓰자!";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "사진 저장";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
