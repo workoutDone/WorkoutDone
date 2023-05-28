@@ -26,6 +26,8 @@ class RoutineViewController : BaseViewController {
         MyRoutineData(title: "바프를 향해 데일리루틴", category: [CategoryData(categoryName: "냠냠", training: "냠냠")], opend: false)
     ]
     
+    var preSelectedIndex : Int = -1
+    
     private let routineTableView = UITableView(frame: .zero, style: .grouped).then {
         $0.register(RoutineCell.self, forCellReuseIdentifier: "routineCell")
         $0.register(RoutineDetailCell.self, forCellReuseIdentifier: "routineDetailCell")
@@ -86,6 +88,14 @@ class RoutineViewController : BaseViewController {
     }
 }
 
+extension RoutineViewController : EditDelegate {
+    func editButtonTapped() {
+        let createRoutineVC = CreateRoutineViewController()
+        createRoutineVC.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(createRoutineVC, animated: false)
+    }
+}
+
 extension RoutineViewController : UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return sampleData.count == 0 ? 1 : sampleData.count
@@ -118,6 +128,7 @@ extension RoutineViewController : UITableViewDelegate, UITableViewDataSource {
         if indexPath.row == 0 {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "routineCell", for: indexPath) as? RoutineCell else { return UITableViewCell() }
             cell.selectionStyle = .none
+            cell.delegate = self
             cell.routineTitleLabel.text = sampleData[indexPath.section].title
             cell.editButton.isHidden = true
             
@@ -154,18 +165,22 @@ extension RoutineViewController : UITableViewDelegate, UITableViewDataSource {
         let footer = UIView()
         
         let outerView = UIView(frame: .init(x: 20, y: 0, width: tableView.bounds.width - 40, height: 20))
-        let innerView = UIButton(frame: .init(x: 1, y: -1, width: outerView.bounds.width - 2, height: outerView.bounds.height))
+        let innerView = UIView(frame: .init(x: 1, y: -1, width: outerView.bounds.width - 2, height: outerView.bounds.height))
         footer.addSubview(outerView)
         outerView.addSubview(innerView)
-        
-        innerView.backgroundColor = .colorFFFFFF
-        innerView.layer.cornerRadius = 10
-        innerView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         
         outerView.backgroundColor = .colorCCCCCC
         outerView.layer.cornerRadius = 10
         outerView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+        
+        innerView.backgroundColor = .colorFFFFFF
+        innerView.layer.cornerRadius = 10
+        innerView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
 
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(routineCellTapped))
+        innerView.addGestureRecognizer(tapGesture)
+        innerView.tag = section
+       
         return footer
     }
     
@@ -175,10 +190,34 @@ extension RoutineViewController : UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if sampleData.count > 0 && indexPath.row == 0 {
+            if !sampleData[indexPath.section].opend {
+                if preSelectedIndex >= 0 {
+                    sampleData[preSelectedIndex].opend = false
+                    tableView.reloadSections([preSelectedIndex], with: .none)
+                }
+                
+                preSelectedIndex = indexPath.section
+            }
             
             sampleData[indexPath.section].opend = !sampleData[indexPath.section].opend
-            
             tableView.reloadSections([indexPath.section], with: .none)
         }
+    }
+    
+    @objc func routineCellTapped(_ gestureRecognizer: UITapGestureRecognizer) {
+        guard let footerView = gestureRecognizer.view else { return }
+        let section = footerView.tag
+
+        if !sampleData[section].opend {
+            if preSelectedIndex >= 0 {
+                sampleData[preSelectedIndex].opend = false
+                routineTableView.reloadSections([preSelectedIndex], with: .none)
+            }
+            
+            preSelectedIndex = section
+        }
+        
+        sampleData[section].opend = !sampleData[section].opend
+        routineTableView.reloadSections([section], with: .none)
     }
 }

@@ -10,14 +10,18 @@ import UIKit
 class StampCell: UICollectionViewCell {
     var stampImage = UIImageView().then {
         $0.backgroundColor = .colorCCCCCC
-        $0.layer.cornerRadius = 20
+        $0.layer.borderWidth = 3
+        $0.layer.borderColor = UIColor.colorFFFFFF.cgColor
+        $0.layer.cornerRadius = 46 / 2
     }
+    
     // MARK: - LIFECYCLE
     override init(frame: CGRect) {
         super.init(frame: frame)
         
         setupLayout()
         setupConstraints()
+        
     }
     
     required init?(coder: NSCoder) {
@@ -31,7 +35,8 @@ class StampCell: UICollectionViewCell {
     
     func setupConstraints() {
         stampImage.snp.makeConstraints {
-            $0.top.bottom.leading.trailing.equalToSuperview()
+            $0.centerX.centerY.equalToSuperview()
+            $0.width.height.equalTo(46)
         }
     }
 }

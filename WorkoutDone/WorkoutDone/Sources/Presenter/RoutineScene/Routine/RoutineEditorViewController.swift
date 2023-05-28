@@ -8,20 +8,26 @@
 import UIKit
 
 class RoutineEditorViewController: BaseViewController {
+    var sampleData = ["벤치 프레스", "벤치 프레스2", "벤치 프레스3", "벤치 프레스4", "ㅠㅠ"]
+    
     private let nameTextField = UITextField().then {
         $0.attributedPlaceholder = NSAttributedString(string: "이 루틴의 이름은 무엇인가요?", attributes: [NSAttributedString.Key.foregroundColor : UIColor.colorCCCCCC])
         $0.layer.borderWidth = 1.5
         $0.layer.borderColor = UIColor.color7442FF.cgColor
         $0.layer.cornerRadius = 15
         $0.addLeftPadding(padding: 21)
+        
+        $0.textColor = .color121212
         $0.font = .pretendard(.regular, size: 16)
     }
     
     private let routineTableView = UITableView(frame: .zero, style: .grouped).then {
         $0.register(RoutineEditorCell.self, forCellReuseIdentifier: "routineEditorCell")
         $0.separatorStyle = .none
-        $0.sectionHeaderHeight = 0
-        $0.sectionFooterHeight = 0
+        $0.showsVerticalScrollIndicator = false
+        $0.contentInset = UIEdgeInsets(top: -28, left: 0, bottom: -42, right: 0)
+        $0.isEditing = true
+        
         $0.backgroundColor = .colorF8F6FF
     }
     
@@ -75,36 +81,86 @@ class RoutineEditorViewController: BaseViewController {
             $0.trailing.equalToSuperview().offset(-24)
             $0.height.equalTo(58)
         }
-        
     }
     
     override func setComponents() {
         routineTableView.delegate = self
         routineTableView.dataSource = self
+        
+        stampView.delegate = self
     }
     
     override func actions() {
-     
+        nameTextField.addTarget(self, action: #selector(self.didChangeTextField), for: .editingChanged)
+        saveButton.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
+    }
+    
+    @objc func didChangeTextField(_ sender: Any?) {
+        if nameTextField.text != "" {
+            nameTextField.font = .pretendard(.bold, size: 16)
+            
+            if stampView.isSelectStampIndex >= 0 {
+                saveButton.gradient.colors = [UIColor.color8E36FF.cgColor, UIColor.color7442FF.cgColor]
+            }
+        } else {
+            nameTextField.font = .pretendard(.regular, size: 16)
+            
+            saveButton.gradient.colors = [UIColor.colorCCCCCC.cgColor, UIColor.colorCCCCCC.cgColor]
+        }
+    }
+    
+    @objc func saveButtonTapped() {
+        if nameTextField.text != "" && stampView.isSelectStampIndex >= 0 {
+            self.navigationController?.popToRootViewController(animated: true)
+        }
+    }
+}
+
+extension RoutineEditorViewController : StampDelegate {
+    func stampTapped() {
+        if nameTextField.text != "" && stampView.isSelectStampIndex >= 0 {
+            saveButton.gradient.colors = [UIColor.color8E36FF.cgColor, UIColor.color7442FF.cgColor]
+        } else {
+            saveButton.gradient.colors = [UIColor.colorCCCCCC.cgColor, UIColor.colorCCCCCC.cgColor]
+        }
     }
 }
 
 extension RoutineEditorViewController : UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return sampleData.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "routineEditorCell", for: indexPath) as? RoutineEditorCell else { return UITableViewCell() }
         cell.selectionStyle = .none
+        
+        cell.weightTrainingLabel.text = sampleData[indexPath.row]
+        cell.layer.borderWidth = 1
+        cell.layer.borderColor = UIColor.colorC8B4FF.cgColor
+        cell.layer.cornerRadius = 8
+        cell.backgroundColor = .colorFFFFFF
+        
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 50
+        return 64
     }
     
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 14
+    // editing 버튼 제거
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        return .none
     }
     
+    // 버튼 여백 제거
+    func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
+        return false
+    }
+    
+    // 셀 이동
+    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        let removed = sampleData.remove(at: sourceIndexPath.row)
+        sampleData.insert(removed, at: destinationIndexPath.row)
+    }
 }
