@@ -6,373 +6,408 @@
 //
 
 import UIKit
+import AVFoundation
 
 class DuringWorkoutViewController : BaseViewController {
+    private var timer : Timer = Timer()
+    private var count : Int = 0
+    private var timerCounting : Bool = false
     
-    lazy var foldedViewHeight = 70.0
-    lazy var expandedViewHeight = 92.0
-    
-    
-    // MARK: - PROPERTIES
-    private let currentWorkoutLabel = UILabel().then {
-        $0.font = .pretendard(.semiBold, size: 20)
-        $0.text = "뎀벨프레스"
-        $0.textColor = .color000000
-    }
-    private let foldedworkoutTimeLabel = UILabel().then {
-        $0.text = "00:08:34"
-        $0.textColor = .color000000
-        $0.font = .pretendard(.regular, size: 16)
-    }
+    private var countdownTimerCounting : Bool = false
+    private var countdowmTimer : DispatchSourceTimer?
+    private var currentCountdownSecond : Int = 0
 
-    
+    // MARK: - PROPERTIES
     private let endWorkoutButton = RightBarButtonItem(title: "운동 종료", buttonBackgroundColor: .colorFFEDF0, titleColor: .colorF54968).then {
-        $0.layer.opacity = 0
         $0.layer.cornerRadius = 5
     }
-    
-    
-    let foldViewToggleButton = UIButton().then {
-        $0.setImage(UIImage(systemName: "chevron.up", withConfiguration: UIImage.SymbolConfiguration(pointSize: 32, weight: .bold)), for: .normal)
-        
+    private let currentWorkoutView = UIView()
+    private let currentWorkoutTitleLabel = UILabel().then {
+        $0.text = "현재 운동"
+        $0.font = .pretendard(.regular, size: 14)
+        $0.textColor = .color7442FF
     }
-    private let foldedPlayButton = UIButton().then {
-        $0.setImage(UIImage(systemName: "play.circle.fill", withConfiguration: UIImage.SymbolConfiguration(pointSize: 41, weight: .bold)), for: .normal)
-        $0.layer.opacity = 1
+    private let currentWorkoutLabel = UILabel().then {
+        $0.font = .pretendard(.bold, size: 24)
+        $0.text = "뎀벨프레스"
+        $0.textColor = .color121212
     }
-
+        private let totalWorkoutTimeTitleLabel = UILabel().then {
+            $0.text = "총 운동 시간"
+            $0.textColor = .color121212
+            $0.font = .pretendard(.regular, size: 12)
+        }
+    
+        private let totalWorkoutTimeLabel = UILabel().then {
+            $0.text = "00:00:00"
+            $0.textColor = .color121212
+            $0.font = .pretendard(.semiBold, size: 20)
+        }
+    private let progressBackView = UIView().then {
+        $0.backgroundColor = .colorE2E2E2
+    }
+    private let progressView = UIView().then {
+        $0.backgroundColor = .color363636
+    }
     private let workoutPlayView = UIView().then {
         $0.backgroundColor = .colorF8F6FF
-        $0.layer.opacity = 0
         $0.layer.cornerRadius = 42
         $0.layer.borderWidth = 1
         $0.layer.borderColor = UIColor.colorE6E0FF.cgColor
         $0.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         $0.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
     }
-    
-    private let expandedPlayButton = UIButton().then {
-        $0.setImage(UIImage(systemName: "play.circle.fill", withConfiguration: UIImage.SymbolConfiguration(pointSize: 41, weight: .bold)), for: .normal)
-        $0.layer.opacity = 0
-    }
-    private let playButtonTitleLabel = UILabel().then {
-        $0.text = "운동 재개"
-        $0.font = .pretendard(.semiBold, size: 14)
-        $0.textColor = .color7442FF
-        $0.layer.opacity = 0
-    }
-    
-    
-    private let nextWorkoutButton = UIButton().then {
-        $0.setImage(UIImage(systemName: "play.circle.fill", withConfiguration: UIImage.SymbolConfiguration(pointSize: 25, weight: .bold)), for: .normal)
-        $0.layer.opacity = 0
-    }
-    
-    private let nextWorkoutButtonTitleLabel = UILabel().then {
-        $0.text = "다음 운동"
-        $0.font = .pretendard(.regular, size: 14)
-        $0.textColor = .color7442FF
-        $0.layer.opacity = 0
-    }
-    
-    private let previousWorkoutButton = UIButton().then {
-        $0.setImage(UIImage(systemName: "play.circle.fill", withConfiguration: UIImage.SymbolConfiguration(pointSize: 25, weight: .bold)), for: .normal)
-        $0.layer.opacity = 0
-    }
-    
-    private let previousWorkoutButtonTitleLabel = UILabel().then {
-        $0.text = "이전 운동"
-        $0.font = .pretendard(.regular, size: 14)
-        $0.textColor = .color7442FF
-        $0.layer.opacity = 0
-    }
-    
     private let restButton = UIButton().then {
         $0.setTitle("휴식하기", for: .normal)
         $0.setTitleColor(UIColor.colorFFFFFF, for: .normal)
         $0.backgroundColor = .colorF54968
         $0.layer.cornerRadius = 12
         $0.titleLabel?.font = .pretendard(.bold, size: 16)
-        $0.layer.opacity = 0
     }
+    private let restBackView = UIView()
     
     private let restTimeLeftLabel = UILabel().then {
         $0.text = "남은 휴식시간"
         $0.font = .pretendard(.regular, size: 14)
         $0.textColor = .colorF54968
-        $0.layer.opacity = 0
-    }
-    
-    private let restTimerUnderBarView = UIView().then {
-        $0.backgroundColor = .colorF54968
-        $0.layer.opacity = 0
     }
     private let restTimerLabel = UILabel().then {
-        $0.text = "00:01:29"
-        $0.font = .pretendard(.semiBold, size: 24)
+        $0.text = "00:00"
+        $0.font = .pretendard(.semiBold, size: 32)
         $0.textColor = .colorF54968
-        $0.layer.opacity = 0
+    }
+    private let restTimerUnderBarView = UIView().then {
+        $0.backgroundColor = .colorF54968
     }
     
-    
-    private let currentWorkoutView = UIView().then {
-        $0.layer.opacity = 0
+    private lazy var restStackView : UIStackView = {
+       let stackView = UIStackView(arrangedSubviews: [restBackView, restButton])
+        stackView.axis = .horizontal
+        stackView.distribution = .fill
+        stackView.spacing = 30
+        stackView.alignment = .bottom
+        return stackView
+    }()
+    private let playButton = UIButton().then {
+        $0.setImage(UIImage(named: "playImage"), for: .normal)
     }
-    
-    private let currentWorkoutTitleLabel = UILabel().then {
-        $0.text = "현재 운동"
+    private let playButtonTitleLabel = UILabel().then {
+        $0.text = "운동 재개"
+        $0.font = .pretendard(.semiBold, size: 14)
+        $0.textColor = .color7442FF
+    }
+
+    private let nextWorkoutButton = UIButton().then {
+        $0.setImage(UIImage(named: "nextWorkoutButton"), for: .normal)
+    }
+
+    private let nextWorkoutButtonTitleLabel = UILabel().then {
+        $0.text = "다음 운동"
         $0.font = .pretendard(.regular, size: 14)
         $0.textColor = .color7442FF
-        $0.layer.opacity = 0
+    }
+
+    private let previousWorkoutButton = UIButton().then {
+        $0.setImage(UIImage(named: "previousWorkoutButton"), for: .normal)
+    }
+
+    private let previousWorkoutButtonTitleLabel = UILabel().then {
+        $0.text = "이전 운동"
+        $0.font = .pretendard(.regular, size: 14)
+        $0.textColor = .color7442FF
     }
     
-    private let expandedTotalWorkoutTimeTitleLabel = UILabel().then {
-        $0.text = "총 운동 시간"
-        $0.textColor = .color121212
-        $0.font = .pretendard(.regular, size: 12)
-        $0.layer.opacity = 0
-    }
+    private lazy var duringSetViewController = DuringSetViewController()
+    private lazy var duringEditRoutineViewController = DuringEditRoutineViewController()
     
-    private let expandedTotalWorkoutTimeLabel = UILabel().then {
-        $0.text = "00:08:34"
-        $0.textColor = .color121212
-        $0.font = .pretendard(.semiBold, size: 20)
-        $0.layer.opacity = 0
-    }
+    private lazy var viewControllers : [UIViewController] = {
+        return [duringSetViewController, duringEditRoutineViewController]
+    }()
+    private lazy var pageViewController : UIPageViewController = {
+        let viewController = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal)
+        return viewController
+    }()
+
     
     // MARK: - LIFECYCLE
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupUI()
-
+        timerCounting = true
+        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(timerCounter), userInfo: nil, repeats: true)
+        setNotifications()
     }
     override func setupBinding() {
         
     }
-    
-    func setupUI() {
-        view.addSubviews(currentWorkoutLabel, foldedworkoutTimeLabel, foldedPlayButton, foldViewToggleButton, endWorkoutButton, workoutPlayView, restButton, restTimerUnderBarView, restTimerLabel, restTimeLeftLabel, currentWorkoutView)
-        workoutPlayView.addSubviews(expandedPlayButton, playButtonTitleLabel, nextWorkoutButton, nextWorkoutButtonTitleLabel, previousWorkoutButton, previousWorkoutButtonTitleLabel)
-        
-        currentWorkoutView.addSubviews(currentWorkoutTitleLabel, expandedTotalWorkoutTimeTitleLabel, expandedTotalWorkoutTimeLabel)
-        view.layer.opacity = 1
-        
-        view.frame = CGRect(x: 0, y: view.frame.height - (foldedViewHeight + 82), width: view.frame.width, height: foldedViewHeight)
-        view.clipsToBounds = true
+    override func setComponents() {
+        super.setComponents()
         view.backgroundColor = .colorFFFFFF
-        currentWorkoutLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(10)
-            $0.leading.equalToSuperview().inset(56)
-        }
-        foldedworkoutTimeLabel.snp.makeConstraints {
-//            $0.top.equalTo(currentWorkoutLabel.snp.bottom).offset(2)
-            $0.bottom.equalToSuperview().inset(12)
-            $0.leading.equalToSuperview().inset(56)
-        }
-        foldedPlayButton.snp.makeConstraints {
-            $0.top.equalTo(view.snp.top).offset(14)
-            $0.height.width.equalTo(41)
-            $0.trailing.equalTo(view.snp.trailing).offset(-20)
-        }
+        let barButton = UIBarButtonItem()
+        barButton.customView = endWorkoutButton
+        navigationItem.rightBarButtonItem = barButton
+        
+        pageViewController.didMove(toParent: self)
+        pageViewController.view.frame = self.view.frame
+        pageViewController.setViewControllers([viewControllers[0]], direction: .forward, animated: true)
+    }
+    
+    
+    override func setupLayout() {
+        self.addChild(pageViewController)
+        view.addSubviews(currentWorkoutView, workoutPlayView,restStackView, pageViewController.view)
+        workoutPlayView.addSubviews(playButton, playButtonTitleLabel, nextWorkoutButton, nextWorkoutButtonTitleLabel, previousWorkoutButtonTitleLabel, previousWorkoutButton)
+        currentWorkoutView.addSubviews(currentWorkoutTitleLabel, currentWorkoutLabel, totalWorkoutTimeTitleLabel, totalWorkoutTimeLabel, progressBackView, progressView)
+        restBackView.addSubviews(restTimeLeftLabel, restTimerLabel, restTimerUnderBarView)
+    }
+    override func setupConstraints() {
         endWorkoutButton.snp.makeConstraints {
-            $0.top.equalTo(view.snp.top).offset(14)
-            $0.width.equalTo(80)
             $0.height.equalTo(30)
-            $0.trailing.equalTo(view.snp.trailing).offset(-14)
+            $0.width.equalTo(80)
         }
-        foldViewToggleButton.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(30)
-            $0.leading.equalTo(20)
-            $0.width.equalTo(16)
-            $0.height.equalTo(9)
-        }
-        workoutPlayView.snp.makeConstraints {
-            $0.bottom.equalTo(view.safeAreaLayoutGuide)
-            $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(96)
-        }
-        expandedPlayButton.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(13)
-            $0.centerX.equalToSuperview()
-            $0.width.height.equalTo(46)
-        }
-        playButtonTitleLabel.snp.makeConstraints {
-            $0.top.equalTo(expandedPlayButton.snp.bottom).offset(2)
-            $0.centerX.equalToSuperview()
-        }
-        nextWorkoutButton.snp.makeConstraints {
-            $0.leading.equalTo(expandedPlayButton.snp.trailing).offset(66)
-            $0.centerY.equalTo(expandedPlayButton.snp.centerY)
-        }
-        nextWorkoutButtonTitleLabel.snp.makeConstraints {
-            $0.top.equalTo(nextWorkoutButton.snp.bottom).offset(4)
-            $0.centerX.equalTo(nextWorkoutButton)
-        }
-        previousWorkoutButton.snp.makeConstraints {
-            $0.trailing.equalTo(expandedPlayButton.snp.leading).offset(-66)
-            $0.centerY.equalTo(expandedPlayButton.snp.centerY)
-        }
-        previousWorkoutButtonTitleLabel.snp.makeConstraints {
-            $0.top.equalTo(previousWorkoutButton.snp.bottom).offset(4)
-            $0.centerX.equalTo(previousWorkoutButton)
-        }
-        restButton.snp.makeConstraints {
-            $0.width.equalTo(148)
-            $0.height.equalTo(45)
-            $0.trailing.equalToSuperview().inset(50)
-            $0.bottom.equalTo(workoutPlayView.snp.top).offset(-30)
-        }
-        restTimerUnderBarView.snp.makeConstraints {
-            $0.height.equalTo(1)
-            $0.width.equalTo(103)
-            $0.bottom.equalTo(workoutPlayView.snp.top).offset(-30)
-            $0.leading.equalToSuperview().inset(53)
-        }
-        restTimerLabel.snp.makeConstraints {
-            $0.bottom.equalTo(restTimerUnderBarView.snp.top).offset(-2)
-            $0.centerX.equalTo(restTimerUnderBarView)
-        }
-        restTimeLeftLabel.snp.makeConstraints {
-            $0.bottom.equalTo(restTimerLabel.snp.top).offset(-8)
-            $0.centerX.equalTo(restTimerUnderBarView)
-        }
-        
-        
         currentWorkoutView.snp.makeConstraints {
-            $0.top.equalTo(endWorkoutButton.snp.bottom).offset(6)
+            $0.top.equalTo(view.safeAreaLayoutGuide)
             $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(71)
         }
         currentWorkoutTitleLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(10)
             $0.leading.equalToSuperview().inset(26)
+            $0.top.equalToSuperview().inset(12)
         }
-        expandedTotalWorkoutTimeTitleLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(10)
+        currentWorkoutLabel.snp.makeConstraints {
+            $0.leading.equalToSuperview().inset(26)
+            $0.bottom.equalToSuperview().inset(10)
+        }
+        totalWorkoutTimeTitleLabel.snp.makeConstraints {
+            $0.trailing.equalToSuperview().inset(26)
+            $0.top.equalToSuperview().inset(23)
+        }
+        totalWorkoutTimeLabel.snp.makeConstraints {
+            $0.bottom.equalToSuperview().inset(10)
             $0.trailing.equalToSuperview().inset(26)
         }
-        expandedTotalWorkoutTimeLabel.snp.makeConstraints {
-            $0.bottom.equalToSuperview().inset(9)
-            $0.trailing.equalToSuperview().inset(26)
+        progressBackView.snp.makeConstraints {
+            $0.bottom.equalToSuperview()
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(1)
         }
-    }
-    
-    override func setupLayout() {
-//        view.addSubviews(workoutPlayView)
+        progressView.snp.makeConstraints {
+            $0.bottom.equalToSuperview()
+            $0.leading.equalToSuperview()
+            $0.width.equalTo(UIScreen.main.bounds.width / 2)
+            $0.height.equalTo(1.5)
+        }
+        if DeviceManager.shared.isHomeButtonDevice() || DeviceManager.shared.isSimulatorIsHomeButtonDevice() {
+            workoutPlayView.snp.makeConstraints {
+                $0.height.equalTo(130 - 34)
+                $0.bottom.equalToSuperview()
+                $0.leading.trailing.equalToSuperview()
+            }
+            restStackView.snp.makeConstraints {
+                $0.bottom.equalTo(workoutPlayView.snp.top).offset(-23)
+                $0.centerX.equalToSuperview()
+            }
+        }
+        else {
+            workoutPlayView.snp.makeConstraints {
+                $0.height.equalTo(130)
+                $0.bottom.equalToSuperview()
+                $0.leading.trailing.equalToSuperview()
+            }
+            restStackView.snp.makeConstraints {
+                $0.bottom.equalTo(workoutPlayView.snp.top).offset(-33)
+                $0.centerX.equalToSuperview()
+            }
+        }
+        restBackView.snp.makeConstraints {
+            $0.height.equalTo(55)
+            $0.width.equalTo(113)
+        }
+        restTimeLeftLabel.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.top.equalToSuperview().inset(5)
+        }
+        restTimerLabel.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.bottom.equalTo(restTimerUnderBarView.snp.top).offset(4)
+            
+        }
+        restTimerUnderBarView.snp.makeConstraints {
+            $0.bottom.equalToSuperview()
+            $0.centerX.equalToSuperview()
+            $0.width.equalTo(92)
+            $0.height.equalTo(1)
+        }
+        restButton.snp.makeConstraints {
+            $0.width.equalTo(148)
+            $0.height.equalTo(45)
+        }
+        playButton.snp.makeConstraints {
+            $0.top.equalToSuperview().inset(13)
+            $0.centerX.equalToSuperview()
+            $0.height.width.equalTo(46)
+        }
+        playButtonTitleLabel.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.top.equalTo(playButton.snp.bottom).offset(7)
+        }
+        nextWorkoutButton.snp.makeConstraints {
+            $0.centerY.equalTo(playButton.snp.centerY)
+            $0.trailing.equalToSuperview().inset(83)
+            $0.height.equalTo(14.16)
+            $0.width.equalTo(25.01)
+        }
+        nextWorkoutButtonTitleLabel.snp.makeConstraints {
+            $0.centerX.equalTo(nextWorkoutButton.snp.centerX)
+            $0.top.equalTo(nextWorkoutButton.snp.bottom).offset(7)
+        }
+        previousWorkoutButton.snp.makeConstraints {
+            $0.centerY.equalTo(playButton.snp.centerY)
+            $0.leading.equalToSuperview().inset(83)
+            $0.height.equalTo(14.16)
+            $0.width.equalTo(25.01)
+        }
+        previousWorkoutButtonTitleLabel.snp.makeConstraints {
+            $0.centerX.equalTo(previousWorkoutButton.snp.centerX)
+            $0.top.equalTo(previousWorkoutButton.snp.bottom).offset(7)
+        }
         
+        
+        pageViewController.view.snp.makeConstraints {
+            $0.top.equalTo(currentWorkoutView.snp.bottom)
+            $0.leading.trailing.equalToSuperview()
+            $0.bottom.equalTo(restBackView.snp.top)
+        }
     }
-    override func setComponents() {
+    func setNotifications() {
+            //백그라운드에서 포어그라운드로 돌아올때
+            NotificationCenter.default.addObserver(self, selector: #selector(addbackGroundTime(_:)), name: NSNotification.Name("sceneWillEnterForeground"), object: nil)
+            //포어그라운드에서 백그라운드로 갈때
+            NotificationCenter.default.addObserver(self, selector: #selector(stopTimer), name: NSNotification.Name("sceneDidEnterBackground"), object: nil)
+        }
 
+    @objc func addbackGroundTime(_ notification:Notification) {
+        let time = notification.userInfo?["time"] as? Int ?? 0
+
+        count += time
+        print(count, "이걸로 되어야하는데?")
+        let updatedTime = secondsToHoursMinutesSeconds(seconds: count)
+        let updatedTimeString = makeTimeString(hours: updatedTime.0, minutes: updatedTime.1, seconds: updatedTime.2)
+        totalWorkoutTimeLabel.text = updatedTimeString
+        timerCounting = true
+        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(timerCounter), userInfo: nil, repeats: true)
     }
-    override func setupConstraints() {
 
-    }
 
+        @objc func stopTimer() {
+            timer.invalidate()
+            totalWorkoutTimeLabel.text = ""
+        }
     
     // MARK: - ACTIONS
     override func actions() {
         super.actions()
-
-        foldViewToggleButton.addTarget(self, action: #selector(foldViewToggleButtonTapped), for: .touchUpInside)
-        endWorkoutButton.addTarget(self, action: #selector(endWorkoutButtonTapped), for: .touchUpInside)
-
-    }
-    @objc func foldViewToggleButtonTapped() {
-        print("foldViewToggleButton")
-        NotificationCenter.default.post(name: NSNotification.Name(duringWorkoutVcVisibility), object: nil, userInfo: nil)
-        guard let bottomWorkoutView = self.view else {return}
         
-        if bottomWorkoutView.frame.height == foldedViewHeight {
-            UIView.animate(withDuration: 0.01, animations: {
-                bottomWorkoutView.frame = CGRect(x: 0, y: self.expandedViewHeight - (self.foldedViewHeight + 82), width: self.view.frame.width, height: self.foldedViewHeight + 200 )
-                self.expandingAnimationQuick()
-            }) { _ in
-                UIView.animate(withDuration: 0.7) {
-                    bottomWorkoutView.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.expandedViewHeight)
-                }
-                self.expandingAnimationSlow()
-//                self.workoutTimeLabel.superview?.layoutIfNeeded()
-            }
-        } else {
-            self.foldingAnimationQuick()
-            UIView.animate(withDuration: 0.01, animations: {
-                bottomWorkoutView.frame =  CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.expandedViewHeight + 200)
-                self.endWorkoutButton.superview?.layoutIfNeeded()
-//                self.currentWorkoutLabel.superview?.layoutIfNeeded()
-
-//                self.currentWorkoutLabel.frame = CGRect(x: 26, y: 100, width: 103, height: 20)
-            }) {_ in
-                UIView.animate(withDuration: 0.7) {
-                    bottomWorkoutView.frame =  CGRect(x: 0, y: self.expandedViewHeight - (self.foldedViewHeight + 82), width: self.view.frame.width, height: self.foldedViewHeight)
-                    
-                    self.foldingAnimationSlow()
-                    self.currentWorkoutLabel.superview?.layoutIfNeeded()
-                }
-            }
-        }
+        let swipeLeftGesture = UISwipeGestureRecognizer(target: self, action: #selector(swipeAction(_:)))
+        let swipeRightGesture = UISwipeGestureRecognizer(target: self, action: #selector(swipeAction(_:)))
+        swipeLeftGesture.direction = .left
+        swipeRightGesture.direction = .right
+        view.addGestureRecognizer(swipeLeftGesture)
+        view.addGestureRecognizer(swipeRightGesture)
         
-    }
-
-    @objc func endWorkoutButtonTapped() {
-        print("dd")
+        restButton.addTarget(self, action: #selector(restButtonTapped), for: .touchUpInside)
+        playButton.addTarget(self, action: #selector(playButtonTapped), for: .touchUpInside)
     }
     
-    //MARK: - Animations
-    func foldingAnimationQuick() {
-        foldViewToggleButton.setImage(UIImage(systemName: "chevron.up", withConfiguration: UIImage.SymbolConfiguration(pointSize: 41, weight: .bold)), for: .normal)
-        
-        workoutPlayView.layer.opacity = 0
-    }
-    func foldingAnimationSlow() {
-        currentWorkoutLabel.frame = CGRect(x: 10, y: foldedViewHeight - 30, width: view.frame.width, height: view.frame.height)
-    }
-    func expandingAnimationQuick() {
-
-        foldViewToggleButton.setImage(UIImage(systemName: "chevron.down", withConfiguration: UIImage.SymbolConfiguration(pointSize: 41, weight: .bold)), for: .normal)
-//        foldViewToggleButton.frame = CGRect(x: 29, y: 100, width: 41, height: 41)
-        
-
-        endWorkoutButton.layer.opacity = 1
-        foldedPlayButton.layer.opacity = 0
-        workoutPlayView.layer.opacity = 1
-        expandedPlayButton.layer.opacity = 1
-        playButtonTitleLabel.layer.opacity = 1
-        nextWorkoutButton.layer.opacity = 1
-        nextWorkoutButtonTitleLabel.layer.opacity = 1
-        previousWorkoutButton.layer.opacity = 1
-        previousWorkoutButtonTitleLabel.layer.opacity = 1
-        restButton.layer.opacity = 1
-        restTimerUnderBarView.layer.opacity = 1
-        restTimerLabel.layer.opacity = 1
-        foldedworkoutTimeLabel.layer.opacity = 0
-        restTimeLeftLabel.layer.opacity = 1
-        currentWorkoutView.layer.opacity = 1
-        currentWorkoutTitleLabel.layer.opacity = 1
-        expandedTotalWorkoutTimeTitleLabel.layer.opacity = 1
-        expandedTotalWorkoutTimeLabel.layer.opacity = 1
-
-    }
-    func expandingAnimationSlow() {
-        endWorkoutButton.snp.remakeConstraints {
-            $0.trailing.equalToSuperview().inset(14)
-            $0.top.equalTo(view.safeAreaLayoutGuide).inset(10)
-            $0.height.equalTo(30)
-            $0.width.equalTo(80)
+    @objc func playButtonTapped() {
+        if timerCounting {
+            timerCounting = false
+            timer.invalidate()
+            //토글 해주기 todo
         }
-        foldViewToggleButton.snp.remakeConstraints {
-            $0.leading.equalToSuperview().inset(14)
-            $0.top.equalTo(view.safeAreaLayoutGuide).inset(10)
-            $0.leading.equalToSuperview().inset(14)
-            $0.height.width.equalTo(32)
+        else {
+            timerCounting = true
+            timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(timerCounter), userInfo: nil, repeats: true)
+            //토글 해주기 todo
         }
-        
-        
-        currentWorkoutLabel.snp.remakeConstraints {
-            $0.top.equalTo(currentWorkoutTitleLabel.snp.bottom).offset(9)
-            $0.leading.equalToSuperview().inset(26)
+    }
+    @objc func timerCounter() -> Void {
+        count = count + 1
+        let time = secondsToHoursMinutesSeconds(seconds: count)
+        let timeString = makeTimeString(hours: time.0, minutes: time.1, seconds: time.2)
+        totalWorkoutTimeLabel.text = timeString
+    }
+    func secondsToHoursMinutesSeconds(seconds: Int) -> (Int, Int, Int) {
+        return ((seconds / 3600), ((seconds % 3600) / 60), ((seconds % 3600) % 60))
+    }
+    func makeTimeString(hours: Int, minutes: Int, seconds: Int) -> String {
+        var timeString = ""
+        timeString += String(format: "%02d", hours)
+        timeString += ":"
+        timeString += String(format: "%02d", minutes)
+        timeString += ":"
+        timeString += String(format: "%02d", seconds)
+        return timeString
+    }
+    
+    @objc func restButtonTapped() {
+        if countdownTimerCounting {
+            stopCountdownTimer()
         }
-
-
+        else {
+            let duringWorkoutTimerViewController = DuringWorkoutTimerViewController()
+            duringWorkoutTimerViewController.modalTransitionStyle = .crossDissolve
+            duringWorkoutTimerViewController.modalPresentationStyle = .overFullScreen
+            duringWorkoutTimerViewController.completionHandler = { [weak self] timer in
+                guard let self else { return }
+                if timer > 0 {
+                    self.currentCountdownSecond = timer
+                    print(self.currentCountdownSecond, "???????")
+                    self.startCountdowmTimer()
+                    self.countdownTimerCounting = true
+                }
+                
+            }
+            present(duringWorkoutTimerViewController, animated: true)
+        }
+    }
+    
+    @objc func swipeAction(_ sender : UISwipeGestureRecognizer) {
+        if sender.direction == .right {
+            pageViewController.setViewControllers([viewControllers[0]], direction: .reverse, animated: true)
+        }
+        else if sender.direction == .left {
+            pageViewController.setViewControllers([viewControllers[1]], direction: .forward, animated: true)
+        }
+    }
+    
+    
+    private func startCountdowmTimer() {
+        if countdowmTimer == nil {
+            restButton.setTitle("휴식종료", for: .normal)
+            countdowmTimer = DispatchSource.makeTimerSource(flags: [], queue: .main)
+            countdowmTimer?.schedule(deadline: .now(), repeating: 1)
+            countdowmTimer?.setEventHandler(handler: {
+                self.currentCountdownSecond -= 1
+                let minutes = (self.currentCountdownSecond % 3600) / 60
+                let seconds = (self.currentCountdownSecond % 3600) % 60
+                self.restTimerLabel.text = String(format: "%02d:%02d", minutes, seconds)
+                debugPrint(self.currentCountdownSecond)
+                if self.currentCountdownSecond <= 0 {
+                    //타이머 종료
+                    self.stopCountdownTimer()
+                    AudioServicesPlaySystemSound(1005)
+                }
+            })
+            countdowmTimer?.resume()
+        }
+    }
+    
+    private func stopCountdownTimer() {
+        countdownTimerCounting = false
+        restButton.setTitle("휴식하기", for: .normal)
+        countdowmTimer?.cancel()
+        countdowmTimer = nil
+        restTimerLabel.text = "00:00"
     }
 }
 // MARK: - EXTENSIONs
