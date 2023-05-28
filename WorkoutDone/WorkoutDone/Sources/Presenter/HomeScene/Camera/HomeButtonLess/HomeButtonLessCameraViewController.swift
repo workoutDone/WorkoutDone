@@ -24,8 +24,6 @@ class HomeButtonLessCameraViewController : BaseViewController {
     let sesstionQueue = DispatchQueue(label: "sesstion Queue")
     let videoDeviceDiscoverySession = AVCaptureDevice.DiscoverySession(deviceTypes: [.builtInWideAngleCamera, .builtInTelephotoCamera], mediaType: .video, position: .unspecified)
     
-///https://medium.com/@barbulescualex/making-a-custom-camera-in-ios-ea44e3087563
-    
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
             hidesBottomBarWhenPushed = true
@@ -160,8 +158,15 @@ class HomeButtonLessCameraViewController : BaseViewController {
         }
     }
     @objc func captureButtonTapped() {
-        let homeButtonLessPressShutterViewController = HomeButtonLessPressShutterViewController()
-        self.navigationController?.pushViewController(homeButtonLessPressShutterViewController, animated: false)
+
+        let videoPreviewLayerOrientation = self.authorizedCameraView.previewView.previewLayer.connection?.videoOrientation
+        sesstionQueue.async {
+            let connection = self.photoOutput.connection(with: .video)
+            connection?.videoOrientation = videoPreviewLayerOrientation!
+            let setting = AVCapturePhotoSettings()
+            self.photoOutput.capturePhoto(with: setting, delegate: self)
+            
+        }
     }
     @objc func permisstionButtonTapped() {
         UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
@@ -181,7 +186,6 @@ class HomeButtonLessCameraViewController : BaseViewController {
         AVCaptureDevice.requestAccess(for: .video) { [weak self] granted in
             guard let self = self else { return }
             if granted {
-                print("ok")
                 self.requestAuthResponseView(granted: true) { _ in
                     DispatchQueue.main.async {
                         self.deniedCameraView.isHidden = true
@@ -196,7 +200,6 @@ class HomeButtonLessCameraViewController : BaseViewController {
                 }
             }
             else {
-                print("no")
                 self.requestAuthResponseView(granted: false) { _ in
                     DispatchQueue.main.async {
                         self.deniedCameraView.isHidden = false
@@ -216,18 +219,6 @@ class HomeButtonLessCameraViewController : BaseViewController {
         }
     }
 }
-//
-//extension HomeButtonLessCameraViewController {
-//    enum FrameButtonType : Int {
-//        case defaultFrame = 1
-//        case manFirstUpperBodyFrame = 2
-//        case manSecondUpperBodyFrame = 3
-//        case manWholeBodyFrame = 4
-//        case womanFirstUpperBodyFrame = 5
-//        case womanSecondUpperBodyFrame = 6
-//        case womanWholeBodyFraame = 7
-//    }
-//}
 extension HomeButtonLessCameraViewController {
     func setupSession() {
         captureSettion.sessionPreset = .photo
@@ -288,7 +279,7 @@ extension HomeButtonLessCameraViewController: AVCapturePhotoCaptureDelegate {
         let flippedImage = UIImage(cgImage: image.cgImage!, scale: image.scale, orientation: .leftMirrored)
        
         DispatchQueue.main.async {
-            let pressShutterVC = PressShutterViewController()
+            let pressShutterVC = HomeButtonLessPressShutterViewController()
             pressShutterVC.captureImage = self.isBack ? image : flippedImage
             pressShutterVC.isSelectFrame = self.isSelectFrameImagesIndex
             self.navigationController?.pushViewController(pressShutterVC, animated: false)
