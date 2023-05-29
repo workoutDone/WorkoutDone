@@ -14,7 +14,7 @@ protocol FrameDelegate: AnyObject {
 class FrameHeaderView : UICollectionReusableView {
     let frames : [String] = ["frame1", "frame2", "frame3", "frame4", "frame5", "frame6"]
     var isSelectFrameIndex = 0
-    var delegate : FrameDelegate?
+    weak var delegate : FrameDelegate?
     
     private let frameCollectionView : UICollectionView = {
         let layout = UICollectionViewFlowLayout()

@@ -109,10 +109,7 @@ extension RoutineViewController : UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if sampleData.count == 0 {
-            return 0
-        }
-        if section == 0 {
+        if sampleData.count == 0 || section == 0 {
             return 0.1
         }
         return 14
