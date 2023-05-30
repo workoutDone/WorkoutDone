@@ -109,11 +109,11 @@ class CreateRoutineViewController : BaseViewController {
     }
     
     override func setComponents() {
-        weightTrainingCollectionView.delegate = self
-        weightTrainingCollectionView.dataSource = self
-        
         bodyPartCollectionView.delegate = self
         bodyPartCollectionView.dataSource = self
+        
+        weightTrainingCollectionView.delegate = self
+        weightTrainingCollectionView.dataSource = self
     }
     
     override func actions() {
