@@ -14,7 +14,8 @@ import Photos
 import PhotosUI
 import DeviceKit
 
-class PhotoGalleryViewController : BaseViewController {
+class PhotoGalleryViewController : BaseViewController, CallPHPickerDelegate, PHPickerViewControllerDelegate {
+    
     //MARK: - ViewModel
     
     private var viewModel = PhotoGalleryViewModel()
@@ -50,6 +51,9 @@ class PhotoGalleryViewController : BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         requestAuth()
+//        let cell = ImportPhotoCollectionViewCell()
+//        cell.delegate = self
+        limitedPhotoGalleryView.delegate = self
     }
     override func setupBinding() {
         super.setupBinding()
@@ -145,7 +149,11 @@ class PhotoGalleryViewController : BaseViewController {
             case .limited:
                 print("limited")
                 self.requestAuthResponseView(status: .limited) { _ in
-                    print("")
+                    self.authorizedPhotoGalleryView.isHidden = true
+                    self.limitedPhotoGalleryView.isHidden = false
+                    self.deniedPhotoGalleryView.isHidden = true
+//                    self.authorizedPhotoGalleryView.loadPHCachingImage()
+                    self.limitedPhotoGalleryView.photoCollectionView.reloadData()
                 }
                 
             @unknown default:
@@ -217,7 +225,20 @@ class PhotoGalleryViewController : BaseViewController {
         
     }
     
-    // MARK: - ACTIONS
+    // MARK: - PICKER
+    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
+        dismiss(animated: true)
+    }
+    
+    func callPicker() {
+        print("오호")
+        var pickerConfiguration = PHPickerConfiguration()
+        pickerConfiguration.selectionLimit = 0
+        pickerConfiguration.filter = .any(of: [.images, .livePhotos])
+        let picker = PHPickerViewController(configuration: pickerConfiguration)
+        picker.delegate = self
+        present(picker, animated: true, completion: nil)
+    }
 }
 // MARK: - EXTENSIONs
 private extension PhotoGalleryViewController {
