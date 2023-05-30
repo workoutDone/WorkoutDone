@@ -12,12 +12,12 @@ import RxSwift
 class HomeViewController : BaseViewController {
     
     
-    private let duringWorkoutViewController : DuringWorkoutViewController = {
-       let duringWorkoutViewController = DuringWorkoutViewController()
-        duringWorkoutViewController.view.tag = 992
-//        duringWorkoutViewController.expandedViewHeight = self.view.frame.size.height
-        return duringWorkoutViewController
-    }()
+//    private let duringWorkoutViewController : DuringWorkoutViewController = {
+//       let duringWorkoutViewController = DuringWorkoutViewController()
+//        duringWorkoutViewController.view.tag = 992
+////        duringWorkoutViewController.expandedViewHeight = self.view.frame.size.height
+//        return duringWorkoutViewController
+//    }()
     
     
     //MARK: - ViewModel
@@ -67,7 +67,7 @@ class HomeViewController : BaseViewController {
         contentScrollView.delegate = self
         calendarView.delegate = self
 //        setWorkOutDoneImage()
-        duringWorkoutViewController.expandedViewHeight = self.view.frame.size.height
+//        duringWorkoutViewController.expandedViewHeight = self.view.frame.size.height
 
 //        duringWorkoutViewController.didMove(toParent: self)
 //        duringWorkoutViewController.view.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: view.bounds.height)
@@ -93,7 +93,6 @@ class HomeViewController : BaseViewController {
         super.setupLayout()
 
         view.addSubviews(contentScrollView)
-//        view.insertSubview(duringWorkoutViewController.view, at: 1)
         contentScrollView.addSubview(contentView)
         [calendarView, recordBaseView, workoutBaseView, workoutResultBaseView].forEach {
             contentView.addSubview($0)
@@ -205,9 +204,14 @@ class HomeViewController : BaseViewController {
         navigationController?.pushViewController(workoutViewController, animated: true)
     }
     @objc func workoutResultButtonTapped() {
-        let workoutResultViewController = WorkoutResultViewController()
-        workoutResultViewController.hidesBottomBarWhenPushed = true
-        navigationController?.pushViewController(workoutResultViewController, animated: true)
+//        let workoutResultViewController = WorkoutResultViewController()
+//        navigationController?.pushViewController(workoutResultViewController, animated: true)
+        //MARK: - Todo 추후에 다시 코드 변경하기
+        let duringWorkoutViewController = DuringWorkoutViewController()
+        let navigationController = UINavigationController(rootViewController: duringWorkoutViewController)
+        navigationController.modalTransitionStyle = .crossDissolve
+        navigationController.modalPresentationStyle = .fullScreen
+        present(navigationController, animated: true)
     }
     
 //    func setWorkOutDoneImage() {

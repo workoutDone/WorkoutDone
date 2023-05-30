@@ -129,6 +129,9 @@
 		A576694029BF1A9900673DFE /* UITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = A576693F29BF1A9900673DFE /* UITextField.swift */; };
 		A57FCCDD2A0828C600576812 /* PhotoFrameTypeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57FCCDC2A0828C600576812 /* PhotoFrameTypeViewModel.swift */; };
 		A583276F2A1DEC82002F8F6E /* HomeButtonLessPressShutterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A583276E2A1DEC82002F8F6E /* HomeButtonLessPressShutterViewModel.swift */; };
+		A58327782A20C110002F8F6E /* DuringSetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58327772A20C110002F8F6E /* DuringSetViewController.swift */; };
+		A583277A2A20C135002F8F6E /* DuringEditRoutineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58327792A20C135002F8F6E /* DuringEditRoutineViewController.swift */; };
+		A583277C2A20D30A002F8F6E /* DuringWorkoutTimerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A583277B2A20D30A002F8F6E /* DuringWorkoutTimerViewController.swift */; };
 		A59A3DDC29C977BC00126ECE /* HomeButtonLessCameraViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59A3DDB29C977BC00126ECE /* HomeButtonLessCameraViewModel.swift */; };
 		A59A3DDE29C9F76200126ECE /* RegisterMyBodyInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59A3DDD29C9F76200126ECE /* RegisterMyBodyInfoViewModel.swift */; };
 		A59ACB7829B46DEB0084C73E /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59ACB7729B46DEB0084C73E /* TabBarController.swift */; };
@@ -281,6 +284,9 @@
 		A576693F29BF1A9900673DFE /* UITextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextField.swift; sourceTree = "<group>"; };
 		A57FCCDC2A0828C600576812 /* PhotoFrameTypeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoFrameTypeViewModel.swift; sourceTree = "<group>"; };
 		A583276E2A1DEC82002F8F6E /* HomeButtonLessPressShutterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeButtonLessPressShutterViewModel.swift; sourceTree = "<group>"; };
+		A58327772A20C110002F8F6E /* DuringSetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuringSetViewController.swift; sourceTree = "<group>"; };
+		A58327792A20C135002F8F6E /* DuringEditRoutineViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuringEditRoutineViewController.swift; sourceTree = "<group>"; };
+		A583277B2A20D30A002F8F6E /* DuringWorkoutTimerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuringWorkoutTimerViewController.swift; sourceTree = "<group>"; };
 		A59A3DDB29C977BC00126ECE /* HomeButtonLessCameraViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeButtonLessCameraViewModel.swift; sourceTree = "<group>"; };
 		A59A3DDD29C9F76200126ECE /* RegisterMyBodyInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterMyBodyInfoViewModel.swift; sourceTree = "<group>"; };
 		A59ACB7729B46DEB0084C73E /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
@@ -808,6 +814,9 @@
 			children = (
 				A5E2DEED2A17611B002A60A4 /* DuringWorkoutViewController.swift */,
 				A51B6F4D2A17B0C000FB7A16 /* DuringWorkoutView.swift */,
+				A58327772A20C110002F8F6E /* DuringSetViewController.swift */,
+				A58327792A20C135002F8F6E /* DuringEditRoutineViewController.swift */,
+				A583277B2A20D30A002F8F6E /* DuringWorkoutTimerViewController.swift */,
 			);
 			path = DuringWorkout;
 			sourceTree = "<group>";
@@ -969,6 +978,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9200602429B1A7CC00586063 /* BaseViewController.swift in Sources */,
+				A583277C2A20D30A002F8F6E /* DuringWorkoutTimerViewController.swift in Sources */,
 				926998142A0DAB5C003DDAD2 /* WeightTrainingInfo.swift in Sources */,
 				926998602A118906003DDAD2 /* RoutineCell.swift in Sources */,
 				A5550A9629F310D500CBD1BF /* PhotoCollectionViewCell.swift in Sources */,
@@ -1006,6 +1016,7 @@
 				9269995E2A1DF8C3003DDAD2 /* RoutineEditorCell.swift in Sources */,
 				A57061D429D045690083ECDD /* WeightGraphView.swift in Sources */,
 				A526C1272A1B433600DAC0EF /* DeleteAlertView.swift in Sources */,
+				A583277A2A20C135002F8F6E /* DuringEditRoutineViewController.swift in Sources */,
 				924E56B229CCB9EA00AA73A2 /* GridToggleButton.swift in Sources */,
 				A52573F529F2F478004FBAC0 /* PhotoGalleryViewController.swift in Sources */,
 				9264A58229B8735C0010856F /* UserDefaultsManager.swift in Sources */,
@@ -1031,6 +1042,7 @@
 				920060CF29B37C9F00586063 /* GradientButton.swift in Sources */,
 				9269995A2A1DECCB003DDAD2 /* StampView.swift in Sources */,
 				A54C486329FFA1A0004CEE3D /* HomeButtonPhotoFrameTypeViewController.swift in Sources */,
+				A58327782A20C110002F8F6E /* DuringSetViewController.swift in Sources */,
 				A526C1292A1B4ACC00DAC0EF /* DeleteRecordAlertView.swift in Sources */,
 				92005FCA29B1A49400586063 /* ViewController.swift in Sources */,
 				9269981C2A0EBD22003DDAD2 /* MyRoutine.swift in Sources */,
@@ -1250,10 +1262,12 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = U4YRB4XYPR;
+				DEVELOPMENT_TEAM = JB8T59WMFR;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = WorkoutDone/Info.plist;
-				INFOPLIST_KEY_NSCameraUsageDescription = "";
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
+				INFOPLIST_KEY_NSCameraUsageDescription = "카메라좀 쓰자!";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "사진 저장";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
@@ -1280,10 +1294,12 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = U4YRB4XYPR;
+				DEVELOPMENT_TEAM = JB8T59WMFR;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = WorkoutDone/Info.plist;
-				INFOPLIST_KEY_NSCameraUsageDescription = "";
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
+				INFOPLIST_KEY_NSCameraUsageDescription = "카메라좀 쓰자!";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "사진 저장";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = "";

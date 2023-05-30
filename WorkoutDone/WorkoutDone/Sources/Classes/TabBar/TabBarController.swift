@@ -9,12 +9,12 @@ import UIKit
 
 class TabBarController : UITabBarController {
     
-    private lazy var duringWorkoutViewController : DuringWorkoutViewController = {
-       let duringWorkoutViewController = DuringWorkoutViewController()
-        duringWorkoutViewController.view.tag = 992
-        duringWorkoutViewController.expandedViewHeight = view.frame.height
-        return duringWorkoutViewController
-    }()
+//    private lazy var duringWorkoutViewController : DuringWorkoutViewController = {
+//       let duringWorkoutViewController = DuringWorkoutViewController()
+//        duringWorkoutViewController.view.tag = 992
+//        duringWorkoutViewController.expandedViewHeight = view.frame.height
+//        return duringWorkoutViewController
+//    }()
     
     
     let homeTab = UINavigationController(rootViewController: HomeViewController())
@@ -27,9 +27,9 @@ class TabBarController : UITabBarController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.delegate = self
+//        self.delegate = self
         
-        view.insertSubview(duringWorkoutViewController.view, at: 1)
+//        view.insertSubview(duringWorkoutViewController.view, at: 1)
         
         homeTab.tabBarItem = homeTabBarItem
         routineTab.tabBarItem = routineTabBarItem
@@ -47,39 +47,39 @@ class TabBarController : UITabBarController {
         tabBar.scrollEdgeAppearance = appearance
         
         //Todo: - 텝바 색상, 탭바 이미지, 텍스트 정하기
-        if let tabBarController = self.tabBarController {
-            let currentTabIndex = tabBarController.selectedIndex
-            print("현재 선택된 탭의 인덱스: \(currentTabIndex)")
-        }
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(showDuringWorkoutViewController(_:)), name: NSNotification.Name(duringWorkoutVcVisibility), object: nil)
+//        if let tabBarController = self.tabBarController {
+//            let currentTabIndex = tabBarController.selectedIndex
+//            print("현재 선택된 탭의 인덱스: \(currentTabIndex)")
+//        }
+//
+//        NotificationCenter.default.addObserver(self, selector: #selector(showDuringWorkoutViewController(_:)), name: NSNotification.Name(duringWorkoutVcVisibility), object: nil)
     }
-    @objc func showDuringWorkoutViewController(_ notification: Notification) {
-        print("showDuringWorkoutViewController")
-        self.tabBar.isHidden.toggle()
-    }
+//    @objc func showDuringWorkoutViewController(_ notification: Notification) {
+//        print("showDuringWorkoutViewController")
+//        self.tabBar.isHidden.toggle()
+//    }
 }
 
-extension TabBarController : UITabBarControllerDelegate {
-    func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
-        
-        if let tabBarController = self.tabBarController {
-            if let currentViewController = tabBarController.selectedViewController {
-                // 현재 화면에 나타난 뷰 컨트롤러를 사용하여 원하는 작업 수행
-                print("현재 화면에 나타난 뷰 컨트롤러: \(currentViewController)")
-            }
-        }
-        if let selectedIndex = tabBarController.viewControllers?.firstIndex(of: viewController) {
-            duringWorkoutViewController.view.isHidden = true
-            duringWorkoutViewController.view.isUserInteractionEnabled = false
-//            if selectedIndex == 0 {
-//                duringWorkoutViewController.view.isHidden = false
-//                duringWorkoutViewController.view.isUserInteractionEnabled = true
+//extension TabBarController : UITabBarControllerDelegate {
+//    func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
+//
+//        if let tabBarController = self.tabBarController {
+//            if let currentViewController = tabBarController.selectedViewController {
+//                // 현재 화면에 나타난 뷰 컨트롤러를 사용하여 원하는 작업 수행
+//                print("현재 화면에 나타난 뷰 컨트롤러: \(currentViewController)")
 //            }
-//            else {
-//                duringWorkoutViewController.view.isHidden = true
-//                duringWorkoutViewController.view.isUserInteractionEnabled = false
-//            }
-        }
-    }
-}
+//        }
+//        if let selectedIndex = tabBarController.viewControllers?.firstIndex(of: viewController) {
+//            duringWorkoutViewController.view.isHidden = true
+//            duringWorkoutViewController.view.isUserInteractionEnabled = false
+////            if selectedIndex == 0 {
+////                duringWorkoutViewController.view.isHidden = false
+////                duringWorkoutViewController.view.isUserInteractionEnabled = true
+////            }
+////            else {
+////                duringWorkoutViewController.view.isHidden = true
+////                duringWorkoutViewController.view.isUserInteractionEnabled = false
+////            }
+//        }
+//    }
+//}
