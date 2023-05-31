@@ -7,7 +7,7 @@
 
 import UIKit
 
-class WeightTrainingCell : UICollectionViewCell {
+class WeightTrainingCell : UITableViewCell {
     var weightTraingView = UIView().then {
         $0.layer.cornerRadius = 8
         $0.layer.borderWidth = 1
@@ -33,8 +33,8 @@ class WeightTrainingCell : UICollectionViewCell {
     }
     
     // MARK: - LIFECYCLE
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         setupLayout()
         setupConstraints()
@@ -44,6 +44,12 @@ class WeightTrainingCell : UICollectionViewCell {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+
+        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 6, left: 0, bottom: 0, right: 0))
     }
     
     // MARK: - ACTIONS
@@ -57,8 +63,9 @@ class WeightTrainingCell : UICollectionViewCell {
     func setupConstraints() {
         weightTraingView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(8)
-            $0.leading.bottom.equalToSuperview()
-            $0.trailing.equalToSuperview().offset(-8)
+            $0.leading.equalToSuperview().offset(40)
+            $0.bottom.equalToSuperview()
+            $0.trailing.equalToSuperview().offset(-40)
         }
         
         weightTrainingLabel.snp.makeConstraints {
@@ -66,8 +73,8 @@ class WeightTrainingCell : UICollectionViewCell {
         }
         
         selectedIndexView.snp.makeConstraints {
-            $0.top.equalToSuperview()
-            $0.trailing.equalToSuperview()
+            $0.top.equalTo(weightTraingView).offset(-8)
+            $0.trailing.equalTo(weightTraingView).offset(8)
             $0.width.height.equalTo(24)
         }
         
