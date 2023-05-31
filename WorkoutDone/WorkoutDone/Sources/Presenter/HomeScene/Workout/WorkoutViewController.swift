@@ -104,7 +104,7 @@ class WorkoutViewController : BaseViewController {
         selectCompleteButton.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(24)
             $0.trailing.equalToSuperview().offset(-24)
-            $0.bottom.equalToSuperview().offset(-55)
+            $0.bottom.equalTo(adImage.snp.top).offset(-29)
             $0.height.equalTo(58)
         }
         
@@ -297,11 +297,16 @@ extension WorkoutViewController : UITableViewDelegate, UITableViewDataSource {
                 preSelectedIndex = indexPath.section
             }
             
-            myRoutineSampleData[indexPath.section].opend = !myRoutineSampleData[indexPath.section].opend
+            if myRoutineSampleData[indexPath.section].opend {
+                myRoutineSampleData[indexPath.section].opend = false
+                selectedCount = 0
+            } else {
+                myRoutineSampleData[indexPath.section].opend = true
+                selectedCount = myRoutineSampleData[indexPath.section].category.count
+            }
+     
             tableView.reloadSections([indexPath.section], with: .none)
-            
-            selectedCount = myRoutineSampleData[indexPath.section].category.count
-            
+    
             if selectedCount == 0 {
                 selectCompleteButton.gradient.colors = [UIColor.colorCCCCCC.cgColor, UIColor.colorCCCCCC.cgColor]
                 selectCompleteButtonCountLabel.text = ""
@@ -328,7 +333,14 @@ extension WorkoutViewController : UITableViewDelegate, UITableViewDataSource {
         myRoutineSampleData[section].opend = !myRoutineSampleData[section].opend
         routineTableView.reloadSections([section], with: .none)
         
-        selectedCount = myRoutineSampleData[section].category.count
+        if myRoutineSampleData[section].opend {
+            myRoutineSampleData[section].opend = false
+            selectedCount = 0
+        } else {
+            myRoutineSampleData[section].opend = true
+            selectedCount = myRoutineSampleData[section].category.count
+        }
+       
         
         if selectedCount == 0 {
             selectCompleteButton.gradient.colors = [UIColor.colorCCCCCC.cgColor, UIColor.colorCCCCCC.cgColor]

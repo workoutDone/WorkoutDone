@@ -31,16 +31,14 @@ class CreateRoutineViewController : BaseViewController {
         return collectionView
     }()
     
-    private let weightTrainingCollectionView : UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .vertical
-        
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.register(WeightTrainingCell.self, forCellWithReuseIdentifier: "weightTrainingCell")
-
-        return collectionView
-    }()
-
+    private let weightTrainingTableView = UITableView(frame: .zero, style: .grouped).then {
+        $0.register(WeightTrainingCell.self, forCellReuseIdentifier: "weightTrainingCell")
+        $0.separatorStyle = .none
+        $0.sectionHeaderHeight = 0
+        $0.sectionFooterHeight = 0
+        $0.backgroundColor = .colorFFFFFF
+    }
+    
     private let selectCompleteButton = GradientButton(colors: [UIColor.colorCCCCCC.cgColor, UIColor.colorCCCCCC.cgColor])
     
     private let selectCompleteButtonCountLabel = UILabel().then {
@@ -69,7 +67,7 @@ class CreateRoutineViewController : BaseViewController {
     override func setupLayout() {
         super.setupLayout()
         
-        [bodyPartCollectionView, weightTrainingCollectionView, selectCompleteButton].forEach {
+        [bodyPartCollectionView, weightTrainingTableView, selectCompleteButton].forEach {
             view.addSubview($0)
         }
         [selectCompleteButtonCountLabel, selectCompleteButtonLabel].forEach {
@@ -86,7 +84,7 @@ class CreateRoutineViewController : BaseViewController {
             $0.height.equalTo(50)
         }
         
-        weightTrainingCollectionView.snp.makeConstraints {
+        weightTrainingTableView.snp.makeConstraints {
             $0.top.equalTo(bodyPartCollectionView.snp.bottom)
             $0.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
         }
@@ -112,8 +110,8 @@ class CreateRoutineViewController : BaseViewController {
         bodyPartCollectionView.delegate = self
         bodyPartCollectionView.dataSource = self
         
-        weightTrainingCollectionView.delegate = self
-        weightTrainingCollectionView.dataSource = self
+        weightTrainingTableView.delegate = self
+        weightTrainingTableView.dataSource = self
     }
     
     override func actions() {
@@ -155,31 +153,62 @@ extension CreateRoutineViewController : RoutineAlertDelegate {
 
 extension CreateRoutineViewController : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if collectionView == bodyPartCollectionView  {
-            return sampleData.count
-        }
-        return sampleData[isSelectBodyPartIndex].weigthTraing.count
+        return sampleData.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if collectionView == bodyPartCollectionView {
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "bodyPartCell", for: indexPath) as? BodyPartCell else { return UICollectionViewCell() }
-            cell.bodyPartLabel.text = sampleData[indexPath.row].bodyPart
-            
-            cell.layer.cornerRadius = 31 / 2
-            cell.backgroundColor = .clear
-            cell.bodyPartLabel.textColor = .colorC8B4FF
-            cell.bodyPartLabel.font = .pretendard(.regular, size: 16)
-
-            if isSelectBodyPartIndex == indexPath.row {
-                cell.backgroundColor = .colorE6E0FF
-                cell.bodyPartLabel.textColor = .color7442FF
-                cell.bodyPartLabel.font = .pretendard(.semiBold, size: 16)
-            }
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "bodyPartCell", for: indexPath) as? BodyPartCell else { return UICollectionViewCell() }
+        cell.bodyPartLabel.text = sampleData[indexPath.row].bodyPart
         
-            return cell
+        cell.layer.cornerRadius = 31 / 2
+        cell.backgroundColor = .clear
+        cell.bodyPartLabel.textColor = .colorC8B4FF
+        cell.bodyPartLabel.font = .pretendard(.regular, size: 16)
+        
+        if isSelectBodyPartIndex == indexPath.row {
+            cell.backgroundColor = .colorE6E0FF
+            cell.bodyPartLabel.textColor = .color7442FF
+            cell.bodyPartLabel.font = .pretendard(.semiBold, size: 16)
         }
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "weightTrainingCell", for: indexPath) as? WeightTrainingCell else { return UICollectionViewCell() }
+        
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 8.5, left: 19, bottom: 10.5, right: 19)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 52, height: 31)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+        return CGSize(width: 0, height: 0)
+      }
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        isSelectBodyPartIndex = indexPath.row
+        bodyPartCollectionView.reloadData()
+        weightTrainingTableView.reloadData()
+    }
+}
+
+extension CreateRoutineViewController : UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return sampleData[isSelectBodyPartIndex].weigthTraing.count
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 9
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "weightTrainingCell", for: indexPath) as? WeightTrainingCell else { return UITableViewCell() }
+        cell.selectionStyle = .none
         cell.weightTrainingLabel.text = sampleData[isSelectBodyPartIndex].weigthTraing[indexPath.row]
         
         cell.weightTraingView.layer.borderColor = UIColor.colorCCCCCC.cgColor
@@ -187,71 +216,46 @@ extension CreateRoutineViewController : UICollectionViewDelegate, UICollectionVi
         cell.weightTrainingLabel.font = .pretendard(.regular, size: 16)
         
         cell.selectedIndexView.isHidden = true
-     
+        
         if let index = isSelectWeightTraings[isSelectBodyPartIndex].firstIndex(of: sampleData[isSelectBodyPartIndex].weigthTraing[indexPath.row]) {
 
             cell.selectedIndexLabel.text = "\(index + 1)"
             cell.selectedIndexView.isHidden = false
-            
+
             cell.weightTraingView.layer.borderColor = UIColor.color7442FF.cgColor
             cell.weightTraingView.backgroundColor = .colorF8F6FF
             cell.weightTrainingLabel.font = .pretendard(.semiBold, size: 16)
         }
-        
+
+
         return cell
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        if collectionView == bodyPartCollectionView {
-            return UIEdgeInsets(top: 8.5, left: 19, bottom: 10.5, right: 19)
-        }
-        return UIEdgeInsets(top: 23, left: 40, bottom: 23, right: 32)
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 64
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        if collectionView == bodyPartCollectionView {
-            return CGSize(width: 52, height: 31)
-        }
-        return CGSize(width: collectionView.frame.width - 78, height: 58)
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 80
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        if collectionView == bodyPartCollectionView {
-            return 0
-        }
-        return 14
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
-        if collectionView == bodyPartCollectionView {
-            return CGSize(width: 0, height: 0)
-        }
-        return CGSize(width: collectionView.bounds.width, height: 90)
-      }
-
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if collectionView == bodyPartCollectionView {
-            isSelectBodyPartIndex = indexPath.row
-            bodyPartCollectionView.reloadData()
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let index = isSelectWeightTraings[isSelectBodyPartIndex].firstIndex(of: sampleData[isSelectBodyPartIndex].weigthTraing[indexPath.row]) {
+            isSelectWeightTraings[isSelectBodyPartIndex].remove(at: index)
+            selectedCount -= 1
         } else {
-            if let index = isSelectWeightTraings[isSelectBodyPartIndex].firstIndex(of: sampleData[isSelectBodyPartIndex].weigthTraing[indexPath.row]) {
-                isSelectWeightTraings[isSelectBodyPartIndex].remove(at: index)
-                selectedCount -= 1
-            } else {
-                isSelectWeightTraings[isSelectBodyPartIndex].append(sampleData[isSelectBodyPartIndex].weigthTraing[indexPath.row])
-                selectedCount += 1
-            }
-            
-            if selectedCount == 0 {
-                selectCompleteButton.gradient.colors = [UIColor.colorCCCCCC.cgColor, UIColor.colorCCCCCC.cgColor]
-                selectCompleteButtonCountLabel.text = ""
-            } else {
-                selectCompleteButton.gradient.colors = [UIColor.color8E36FF.cgColor, UIColor.color7442FF.cgColor]
-                selectCompleteButtonCountLabel.text = "\(selectedCount)"
-            }
-           
+            isSelectWeightTraings[isSelectBodyPartIndex].append(sampleData[isSelectBodyPartIndex].weigthTraing[indexPath.row])
+            selectedCount += 1
         }
-        weightTrainingCollectionView.reloadData()
+        
+        if selectedCount == 0 {
+            selectCompleteButton.gradient.colors = [UIColor.colorCCCCCC.cgColor, UIColor.colorCCCCCC.cgColor]
+            selectCompleteButtonCountLabel.text = ""
+        } else {
+            selectCompleteButton.gradient.colors = [UIColor.color8E36FF.cgColor, UIColor.color7442FF.cgColor]
+            selectCompleteButtonCountLabel.text = "\(selectedCount)"
+        }
+        
+        weightTrainingTableView.reloadData()
     }
 }
-
