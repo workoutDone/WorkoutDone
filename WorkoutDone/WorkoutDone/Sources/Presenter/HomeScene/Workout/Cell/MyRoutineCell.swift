@@ -33,8 +33,8 @@ class MyRoutineCell: UITableViewCell {
         $0.font = .pretendard(.semiBold, size: 16)
     }
     
-    let openButton = UIButton().then {
-        $0.setImage(UIImage(named: "open"), for: .normal)
+    let openImage = UIImageView().then {
+        $0.image = UIImage(named: "open")
     }
     
     // MARK: - LIFECYCLE
@@ -62,7 +62,7 @@ class MyRoutineCell: UITableViewCell {
     func setupLayout() {
         contentView.addSubview(outerView)
         outerView.addSubviews(innerView)
-        [routineIndexLabel, routineTitleLabel, openButton].forEach {
+        [routineIndexLabel, routineTitleLabel, openImage].forEach {
             innerView.addSubviews($0)
         }
     }
@@ -90,19 +90,11 @@ class MyRoutineCell: UITableViewCell {
             $0.top.equalToSuperview().offset(30)
         }
         
-        openButton.snp.makeConstraints {
+        openImage.snp.makeConstraints {
             $0.top.equalToSuperview().offset(30)
             $0.trailing.equalToSuperview().offset(-21)
-            $0.width.height.equalTo(16)
+            $0.width.equalTo(16)
+            $0.height.equalTo(9)
         }
     }
-    
-    func opendRoutine() {
-//        innerView.snp.remakeConstraints {
-//            $0.top.leading.equalTo(outerView).offset(1)
-//            $0.trailing.equalTo(outerView).offset(-1)
-//            $0.bottom.equalTo(outerView)
-//        }
-    }
-
 }
