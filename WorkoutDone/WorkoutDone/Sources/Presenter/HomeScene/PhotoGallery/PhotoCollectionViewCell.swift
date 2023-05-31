@@ -44,6 +44,7 @@ class PhotosCollectionViewCell : UICollectionViewCell {
         contentView.addSubviews(photoImageView)
         photoImageView.addSubviews(selectedEffectView, selectedButtonImage)
         setLayout()
+        photoImageView.backgroundColor = .red
     }
     
     func setLayout() {
