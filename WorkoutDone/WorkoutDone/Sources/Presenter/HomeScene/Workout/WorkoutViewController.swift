@@ -8,8 +8,11 @@
 import UIKit
 
 class WorkoutViewController : BaseViewController {
+    var isSelectBodyPartIndex : Int = -1
     var preSelectedIndex : Int = -1
-    var selectedCount = 0
+    var selectedMyRoutineCount : Int = 0
+    var selectedCount : Int = 0
+    var isSelectWeightTraings = [[String]]()
     
     var myRoutineSampleData =
     [
@@ -19,8 +22,6 @@ class WorkoutViewController : BaseViewController {
     ]
     
     let sampleData = [BodyPartData(bodyPart: "가슴", weigthTraing: ["벤치 프레스", "디클라인 푸시업", "버터플라이", "인클라인 덤벨 체스트플라이", "벤치 프레스2", "디클라인 푸시업2", "버터플라이2", "인클라인 덤벨 체스트플라이2", "벤치 프레스3", "디클라인 푸시업3", "버터플라이3", "인클라인 덤벨 체스트플라이3"]), BodyPartData(bodyPart: "등", weigthTraing: ["벤치 프레스0"]), BodyPartData(bodyPart: "하체", weigthTraing: []), BodyPartData(bodyPart: "어깨", weigthTraing: []), BodyPartData(bodyPart: "삼두", weigthTraing: []), BodyPartData(bodyPart: "이두", weigthTraing: []), BodyPartData(bodyPart: "졸려", weigthTraing: []), BodyPartData(bodyPart: "하암", weigthTraing: [])]
-    
-    var isSelectBodyPartIndex = -1
     
     private let bodyPartCollectionView : UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -40,6 +41,7 @@ class WorkoutViewController : BaseViewController {
         $0.tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 0.1))
         $0.register(MyRoutineCell.self, forCellReuseIdentifier: "myRoutineCell")
         $0.register(MyRoutineDetailCell.self, forCellReuseIdentifier: "myRoutineDetailCell")
+        $0.register(WeightTrainingCell.self, forCellReuseIdentifier: "weightTrainingCell")
         $0.separatorStyle = .none
         $0.sectionHeaderHeight = 0
         $0.sectionFooterHeight = 0
@@ -72,6 +74,8 @@ class WorkoutViewController : BaseViewController {
         
         title = "운동하기"
         view.backgroundColor = .colorFFFFFF
+        
+        isSelectWeightTraings = Array(repeating: [], count: sampleData.count)
     }
     
     override func setupLayout() {
@@ -130,12 +134,23 @@ class WorkoutViewController : BaseViewController {
         routineTableView.delegate = self
         routineTableView.dataSource = self
     }
+    
+    func updateSelectCompleteButton() {
+        if selectedMyRoutineCount + selectedCount == 0 {
+            selectCompleteButton.gradient.colors = [UIColor.colorCCCCCC.cgColor, UIColor.colorCCCCCC.cgColor]
+            selectCompleteButtonCountLabel.text = ""
+        } else {
+            selectCompleteButton.gradient.colors = [UIColor.color8E36FF.cgColor, UIColor.color7442FF.cgColor]
+            selectCompleteButtonCountLabel.text = "\(selectedMyRoutineCount + selectedCount)"
+        }
+    }
 }
 
 extension WorkoutViewController : MyRoutineDelegate, CreateRoutineDelegate {
     func myRoutineButtonTapped() {
         isSelectBodyPartIndex = -1
         bodyPartCollectionView.reloadData()
+        routineTableView.reloadData()
     }
     
     func createRoutineButtonTapped() {
@@ -204,6 +219,7 @@ extension WorkoutViewController : UICollectionViewDelegate, UICollectionViewData
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         isSelectBodyPartIndex = indexPath.row
         bodyPartCollectionView.reloadData()
+        routineTableView.reloadData()
        
     }
 }
@@ -211,143 +227,179 @@ extension WorkoutViewController : UICollectionViewDelegate, UICollectionViewData
 
 extension WorkoutViewController : UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return myRoutineSampleData.count == 0 ? 1 : myRoutineSampleData.count
-    }
-
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if myRoutineSampleData.count > 0 && myRoutineSampleData[section].opend == true {
-            return myRoutineSampleData[section].category.count + 1
+        if isSelectBodyPartIndex == -1 {
+            return myRoutineSampleData.count == 0 ? 1 : myRoutineSampleData.count
         }
         return 1
     }
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if isSelectBodyPartIndex == -1 {
+            if myRoutineSampleData.count > 0 && myRoutineSampleData[section].opend == true {
+                return myRoutineSampleData[section].category.count + 1
+            }
+            return 1
+        }
+        return sampleData[isSelectBodyPartIndex].weigthTraing.count
+    }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if myRoutineSampleData.count == 0 {
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: "createRoutineCell", for: indexPath) as? CreateRoutineCell else { return UITableViewCell() }
-            cell.selectionStyle = .none
-            cell.delegate = self
-            return cell
-        }
-        if indexPath.row == 0 {
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: "myRoutineCell", for: indexPath) as? MyRoutineCell else { return UITableViewCell() }
+        if isSelectBodyPartIndex == -1 {
+            if myRoutineSampleData.count == 0 {
+                guard let cell = tableView.dequeueReusableCell(withIdentifier: "createRoutineCell", for: indexPath) as? CreateRoutineCell else { return UITableViewCell() }
+                cell.selectionStyle = .none
+                cell.delegate = self
+                return cell
+            }
+            if indexPath.row == 0 {
+                guard let cell = tableView.dequeueReusableCell(withIdentifier: "myRoutineCell", for: indexPath) as? MyRoutineCell else { return UITableViewCell() }
+                cell.selectionStyle = .none
+               
+                return cell
+            }
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "myRoutineDetailCell", for: indexPath) as? MyRoutineDetailCell else { return UITableViewCell() }
             cell.selectionStyle = .none
            
             return cell
         }
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "myRoutineDetailCell", for: indexPath) as? MyRoutineDetailCell else { return UITableViewCell() }
+        
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "weightTrainingCell", for: indexPath) as? WeightTrainingCell else { return UITableViewCell() }
         cell.selectionStyle = .none
-       
+        cell.weightTrainingLabel.text = sampleData[isSelectBodyPartIndex].weigthTraing[indexPath.row]
+        
+        cell.weightTraingView.layer.borderColor = UIColor.colorCCCCCC.cgColor
+        cell.weightTraingView.backgroundColor = .colorFFFFFF
+        cell.weightTrainingLabel.font = .pretendard(.regular, size: 16)
+        
+        if let index = isSelectWeightTraings[isSelectBodyPartIndex].firstIndex(of: sampleData[isSelectBodyPartIndex].weigthTraing[indexPath.row]) {
+            cell.weightTraingView.layer.borderColor = UIColor.color7442FF.cgColor
+            cell.weightTraingView.backgroundColor = .colorF8F6FF
+            cell.weightTrainingLabel.font = .pretendard(.semiBold, size: 16)
+        }
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if myRoutineSampleData.count == 0 {
-            return 127
+        if isSelectBodyPartIndex == -1 {
+            if myRoutineSampleData.count == 0 {
+                return 127
+            }
+            
+            if indexPath.row == 0 {
+                return myRoutineSampleData[indexPath.section].opend == true ? 65 : 53
+            }
+            return 58
         }
-        
-        if indexPath.row == 0 {
-            return myRoutineSampleData[indexPath.section].opend == true ? 65 : 53
-        }
-        return 58
+     
+        return 64
     }
     
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if section == 0 {
-            return 23
+        if isSelectBodyPartIndex == -1 {
+            if section == 0 {
+                return 23
+            }
+            return 14
         }
-        return 14
+        return 9
     }
     
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         let footer = UIView()
         
-        let outerView = UIView(frame: .init(x: 20, y: 0, width: tableView.bounds.width - 40, height: 20))
-        let innerView = UIView(frame: .init(x: 1, y: -1, width: outerView.bounds.width - 2, height: outerView.bounds.height))
-        footer.addSubview(outerView)
-        outerView.addSubview(innerView)
-        
-        outerView.backgroundColor = .colorCCCCCC
-        outerView.layer.cornerRadius = 10
-        outerView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
-        
-        innerView.backgroundColor = .colorFFFFFF
-        innerView.layer.cornerRadius = 10
-        innerView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+        if isSelectBodyPartIndex == -1 {
+            let outerView = UIView(frame: .init(x: 20, y: 0, width: tableView.bounds.width - 40, height: 20))
+            let innerView = UIView(frame: .init(x: 1, y: -1, width: outerView.bounds.width - 2, height: outerView.bounds.height))
+            footer.addSubview(outerView)
+            outerView.addSubview(innerView)
+            
+            outerView.backgroundColor = .colorCCCCCC
+            outerView.layer.cornerRadius = 10
+            outerView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+            
+            innerView.backgroundColor = .colorFFFFFF
+            innerView.layer.cornerRadius = 10
+            innerView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
 
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(routineCellTapped))
-        innerView.addGestureRecognizer(tapGesture)
-        innerView.tag = section
-
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(routineCellTapped))
+            innerView.addGestureRecognizer(tapGesture)
+            innerView.tag = section
+        }
+        
         return footer
     }
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return myRoutineSampleData[section].opend == true ? 19 : 17
+        if isSelectBodyPartIndex == -1 {
+            return myRoutineSampleData[section].opend == true ? 19 : 17
+        }
+        return 80
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if myRoutineSampleData.count > 0 && indexPath.row == 0 {
-            if !myRoutineSampleData[indexPath.section].opend {
-                if preSelectedIndex >= 0 {
-                    myRoutineSampleData[preSelectedIndex].opend = false
-                    tableView.reloadSections([preSelectedIndex], with: .none)
+        if isSelectBodyPartIndex == -1 {
+            if myRoutineSampleData.count > 0 && indexPath.row == 0 {
+                if !myRoutineSampleData[indexPath.section].opend {
+                    if preSelectedIndex >= 0 {
+                        myRoutineSampleData[preSelectedIndex].opend = false
+                        tableView.reloadSections([preSelectedIndex], with: .none)
+                    }
+                    
+                    preSelectedIndex = indexPath.section
                 }
                 
-                preSelectedIndex = indexPath.section
+                if myRoutineSampleData[indexPath.section].opend {
+                    myRoutineSampleData[indexPath.section].opend = false
+                    selectedMyRoutineCount = 0
+                } else {
+                    myRoutineSampleData[indexPath.section].opend = true
+                    selectedMyRoutineCount = myRoutineSampleData[indexPath.section].category.count
+                }
+         
+                tableView.reloadSections([indexPath.section], with: .none)
             }
             
-            if myRoutineSampleData[indexPath.section].opend {
-                myRoutineSampleData[indexPath.section].opend = false
-                selectedCount = 0
+        } else {
+            if let index = isSelectWeightTraings[isSelectBodyPartIndex].firstIndex(of: sampleData[isSelectBodyPartIndex].weigthTraing[indexPath.row]) {
+                isSelectWeightTraings[isSelectBodyPartIndex].remove(at: index)
+                selectedCount -= 1
             } else {
-                myRoutineSampleData[indexPath.section].opend = true
-                selectedCount = myRoutineSampleData[indexPath.section].category.count
+                isSelectWeightTraings[isSelectBodyPartIndex].append(sampleData[isSelectBodyPartIndex].weigthTraing[indexPath.row])
+                selectedCount += 1
             }
-     
-            tableView.reloadSections([indexPath.section], with: .none)
-    
-            if selectedCount == 0 {
-                selectCompleteButton.gradient.colors = [UIColor.colorCCCCCC.cgColor, UIColor.colorCCCCCC.cgColor]
-                selectCompleteButtonCountLabel.text = ""
-            } else {
-                selectCompleteButton.gradient.colors = [UIColor.color8E36FF.cgColor, UIColor.color7442FF.cgColor]
-                selectCompleteButtonCountLabel.text = "\(selectedCount)"
-            }
+            
+            routineTableView.reloadData()
         }
+        
+        updateSelectCompleteButton()
     }
     
     @objc func routineCellTapped(_ gestureRecognizer: UITapGestureRecognizer) {
-        guard let footerView = gestureRecognizer.view else { return }
-        let section = footerView.tag
+        if isSelectBodyPartIndex == -1 {
+            guard let footerView = gestureRecognizer.view else { return }
+            let section = footerView.tag
 
-        if !myRoutineSampleData[section].opend {
-            if preSelectedIndex >= 0 {
-                myRoutineSampleData[preSelectedIndex].opend = false
-                routineTableView.reloadSections([preSelectedIndex], with: .none)
+            if !myRoutineSampleData[section].opend {
+                if preSelectedIndex >= 0 {
+                    myRoutineSampleData[preSelectedIndex].opend = false
+                    routineTableView.reloadSections([preSelectedIndex], with: .none)
+                }
+                
+                preSelectedIndex = section
+            }
+       
+            if myRoutineSampleData[section].opend {
+                myRoutineSampleData[section].opend = false
+                selectedMyRoutineCount = 0
+            } else {
+                myRoutineSampleData[section].opend = true
+                selectedMyRoutineCount = myRoutineSampleData[section].category.count
             }
             
-            preSelectedIndex = section
+            routineTableView.reloadSections([section], with: .none)
         }
         
-        myRoutineSampleData[section].opend = !myRoutineSampleData[section].opend
-        routineTableView.reloadSections([section], with: .none)
-        
-        if myRoutineSampleData[section].opend {
-            myRoutineSampleData[section].opend = false
-            selectedCount = 0
-        } else {
-            myRoutineSampleData[section].opend = true
-            selectedCount = myRoutineSampleData[section].category.count
-        }
-       
-        
-        if selectedCount == 0 {
-            selectCompleteButton.gradient.colors = [UIColor.colorCCCCCC.cgColor, UIColor.colorCCCCCC.cgColor]
-            selectCompleteButtonCountLabel.text = ""
-        } else {
-            selectCompleteButton.gradient.colors = [UIColor.color8E36FF.cgColor, UIColor.color7442FF.cgColor]
-            selectCompleteButtonCountLabel.text = "\(selectedCount)"
-        }
+        updateSelectCompleteButton()
     }
 }

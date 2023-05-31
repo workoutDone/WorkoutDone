@@ -227,7 +227,6 @@ extension CreateRoutineViewController : UITableViewDelegate, UITableViewDataSour
             cell.weightTrainingLabel.font = .pretendard(.semiBold, size: 16)
         }
 
-
         return cell
     }
     
