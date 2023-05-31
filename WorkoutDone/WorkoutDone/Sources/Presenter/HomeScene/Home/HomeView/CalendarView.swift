@@ -331,7 +331,7 @@ class CalendarView : BaseUIView {
         days.removeAll()
         
         if startDayOfWeek > endDayOfWeek {
-            for day in startDayOfWeek..<startDayOfWeek + (7 - endDayOfWeek) {
+            for day in startDayOfWeek...startDayOfWeek + (7 - endDayOfWeek) {
                 days.append(String(day))
             }
             for day in 1..<endDayOfWeek {
