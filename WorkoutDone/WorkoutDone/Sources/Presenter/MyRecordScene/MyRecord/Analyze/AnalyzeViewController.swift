@@ -109,5 +109,8 @@ class AnalyzeViewController : BaseViewController {
             $0.bottom.equalToSuperview().offset(-30)
         }
     }
+    override func actions() {
+//        super.actions()
+    }
     
 }
