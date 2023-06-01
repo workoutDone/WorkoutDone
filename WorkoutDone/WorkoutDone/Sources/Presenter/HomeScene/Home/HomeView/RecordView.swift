@@ -11,7 +11,6 @@ import SnapKit
 import DeviceKit
 
 
-//Todo: - 몸무게, 체지방량, 근골격량 길이 길어질 때 처리하기
 
 class RecordView : BaseUIView {
     // MARK: - PROPERTIES
@@ -76,11 +75,11 @@ class RecordView : BaseUIView {
     let weightInputLabel = UILabel().then {
         $0.text = "-"
         $0.textColor = .color7442FF
-        $0.font = .pretendard(.medium, size: 20)
+        $0.font = .pretendard(.medium, size: 22)
         $0.lineBreakMode = .byTruncatingHead
     }
     private let weightUnitLabel = UILabel().then {
-        $0.text = "  kg"
+        $0.text = "kg"
         $0.textColor = .color121212
         $0.font = .pretendard(.medium, size: 20)
     }
@@ -88,7 +87,7 @@ class RecordView : BaseUIView {
         $0.axis = .horizontal
         $0.alignment = .fill
         $0.distribution = .fill
-        $0.spacing = 0
+        $0.spacing = 6
     }
     private let weightSeparateView = UIView().then {
         $0.backgroundColor = .colorE6E0FF
@@ -99,14 +98,14 @@ class RecordView : BaseUIView {
         $0.font = .pretendard(.semiBold, size: 20)
     }
     private let skeletalMuscleMassUnitLabel = UILabel().then {
-        $0.text = "  kg"
+        $0.text = "kg"
         $0.textColor = .color121212
         $0.font = .pretendard(.medium, size: 20)
     }
     let skeletalMuscleMassInputLabel = UILabel().then {
         $0.text = "-"
         $0.textColor = .color7442FF
-        $0.font = .pretendard(.medium, size: 20)
+        $0.font = .pretendard(.medium, size: 22)
     }
     private let skeletalMusleMassSeparateView = UIView().then {
         $0.backgroundColor = .colorE6E0FF
@@ -115,7 +114,7 @@ class RecordView : BaseUIView {
         $0.axis = .horizontal
         $0.alignment = .fill
         $0.distribution = .fill
-        $0.spacing = 0
+        $0.spacing = 6
     }
     
     private let fatPercentageLabel = UILabel().then {
@@ -124,20 +123,21 @@ class RecordView : BaseUIView {
         $0.font = .pretendard(.semiBold, size: 20)
     }
     private let fatPercentageUnitLabel = UILabel().then {
-        $0.text = "  %"
+        $0.text = "%"
         $0.textColor = .color121212
+        $0.textAlignment = .right
         $0.font = .pretendard(.medium, size: 20)
     }
     let fatPercentageInputLabel = UILabel().then {
         $0.text = "-"
         $0.textColor = .color7442FF
-        $0.font = .pretendard(.medium, size: 20)
+        $0.font = .pretendard(.medium, size: 22)
     }
     private let fatPercentageStackView = UIStackView().then {
         $0.axis = .horizontal
         $0.alignment = .fill
         $0.distribution = .fill
-        $0.spacing = 0
+        $0.spacing = 6
     }
     private let fatPercentageSeparateView = UIView().then {
         $0.backgroundColor = .colorE6E0FF
@@ -172,6 +172,15 @@ class RecordView : BaseUIView {
 
         [fatPercentageInputLabel, fatPercentageUnitLabel].forEach {
             fatPercentageStackView.addArrangedSubview($0)
+        }
+        weightUnitLabel.snp.makeConstraints {
+            $0.width.equalTo(22)
+        }
+        skeletalMuscleMassUnitLabel.snp.makeConstraints {
+            $0.width.equalTo(22)
+        }
+        fatPercentageUnitLabel.snp.makeConstraints {
+            $0.width.equalTo(22)
         }
 
     }
