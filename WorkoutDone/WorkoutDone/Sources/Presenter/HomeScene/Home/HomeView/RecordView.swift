@@ -210,11 +210,10 @@ class RecordView : BaseUIView {
         workoutNotDoneInfoLabel.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.height.equalTo(44)
-            $0.top.equalTo(workoutImageBaseView.snp.top).offset(58)
+            $0.bottom.equalTo(clickImage.snp.top).offset(-31)
         }
         clickImage.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
-            $0.top.equalTo(workoutNotDoneInfoLabel.snp.bottom).offset(31)
+            $0.centerX.centerY.equalToSuperview()
             $0.height.width.equalTo(41)
         }
         clickAlertLabel.snp.makeConstraints {
