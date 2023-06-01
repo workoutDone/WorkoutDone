@@ -131,7 +131,6 @@ class HomeViewController : BaseViewController {
         recordBaseView.snp.makeConstraints {
             $0.top.equalTo(calendarView.snp.bottom).offset(30)
             $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(576)
         }
         ///운동하기 view
         workoutBaseView.snp.makeConstraints {
