@@ -201,6 +201,7 @@ class HomeViewController : BaseViewController {
     }
     @objc func workoutRoutineChoiceButtonTapped() {
         let workoutViewController = WorkoutViewController()
+        workoutViewController.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(workoutViewController, animated: true)
     }
     @objc func workoutResultButtonTapped() {

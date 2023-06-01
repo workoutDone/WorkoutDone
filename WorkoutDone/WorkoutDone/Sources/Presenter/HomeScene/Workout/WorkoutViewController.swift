@@ -48,7 +48,6 @@ class WorkoutViewController : BaseViewController {
         $0.backgroundColor = .colorFFFFFF
     }
     
-    // [UIColor.color8E36FF.cgColor, UIColor.color7442FF.cgColor]
     private let selectCompleteButton = GradientButton(colors: [UIColor.colorCCCCCC.cgColor, UIColor.colorCCCCCC.cgColor])
     
     private let selectCompleteButtonCountLabel = UILabel().then {
@@ -122,7 +121,7 @@ class WorkoutViewController : BaseViewController {
         }
         
         adImage.snp.makeConstraints {
-            $0.leading.trailing.bottom.equalToSuperview()
+            $0.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
             $0.height.equalTo(50)
         }
     }
@@ -135,6 +134,10 @@ class WorkoutViewController : BaseViewController {
         routineTableView.dataSource = self
     }
     
+    override func actions() {
+        selectCompleteButton.addTarget(self, action: #selector(selectCompleteButtonTapped), for: .touchUpInside)
+    }
+    
     func updateSelectCompleteButton() {
         if selectedMyRoutineCount + selectedCount == 0 {
             selectCompleteButton.gradient.colors = [UIColor.colorCCCCCC.cgColor, UIColor.colorCCCCCC.cgColor]
@@ -142,6 +145,13 @@ class WorkoutViewController : BaseViewController {
         } else {
             selectCompleteButton.gradient.colors = [UIColor.color8E36FF.cgColor, UIColor.color7442FF.cgColor]
             selectCompleteButtonCountLabel.text = "\(selectedMyRoutineCount + selectedCount)"
+        }
+    }
+    
+    @objc func selectCompleteButtonTapped(sender: UIButton!) {
+        if selectedMyRoutineCount + selectedCount > 0 {
+            let workoutSequenceVC = WorkoutSequenceViewController()
+            navigationController?.pushViewController(workoutSequenceVC, animated: false)
         }
     }
 }
