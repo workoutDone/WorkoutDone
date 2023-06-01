@@ -264,6 +264,7 @@ extension WorkoutViewController : UITableViewDelegate, UITableViewDataSource {
             if indexPath.row == 0 {
                 guard let cell = tableView.dequeueReusableCell(withIdentifier: "myRoutineCell", for: indexPath) as? MyRoutineCell else { return UITableViewCell() }
                 cell.selectionStyle = .none
+                cell.routineIndexLabel.text = "routine \(indexPath.routineOrder)"
                
                 return cell
             }

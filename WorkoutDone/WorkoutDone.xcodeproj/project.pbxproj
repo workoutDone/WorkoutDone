@@ -80,6 +80,7 @@
 		929158152A2512E20022BEF9 /* MyRoutineDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929158142A2512E20022BEF9 /* MyRoutineDetailCell.swift */; };
 		9291583D2A272B440022BEF9 /* WorkoutSequenceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9291583C2A272B440022BEF9 /* WorkoutSequenceViewController.swift */; };
 		9291583F2A2886150022BEF9 /* AddOrRemoveButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9291583E2A2886150022BEF9 /* AddOrRemoveButton.swift */; };
+		929158412A28DFEE0022BEF9 /* IndexPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929158402A28DFEE0022BEF9 /* IndexPath.swift */; };
 		92DCF3EC29CDB38300F90002 /* BackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DCF3EB29CDB38300F90002 /* BackButton.swift */; };
 		92DCF47A29D0818A00F90002 /* WorkOutDoneData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DCF47929D0818A00F90002 /* WorkOutDoneData.swift */; };
 		92DCF47E29D0830B00F90002 /* FrameImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DCF47D29D0830B00F90002 /* FrameImage.swift */; };
@@ -237,6 +238,7 @@
 		929158142A2512E20022BEF9 /* MyRoutineDetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyRoutineDetailCell.swift; sourceTree = "<group>"; };
 		9291583C2A272B440022BEF9 /* WorkoutSequenceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutSequenceViewController.swift; sourceTree = "<group>"; };
 		9291583E2A2886150022BEF9 /* AddOrRemoveButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddOrRemoveButton.swift; sourceTree = "<group>"; };
+		929158402A28DFEE0022BEF9 /* IndexPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndexPath.swift; sourceTree = "<group>"; };
 		92DCF3EB29CDB38300F90002 /* BackButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackButton.swift; sourceTree = "<group>"; };
 		92DCF47929D0818A00F90002 /* WorkOutDoneData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkOutDoneData.swift; sourceTree = "<group>"; };
 		92DCF47D29D0830B00F90002 /* FrameImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameImage.swift; sourceTree = "<group>"; };
@@ -513,6 +515,7 @@
 				A55149192A0FE64900222A72 /* UILabel.swift */,
 				A5632CD92A0E30F5007EC335 /* UIImage.swift */,
 				A5552D302A121D4600835B40 /* Double.swift */,
+				929158402A28DFEE0022BEF9 /* IndexPath.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1060,6 +1063,7 @@
 				A52F65F82A09FE9D00D398DF /* NotificationCenterManager.swift in Sources */,
 				926DBC9429DEA31C007BE22A /* SaveImageToastMessageView.swift in Sources */,
 				A59ACB7A29B4BC740084C73E /* RoutineViewController.swift in Sources */,
+				929158412A28DFEE0022BEF9 /* IndexPath.swift in Sources */,
 				A51B6F4E2A17B0C000FB7A16 /* DuringWorkoutView.swift in Sources */,
 				A5632CDA2A0E30F5007EC335 /* UIImage.swift in Sources */,
 				A57061CF29CD6A5E0083ECDD /* GalleryViewController.swift in Sources */,

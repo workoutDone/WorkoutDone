@@ -126,6 +126,8 @@ extension RoutineViewController : UITableViewDelegate, UITableViewDataSource {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "routineCell", for: indexPath) as? RoutineCell else { return UITableViewCell() }
             cell.selectionStyle = .none
             cell.delegate = self
+            
+            cell.routineIndexLabel.text = "routine \(indexPath.routineOrder)"
             cell.routineTitleLabel.text = sampleData[indexPath.section].title
             cell.editButton.isHidden = true
             
