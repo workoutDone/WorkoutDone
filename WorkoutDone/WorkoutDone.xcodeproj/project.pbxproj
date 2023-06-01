@@ -78,6 +78,8 @@
 		929158102A23B16D0022BEF9 /* CreateRoutineCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9291580F2A23B16D0022BEF9 /* CreateRoutineCell.swift */; };
 		929158122A24DC3E0022BEF9 /* MyRoutineCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929158112A24DC3E0022BEF9 /* MyRoutineCell.swift */; };
 		929158152A2512E20022BEF9 /* MyRoutineDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929158142A2512E20022BEF9 /* MyRoutineDetailCell.swift */; };
+		9291583D2A272B440022BEF9 /* WorkoutSequenceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9291583C2A272B440022BEF9 /* WorkoutSequenceViewController.swift */; };
+		9291583F2A2886150022BEF9 /* AddOrRemoveButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9291583E2A2886150022BEF9 /* AddOrRemoveButton.swift */; };
 		92DCF3EC29CDB38300F90002 /* BackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DCF3EB29CDB38300F90002 /* BackButton.swift */; };
 		92DCF47A29D0818A00F90002 /* WorkOutDoneData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DCF47929D0818A00F90002 /* WorkOutDoneData.swift */; };
 		92DCF47E29D0830B00F90002 /* FrameImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DCF47D29D0830B00F90002 /* FrameImage.swift */; };
@@ -233,6 +235,8 @@
 		9291580F2A23B16D0022BEF9 /* CreateRoutineCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRoutineCell.swift; sourceTree = "<group>"; };
 		929158112A24DC3E0022BEF9 /* MyRoutineCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyRoutineCell.swift; sourceTree = "<group>"; };
 		929158142A2512E20022BEF9 /* MyRoutineDetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyRoutineDetailCell.swift; sourceTree = "<group>"; };
+		9291583C2A272B440022BEF9 /* WorkoutSequenceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutSequenceViewController.swift; sourceTree = "<group>"; };
+		9291583E2A2886150022BEF9 /* AddOrRemoveButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddOrRemoveButton.swift; sourceTree = "<group>"; };
 		92DCF3EB29CDB38300F90002 /* BackButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackButton.swift; sourceTree = "<group>"; };
 		92DCF47929D0818A00F90002 /* WorkOutDoneData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkOutDoneData.swift; sourceTree = "<group>"; };
 		92DCF47D29D0830B00F90002 /* FrameImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameImage.swift; sourceTree = "<group>"; };
@@ -792,6 +796,8 @@
 			children = (
 				A59EF6E129C0B69C005DE9B5 /* WorkoutViewController.swift */,
 				9291580D2A223DC20022BEF9 /* MyRoutineHeaderView.swift */,
+				9291583C2A272B440022BEF9 /* WorkoutSequenceViewController.swift */,
+				9291583E2A2886150022BEF9 /* AddOrRemoveButton.swift */,
 				929158132A24DC420022BEF9 /* Cell */,
 			);
 			path = Workout;
@@ -1009,6 +1015,7 @@
 				9200604B29B1ADA500586063 /* BaseUIView.swift in Sources */,
 				A55149182A0FCAD200222A72 /* DeleteRecordAlertViewController.swift in Sources */,
 				A5021EEC2A1A8AF4007DE096 /* PermissionDeniedView.swift in Sources */,
+				9291583F2A2886150022BEF9 /* AddOrRemoveButton.swift in Sources */,
 				92DCF4D229D1B64100F90002 /* FrameCategoryCell.swift in Sources */,
 				A5FD469829DDDB4C003AC96E /* SkeletalMuslemassViewModel.swift in Sources */,
 				A55149142A0FBE9D00222A72 /* WorkoutResultViewController.swift in Sources */,
@@ -1092,6 +1099,7 @@
 				92DCF47A29D0818A00F90002 /* WorkOutDoneData.swift in Sources */,
 				929158102A23B16D0022BEF9 /* CreateRoutineCell.swift in Sources */,
 				92DCF3EC29CDB38300F90002 /* BackButton.swift in Sources */,
+				9291583D2A272B440022BEF9 /* WorkoutSequenceViewController.swift in Sources */,
 				A576693E29BB06CB00673DFE /* RegisterMyBodyInfoViewController.swift in Sources */,
 				920060E429B71D7400586063 /* DayCell.swift in Sources */,
 			);
