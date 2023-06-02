@@ -7,16 +7,28 @@
 
 import UIKit
 import RealmSwift
+import NotificationCenter
+import UserNotifications
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-
+    var userNotificationCenter = UNUserNotificationCenter.current()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         let realm = try! Realm()
         print(Realm.Configuration.defaultConfiguration.fileURL)
+        UNUserNotificationCenter.current().delegate = self
+        
+        let authrizationOptions = UNAuthorizationOptions(arrayLiteral: [.alert, .badge, .sound])
+        
+        userNotificationCenter.requestAuthorization(options: authrizationOptions) { _, error in
+            if let error = error {
+                print(error.localizedDescription, "UNUserNotificationCenter")
+            }
+        }
+        
         return true
     }
 
@@ -37,3 +49,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 }
 
+extension AppDelegate : UNUserNotificationCenterDelegate {
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        completionHandler([.banner, .badge, .sound])
+    }
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        completionHandler()
+    }
+}

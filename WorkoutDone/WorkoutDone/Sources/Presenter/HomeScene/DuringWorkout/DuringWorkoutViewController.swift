@@ -7,8 +7,13 @@
 
 import UIKit
 import AVFoundation
+import UserNotifications
 
 class DuringWorkoutViewController : BaseViewController {
+    
+    let userNotificationCenter = UNUserNotificationCenter.current()
+    
+    
     private var dummy = ExBodyPart.dummy()
     var firstArrayIndex = 0
     var secondArrayIndex = 0
@@ -22,9 +27,9 @@ class DuringWorkoutViewController : BaseViewController {
     private var count : Int = 0
     private var timerCounting : Bool = false
     
-    private var countdownTimerCounting : Bool = false
+    var countdownTimerCounting : Bool = false
     private var countdowmTimer : DispatchSourceTimer?
-    private var currentCountdownSecond : Int = 0
+    var currentCountdownSecond : Int = 0
 
     // MARK: - PROPERTIES
     private let endWorkoutButton = RightBarButtonItem(title: "운동 종료", buttonBackgroundColor: .colorFFEDF0, titleColor: .colorF54968).then {
@@ -405,11 +410,13 @@ class DuringWorkoutViewController : BaseViewController {
         if timerCounting {
             timerCounting = false
             timer.invalidate()
+            self.userNotificationCenter.addNotificationRequest(viewController: self)
             //토글 해주기 todo
         }
         else {
             timerCounting = true
             timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(timerCounter), userInfo: nil, repeats: true)
+            self.userNotificationCenter.addNotificationRequest(viewController: self)
             //토글 해주기 todo
         }
     }
@@ -435,6 +442,7 @@ class DuringWorkoutViewController : BaseViewController {
     @objc func restButtonTapped() {
         if countdownTimerCounting {
             stopCountdownTimer()
+            userNotificationCenter.removePendingNotificationRequests(withIdentifiers: ["LocalNoti"])
         }
         else {
             let duringWorkoutTimerViewController = DuringWorkoutTimerViewController()
@@ -447,6 +455,7 @@ class DuringWorkoutViewController : BaseViewController {
                     print(self.currentCountdownSecond, "???????")
                     self.startCountdowmTimer()
                     self.countdownTimerCounting = true
+                    self.userNotificationCenter.addNotificationRequest(viewController: self)
                 }
                 
             }
