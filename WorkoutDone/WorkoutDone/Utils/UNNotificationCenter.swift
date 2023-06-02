@@ -14,6 +14,7 @@ extension UNUserNotificationCenter {
         let notificationCentent = UNMutableNotificationContent()
         notificationCentent.title = "야호"
         notificationCentent.body = "야호오오오"
+        notificationCentent.sound = UNNotificationSound.default
         
         let trigger = UNTimeIntervalNotificationTrigger(timeInterval: TimeInterval(viewController.currentCountdownSecond), repeats: false)
         let request = UNNotificationRequest(identifier: "LocalNoti", content: notificationCentent, trigger: trigger)
