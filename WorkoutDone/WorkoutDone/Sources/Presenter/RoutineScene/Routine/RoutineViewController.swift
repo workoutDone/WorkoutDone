@@ -7,25 +7,12 @@
 
 import UIKit
 
-struct MyRoutineData {
-    var title : String
-    var category : [CategoryData]
-    var opend : Bool
-}
-
-struct CategoryData {
-    var categoryName : String
-    var training : String
-}
 
 class RoutineViewController : BaseViewController {
-    var sampleData =
-    [
-        MyRoutineData(title: "오늘은 등 운동!", category: [CategoryData(categoryName: "어깨", training: "배틀 로프")], opend: false),
-        MyRoutineData(title: "어깨 몸짱 가보자고", category: [CategoryData(categoryName: "어깨", training: "배틀 로프"), CategoryData(categoryName: "어깨", training: "클린 앤 저크"), CategoryData(categoryName: "어깨", training: "플란체")], opend: false),
-        MyRoutineData(title: "바프를 향해 데일리루틴", category: [CategoryData(categoryName: "냠냠", training: "냠냠")], opend: false)
-    ]
-    
+    let routineViewModel = RoutineViewModel()
+    var selectedRoutines = [Bool]()
+    var myRoutines = [String]()
+    var myRoutineDetail = [MyRoutineDetail]()
     var preSelectedIndex : Int = -1
     
     private let routineTableView = UITableView(frame: .zero, style: .grouped).then {
@@ -50,11 +37,16 @@ class RoutineViewController : BaseViewController {
         
         view.backgroundColor = .colorFFFFFF
         title = "나의 운동 루틴"
+        
+        myRoutines = routineViewModel.loadMyRoutine()
+   
+        selectedRoutines = Array(repeating: false, count: myRoutines.count)
     }
     
     override func setupLayout() {
-        view.addSubview(routineTableView)
-        view.addSubview(createdButton)
+        [routineTableView, createdButton].forEach {
+            view.addSubview($0)
+        }
     }
     
     override func setupConstraints() {
@@ -98,25 +90,25 @@ extension RoutineViewController : EditDelegate {
 
 extension RoutineViewController : UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return sampleData.count == 0 ? 1 : sampleData.count
+        return myRoutines.count == 0 ? 1 : myRoutines.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if sampleData.count > 0 && sampleData[section].opend == true {
-            return sampleData[section].category.count + 1
+        if myRoutines.count > 0 && selectedRoutines[section] == true {
+            return myRoutineDetail.count + 1
         }
         return 1
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if sampleData.count == 0 || section == 0 {
+        if myRoutines.count == 0 || section == 0 {
             return 0.1
         }
         return 14
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if sampleData.count == 0 {
+        if myRoutines.count == 0 {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "emptyRoutineCell", for: indexPath) as? EmptyRoutineCell else { return UITableViewCell() }
             cell.selectionStyle = .none
             
@@ -128,11 +120,11 @@ extension RoutineViewController : UITableViewDelegate, UITableViewDataSource {
             cell.delegate = self
             
             cell.routineIndexLabel.text = "routine \(indexPath.routineOrder)"
-            cell.routineTitleLabel.text = sampleData[indexPath.section].title
+            cell.routineTitleLabel.text = myRoutines[indexPath.section]
             cell.editButton.isHidden = true
             
             cell.outerView.backgroundColor = .colorCCCCCC
-            if sampleData[indexPath.section].opend {
+            if selectedRoutines[indexPath.section] {
                 cell.editButton.isHidden = false
             }
             
@@ -140,9 +132,9 @@ extension RoutineViewController : UITableViewDelegate, UITableViewDataSource {
         }
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "routineDetailCell", for: indexPath) as? RoutineDetailCell else { return UITableViewCell() }
         cell.selectionStyle = .none
-        
-        cell.bodyPartLabel.text = sampleData[indexPath.section].category[indexPath.row - 1].categoryName
-        cell.weightTrainingLabel.text = sampleData[indexPath.section].category[indexPath.row - 1].training
+
+        cell.bodyPartLabel.text = myRoutineDetail[indexPath.row - 1].name
+        cell.weightTrainingLabel.text = myRoutineDetail[indexPath.row - 1].weightTraining
         
         cell.outerView.backgroundColor = .colorCCCCCC
 
@@ -150,12 +142,12 @@ extension RoutineViewController : UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if sampleData.count == 0 {
+        if myRoutines.count == 0 {
             return tableView.frame.height
         }
         
         if indexPath.row == 0 {
-            return sampleData[indexPath.section].opend == true ? 65 : 53
+            return selectedRoutines[indexPath.section] == true ? 65 : 53
         }
         return 58
     }
@@ -184,21 +176,26 @@ extension RoutineViewController : UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return sampleData[section].opend == true ? 19 : 17
+        if myRoutines.count > 0 {
+            return selectedRoutines[section] == true ? 19 : 17
+        }
+        return 0
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if sampleData.count > 0 && indexPath.row == 0 {
-            if !sampleData[indexPath.section].opend {
+        if myRoutines.count > 0 && indexPath.row == 0 {
+            if !selectedRoutines[indexPath.section] {
                 if preSelectedIndex >= 0 {
-                    sampleData[preSelectedIndex].opend = false
+                    selectedRoutines[preSelectedIndex] = false
                     tableView.reloadSections([preSelectedIndex], with: .none)
                 }
                 
                 preSelectedIndex = indexPath.section
+                myRoutineDetail = routineViewModel.loadMyRoutineDetail(routine: myRoutines[indexPath.section])
             }
             
-            sampleData[indexPath.section].opend = !sampleData[indexPath.section].opend
+            selectedRoutines[indexPath.section] = !selectedRoutines[indexPath.section]
+            
             tableView.reloadSections([indexPath.section], with: .none)
         }
     }
@@ -207,16 +204,18 @@ extension RoutineViewController : UITableViewDelegate, UITableViewDataSource {
         guard let footerView = gestureRecognizer.view else { return }
         let section = footerView.tag
 
-        if !sampleData[section].opend {
+        if !selectedRoutines[section] {
             if preSelectedIndex >= 0 {
-                sampleData[preSelectedIndex].opend = false
+                selectedRoutines[preSelectedIndex] = false
                 routineTableView.reloadSections([preSelectedIndex], with: .none)
             }
             
             preSelectedIndex = section
+            myRoutineDetail = routineViewModel.loadMyRoutineDetail(routine: myRoutines[section])
         }
+
+        selectedRoutines[section] = !selectedRoutines[section]
         
-        sampleData[section].opend = !sampleData[section].opend
         routineTableView.reloadSections([section], with: .none)
     }
 }

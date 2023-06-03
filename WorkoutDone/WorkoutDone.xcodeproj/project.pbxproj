@@ -81,6 +81,8 @@
 		9291583D2A272B440022BEF9 /* WorkoutSequenceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9291583C2A272B440022BEF9 /* WorkoutSequenceViewController.swift */; };
 		9291583F2A2886150022BEF9 /* AddOrRemoveButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9291583E2A2886150022BEF9 /* AddOrRemoveButton.swift */; };
 		929158412A28DFEE0022BEF9 /* IndexPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929158402A28DFEE0022BEF9 /* IndexPath.swift */; };
+		929158432A28FDDD0022BEF9 /* RoutineViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929158422A28FDDD0022BEF9 /* RoutineViewModel.swift */; };
+		929158452A2BAB940022BEF9 /* MyRoutineDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929158442A2BAB940022BEF9 /* MyRoutineDetail.swift */; };
 		92DCF3EC29CDB38300F90002 /* BackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DCF3EB29CDB38300F90002 /* BackButton.swift */; };
 		92DCF47A29D0818A00F90002 /* WorkOutDoneData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DCF47929D0818A00F90002 /* WorkOutDoneData.swift */; };
 		92DCF47E29D0830B00F90002 /* FrameImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DCF47D29D0830B00F90002 /* FrameImage.swift */; };
@@ -239,6 +241,8 @@
 		9291583C2A272B440022BEF9 /* WorkoutSequenceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutSequenceViewController.swift; sourceTree = "<group>"; };
 		9291583E2A2886150022BEF9 /* AddOrRemoveButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddOrRemoveButton.swift; sourceTree = "<group>"; };
 		929158402A28DFEE0022BEF9 /* IndexPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndexPath.swift; sourceTree = "<group>"; };
+		929158422A28FDDD0022BEF9 /* RoutineViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineViewModel.swift; sourceTree = "<group>"; };
+		929158442A2BAB940022BEF9 /* MyRoutineDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyRoutineDetail.swift; sourceTree = "<group>"; };
 		92DCF3EB29CDB38300F90002 /* BackButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackButton.swift; sourceTree = "<group>"; };
 		92DCF47929D0818A00F90002 /* WorkOutDoneData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkOutDoneData.swift; sourceTree = "<group>"; };
 		92DCF47D29D0830B00F90002 /* FrameImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameImage.swift; sourceTree = "<group>"; };
@@ -614,6 +618,7 @@
 				9269981B2A0EBD22003DDAD2 /* MyRoutine.swift */,
 				9269981F2A0EBD7D003DDAD2 /* MyBodyPart.swift */,
 				926998212A0EC4A8003DDAD2 /* MyWeightTraining.swift */,
+				929158442A2BAB940022BEF9 /* MyRoutineDetail.swift */,
 			);
 			path = MyRoutine;
 			sourceTree = "<group>";
@@ -768,6 +773,7 @@
 				926999532A1CEBA8003DDAD2 /* RoutineAlertViewController.swift */,
 				926999572A1D9DEA003DDAD2 /* RoutineEditorViewController.swift */,
 				926999592A1DECCA003DDAD2 /* StampView.swift */,
+				929158422A28FDDD0022BEF9 /* RoutineViewModel.swift */,
 				926998E32A1473FD003DDAD2 /* Cell */,
 			);
 			path = Routine;
@@ -1010,6 +1016,7 @@
 				9200602729B1A7F400586063 /* UIColor.swift in Sources */,
 				A526C12E2A1BC5A600DAC0EF /* AuthorizedCameraView.swift in Sources */,
 				929158122A24DC3E0022BEF9 /* MyRoutineCell.swift in Sources */,
+				929158432A28FDDD0022BEF9 /* RoutineViewModel.swift in Sources */,
 				9200602D29B1A91600586063 /* OnboardingCell.swift in Sources */,
 				926DBC9229DDC905007BE22A /* PressShutterViewController.swift in Sources */,
 				A54C486129FFA176004CEE3D /* HomeButtonLessPhotoFrameTypeViewController.swift in Sources */,
@@ -1078,6 +1085,7 @@
 				926998222A0EC4A8003DDAD2 /* MyWeightTraining.swift in Sources */,
 				A57061D629D09AC40083ECDD /* SkeletalMuscleMassGraphView.swift in Sources */,
 				A5021EEA2A194E78007DE096 /* RightBarButtonItem.swift in Sources */,
+				929158452A2BAB940022BEF9 /* MyRoutineDetail.swift in Sources */,
 				926999502A172F4E003DDAD2 /* RoutineDetailCell.swift in Sources */,
 				926999542A1CEBA8003DDAD2 /* RoutineAlertViewController.swift in Sources */,
 				A551491A2A0FE64900222A72 /* UILabel.swift in Sources */,
