@@ -25,15 +25,31 @@ class DuringWorkoutTimerViewController : BaseViewController {
         return effectView
     }()
     
+    private let pickerBackView = UIView()
+    
+    private let minutesPickerView = UIPickerView()
+    
+    private let dotLabel = UILabel().then {
+        $0.text = ":"
+        $0.textColor = .color121212
+        $0.font = .pretendard(.medium, size: 36)
+    }
+    
+    private let secondsPickerView = UIPickerView()
+    
+    private lazy var timerStackView : UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [minutesPickerView, dotLabel, secondsPickerView])
+        stackView.axis = .horizontal
+        stackView.distribution = .equalSpacing
+        stackView.alignment = .center
+        stackView.spacing = 32
+        return stackView
+    }()
     private let minutesLabel = UILabel().then {
         $0.text = "분"
         $0.font = UIFont.pretendard(.regular, size: 16)
         $0.textColor = .color5E5E5E
     }
-    
-    private let pickerBackView = UIView()
-    
-    private let minutesPickerView = UIPickerView()
     
     private let secondsLabel = UILabel().then {
         $0.text = "초"
@@ -41,15 +57,13 @@ class DuringWorkoutTimerViewController : BaseViewController {
         $0.textColor = .color5E5E5E
     }
     
-    private let secondsPickerView = UIPickerView()
-    
     let cancelButton = UIButton().then {
         $0.setTitle("취소", for: .normal)
         $0.setTitleColor(UIColor.color5E5E5E, for: .normal)
         $0.layer.cornerRadius = 10
         $0.layer.borderColor = UIColor.color929292.cgColor
         $0.layer.borderWidth = 1
-        $0.titleLabel?.font = UIFont.pretendard(.semiBold, size: 16)
+        $0.titleLabel?.font = UIFont.pretendard(.semiBold, size: 20)
     }
     
     let okayButton = UIButton().then {
@@ -58,21 +72,22 @@ class DuringWorkoutTimerViewController : BaseViewController {
         $0.layer.cornerRadius = 10
         $0.layer.borderColor = UIColor.colorF54968.cgColor
         $0.layer.borderWidth = 1
-        $0.titleLabel?.font = UIFont.pretendard(.semiBold, size: 16)
+        $0.titleLabel?.font = UIFont.pretendard(.semiBold, size: 20)
         $0.backgroundColor = UIColor.colorF54968
     }
     
-    private let dotLabel = UILabel().then {
-        $0.text = ":"
-        $0.textColor = .color121212
-        $0.font = .pretendard(.medium, size: 32)
-    }
+    private lazy var buttonStackView : UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [cancelButton, okayButton])
+        stackView.axis = .horizontal
+        stackView.distribution = .fillEqually
+        stackView.alignment = .fill
+        stackView.spacing = 11
+        return stackView
+    }()
     
     // MARK: - LIFECYCLE
     override func viewDidLoad() {
         super.viewDidLoad()
-//        pickerBackView.backgroundColor = .red
-//        pickerBackView.backgroundColor = .blue
         minutesPickerView.delegate = self
         secondsPickerView.delegate = self
     }
@@ -87,34 +102,32 @@ class DuringWorkoutTimerViewController : BaseViewController {
     }
     override func setupLayout() {
         view.addSubviews(visualEffectView, timerBackView)
-        timerBackView.addSubviews(minutesLabel, secondsLabel, cancelButton, okayButton, pickerBackView)
-        pickerBackView.addSubviews(minutesPickerView, secondsPickerView, dotLabel)
+        timerBackView.addSubviews(buttonStackView, minutesLabel, secondsLabel, pickerBackView)
+        pickerBackView.addSubview(timerStackView)
     }
     override func setupConstraints() {
         timerBackView.snp.makeConstraints {
             $0.centerY.centerX.equalToSuperview()
-            $0.height.equalTo(227)
-            $0.width.equalTo(267)
+            $0.height.equalTo(261)
+            $0.leading.equalToSuperview().inset(42)
+        }
+        buttonStackView.snp.makeConstraints {
+            $0.height.equalTo(64)
+            $0.leading.trailing.bottom.equalToSuperview().inset(15)
         }
         cancelButton.snp.makeConstraints {
-            $0.height.equalTo(57)
-            $0.width.equalTo(114)
-            $0.bottom.equalToSuperview().inset(15)
-            $0.leading.equalToSuperview().inset(14)
+            $0.height.equalTo(64)
         }
         okayButton.snp.makeConstraints {
-            $0.height.equalTo(57)
-            $0.width.equalTo(114)
-            $0.bottom.equalToSuperview().inset(15)
-            $0.trailing.equalToSuperview().inset(14)
+            $0.height.equalTo(64)
         }
         minutesLabel.snp.makeConstraints {
+            $0.top.equalToSuperview().inset(27)
             $0.centerX.equalTo(cancelButton.snp.centerX)
-            $0.top.equalToSuperview().inset(20)
         }
         secondsLabel.snp.makeConstraints {
+            $0.top.equalToSuperview().inset(27)
             $0.centerX.equalTo(okayButton.snp.centerX)
-            $0.top.equalToSuperview().inset(20)
         }
         pickerBackView.snp.makeConstraints {
             $0.top.equalToSuperview().inset(40)
@@ -122,23 +135,15 @@ class DuringWorkoutTimerViewController : BaseViewController {
             $0.bottom.equalTo(cancelButton.snp.top)
         }
         
+        timerStackView.snp.makeConstraints {
+            $0.top.bottom.centerX.top.equalToSuperview()
+            
+        }
         minutesPickerView.snp.makeConstraints {
-            $0.top.bottom.equalToSuperview()
-            $0.centerX.equalTo(cancelButton.snp.centerX)
-            $0.centerY.equalToSuperview()
-            $0.width.equalTo(114)
-            $0.height.equalTo(60)
+            $0.width.equalTo(70)
         }
         secondsPickerView.snp.makeConstraints {
-            $0.top.bottom.equalToSuperview()
-            $0.centerX.equalTo(okayButton.snp.centerX)
-            $0.centerY.equalToSuperview()
-            $0.width.equalTo(114)
-            $0.height.equalTo(60)
-        }
-        dotLabel.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
-            $0.centerY.equalTo(minutesPickerView.snp.centerY)
+            $0.width.equalTo(70)
         }
     }
     
@@ -173,7 +178,7 @@ extension DuringWorkoutTimerViewController : UIPickerViewDelegate, UIPickerViewD
         return String(timeArray[row])
     }
     func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
-        return 40
+        return 50
     }
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         switch pickerView {
