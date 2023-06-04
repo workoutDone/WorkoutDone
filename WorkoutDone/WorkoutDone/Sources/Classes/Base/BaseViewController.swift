@@ -29,10 +29,6 @@ class BaseViewController : UIViewController {
         setupBinding()
         setComponents()
         actions()
-        
-        let backBarButtonItem = UIBarButtonItem(title: "뒤로가기", style: .plain, target: self, action: nil)
-        backBarButtonItem.tintColor = .color000000
-        self.navigationItem.backBarButtonItem = backBarButtonItem
     }
     
     // MARK: - 서브뷰 추가 함수
@@ -48,6 +44,10 @@ class BaseViewController : UIViewController {
     // MARK: - 컴포넌트 설정 함수
     func setComponents() {
         /// Override setComponent
+        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
+        let backBarButtonItem = UIBarButtonItem(title: "뒤로가기", style: .plain, target: self, action: nil)
+        backBarButtonItem.tintColor = .color000000
+        self.navigationItem.backBarButtonItem = backBarButtonItem
     }
     // MARK: - RX 관련 코드
     func setupBinding() {
@@ -57,7 +57,12 @@ class BaseViewController : UIViewController {
     // MARK: - Action 함수
     func actions() {
         /// Override Actions
+        let swipeLeftGesture = UISwipeGestureRecognizer(target: self, action: #selector(popAction(_:)))
+        swipeLeftGesture.direction = .right
+        view.addGestureRecognizer(swipeLeftGesture)
     }
-    
+    @objc func popAction(_ sender : UISwipeGestureRecognizer) {
+        navigationController?.popViewController(animated: true)
+    }
 }
 
