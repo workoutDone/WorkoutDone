@@ -7,8 +7,13 @@
 
 import UIKit
 import AVFoundation
+import UserNotifications
 
 class DuringWorkoutViewController : BaseViewController {
+    
+    let userNotificationCenter = UNUserNotificationCenter.current()
+    
+    
     private var dummy = ExBodyPart.dummy()
     var firstArrayIndex = 0
     var secondArrayIndex = 0
@@ -22,9 +27,9 @@ class DuringWorkoutViewController : BaseViewController {
     private var count : Int = 0
     private var timerCounting : Bool = false
     
-    private var countdownTimerCounting : Bool = false
+    var countdownTimerCounting : Bool = false
     private var countdowmTimer : DispatchSourceTimer?
-    private var currentCountdownSecond : Int = 0
+    var currentCountdownSecond : Int = 0
 
     // MARK: - PROPERTIES
     private let endWorkoutButton = RightBarButtonItem(title: "운동 종료", buttonBackgroundColor: .colorFFEDF0, titleColor: .colorF54968).then {
@@ -308,15 +313,31 @@ class DuringWorkoutViewController : BaseViewController {
         }
     }
     func setNotifications() {
-            //백그라운드에서 포어그라운드로 돌아올때
+            ///총 시간 타이머 백그라운드에서 포어그라운드로 돌아올때
             NotificationCenter.default.addObserver(self, selector: #selector(addbackGroundTime(_:)), name: NSNotification.Name("sceneWillEnterForeground"), object: nil)
-            //포어그라운드에서 백그라운드로 갈때
+            ///총 시간 타이머 포어그라운드에서 백그라운드로 갈때
             NotificationCenter.default.addObserver(self, selector: #selector(stopTimer), name: NSNotification.Name("sceneDidEnterBackground"), object: nil)
+        
+            ///카운트 다운 타이머 백그라운드에서 포어그라운드로 돌아올때
+        NotificationCenter.default.addObserver(self, selector: #selector(addBackgroundCountdownTime(_:)), name: NSNotification.Name("sceneWillEnterForeground"), object: nil)
+            ///카운트 다운  타이머 포어그라운드에서 백그라운드로 갈때
+        NotificationCenter.default.addObserver(self, selector: #selector(stopCountdownTimer(_:)), name: NSNotification.Name("sceneDidEnterBackground"), object: nil)
         }
+    @objc func addBackgroundCountdownTime(_ notification:Notification) {
+        let time = notification.userInfo?["time"] as? Int ?? 0
+        currentCountdownSecond -= time
+        print(currentCountdownSecond, "마이너 나오나요~")
+        if currentCountdownSecond <= 0 {
+            self.stopCountdownTimer()
+        }
+
+    }
+    @objc func stopCountdownTimer(_ notification:Notification) {
+        restTimerLabel.text = "00:00"
+    }
 
     @objc func addbackGroundTime(_ notification:Notification) {
         let time = notification.userInfo?["time"] as? Int ?? 0
-
         count += time
         print(count, "이걸로 되어야하는데?")
         let updatedTime = secondsToHoursMinutesSeconds(seconds: count)
@@ -405,11 +426,13 @@ class DuringWorkoutViewController : BaseViewController {
         if timerCounting {
             timerCounting = false
             timer.invalidate()
+            self.userNotificationCenter.addNotificationRequest(viewController: self)
             //토글 해주기 todo
         }
         else {
             timerCounting = true
             timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(timerCounter), userInfo: nil, repeats: true)
+            self.userNotificationCenter.addNotificationRequest(viewController: self)
             //토글 해주기 todo
         }
     }
@@ -435,6 +458,7 @@ class DuringWorkoutViewController : BaseViewController {
     @objc func restButtonTapped() {
         if countdownTimerCounting {
             stopCountdownTimer()
+            userNotificationCenter.removePendingNotificationRequests(withIdentifiers: ["LocalNoti"])
         }
         else {
             let duringWorkoutTimerViewController = DuringWorkoutTimerViewController()
@@ -447,6 +471,7 @@ class DuringWorkoutViewController : BaseViewController {
                     print(self.currentCountdownSecond, "???????")
                     self.startCountdowmTimer()
                     self.countdownTimerCounting = true
+                    self.userNotificationCenter.addNotificationRequest(viewController: self)
                 }
                 
             }
