@@ -9,6 +9,7 @@ import UIKit
 
 class RoutineEditorViewController: BaseViewController {
     var sampleData = ["벤치 프레스", "벤치 프레스2", "벤치 프레스3", "벤치 프레스4", "ㅠㅠ"]
+    var draggedItem: String = ""
     
     private let nameTextField = UITextField().then {
         $0.attributedPlaceholder = NSAttributedString(string: "이 루틴의 이름은 무엇인가요?", attributes: [NSAttributedString.Key.foregroundColor : UIColor.colorCCCCCC])
@@ -26,7 +27,7 @@ class RoutineEditorViewController: BaseViewController {
         $0.separatorStyle = .none
         $0.showsVerticalScrollIndicator = false
         $0.contentInset = UIEdgeInsets(top: -28, left: 0, bottom: -42, right: 0)
-        $0.isEditing = true
+        //$0.isEditing = true
         
         $0.backgroundColor = .colorF8F6FF
     }
@@ -43,6 +44,8 @@ class RoutineEditorViewController: BaseViewController {
         
         view.backgroundColor = .colorFFFFFF
         title = "루틴 만들기"
+        
+        
     }
     
     override func setupLayout() {
@@ -87,6 +90,10 @@ class RoutineEditorViewController: BaseViewController {
         routineTableView.delegate = self
         routineTableView.dataSource = self
         
+        routineTableView.dragDelegate = self
+        routineTableView.dropDelegate = self
+        routineTableView.dragInteractionEnabled = true
+        
         stampView.delegate = self
     }
     
@@ -126,7 +133,7 @@ extension RoutineEditorViewController : StampDelegate {
     }
 }
 
-extension RoutineEditorViewController : UITableViewDelegate, UITableViewDataSource {
+extension RoutineEditorViewController : UITableViewDelegate, UITableViewDataSource, UITableViewDragDelegate, UITableViewDropDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return sampleData.count
     }
@@ -136,10 +143,8 @@ extension RoutineEditorViewController : UITableViewDelegate, UITableViewDataSour
         cell.selectionStyle = .none
         
         cell.weightTrainingLabel.text = sampleData[indexPath.row]
-        cell.layer.borderWidth = 1
-        cell.layer.borderColor = UIColor.colorC8B4FF.cgColor
-        cell.layer.cornerRadius = 8
-        cell.backgroundColor = .colorFFFFFF
+        cell.backgroundColor = .clear
+        
         
         return cell
     }
@@ -148,19 +153,33 @@ extension RoutineEditorViewController : UITableViewDelegate, UITableViewDataSour
         return 64
     }
     
-    // editing 버튼 제거
-    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
-        return .none
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
     }
     
-    // 버튼 여백 제거
-    func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
-        return false
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if (editingStyle == .delete) {
+            sampleData.remove(at: indexPath.row)
+        }
+        tableView.reloadData()
     }
     
-    // 셀 이동
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        let removed = sampleData.remove(at: sourceIndexPath.row)
-        sampleData.insert(removed, at: destinationIndexPath.row)
+        let moveCell = sampleData[sourceIndexPath.row]
+        sampleData.remove(at: sourceIndexPath.row)
+        sampleData.insert(moveCell, at: destinationIndexPath.row)
     }
+    
+    func tableView(_ tableView: UITableView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
+        return [UIDragItem(itemProvider: NSItemProvider())]
+    }
+    
+    func tableView(_ tableView: UITableView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UITableViewDropProposal {
+        if session.localDragSession != nil {
+            return UITableViewDropProposal(operation: .move, intent: .insertAtDestinationIndexPath)
+        }
+        return UITableViewDropProposal(operation: .cancel, intent: .unspecified)
+    }
+    
+    func tableView(_ tableView: UITableView, performDropWith coordinator: UITableViewDropCoordinator) { }
 }
