@@ -12,14 +12,6 @@ import RxSwift
 class HomeViewController : BaseViewController {
     
     
-//    private let duringWorkoutViewController : DuringWorkoutViewController = {
-//       let duringWorkoutViewController = DuringWorkoutViewController()
-//        duringWorkoutViewController.view.tag = 992
-////        duringWorkoutViewController.expandedViewHeight = self.view.frame.size.height
-//        return duringWorkoutViewController
-//    }()
-    
-    
     //MARK: - ViewModel
     var homeViewModel = HomeViewModel()
     let frameImageViewModel = FrameImageViewModel()
@@ -66,15 +58,6 @@ class HomeViewController : BaseViewController {
         super.viewDidLoad()
         contentScrollView.delegate = self
         calendarView.delegate = self
-//        setWorkOutDoneImage()
-//        duringWorkoutViewController.expandedViewHeight = self.view.frame.size.height
-
-//        duringWorkoutViewController.didMove(toParent: self)
-//        duringWorkoutViewController.view.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: view.bounds.height)
-//        duringWorkoutViewController.view.backgroundColor = UIColor.red
-//        print(duringWorkoutViewController.view.backgroundColor! as UIColor, "얍")
-        
-//        NotificationCenter.default.addObserver(self, selector: #selector(showDuringWorkoutViewController(_:)), name: NSNotification.Name(duringWorkoutVcVisibility), object: nil)
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -131,7 +114,6 @@ class HomeViewController : BaseViewController {
         recordBaseView.snp.makeConstraints {
             $0.top.equalTo(calendarView.snp.bottom).offset(30)
             $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(576)
         }
         ///운동하기 view
         workoutBaseView.snp.makeConstraints {
@@ -201,6 +183,7 @@ class HomeViewController : BaseViewController {
     }
     @objc func workoutRoutineChoiceButtonTapped() {
         let workoutViewController = WorkoutViewController()
+        workoutViewController.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(workoutViewController, animated: true)
     }
     @objc func workoutResultButtonTapped() {

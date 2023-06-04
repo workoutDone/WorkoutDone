@@ -11,10 +11,11 @@ import SnapKit
 import DeviceKit
 
 
-//Todo: - 몸무게, 체지방량, 근골격량 길이 길어질 때 처리하기
 
 class RecordView : BaseUIView {
     // MARK: - PROPERTIES
+    private let backView = UIView()
+    
     private let recordLabel = UILabel().then {
         $0.text = "기록하기"
         $0.textColor = .color121212
@@ -39,7 +40,7 @@ class RecordView : BaseUIView {
     }
     private let clickImage = UIImageView().then {
         $0.image = UIImage(named: "clickImage")
-        $0.contentMode = .scaleAspectFill
+        $0.contentMode = .scaleAspectFit
     }
     private let clickAlertLabel = UILabel().then {
         $0.text = "오늘의 운동을 마쳤다면 클릭!"
@@ -74,11 +75,11 @@ class RecordView : BaseUIView {
     let weightInputLabel = UILabel().then {
         $0.text = "-"
         $0.textColor = .color7442FF
-        $0.font = .pretendard(.medium, size: 20)
+        $0.font = .pretendard(.medium, size: 22)
         $0.lineBreakMode = .byTruncatingHead
     }
     private let weightUnitLabel = UILabel().then {
-        $0.text = "  kg"
+        $0.text = "kg"
         $0.textColor = .color121212
         $0.font = .pretendard(.medium, size: 20)
     }
@@ -86,7 +87,7 @@ class RecordView : BaseUIView {
         $0.axis = .horizontal
         $0.alignment = .fill
         $0.distribution = .fill
-        $0.spacing = 0
+        $0.spacing = 6
     }
     private let weightSeparateView = UIView().then {
         $0.backgroundColor = .colorE6E0FF
@@ -97,14 +98,14 @@ class RecordView : BaseUIView {
         $0.font = .pretendard(.semiBold, size: 20)
     }
     private let skeletalMuscleMassUnitLabel = UILabel().then {
-        $0.text = "  kg"
+        $0.text = "kg"
         $0.textColor = .color121212
         $0.font = .pretendard(.medium, size: 20)
     }
     let skeletalMuscleMassInputLabel = UILabel().then {
         $0.text = "-"
         $0.textColor = .color7442FF
-        $0.font = .pretendard(.medium, size: 20)
+        $0.font = .pretendard(.medium, size: 22)
     }
     private let skeletalMusleMassSeparateView = UIView().then {
         $0.backgroundColor = .colorE6E0FF
@@ -113,7 +114,7 @@ class RecordView : BaseUIView {
         $0.axis = .horizontal
         $0.alignment = .fill
         $0.distribution = .fill
-        $0.spacing = 0
+        $0.spacing = 6
     }
     
     private let fatPercentageLabel = UILabel().then {
@@ -122,20 +123,21 @@ class RecordView : BaseUIView {
         $0.font = .pretendard(.semiBold, size: 20)
     }
     private let fatPercentageUnitLabel = UILabel().then {
-        $0.text = "  %"
+        $0.text = "%"
         $0.textColor = .color121212
+        $0.textAlignment = .right
         $0.font = .pretendard(.medium, size: 20)
     }
     let fatPercentageInputLabel = UILabel().then {
         $0.text = "-"
         $0.textColor = .color7442FF
-        $0.font = .pretendard(.medium, size: 20)
+        $0.font = .pretendard(.medium, size: 22)
     }
     private let fatPercentageStackView = UIStackView().then {
         $0.axis = .horizontal
         $0.alignment = .fill
         $0.distribution = .fill
-        $0.spacing = 0
+        $0.spacing = 6
     }
     private let fatPercentageSeparateView = UIView().then {
         $0.backgroundColor = .colorE6E0FF
@@ -155,7 +157,8 @@ class RecordView : BaseUIView {
 
     override func setupLayout() {
         super.setupLayout()
-        self.addSubviews(recordLabel, recordView)
+        self.addSubviews(backView)
+        backView.addSubviews(recordLabel, recordView)
         recordView.addSubviews(workoutImageBaseView, bodyInfoView)
         workoutImageBaseView.addSubviews(workoutNotDoneInfoLabel, clickImage, clickAlertLabel, bodyImageView, workoutDoneCameraButton)
         bodyInfoView.addSubviews(weightLabel, weightStackView, weightSeparateView, skeletalMuscleMassLabel, skelatalMuscleMassStackView, skeletalMusleMassSeparateView, fatPercentageLabel, fatPercentageStackView, fatPercentageSeparateView, bodyDataEntryButton)
@@ -170,21 +173,23 @@ class RecordView : BaseUIView {
         [fatPercentageInputLabel, fatPercentageUnitLabel].forEach {
             fatPercentageStackView.addArrangedSubview($0)
         }
+        weightUnitLabel.snp.makeConstraints {
+            $0.width.equalTo(22)
+        }
+        skeletalMuscleMassUnitLabel.snp.makeConstraints {
+            $0.width.equalTo(22)
+        }
+        fatPercentageUnitLabel.snp.makeConstraints {
+            $0.width.equalTo(22)
+        }
 
     }
     override func setupConstraints() {
         super.setupConstraints()
-//        [weightUnitLabel, weightInputLabel, weightLabel].forEach {
-//            if DeviceManager.shared.isHomeButtonDevice() || DeviceManager.shared.isSimulatorIsHomeButtonDevice() {
-//                $0.font = .pretendard(.semiBold, size: 16)
-//            }
-//        }
-//        [skeletalMuscleMassLabel, fatPercentageLabel, skeletalMuscleMassInputLabel, skeletalMuscleMassUnitLabel, fatPercentageInputLabel, fatPercentageUnitLabel].forEach {
-//            if DeviceManager.shared.isHomeButtonDevice() || DeviceManager.shared.isSimulatorIsHomeButtonDevice() {
-//                $0.font = .pretendard(.semiBold, size: 13)
-//            }
-//        }
-//
+        backView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+        
         recordLabel.snp.makeConstraints {
             $0.top.equalToSuperview()
             $0.leading.equalToSuperview().offset(30)
@@ -194,22 +199,21 @@ class RecordView : BaseUIView {
             $0.centerX.equalToSuperview()
             $0.leading.equalToSuperview().offset(18)
             $0.top.equalTo(recordLabel.snp.bottom).offset(8)
-            $0.height.equalTo(515)
+            $0.bottom.equalToSuperview().inset(30)
         }
         workoutImageBaseView.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.leading.equalTo(recordView.snp.leading).offset(12)
             $0.top.equalTo(recordView.snp.top).offset(13)
-            $0.height.equalTo(318)
+            $0.height.equalTo(workoutImageBaseView.snp.width)
         }
         workoutNotDoneInfoLabel.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.height.equalTo(44)
-            $0.top.equalTo(workoutImageBaseView.snp.top).offset(58)
+            $0.bottom.equalTo(clickImage.snp.top).offset(-31)
         }
         clickImage.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
-            $0.top.equalTo(workoutNotDoneInfoLabel.snp.bottom).offset(31)
+            $0.centerX.centerY.equalToSuperview()
             $0.height.width.equalTo(41)
         }
         clickAlertLabel.snp.makeConstraints {
