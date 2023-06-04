@@ -48,15 +48,14 @@ class RoutineCell : UITableViewCell {
         $0.setTitle("수정하기", for: .normal)
         $0.setTitleColor(UIColor.color363636, for: .normal)
         $0.titleLabel?.font = .pretendard(.semiBold, size: 14)
-        //$0.isHidden = true
     }
     
     // MARK: - LIFECYCLE
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-         setupLayout()
-         setupConstraints()
+        setupLayout()
+        setupConstraints()
         
         innerView.backgroundColor = .white
         innerView.layer.cornerRadius = 10

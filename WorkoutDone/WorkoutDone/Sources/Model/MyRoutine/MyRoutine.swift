@@ -10,13 +10,13 @@ import RealmSwift
 
 class MyRoutine : Object {
     @Persisted dynamic var name : String
-    @Persisted dynamic var image : String
+    @Persisted dynamic var stamp : String
     @Persisted dynamic var myBodyPart: List<MyBodyPart>
 
-    convenience init(name: String, image: String, myBodyPart: List<MyBodyPart>) {
+    convenience init(name: String, stamp: String, myBodyPart: List<MyBodyPart>) {
         self.init()
         self.name = name
-        self.image = image
+        self.stamp = stamp
         self.myBodyPart = myBodyPart
     }
     
