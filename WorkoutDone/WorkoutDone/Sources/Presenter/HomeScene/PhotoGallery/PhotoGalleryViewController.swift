@@ -14,7 +14,10 @@ import Photos
 import PhotosUI
 import DeviceKit
 
-class PhotoGalleryViewController : BaseViewController {
+class PhotoGalleryViewController : BaseViewController, CallPHPickerDelegate, PHPhotoLibraryChangeObserver {
+    
+    var selectedImage : PHAsset?
+    
     //MARK: - ViewModel
     
     private var viewModel = PhotoGalleryViewModel()
@@ -50,6 +53,8 @@ class PhotoGalleryViewController : BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         requestAuth()
+        limitedPhotoGalleryView.delegate = self
+        PHPhotoLibrary.shared().register(self)
     }
     override func setupBinding() {
         super.setupBinding()
@@ -70,6 +75,16 @@ class PhotoGalleryViewController : BaseViewController {
         authorizedPhotoGalleryView.photoCollectionView.rx.itemSelected
             .bind { _ in
                 if self.authorizedPhotoGalleryView.selectedIndexPath != nil {
+                    self.selectedPhoto.onNext(true)
+                }
+                else {
+                    self.selectedPhoto.onNext(false)
+                }
+            }
+            .disposed(by: disposeBag)
+        limitedPhotoGalleryView.photoCollectionView.rx.itemSelected
+            .bind { _ in
+                if self.limitedPhotoGalleryView.selectedIndexPath != nil {
                     self.selectedPhoto.onNext(true)
                 }
                 else {
@@ -145,7 +160,14 @@ class PhotoGalleryViewController : BaseViewController {
             case .limited:
                 print("limited")
                 self.requestAuthResponseView(status: .limited) { _ in
-                    print("")
+                    DispatchQueue.main.async { [weak self] in
+                        guard let self = self else { return }
+                        self.authorizedPhotoGalleryView.isHidden = true
+                        self.limitedPhotoGalleryView.isHidden = false
+                        self.deniedPhotoGalleryView.isHidden = true
+                        PHPhotoLibrary.shared().register(self)
+                        self.limitedPhotoGalleryView.photoCollectionView.reloadData()
+                    }
                 }
                 
             @unknown default:
@@ -181,6 +203,7 @@ class PhotoGalleryViewController : BaseViewController {
 
     }
     @objc func photoSelectionButtonTapped() {
+        print("??????")
         if DeviceManager.shared.isHomeButtonDevice() || DeviceManager.shared.isSimulatorIsHomeButtonDevice() {
             ///홈버튼 있는 기종
             let homeButtonPhotoFrameTypeViewController = HomeButtonPhotoFrameTypeViewController()
@@ -188,7 +211,8 @@ class PhotoGalleryViewController : BaseViewController {
             let options = PHImageRequestOptions()
             options.deliveryMode = .highQualityFormat
             options.resizeMode = .exact
-            guard let phAsset = authorizedPhotoGalleryView.selectedImage else { return }
+            selectedImage = authorizedPhotoGalleryView.selectedImage != nil ? authorizedPhotoGalleryView.selectedImage : limitedPhotoGalleryView.selectedImage
+            guard let phAsset = selectedImage else { return }
             manager.requestImageDataAndOrientation(
                 for: phAsset,
                 options: options) { data, _, _, _ in
@@ -205,7 +229,8 @@ class PhotoGalleryViewController : BaseViewController {
             let options = PHImageRequestOptions()
             options.deliveryMode = .highQualityFormat
             options.resizeMode = .exact
-            guard let phAsset = authorizedPhotoGalleryView.selectedImage else { return }
+            selectedImage = authorizedPhotoGalleryView.selectedImage != nil ? authorizedPhotoGalleryView.selectedImage : limitedPhotoGalleryView.selectedImage
+            guard let phAsset = selectedImage else { return }
             manager.requestImageDataAndOrientation(
                 for: phAsset,
                 options: options) { data, _, _, _ in
@@ -217,9 +242,18 @@ class PhotoGalleryViewController : BaseViewController {
         
     }
     
-    // MARK: - ACTIONS
+    // MARK: - PICKER
+    func callPicker() {
+        PHPhotoLibrary.shared().presentLimitedLibraryPicker(from: self)
+    }
+    ///변화 감지
+    func photoLibraryDidChange(_ changeInstance: PHChange) {
+        let fetchOptions = PHFetchOptions()
+        limitedPhotoGalleryView.imageFetch = PHAsset.fetchAssets(with: .image, options: fetchOptions)
+        DispatchQueue.main.async {
+            self.limitedPhotoGalleryView.photoCollectionView.reloadData()
+        }
+
+    }
 }
-// MARK: - EXTENSIONs
-private extension PhotoGalleryViewController {
-    
-}
+
