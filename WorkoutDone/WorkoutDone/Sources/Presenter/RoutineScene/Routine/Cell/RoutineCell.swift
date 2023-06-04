@@ -19,13 +19,7 @@ class RoutineCell : UITableViewCell {
     weak var delegate: EditDelegate?
     
     let outerView = UIView().then {
-        $0.backgroundColor = .colorCCCCCC
-        $0.layer.cornerRadius = 10
-        $0.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-    }
-    
-    let innerView = UIView().then {
-        $0.backgroundColor = .colorFFFFFF
+        $0.backgroundColor = .colorF6F6F6
         $0.layer.cornerRadius = 10
         $0.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
     }
@@ -42,9 +36,14 @@ class RoutineCell : UITableViewCell {
         $0.font = .pretendard(.semiBold, size: 16)
     }
     
+    let openImage = UIImageView().then {
+        $0.image = UIImage(named: "open")
+        $0.contentMode = .scaleAspectFit
+    }
+    
     let editButton = UIButton().then {
         $0.layer.cornerRadius = 5
-        $0.backgroundColor = .colorF3F3F3
+        $0.backgroundColor = .colorFFFFFF
         $0.setTitle("수정하기", for: .normal)
         $0.setTitleColor(UIColor.color363636, for: .normal)
         $0.titleLabel?.font = .pretendard(.semiBold, size: 14)
@@ -56,9 +55,6 @@ class RoutineCell : UITableViewCell {
         
         setupLayout()
         setupConstraints()
-        
-        innerView.backgroundColor = .white
-        innerView.layer.cornerRadius = 10
         
         editButton.addTarget(self, action: #selector(editButtonTapped), for: .touchUpInside)
         
@@ -76,9 +72,8 @@ class RoutineCell : UITableViewCell {
     // MARK: - ACTIONS
     func setupLayout() {
         contentView.addSubview(outerView)
-        outerView.addSubviews(innerView)
-        [routineIndexLabel, routineTitleLabel, editButton].forEach {
-            innerView.addSubviews($0)
+        [routineIndexLabel, routineTitleLabel, openImage, editButton].forEach {
+            outerView.addSubviews($0)
         }
     }
     
@@ -89,12 +84,6 @@ class RoutineCell : UITableViewCell {
             $0.trailing.equalToSuperview().offset(-20)
         }
         
-        innerView.snp.makeConstraints {
-            $0.top.leading.equalTo(outerView).offset(1)
-            $0.trailing.equalTo(outerView).offset(-1)
-            $0.bottom.equalTo(outerView)
-        }
-        
         routineIndexLabel.snp.makeConstraints {
             $0.top.equalToSuperview().offset(15)
             $0.leading.equalToSuperview().offset(19)
@@ -102,7 +91,13 @@ class RoutineCell : UITableViewCell {
         
         routineTitleLabel.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(19)
-            $0.top.equalToSuperview().offset(30)
+            $0.top.equalToSuperview().offset(31)
+        }
+        
+        openImage.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(29)
+            $0.trailing.equalTo(-20)
+            $0.width.height.equalTo(16.3)
         }
         
         editButton.snp.makeConstraints {
@@ -110,14 +105,6 @@ class RoutineCell : UITableViewCell {
             $0.trailing.equalToSuperview().offset(-20)
             $0.width.equalTo(65)
             $0.height.equalTo(27)
-        }
-    }
-    
-    func opendRoutine() {
-        innerView.snp.remakeConstraints {
-            $0.top.leading.equalTo(outerView).offset(1)
-            $0.trailing.equalTo(outerView).offset(-1)
-            $0.bottom.equalTo(outerView)
         }
     }
     
