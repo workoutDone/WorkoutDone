@@ -1111,7 +1111,6 @@
 				A58327902A23C73E002F8F6E /* DuringSetFooterCell.swift in Sources */,
 				A59ACB7A29B4BC740084C73E /* RoutineViewController.swift in Sources */,
 				929158412A28DFEE0022BEF9 /* IndexPath.swift in Sources */,
-				A51B6F4E2A17B0C000FB7A16 /* DuringWorkoutView.swift in Sources */,
 				A5632CDA2A0E30F5007EC335 /* UIImage.swift in Sources */,
 				A57061CF29CD6A5E0083ECDD /* GalleryViewController.swift in Sources */,
 				9269995C2A1DF135003DDAD2 /* StampCell.swift in Sources */,
@@ -1326,6 +1325,7 @@
 				DEVELOPMENT_TEAM = JB8T59WMFR;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = WorkoutDone/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "오운완";
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_NSCameraUsageDescription = "카메라좀 쓰자!";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "사진 저장";
@@ -1358,6 +1358,7 @@
 				DEVELOPMENT_TEAM = JB8T59WMFR;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = WorkoutDone/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "오운완";
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_NSCameraUsageDescription = "카메라좀 쓰자!";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "사진 저장";
