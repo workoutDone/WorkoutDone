@@ -11,8 +11,7 @@ import UIKit
 class RoutineViewController : BaseViewController {
     let routineViewModel = RoutineViewModel()
     var selectedRoutines = [Bool]()
-    var myRoutines = [String]()
-    var myRoutineDetail = [MyRoutineDetail]()
+    var myRoutines = [MyRoutine]()
     var preSelectedIndex : Int = -1
     
     private let routineTableView = UITableView(frame: .zero, style: .grouped).then {
@@ -84,6 +83,7 @@ extension RoutineViewController : EditDelegate {
     func editButtonTapped() {
         let createRoutineVC = CreateRoutineViewController()
         createRoutineVC.hidesBottomBarWhenPushed = true
+        //createRoutineVC.myRoutine = Array(myRoutines[preSelectedIndex].myWeightTraining)
         navigationController?.pushViewController(createRoutineVC, animated: false)
     }
 }
@@ -95,7 +95,7 @@ extension RoutineViewController : UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if myRoutines.count > 0 && selectedRoutines[section] == true {
-            return myRoutineDetail.count + 1
+            return myRoutines[section].myWeightTraining.count + 1
         }
         return 1
     }
@@ -120,7 +120,7 @@ extension RoutineViewController : UITableViewDelegate, UITableViewDataSource {
             cell.delegate = self
             
             cell.routineIndexLabel.text = "routine \(indexPath.routineOrder)"
-            cell.routineTitleLabel.text = myRoutines[indexPath.section]
+            cell.routineTitleLabel.text = myRoutines[indexPath.section].name
             cell.editButton.isHidden = true
             cell.openImage.isHidden = false
             cell.outerView.backgroundColor = .colorF6F6F6
@@ -136,9 +136,8 @@ extension RoutineViewController : UITableViewDelegate, UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "routineDetailCell", for: indexPath) as? RoutineDetailCell else { return UITableViewCell() }
         cell.selectionStyle = .none
 
-        cell.bodyPartLabel.text = myRoutineDetail[indexPath.row - 1].name
-        cell.weightTrainingLabel.text = myRoutineDetail[indexPath.row - 1].weightTraining
-        
+        cell.bodyPartLabel.text = myRoutines[indexPath.section].myWeightTraining[indexPath.row - 1].myBodyPart
+        cell.weightTrainingLabel.text = myRoutines[indexPath.section].myWeightTraining[indexPath.row - 1].myWeightTraining
 
         return cell
     }
@@ -191,7 +190,6 @@ extension RoutineViewController : UITableViewDelegate, UITableViewDataSource {
                 }
                 
                 preSelectedIndex = indexPath.section
-                myRoutineDetail = routineViewModel.loadMyRoutineDetail(routine: myRoutines[indexPath.section])
             }
             
             selectedRoutines[indexPath.section] = !selectedRoutines[indexPath.section]
@@ -211,7 +209,6 @@ extension RoutineViewController : UITableViewDelegate, UITableViewDataSource {
             }
             
             preSelectedIndex = section
-            myRoutineDetail = routineViewModel.loadMyRoutineDetail(routine: myRoutines[section])
         }
 
         selectedRoutines[section] = !selectedRoutines[section]
