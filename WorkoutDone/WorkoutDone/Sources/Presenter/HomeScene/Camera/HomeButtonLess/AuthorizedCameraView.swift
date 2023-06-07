@@ -23,30 +23,51 @@ class AuthorizedCameraView : BaseUIView {
     ///프레임 타입 버튼
     let defaultFrameButton = UIButton().then {
         $0.layer.cornerRadius = 10
+        $0.layer.borderWidth = 1
+        $0.layer.borderColor = UIColor.colorCCCCCC.cgColor
+        $0.setImage(UIImage(named: "selectedDefaultImage"), for: .normal)
     }
 
     let manFirstUpperBodyFrameButton = UIButton().then {
         $0.layer.cornerRadius = 10
+        $0.layer.borderWidth = 1
+        $0.layer.borderColor = UIColor.colorCCCCCC.cgColor
+        $0.setImage(UIImage(named: "frame1"), for: .normal)
     }
 
     let manSecondUpperBodyFrameButton = UIButton().then {
         $0.layer.cornerRadius = 10
+        $0.layer.borderWidth = 1
+        $0.layer.borderColor = UIColor.colorCCCCCC.cgColor
+        $0.setImage(UIImage(named: "frame3"), for: .normal)
     }
 
     let manWholeBodyFrameButton = UIButton().then {
         $0.layer.cornerRadius = 10
+        $0.layer.borderWidth = 1
+        $0.layer.borderColor = UIColor.colorCCCCCC.cgColor
+        $0.setImage(UIImage(named: "frame5"), for: .normal)
     }
 
     let womanFirstUpperBodyFrameButton = UIButton().then {
         $0.layer.cornerRadius = 10
+        $0.layer.borderWidth = 1
+        $0.layer.borderColor = UIColor.colorCCCCCC.cgColor
+        $0.setImage(UIImage(named: "frame2"), for: .normal)
     }
 
     let womanSecondUpperBodyFrameButton = UIButton().then {
         $0.layer.cornerRadius = 10
+        $0.layer.borderWidth = 1
+        $0.layer.borderColor = UIColor.colorCCCCCC.cgColor
+        $0.setImage(UIImage(named: "frame4"), for: .normal)
     }
 
     let womanWholeBodyFrameButton = UIButton().then {
         $0.layer.cornerRadius = 10
+        $0.layer.borderWidth = 1
+        $0.layer.borderColor = UIColor.colorCCCCCC.cgColor
+        $0.setImage(UIImage(named: "frame6"), for: .normal)
     }
     private let frameScrollBackView = UIView().then {
         $0.backgroundColor = .colorFFFFFF
@@ -81,9 +102,6 @@ class AuthorizedCameraView : BaseUIView {
     override func setUI() {
         super.setUI()
         gridImageView.isHidden = true
-        [defaultFrameButton, manFirstUpperBodyFrameButton, manSecondUpperBodyFrameButton, manWholeBodyFrameButton, womanFirstUpperBodyFrameButton, womanSecondUpperBodyFrameButton, womanWholeBodyFrameButton].forEach {
-            $0.backgroundColor = .colorE2E2E2
-        }
         frameScrollView.showsHorizontalScrollIndicator = false
     }
     override func setupLayout() {
@@ -93,7 +111,7 @@ class AuthorizedCameraView : BaseUIView {
         frameScrollBackView.addSubview(frameScrollView)
         frameScrollView.addSubview(frameScrollContentView)
         frameScrollContentView.addSubview(frameStackView)
-        [defaultFrameButton, manFirstUpperBodyFrameButton, manSecondUpperBodyFrameButton, manWholeBodyFrameButton, womanFirstUpperBodyFrameButton, womanSecondUpperBodyFrameButton, womanWholeBodyFrameButton].forEach {
+        [defaultFrameButton, manFirstUpperBodyFrameButton, womanFirstUpperBodyFrameButton, manSecondUpperBodyFrameButton, womanSecondUpperBodyFrameButton, manWholeBodyFrameButton, womanWholeBodyFrameButton].forEach {
             frameStackView.addArrangedSubview($0)
         }
         captureBackView.addSubviews(captureButton, switchCameraButton)
