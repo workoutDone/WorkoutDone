@@ -70,37 +70,51 @@ class HomeButtonLessPhotoFrameTypeViewController : BaseViewController {
     ///프레임 타입 버튼
     private let defaultFrameButton = UIButton().then {
         $0.layer.cornerRadius = 10
-        $0.backgroundColor = .colorE2E2E2
+        $0.layer.borderWidth = 1
+        $0.layer.borderColor = UIColor.colorCCCCCC.cgColor
+        $0.setImage(UIImage(named: "unselectedDefaultImage"), for: .normal)
     }
     
     private let manFirstUpperBodyFrameButton = UIButton().then {
         $0.layer.cornerRadius = 10
-        $0.backgroundColor = .colorE2E2E2
+        $0.layer.borderWidth = 1
+        $0.layer.borderColor = UIColor.colorCCCCCC.cgColor
+        $0.setImage(UIImage(named: "frame1"), for: .normal)
     }
     
     private let manSecondUpperBodyFrameButton = UIButton().then {
         $0.layer.cornerRadius = 10
-        $0.backgroundColor = .colorE2E2E2
+        $0.layer.borderWidth = 1
+        $0.layer.borderColor = UIColor.colorCCCCCC.cgColor
+        $0.setImage(UIImage(named: "frame3"), for: .normal)
     }
     
     private let manWholeBodyFrameButton = UIButton().then {
         $0.layer.cornerRadius = 10
-        $0.backgroundColor = .colorE2E2E2
+        $0.layer.borderWidth = 1
+        $0.layer.borderColor = UIColor.colorCCCCCC.cgColor
+        $0.setImage(UIImage(named: "frame5"), for: .normal)
     }
     
     private let womanFirstUpperBodyFrameButton = UIButton().then {
         $0.layer.cornerRadius = 10
-        $0.backgroundColor = .colorE2E2E2
+        $0.layer.borderWidth = 1
+        $0.layer.borderColor = UIColor.colorCCCCCC.cgColor
+        $0.setImage(UIImage(named: "frame2"), for: .normal)
     }
     
     private let womanSecondUpperBodyFrameButton = UIButton().then {
         $0.layer.cornerRadius = 10
-        $0.backgroundColor = .colorE2E2E2
+        $0.layer.borderWidth = 1
+        $0.layer.borderColor = UIColor.colorCCCCCC.cgColor
+        $0.setImage(UIImage(named: "frame4"), for: .normal)
     }
     
     private let womanWholeBodyFrameButton = UIButton().then {
         $0.layer.cornerRadius = 10
-        $0.backgroundColor = .colorE2E2E2
+        $0.layer.borderWidth = 1
+        $0.layer.borderColor = UIColor.colorCCCCCC.cgColor
+        $0.setImage(UIImage(named: "frame6"), for: .normal)
     }
     private var frameButtons = [UIButton]()
     
@@ -152,11 +166,12 @@ class HomeButtonLessPhotoFrameTypeViewController : BaseViewController {
     }
     
     override func setComponents() {
+        super.setComponents()
         view.backgroundColor = .colorFFFFFF
         navigationItem.title = "프레임 선택"
         navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.color121212]
         
-        [defaultFrameButton, manFirstUpperBodyFrameButton, manSecondUpperBodyFrameButton, manWholeBodyFrameButton, womanFirstUpperBodyFrameButton, womanSecondUpperBodyFrameButton, womanWholeBodyFrameButton].forEach {
+        [defaultFrameButton, manFirstUpperBodyFrameButton, womanFirstUpperBodyFrameButton, manSecondUpperBodyFrameButton, womanSecondUpperBodyFrameButton, manWholeBodyFrameButton, womanWholeBodyFrameButton].forEach {
             frameButtons.append($0)
         }
         defaultFrameButton.tag = frame.defaultFrame.getFrameType()
@@ -174,7 +189,14 @@ class HomeButtonLessPhotoFrameTypeViewController : BaseViewController {
         photoFrameBackView.addSubview(photoFrameButtonsScrollView)
         photoFrameButtonsScrollView.addSubview(photoFrameButtonsScrollContentView)
         photoFrameButtonsScrollContentView.addSubview(photoFrameButtonsStackView)
-        photoFrameButtonsStackView.addArrangedSubviews(defaultFrameButton, manFirstUpperBodyFrameButton, manSecondUpperBodyFrameButton, manWholeBodyFrameButton, womanFirstUpperBodyFrameButton, womanSecondUpperBodyFrameButton, womanWholeBodyFrameButton)
+        photoFrameButtonsStackView.addArrangedSubviews(
+            defaultFrameButton,
+            manFirstUpperBodyFrameButton,
+            womanFirstUpperBodyFrameButton,
+            manSecondUpperBodyFrameButton,
+            womanSecondUpperBodyFrameButton,
+            manWholeBodyFrameButton,
+            womanWholeBodyFrameButton)
     }
     
     override func setupConstraints() {
@@ -263,23 +285,35 @@ class HomeButtonLessPhotoFrameTypeViewController : BaseViewController {
         for button in frameButtons {
             if button == sender {
                 if doubleCheckButtonStatus == sender.tag {
-                    button.layer.borderColor = .none
-                    button.layer.borderWidth = 0
+                    button.layer.borderWidth = 1
+                    button.layer.borderColor = UIColor.colorCCCCCC.cgColor
                     doubleCheckButtonStatus = nil
                     selectedFrameTypeButtonStatus.onNext(false)
+                    button.backgroundColor = nil
+                    if button.tag == 0 {
+                        button.setImage(UIImage(named: "unselectedDefaultImage"), for: .normal)
+                    }
                 }
                 else {
                     button.layer.borderColor = UIColor.color7442FF.cgColor
                     button.layer.borderWidth = 2
+                    button.backgroundColor = UIColor(hex: 0x7442FF, alpha: 0.2)
                     doubleCheckButtonStatus = sender.tag
                     selectedFrameTypeButtonStatus.onNext(true)
                     selectedFrameType.onNext(sender.tag)
                     print(sender.tag, "ddd")
+                    if button.tag == 0 {
+                        button.setImage(UIImage(named: "selectedDefaultImage"), for: .normal)
+                    }
                 }
             }
             else {
-                button.layer.borderColor = .none
-                button.layer.borderWidth = 0
+                button.layer.borderWidth = 1
+                button.layer.borderColor = UIColor.colorCCCCCC.cgColor
+                button.backgroundColor = nil
+                if button.tag == 0 {
+                    button.setImage(UIImage(named: "unselectedDefaultImage"), for: .normal)
+                }
             }
         }
     }
@@ -298,10 +332,10 @@ extension HomeButtonLessPhotoFrameTypeViewController {
     enum PhotoFrameType : Int {
         case defaultFrame = 0
         case manFirstUpperBodyFrame = 1
-        case manSecondUpperBodyFrame = 2
-        case manWholeBodyFrame = 3
-        case womanFirstUpperBodyFrame = 4
-        case womanSecondUpperBodyFrame = 5
+        case manSecondUpperBodyFrame = 3
+        case manWholeBodyFrame = 5
+        case womanFirstUpperBodyFrame = 2
+        case womanSecondUpperBodyFrame = 4
         case womanWholeBodyFrame = 6
         
         func getFrameType() -> Int {
