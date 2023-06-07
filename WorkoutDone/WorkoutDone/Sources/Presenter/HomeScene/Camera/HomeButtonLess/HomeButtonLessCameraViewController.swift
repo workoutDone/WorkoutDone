@@ -64,10 +64,10 @@ class HomeButtonLessCameraViewController : BaseViewController {
         
         authorizedCameraView.defaultFrameButton.tag = 0
         authorizedCameraView.manFirstUpperBodyFrameButton.tag = 1
-        authorizedCameraView.manSecondUpperBodyFrameButton.tag = 2
-        authorizedCameraView.manWholeBodyFrameButton.tag = 3
-        authorizedCameraView.womanFirstUpperBodyFrameButton.tag = 4
-        authorizedCameraView.womanSecondUpperBodyFrameButton.tag = 5
+        authorizedCameraView.manSecondUpperBodyFrameButton.tag = 3
+        authorizedCameraView.manWholeBodyFrameButton.tag = 5
+        authorizedCameraView.womanFirstUpperBodyFrameButton.tag = 2
+        authorizedCameraView.womanSecondUpperBodyFrameButton.tag = 4
         authorizedCameraView.womanWholeBodyFrameButton.tag = 6
         
         authorizedCameraView.defaultFrameButton.layer.borderWidth = 2
@@ -146,14 +146,20 @@ class HomeButtonLessCameraViewController : BaseViewController {
                     authorizedCameraView.frameImageView.image = .none
                 }
                 else {
-                    authorizedCameraView.frameImageView.image = UIImage(named: "frame\(button.tag)")
+                    authorizedCameraView.frameImageView.image = UIImage(named: "cameraFrame\(button.tag)")
                 }
                 button.layer.borderWidth = 2
                 button.layer.borderColor = UIColor.color7442FF.cgColor
+                if button.tag == 0 {
+                    button.setImage(UIImage(named: "selectedDefaultImage"), for: .normal)
+                }
             }
             else {
-                button.layer.borderColor = .none
-                button.layer.borderWidth = 0
+                button.layer.borderColor = UIColor.colorCCCCCC.cgColor
+                button.layer.borderWidth = 1
+                if button.tag == 0 {
+                    button.setImage(UIImage(named: "unselectedDefaultImage"), for: .normal)
+                }
             }
         }
     }

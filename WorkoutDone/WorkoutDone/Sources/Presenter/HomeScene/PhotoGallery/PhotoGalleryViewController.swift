@@ -99,6 +99,7 @@ class PhotoGalleryViewController : BaseViewController, CallPHPickerDelegate, PHP
         view.addSubviews(authorizedPhotoGalleryView, limitedPhotoGalleryView, deniedPhotoGalleryView)
     }
     override func setComponents() {
+        super.setComponents()
         view.backgroundColor = .colorFFFFFF
         navigationController?.isNavigationBarHidden = false
         let barButton = UIBarButtonItem()
