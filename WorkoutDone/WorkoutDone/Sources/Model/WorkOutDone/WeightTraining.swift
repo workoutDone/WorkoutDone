@@ -9,12 +9,14 @@ import Foundation
 import RealmSwift
 
 class WeightTraining : Object {
-    @Persisted dynamic var name : String
+    @Persisted dynamic var bodyPart : String
+    @Persisted dynamic var weightTraining : String
     @Persisted dynamic var weightTrainingInfo : List<WeightTrainingInfo>
     
-    convenience init(name: String, weightTrainingInfo: List<WeightTrainingInfo>) {
+    convenience init(bodyPart: String, weightTraining: String, weightTrainingInfo: List<WeightTrainingInfo>) {
         self.init()
-        self.name = name
+        self.bodyPart = bodyPart
+        self.weightTraining = weightTraining
         self.weightTrainingInfo = weightTrainingInfo
     }
 }

@@ -11,13 +11,13 @@ import RealmSwift
 class MyRoutine : Object {
     @Persisted dynamic var name : String
     @Persisted dynamic var stamp : String
-    @Persisted dynamic var myBodyPart: List<MyBodyPart>
+    @Persisted dynamic var myWeightTraining: List<MyWeightTraining>
 
-    convenience init(name: String, stamp: String, myBodyPart: List<MyBodyPart>) {
+    convenience init(name: String, stamp: String, myWeightTraining: List<MyWeightTraining>) {
         self.init()
         self.name = name
         self.stamp = stamp
-        self.myBodyPart = myBodyPart
+        self.myWeightTraining = myWeightTraining
     }
     
     override class func primaryKey() -> String? {

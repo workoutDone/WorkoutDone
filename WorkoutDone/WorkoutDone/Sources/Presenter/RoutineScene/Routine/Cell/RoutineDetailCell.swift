@@ -11,27 +11,23 @@ import Then
 
 class RoutineDetailCell : UITableViewCell {
     let outerView = UIView().then {
-        $0.backgroundColor = .colorCCCCCC
-    }
-    
-    let innerView = UIView().then {
-        $0.backgroundColor = .colorFFFFFF
+        $0.backgroundColor = .colorF8F6FF
     }
 
     private let routineView = UIView().then {
-        $0.backgroundColor = .colorF3F3F3
+        $0.backgroundColor = .colorE6E0FF
         $0.layer.cornerRadius = 8
     }
     
     private let bodyPartView = UIView().then {
         $0.layer.borderWidth = 1
-        $0.layer.borderColor = UIColor.color929292.cgColor
+        $0.layer.borderColor = UIColor.color7442FF.cgColor
         $0.layer.cornerRadius = 23 / 2
     }
     
     let bodyPartLabel = UILabel().then {
         $0.text = "어깨"
-        $0.textColor = .color929292
+        $0.textColor = .color7442FF
         $0.font = .pretendard(.regular, size: 14)
     }
     
@@ -61,8 +57,7 @@ class RoutineDetailCell : UITableViewCell {
     // MARK: - ACTIONS
     func setupLayout() {
         contentView.addSubview(outerView)
-        outerView.addSubview(innerView)
-        innerView.addSubview(routineView)
+        outerView.addSubview(routineView)
         
         routineView.addSubview(bodyPartView)
         bodyPartView.addSubview(bodyPartLabel)
@@ -74,12 +69,6 @@ class RoutineDetailCell : UITableViewCell {
             $0.top.bottom.equalToSuperview()
             $0.leading.equalToSuperview().offset(20)
             $0.trailing.equalToSuperview().offset(-20)
-        }
-        
-        innerView.snp.makeConstraints {
-            $0.top.bottom.equalTo(outerView)
-            $0.leading.equalTo(outerView).offset(1)
-            $0.trailing.equalTo(outerView).offset(-1)
         }
         
         routineView.snp.makeConstraints {

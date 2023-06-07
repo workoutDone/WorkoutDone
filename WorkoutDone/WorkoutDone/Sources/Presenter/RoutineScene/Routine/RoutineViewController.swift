@@ -11,8 +11,7 @@ import UIKit
 class RoutineViewController : BaseViewController {
     let routineViewModel = RoutineViewModel()
     var selectedRoutines = [Bool]()
-    var myRoutines = [String]()
-    var myRoutineDetail = [MyRoutineDetail]()
+    var myRoutines = [MyRoutine]()
     var preSelectedIndex : Int = -1
     
     private let routineTableView = UITableView(frame: .zero, style: .grouped).then {
@@ -84,6 +83,7 @@ extension RoutineViewController : EditDelegate {
     func editButtonTapped() {
         let createRoutineVC = CreateRoutineViewController()
         createRoutineVC.hidesBottomBarWhenPushed = true
+        //createRoutineVC.myRoutine = Array(myRoutines[preSelectedIndex].myWeightTraining)
         navigationController?.pushViewController(createRoutineVC, animated: false)
     }
 }
@@ -95,7 +95,7 @@ extension RoutineViewController : UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if myRoutines.count > 0 && selectedRoutines[section] == true {
-            return myRoutineDetail.count + 1
+            return myRoutines[section].myWeightTraining.count + 1
         }
         return 1
     }
@@ -120,12 +120,15 @@ extension RoutineViewController : UITableViewDelegate, UITableViewDataSource {
             cell.delegate = self
             
             cell.routineIndexLabel.text = "routine \(indexPath.routineOrder)"
-            cell.routineTitleLabel.text = myRoutines[indexPath.section]
+            cell.routineTitleLabel.text = myRoutines[indexPath.section].name
             cell.editButton.isHidden = true
+            cell.openImage.isHidden = false
+            cell.outerView.backgroundColor = .colorF6F6F6
             
-            cell.outerView.backgroundColor = .colorCCCCCC
             if selectedRoutines[indexPath.section] {
                 cell.editButton.isHidden = false
+                cell.openImage.isHidden = true
+                cell.outerView.backgroundColor = .colorF8F6FF
             }
             
             return cell
@@ -133,10 +136,8 @@ extension RoutineViewController : UITableViewDelegate, UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "routineDetailCell", for: indexPath) as? RoutineDetailCell else { return UITableViewCell() }
         cell.selectionStyle = .none
 
-        cell.bodyPartLabel.text = myRoutineDetail[indexPath.row - 1].name
-        cell.weightTrainingLabel.text = myRoutineDetail[indexPath.row - 1].weightTraining
-        
-        cell.outerView.backgroundColor = .colorCCCCCC
+        cell.bodyPartLabel.text = myRoutines[indexPath.section].myWeightTraining[indexPath.row - 1].myBodyPart
+        cell.weightTrainingLabel.text = myRoutines[indexPath.section].myWeightTraining[indexPath.row - 1].myWeightTraining
 
         return cell
     }
@@ -156,21 +157,19 @@ extension RoutineViewController : UITableViewDelegate, UITableViewDataSource {
         let footer = UIView()
         
         let outerView = UIView(frame: .init(x: 20, y: 0, width: tableView.bounds.width - 40, height: 20))
-        let innerView = UIView(frame: .init(x: 1, y: -1, width: outerView.bounds.width - 2, height: outerView.bounds.height))
         footer.addSubview(outerView)
-        outerView.addSubview(innerView)
         
-        outerView.backgroundColor = .colorCCCCCC
+        outerView.backgroundColor = .colorF6F6F6
         outerView.layer.cornerRadius = 10
         outerView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         
-        innerView.backgroundColor = .colorFFFFFF
-        innerView.layer.cornerRadius = 10
-        innerView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+        if selectedRoutines[section] {
+            outerView.backgroundColor = .colorF8F6FF
+        }
 
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(routineCellTapped))
-        innerView.addGestureRecognizer(tapGesture)
-        innerView.tag = section
+        outerView.addGestureRecognizer(tapGesture)
+        outerView.tag = section
        
         return footer
     }
@@ -191,7 +190,6 @@ extension RoutineViewController : UITableViewDelegate, UITableViewDataSource {
                 }
                 
                 preSelectedIndex = indexPath.section
-                myRoutineDetail = routineViewModel.loadMyRoutineDetail(routine: myRoutines[indexPath.section])
             }
             
             selectedRoutines[indexPath.section] = !selectedRoutines[indexPath.section]
@@ -211,7 +209,6 @@ extension RoutineViewController : UITableViewDelegate, UITableViewDataSource {
             }
             
             preSelectedIndex = section
-            myRoutineDetail = routineViewModel.loadMyRoutineDetail(routine: myRoutines[section])
         }
 
         selectedRoutines[section] = !selectedRoutines[section]
