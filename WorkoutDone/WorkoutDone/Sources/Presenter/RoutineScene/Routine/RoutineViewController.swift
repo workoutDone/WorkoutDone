@@ -83,7 +83,7 @@ extension RoutineViewController : EditDelegate {
     func editButtonTapped() {
         let createRoutineVC = CreateRoutineViewController()
         createRoutineVC.hidesBottomBarWhenPushed = true
-        //createRoutineVC.myRoutine = Array(myRoutines[preSelectedIndex].myWeightTraining)
+        createRoutineVC.myWeightTraining = Array(myRoutines[preSelectedIndex].myWeightTraining)
         navigationController?.pushViewController(createRoutineVC, animated: false)
     }
 }

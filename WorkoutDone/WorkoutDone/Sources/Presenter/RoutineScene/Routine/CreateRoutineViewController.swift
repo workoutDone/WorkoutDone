@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import RealmSwift
 
 struct BodyPartData {
     let bodyPart : String
@@ -15,6 +14,8 @@ struct BodyPartData {
 
 class CreateRoutineViewController : BaseViewController {
     let sampleData = [BodyPartData(bodyPart: "가슴", weigthTraing: ["벤치 프레스", "디클라인 푸시업", "버터플라이", "인클라인 덤벨 체스트플라이", "벤치 프레스2", "디클라인 푸시업2", "버터플라이2", "인클라인 덤벨 체스트플라이2", "벤치 프레스3", "디클라인 푸시업3", "버터플라이3", "인클라인 덤벨 체스트플라이3"]), BodyPartData(bodyPart: "등", weigthTraing: ["등0", "등1"]), BodyPartData(bodyPart: "하체", weigthTraing: ["하체0", "하체1", "하체2"]), BodyPartData(bodyPart: "어깨", weigthTraing: []), BodyPartData(bodyPart: "삼두", weigthTraing: []), BodyPartData(bodyPart: "이두", weigthTraing: []), BodyPartData(bodyPart: "졸려", weigthTraing: []), BodyPartData(bodyPart: "하암", weigthTraing: [])]
+    
+    var myWeightTraining = [MyWeightTraining]()
     
     var isSelectBodyPartIndex = 0
     
@@ -61,7 +62,7 @@ class CreateRoutineViewController : BaseViewController {
         title = "루틴 만들기"
 
         setBackButton()
-        
+        setSelectCompleteButton()
     }
     
     override func setupLayout() {
@@ -133,6 +134,15 @@ class CreateRoutineViewController : BaseViewController {
             self.present(routineAlertVC, animated: false)
         } else {
             returnToRoot()
+        }
+    }
+    
+    func setSelectCompleteButton() {
+        selectedCount = myWeightTraining.count
+        
+        if selectedCount > 0 {
+            selectCompleteButton.gradient.colors = [UIColor.color8E36FF.cgColor, UIColor.color7442FF.cgColor]
+            selectCompleteButtonCountLabel.text = "\(selectedCount)"
         }
     }
     
@@ -216,20 +226,18 @@ extension CreateRoutineViewController : UITableViewDelegate, UITableViewDataSour
         cell.weightTrainingLabel.font = .pretendard(.regular, size: 16)
         
         cell.selectedIndexView.isHidden = true
+  
+        for (index, weightTraining) in myWeightTraining.enumerated() {
+            if weightTraining.myBodyPart == sampleData[isSelectBodyPartIndex].bodyPart && weightTraining.myWeightTraining == sampleData[isSelectBodyPartIndex].weigthTraing[indexPath.row] {
+                cell.selectedIndexLabel.text = "\(index + 1)"
+                cell.selectedIndexView.isHidden = false
+                
+                cell.weightTraingView.layer.borderColor = UIColor.color7442FF.cgColor
+                cell.weightTraingView.backgroundColor = .colorF8F6FF
+                cell.weightTrainingLabel.font = .pretendard(.semiBold, size: 16)
+            }
+        }
         
-//        if let index = myRoutine.
-//            isSelectWeightTraings[isSelectBodyPartIndex].firstIndex(of: sampleData[isSelectBodyPartIndex].weigthTraing[indexPath.row]) {
-//
-//            cell.selectedIndexLabel.text = "\(index + 1)"
-//            cell.selectedIndexView.isHidden = false
-//
-//            cell.weightTraingView.layer.borderColor = UIColor.color7442FF.cgColor
-//            cell.weightTraingView.backgroundColor = .colorF8F6FF
-//            cell.weightTrainingLabel.font = .pretendard(.semiBold, size: 16)
-//        }
-//
-        
-
         return cell
     }
     
@@ -242,23 +250,15 @@ extension CreateRoutineViewController : UITableViewDelegate, UITableViewDataSour
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        if let index = myRoutine.firstIndex(where: {$0.name == sampleData[isSelectBodyPartIndex].bodyPart} ) {
-//            let weightTraing = MyWeightTraining(name: sampleData[isSelectBodyPartIndex].weigthTraing[indexPath.row])
-//            myRoutine[index].myWeightTraining.append(weightTraing)
-//        } else {
-//            let bodyPart = sampleData[isSelectBodyPartIndex].bodyPart
-//            let weightTraining : List<MyWeightTraining> = List<MyWeightTraining>()
-//            weightTraining.append(MyWeightTraining(name: sampleData[isSelectBodyPartIndex].weigthTraing[indexPath.row]))
-//            myRoutine.append(MyBodyPart(name: bodyPart, myWeightTraining: weightTraining))
-//        }
-//            isSelectWeightTraings[isSelectBodyPartIndex].firstIndex(of: sampleData[isSelectBodyPartIndex].weigthTraing[indexPath.row]) {
-//            isSelectWeightTraings[isSelectBodyPartIndex].remove(at: index)
-//            selectedCount -= 1
-//        } else {
-//            isSelectWeightTraings[isSelectBodyPartIndex].append(sampleData[isSelectBodyPartIndex].weigthTraing[indexPath.row])
-//            selectedCount += 1
-//        }
-//
+        if let index = myWeightTraining.firstIndex(where: {$0.myWeightTraining == sampleData[isSelectBodyPartIndex].weigthTraing[indexPath.row]}) {
+            myWeightTraining.remove(at: index)
+            selectedCount -= 1
+        } else {
+            myWeightTraining.append(MyWeightTraining(myBodyPart: sampleData[isSelectBodyPartIndex].bodyPart, myWeightTraining: sampleData[isSelectBodyPartIndex].weigthTraing[indexPath.row]))
+            selectedCount += 1
+        }
+        
+
         if selectedCount == 0 {
             selectCompleteButton.gradient.colors = [UIColor.colorCCCCCC.cgColor, UIColor.colorCCCCCC.cgColor]
             selectCompleteButtonCountLabel.text = ""
