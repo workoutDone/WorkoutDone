@@ -26,6 +26,10 @@ class RoutineEditorCell: UITableViewCell {
         $0.text = "배틀 로프"
         $0.font = .pretendard(.regular, size: 16)
     }
+    
+    let editImage = UIImageView().then {
+        $0.image = UIImage(named: "edit")
+    }
 
     // MARK: - LIFECYCLE
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -33,6 +37,11 @@ class RoutineEditorCell: UITableViewCell {
         
         setupLayout()
         setupConstraints()
+        
+        contentView.layer.borderWidth = 1
+        contentView.layer.borderColor = UIColor.colorC8B4FF.cgColor
+        contentView.layer.cornerRadius = 8
+        contentView.backgroundColor = .colorFFFFFF
         
     }
     
@@ -47,11 +56,14 @@ class RoutineEditorCell: UITableViewCell {
      
     }
     
+    
     // MARK: - ACTIONS
     func setupLayout() {
-        contentView.addSubview(bodyPartView)
+        [bodyPartView, weightTrainingLabel, editImage].forEach {
+            contentView.addSubview($0)
+        }
+
         bodyPartView.addSubview(bodyPartLabel)
-        contentView.addSubview(weightTrainingLabel)
     }
     
     func setupConstraints() {
@@ -68,6 +80,13 @@ class RoutineEditorCell: UITableViewCell {
         
         weightTrainingLabel.snp.makeConstraints {
             $0.centerX.centerY.equalToSuperview()
+        }
+        
+        editImage.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.trailing.equalToSuperview().offset(-20)
+            $0.width.equalTo(15.5)
+            $0.height.equalTo(9.3)
         }
     }
 }
