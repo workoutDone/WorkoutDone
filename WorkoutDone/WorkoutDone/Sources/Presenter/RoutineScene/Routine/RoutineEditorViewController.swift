@@ -8,7 +8,7 @@
 import UIKit
 
 class RoutineEditorViewController: BaseViewController {
-    var sampleData = ["벤치 프레스", "벤치 프레스2", "벤치 프레스3", "벤치 프레스4", "ㅠㅠ"]
+    var myWeightTraining = [MyWeightTraining]()
     var draggedItem: String = ""
     
     private let nameTextField = UITextField().then {
@@ -43,10 +43,6 @@ class RoutineEditorViewController: BaseViewController {
         
         view.backgroundColor = .colorFFFFFF
         title = "루틴 만들기"
-        
-        let backButton = RoutineBackButton()
-        backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
     }
     
     override func setupLayout() {
@@ -88,6 +84,8 @@ class RoutineEditorViewController: BaseViewController {
     }
     
     override func setComponents() {
+        setBackButton()
+        
         routineTableView.delegate = self
         routineTableView.dataSource = self
         
@@ -101,6 +99,12 @@ class RoutineEditorViewController: BaseViewController {
     override func actions() {
         nameTextField.addTarget(self, action: #selector(self.didChangeTextField), for: .editingChanged)
         saveButton.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
+    }
+    
+    func setBackButton() {
+        let backButton = RoutineBackButton()
+        backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
     }
     
     @objc func backButtonTapped() {
@@ -141,14 +145,15 @@ extension RoutineEditorViewController : StampDelegate {
 
 extension RoutineEditorViewController : UITableViewDelegate, UITableViewDataSource, UITableViewDragDelegate, UITableViewDropDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return sampleData.count
+        return myWeightTraining.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "routineEditorCell", for: indexPath) as? RoutineEditorCell else { return UITableViewCell() }
         cell.selectionStyle = .none
         
-        cell.weightTrainingLabel.text = sampleData[indexPath.row]
+        cell.bodyPartLabel.text = myWeightTraining[indexPath.row].myBodyPart
+        cell.weightTrainingLabel.text = myWeightTraining[indexPath.row].myWeightTraining
         cell.backgroundColor = .clear
         
         
@@ -165,15 +170,15 @@ extension RoutineEditorViewController : UITableViewDelegate, UITableViewDataSour
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if (editingStyle == .delete) {
-            sampleData.remove(at: indexPath.row)
+            myWeightTraining.remove(at: indexPath.row)
         }
         tableView.reloadData()
     }
     
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        let moveCell = sampleData[sourceIndexPath.row]
-        sampleData.remove(at: sourceIndexPath.row)
-        sampleData.insert(moveCell, at: destinationIndexPath.row)
+        let moveCell = myWeightTraining[sourceIndexPath.row]
+        myWeightTraining.remove(at: sourceIndexPath.row)
+        myWeightTraining.insert(moveCell, at: destinationIndexPath.row)
     }
     
     func tableView(_ tableView: UITableView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
