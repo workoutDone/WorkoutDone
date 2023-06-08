@@ -68,37 +68,51 @@ class HomeButtonPhotoFrameTypeViewController : BaseViewController {
     
     private let defaultFrameButton = UIButton().then {
         $0.layer.cornerRadius = 10
-        $0.backgroundColor = .colorE2E2E2
+        $0.layer.borderWidth = 1
+        $0.layer.borderColor = UIColor.colorCCCCCC.cgColor
+        $0.setImage(UIImage(named: "unselectedDefaultImage"), for: .normal)
     }
     
     private let manFirstUpperBodyFrameButton = UIButton().then {
         $0.layer.cornerRadius = 10
-        $0.backgroundColor = .colorE2E2E2
+        $0.layer.borderWidth = 1
+        $0.layer.borderColor = UIColor.colorCCCCCC.cgColor
+        $0.setImage(UIImage(named: "frame1"), for: .normal)
     }
     
     private let manSecondUpperBodyFrameButton = UIButton().then {
         $0.layer.cornerRadius = 10
-        $0.backgroundColor = .colorE2E2E2
+        $0.layer.borderWidth = 1
+        $0.layer.borderColor = UIColor.colorCCCCCC.cgColor
+        $0.setImage(UIImage(named: "frame3"), for: .normal)
     }
     
     private let manWholeBodyFrameButton = UIButton().then {
         $0.layer.cornerRadius = 10
-        $0.backgroundColor = .colorE2E2E2
+        $0.layer.borderWidth = 1
+        $0.layer.borderColor = UIColor.colorCCCCCC.cgColor
+        $0.setImage(UIImage(named: "frame5"), for: .normal)
     }
     
     private let womanFirstUpperBodyFrameButton = UIButton().then {
         $0.layer.cornerRadius = 10
-        $0.backgroundColor = .colorE2E2E2
+        $0.layer.borderWidth = 1
+        $0.layer.borderColor = UIColor.colorCCCCCC.cgColor
+        $0.setImage(UIImage(named: "frame2"), for: .normal)
     }
     
     private let womanSecondUpperBodyFrameButton = UIButton().then {
         $0.layer.cornerRadius = 10
-        $0.backgroundColor = .colorE2E2E2
+        $0.layer.borderWidth = 1
+        $0.layer.borderColor = UIColor.colorCCCCCC.cgColor
+        $0.setImage(UIImage(named: "frame4"), for: .normal)
     }
     
     private let womanWholeBodyFrameButton = UIButton().then {
         $0.layer.cornerRadius = 10
-        $0.backgroundColor = .colorE2E2E2
+        $0.layer.borderWidth = 1
+        $0.layer.borderColor = UIColor.colorCCCCCC.cgColor
+        $0.setImage(UIImage(named: "frame6"), for: .normal)
     }
     private var frameButtons = [UIButton]()
     
@@ -180,6 +194,7 @@ class HomeButtonPhotoFrameTypeViewController : BaseViewController {
             $0.top.equalTo(view.safeAreaLayoutGuide).offset(-navBarHeight)
             $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(view.frame.width * 4 / 3)
+//            $0.bottom.equalTo(photoFrameBackView.snp.top)
         }
 
         photoFrameBackView.snp.makeConstraints {
@@ -204,7 +219,7 @@ class HomeButtonPhotoFrameTypeViewController : BaseViewController {
         }
         
         photoFrameButtonsScrollView.snp.makeConstraints {
-            $0.bottom.equalTo(photoFrameBackView.snp.bottom)
+            $0.centerY.equalToSuperview()
             $0.height.equalTo(66)
             $0.leading.trailing.equalToSuperview()
         }
