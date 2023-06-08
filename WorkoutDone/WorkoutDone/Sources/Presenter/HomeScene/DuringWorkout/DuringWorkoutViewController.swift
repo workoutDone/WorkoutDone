@@ -368,6 +368,13 @@ class DuringWorkoutViewController : BaseViewController {
         playButton.addTarget(self, action: #selector(playButtonTapped), for: .touchUpInside)
         nextWorkoutButton.addTarget(self, action: #selector(nextWorkoutButtonTapped), for: .touchUpInside)
         previousWorkoutButton.addTarget(self, action: #selector(previousWorkoutButtonTapped), for: .touchUpInside)
+        endWorkoutButton.addTarget(self, action: #selector(endWorkoutButtonTapped), for: .touchUpInside)
+    }
+    @objc func endWorkoutButtonTapped() {
+        let endWorkoutViewController = EndWorkoutViewController()
+        endWorkoutViewController.modalTransitionStyle = .crossDissolve
+        endWorkoutViewController.modalPresentationStyle = .overFullScreen
+        present(endWorkoutViewController, animated: true)
     }
     @objc func nextWorkoutButtonTapped() {
         print(firstArrayIndexCount, "firstIndex카운트")

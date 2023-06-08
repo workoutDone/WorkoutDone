@@ -94,6 +94,8 @@
 		A5021EE82A1906EB007DE096 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5021EE72A1906EB007DE096 /* Constants.swift */; };
 		A5021EEA2A194E78007DE096 /* RightBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5021EE92A194E78007DE096 /* RightBarButtonItem.swift */; };
 		A5021EEC2A1A8AF4007DE096 /* PermissionDeniedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5021EEB2A1A8AF4007DE096 /* PermissionDeniedView.swift */; };
+		A5091F272A31A896002FE6DA /* EndWorkoutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5091F262A31A896002FE6DA /* EndWorkoutViewController.swift */; };
+		A5091F292A31A994002FE6DA /* EndWorkoutAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5091F282A31A994002FE6DA /* EndWorkoutAlertView.swift */; };
 		A52573EA29EDB8A9004FBAC0 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52573E929EDB8A9004FBAC0 /* UIView.swift */; };
 		A52573EC29EDB928004FBAC0 /* UIStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52573EB29EDB928004FBAC0 /* UIStackView.swift */; };
 		A52573EE29EDB9B9004FBAC0 /* ViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52573ED29EDB9B9004FBAC0 /* ViewModelType.swift */; };
@@ -257,6 +259,8 @@
 		A5021EE72A1906EB007DE096 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		A5021EE92A194E78007DE096 /* RightBarButtonItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RightBarButtonItem.swift; sourceTree = "<group>"; };
 		A5021EEB2A1A8AF4007DE096 /* PermissionDeniedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionDeniedView.swift; sourceTree = "<group>"; };
+		A5091F262A31A896002FE6DA /* EndWorkoutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndWorkoutViewController.swift; sourceTree = "<group>"; };
+		A5091F282A31A994002FE6DA /* EndWorkoutAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndWorkoutAlertView.swift; sourceTree = "<group>"; };
 		A52573E929EDB8A9004FBAC0 /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
 		A52573EB29EDB928004FBAC0 /* UIStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIStackView.swift; sourceTree = "<group>"; };
 		A52573ED29EDB9B9004FBAC0 /* ViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelType.swift; sourceTree = "<group>"; };
@@ -855,6 +859,8 @@
 				A58327772A20C110002F8F6E /* DuringSetViewController.swift */,
 				A58327792A20C135002F8F6E /* DuringEditRoutineViewController.swift */,
 				A583277B2A20D30A002F8F6E /* DuringWorkoutTimerViewController.swift */,
+				A5091F262A31A896002FE6DA /* EndWorkoutViewController.swift */,
+				A5091F282A31A994002FE6DA /* EndWorkoutAlertView.swift */,
 				A583278C2A23C6EB002F8F6E /* DuringSetCells */,
 				A58327872A234FF0002F8F6E /* DuringEditRoutineCells */,
 			);
@@ -1103,6 +1109,7 @@
 				A59ACB7A29B4BC740084C73E /* RoutineViewController.swift in Sources */,
 				929158412A28DFEE0022BEF9 /* IndexPath.swift in Sources */,
 				A5632CDA2A0E30F5007EC335 /* UIImage.swift in Sources */,
+				A5091F272A31A896002FE6DA /* EndWorkoutViewController.swift in Sources */,
 				A57061CF29CD6A5E0083ECDD /* GalleryViewController.swift in Sources */,
 				9269995C2A1DF135003DDAD2 /* StampCell.swift in Sources */,
 				920060E229B63C1500586063 /* CalendarView.swift in Sources */,
@@ -1114,6 +1121,7 @@
 				A583278E2A23C70B002F8F6E /* DuringSetTableViewCell.swift in Sources */,
 				A56D904229E08604009FD0B2 /* HomeViewModel.swift in Sources */,
 				926998222A0EC4A8003DDAD2 /* MyWeightTraining.swift in Sources */,
+				A5091F292A31A994002FE6DA /* EndWorkoutAlertView.swift in Sources */,
 				A57061D629D09AC40083ECDD /* SkeletalMuscleMassGraphView.swift in Sources */,
 				A5021EEA2A194E78007DE096 /* RightBarButtonItem.swift in Sources */,
 				926999502A172F4E003DDAD2 /* RoutineDetailCell.swift in Sources */,
