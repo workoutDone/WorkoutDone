@@ -355,7 +355,7 @@ class DuringWorkoutViewController : BaseViewController {
     
     // MARK: - ACTIONS
     override func actions() {
-        super.actions()
+//        super.actions()
         
         let swipeLeftGesture = UISwipeGestureRecognizer(target: self, action: #selector(swipeAction(_:)))
         let swipeRightGesture = UISwipeGestureRecognizer(target: self, action: #selector(swipeAction(_:)))

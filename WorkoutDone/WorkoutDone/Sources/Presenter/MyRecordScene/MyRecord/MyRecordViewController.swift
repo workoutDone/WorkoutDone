@@ -125,7 +125,7 @@ class MyRecordViewController : BaseViewController {
     }
     //MARK: - Actions
     override func actions() {
-//        super.actions()
+        super.actions()
         galleryPageButton.addTarget(self, action: #selector(galleryButtonTapped), for: .touchUpInside)
         analyzePageButton.addTarget(self, action: #selector(analyzeButtonTapped), for: .touchUpInside)
         let swipeLeftGesture = UISwipeGestureRecognizer(target: self, action: #selector(swipeActions(_:)))
