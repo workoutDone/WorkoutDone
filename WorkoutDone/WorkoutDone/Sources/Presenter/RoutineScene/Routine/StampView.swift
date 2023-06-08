@@ -12,6 +12,7 @@ protocol StampDelegate : AnyObject {
 }
 
 class StampView: BaseUIView {
+    var stampIamges = ["stampAbsImage", "stampArmImage", "stampBackImage", "stampLegImage", "stampRunningImage", "stampVImage"]
     var isSelectStampIndex = -1
     
     weak var delegate: StampDelegate?
@@ -69,11 +70,13 @@ class StampView: BaseUIView {
 
 extension StampView : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 6
+        return stampIamges.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "stampCell", for: indexPath) as? StampCell else { return UICollectionViewCell() }
+        cell.stampImage.image = UIImage(named: stampIamges[indexPath.row])
+        
         cell.contentView.layer.cornerRadius = cell.frame.height / 2
         cell.contentView.layer.borderWidth = 1
         cell.contentView.layer.borderColor = UIColor.clear.cgColor

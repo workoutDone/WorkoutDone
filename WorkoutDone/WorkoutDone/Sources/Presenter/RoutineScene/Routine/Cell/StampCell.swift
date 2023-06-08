@@ -9,7 +9,6 @@ import UIKit
 
 class StampCell: UICollectionViewCell {
     var stampImage = UIImageView().then {
-        $0.backgroundColor = .colorCCCCCC
         $0.layer.borderWidth = 3
         $0.layer.borderColor = UIColor.colorFFFFFF.cgColor
         $0.layer.cornerRadius = 46 / 2
