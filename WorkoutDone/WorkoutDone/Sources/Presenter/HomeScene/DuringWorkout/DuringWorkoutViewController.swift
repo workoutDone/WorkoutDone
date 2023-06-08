@@ -8,10 +8,11 @@
 import UIKit
 import AVFoundation
 import UserNotifications
+import NotificationCenter
 
 class DuringWorkoutViewController : BaseViewController {
     
-    let userNotificationCenter = UNUserNotificationCenter.current()
+    private let userNotificationCenter = UNUserNotificationCenter.current()
     
     
     private var dummy = ExBodyPart.dummy()
@@ -159,6 +160,7 @@ class DuringWorkoutViewController : BaseViewController {
         timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(timerCounter), userInfo: nil, repeats: true)
         setNotifications()
         calcCurrentWorkoutCount()
+        userNotificationDelegate()
     }
     override func setupBinding() {
         
@@ -549,17 +551,25 @@ class DuringWorkoutViewController : BaseViewController {
 
 
 
-
-
-
-
-
-
-
-
 // MARK: - EXTENSIONs
-extension DuringWorkoutViewController {
-
+extension DuringWorkoutViewController : UNUserNotificationCenterDelegate {
+    
+    func userNotificationDelegate() {
+        UNUserNotificationCenter.current().delegate = self
+        let authrizationOptions = UNAuthorizationOptions(arrayLiteral: [.alert, .badge, .sound])
+        userNotificationCenter.requestAuthorization(options: authrizationOptions) { _, error in
+            if let error = error {
+                print(error.localizedDescription, "UNUserNotificationCenter")
+            }
+        }
+    }
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        completionHandler([.banner, .badge, .sound])
+    }
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        completionHandler()
+    }
 }
 
 struct ExBodyPart {
@@ -613,6 +623,8 @@ extension ExBodyPart {
     }
 }
 
+
+
 extension ExWegihtTraining {
     static func dummy() -> [ExWegihtTraining] {
         return [
@@ -635,3 +647,5 @@ extension ExWegihtTraining {
         ]
     }
 }
+
+
