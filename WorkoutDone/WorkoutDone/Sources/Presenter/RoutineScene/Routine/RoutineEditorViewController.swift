@@ -27,7 +27,6 @@ class RoutineEditorViewController: BaseViewController {
         $0.separatorStyle = .none
         $0.showsVerticalScrollIndicator = false
         $0.contentInset = UIEdgeInsets(top: -28, left: 0, bottom: -42, right: 0)
-        //$0.isEditing = true
         
         $0.backgroundColor = .colorF8F6FF
     }
@@ -45,7 +44,9 @@ class RoutineEditorViewController: BaseViewController {
         view.backgroundColor = .colorFFFFFF
         title = "루틴 만들기"
         
-        
+        let backButton = RoutineBackButton()
+        backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
     }
     
     override func setupLayout() {
@@ -101,6 +102,11 @@ class RoutineEditorViewController: BaseViewController {
         nameTextField.addTarget(self, action: #selector(self.didChangeTextField), for: .editingChanged)
         saveButton.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
     }
+    
+    @objc func backButtonTapped() {
+        navigationController?.popViewController(animated: false)
+    }
+    
     
     @objc func didChangeTextField(_ sender: Any?) {
         if nameTextField.text != "" {
