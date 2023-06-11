@@ -8,7 +8,10 @@
 import UIKit
 
 class RoutineEditorViewController: BaseViewController {
+    var routineViewModel = RoutineViewModel()
+    var myRoutine = MyRoutine()
     var myWeightTraining = [MyWeightTraining]()
+    var routineId: String?
     var draggedItem: String = ""
     
     private let nameTextField = UITextField().then {
@@ -43,6 +46,9 @@ class RoutineEditorViewController: BaseViewController {
         
         view.backgroundColor = .colorFFFFFF
         title = "루틴 만들기"
+        
+        setRoutineName()
+        setRoutineStamp()
     }
     
     override func setupLayout() {
@@ -107,6 +113,16 @@ class RoutineEditorViewController: BaseViewController {
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
     }
     
+    func setRoutineName() {
+        guard let id = routineId else { return }
+        nameTextField.text = routineViewModel.loadMyRoutineName(id: id)
+    }
+    
+    func setRoutineStamp() {
+        guard let id = routineId else { return }
+        print(routineViewModel.loadMyRoutineStamp(id: id))
+    }
+    
     @objc func backButtonTapped() {
         navigationController?.popViewController(animated: false)
     }
@@ -128,6 +144,9 @@ class RoutineEditorViewController: BaseViewController {
     
     @objc func saveButtonTapped() {
         if nameTextField.text != "" && stampView.isSelectStampIndex >= 0 {
+            routineViewModel.saveMyRoutine(id: routineId, name: nameTextField.text ?? "", stamp: "ㅠ", weightTraining: myWeightTraining)
+            
+           
             self.navigationController?.popToRootViewController(animated: true)
         }
     }

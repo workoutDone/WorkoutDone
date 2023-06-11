@@ -16,6 +16,7 @@ class CreateRoutineViewController : BaseViewController {
     let sampleData = [BodyPartData(bodyPart: "가슴", weigthTraing: ["벤치 프레스", "디클라인 푸시업", "버터플라이", "인클라인 덤벨 체스트플라이", "벤치 프레스2", "디클라인 푸시업2", "버터플라이2", "인클라인 덤벨 체스트플라이2", "벤치 프레스3", "디클라인 푸시업3", "버터플라이3", "인클라인 덤벨 체스트플라이3"]), BodyPartData(bodyPart: "등", weigthTraing: ["등0", "등1"]), BodyPartData(bodyPart: "하체", weigthTraing: ["하체0", "하체1", "하체2"]), BodyPartData(bodyPart: "어깨", weigthTraing: []), BodyPartData(bodyPart: "삼두", weigthTraing: []), BodyPartData(bodyPart: "이두", weigthTraing: []), BodyPartData(bodyPart: "졸려", weigthTraing: []), BodyPartData(bodyPart: "하암", weigthTraing: [])]
     
     var myWeightTraining = [MyWeightTraining]()
+    var routineId: String?
     
     var isSelectBodyPartIndex = 0
     
@@ -150,6 +151,7 @@ class CreateRoutineViewController : BaseViewController {
         if selectedCount > 0 {
             let routineEditorVC = RoutineEditorViewController()
             routineEditorVC.myWeightTraining = myWeightTraining
+            routineEditorVC.routineId = routineId
             navigationController?.pushViewController(routineEditorVC, animated: false)
         }
     }
