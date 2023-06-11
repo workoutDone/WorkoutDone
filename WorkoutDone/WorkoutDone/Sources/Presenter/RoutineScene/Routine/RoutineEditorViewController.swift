@@ -146,7 +146,10 @@ class RoutineEditorViewController: BaseViewController {
         if nameTextField.text != "" && stampView.isSelectStampIndex >= 0 {
             routineViewModel.saveMyRoutine(id: routineId, name: nameTextField.text ?? "", stamp: "ㅠ", weightTraining: myWeightTraining)
             
-           
+            if let routineVC = self.navigationController?.viewControllers.first as? RoutineViewController {
+                routineVC.loadMyRoutine()
+            }
+            
             self.navigationController?.popToRootViewController(animated: true)
         }
     }

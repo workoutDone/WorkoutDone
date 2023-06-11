@@ -7,7 +7,6 @@
 
 import UIKit
 
-
 class RoutineViewController : BaseViewController {
     let routineViewModel = RoutineViewModel()
     var selectedRoutines = [Bool]()
@@ -38,7 +37,6 @@ class RoutineViewController : BaseViewController {
         title = "나의 운동 루틴"
         
         myRoutines = routineViewModel.loadMyRoutine()
-   
         selectedRoutines = Array(repeating: false, count: myRoutines.count)
     }
     
@@ -70,6 +68,14 @@ class RoutineViewController : BaseViewController {
     
     override func actions() {
         createdButton.addTarget(self, action: #selector(createdButtonTapped), for: .touchUpInside)
+    }
+    
+    func loadMyRoutine() {
+        myRoutines = routineViewModel.loadMyRoutine()
+        selectedRoutines = Array(repeating: false, count: myRoutines.count)
+        
+        routineTableView.reloadData()
+        print("ㅜㅜ")
     }
     
     @objc func createdButtonTapped(sender: UIButton!) {
