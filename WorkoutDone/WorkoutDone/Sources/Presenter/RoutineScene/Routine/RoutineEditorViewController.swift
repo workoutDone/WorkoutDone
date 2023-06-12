@@ -7,11 +7,13 @@
 
 import UIKit
 
-class RoutineEditorViewController: BaseViewController {
+class RoutineEditorViewController : BaseViewController {
     var routineViewModel = RoutineViewModel()
     var myRoutine = MyRoutine()
     var myWeightTraining = [MyWeightTraining]()
-    var routineId: String?
+    var routineId : String?
+    var stamp : String?
+    
     var draggedItem: String = ""
     
     private let nameTextField = UITextField().then {
@@ -49,6 +51,7 @@ class RoutineEditorViewController: BaseViewController {
         
         setRoutineName()
         setRoutineStamp()
+        setSaveButton()
     }
     
     override func setupLayout() {
@@ -120,7 +123,11 @@ class RoutineEditorViewController: BaseViewController {
     
     func setRoutineStamp() {
         guard let id = routineId else { return }
-        print(routineViewModel.loadMyRoutineStamp(id: id))
+        stamp = routineViewModel.loadMyRoutineStamp(id: id)
+        
+        if let index = stampView.stampIamges.firstIndex(where: {$0 == stamp}) {
+            stampView.isSelectStampIndex = index
+        }
     }
     
     @objc func backButtonTapped() {
@@ -142,9 +149,15 @@ class RoutineEditorViewController: BaseViewController {
         }
     }
     
+    func setSaveButton() {
+        guard let name = nameTextField.text, name != "", let _ = stamp else { return }
+        
+        saveButton.gradient.colors = [UIColor.color8E36FF.cgColor, UIColor.color7442FF.cgColor]
+    }
+    
     @objc func saveButtonTapped() {
-        if nameTextField.text != "" && stampView.isSelectStampIndex >= 0 {
-            routineViewModel.saveMyRoutine(id: routineId, name: nameTextField.text ?? "", stamp: "ㅠ", weightTraining: myWeightTraining)
+        if let name = nameTextField.text, name != "", let stamp = stamp {
+            routineViewModel.saveMyRoutine(id: routineId, name: nameTextField.text ?? "", stamp: stamp, weightTraining: myWeightTraining)
             
             if let routineVC = self.navigationController?.viewControllers.first as? RoutineViewController {
                 routineVC.loadMyRoutine()
@@ -156,11 +169,13 @@ class RoutineEditorViewController: BaseViewController {
 }
 
 extension RoutineEditorViewController : StampDelegate {
-    func stampTapped() {
+    func stampTapped(image: String) {
         if nameTextField.text != "" && stampView.isSelectStampIndex >= 0 {
             saveButton.gradient.colors = [UIColor.color8E36FF.cgColor, UIColor.color7442FF.cgColor]
+            stamp = image
         } else {
             saveButton.gradient.colors = [UIColor.colorCCCCCC.cgColor, UIColor.colorCCCCCC.cgColor]
+            stamp = nil
         }
     }
 }

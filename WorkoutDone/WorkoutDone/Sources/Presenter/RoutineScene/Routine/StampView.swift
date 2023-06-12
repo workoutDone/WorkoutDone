@@ -8,7 +8,7 @@
 import UIKit
 
 protocol StampDelegate : AnyObject {
-    func stampTapped()
+    func stampTapped(image: String)
 }
 
 class StampView: BaseUIView {
@@ -109,6 +109,6 @@ extension StampView : UICollectionViewDelegate, UICollectionViewDataSource, UICo
         
         collectionView.reloadData()
         
-        delegate?.stampTapped()
+        delegate?.stampTapped(image: stampIamges[indexPath.row])
     }
 }

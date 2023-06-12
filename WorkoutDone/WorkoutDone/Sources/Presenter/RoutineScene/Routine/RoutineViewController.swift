@@ -75,7 +75,6 @@ class RoutineViewController : BaseViewController {
         selectedRoutines = Array(repeating: false, count: myRoutines.count)
         
         routineTableView.reloadData()
-        print("ㅜㅜ")
     }
     
     @objc func createdButtonTapped(sender: UIButton!) {
