@@ -293,8 +293,7 @@ extension WorkoutViewController : UITableViewDelegate, UITableViewDataSource {
         cell.selectionStyle = .none
         cell.weightTrainingLabel.text = sampleData[isSelectBodyPartIndex].weigthTraing[indexPath.row]
 
-        cell.weightTraingView.layer.borderColor = UIColor.colorCCCCCC.cgColor
-        cell.weightTraingView.backgroundColor = .colorFFFFFF
+        cell.weightTraingView.backgroundColor = .colorF6F6F6
         cell.weightTrainingLabel.font = .pretendard(.regular, size: 16)
         
         cell.selectedIndexView.isHidden = true
@@ -304,8 +303,7 @@ extension WorkoutViewController : UITableViewDelegate, UITableViewDataSource {
                 cell.selectedIndexLabel.text = "\(index + selectedMyRoutineCount + 1)"
                 cell.selectedIndexView.isHidden = false
                 
-                cell.weightTraingView.layer.borderColor = UIColor.color7442FF.cgColor
-                cell.weightTraingView.backgroundColor = .colorF8F6FF
+                cell.weightTraingView.backgroundColor = .colorE6E0FF
                 cell.weightTrainingLabel.font = .pretendard(.semiBold, size: 16)
             }
         }
