@@ -120,7 +120,6 @@ class CreateRoutineViewController : BaseViewController {
         selectCompleteButton.addTarget(self, action: #selector(selectCompleteButtonTapped), for: .touchUpInside)
     }
     
-    
     func setBackButton() {
         let backButton = RoutineBackButton()
         backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
