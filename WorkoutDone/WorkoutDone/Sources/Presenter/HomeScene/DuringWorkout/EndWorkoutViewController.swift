@@ -30,13 +30,18 @@ class EndWorkoutViewController : BaseViewController {
     // MARK: - ACTIONS
     override func actions() {
         endWorkoutAlertView.deleteAlertView.cancelButton.addTarget(self, action: #selector(cancelButtonTapped), for: .touchUpInside)
-        endWorkoutAlertView.deleteAlertView.deleteButton.addTarget(self, action: #selector(deleteButtonTapped), for: .touchUpInside)
+        endWorkoutAlertView.deleteAlertView.deleteButton.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
     }
     @objc func cancelButtonTapped() {
         dismiss(animated: true)
     }
-    @objc func deleteButtonTapped() {
-        dismiss(animated: true)
+    @objc func saveButtonTapped() {
+//        dismiss(animated: true)
+        let duringWorkoutResultViewController = DuringWorkoutResultViewController()
+        let navigationController = UINavigationController(rootViewController: duringWorkoutResultViewController)
+        navigationController.modalTransitionStyle = .crossDissolve
+        navigationController.modalPresentationStyle = .fullScreen
+        present(navigationController, animated: true)
     }
 }
 // MARK: - EXTENSIONs

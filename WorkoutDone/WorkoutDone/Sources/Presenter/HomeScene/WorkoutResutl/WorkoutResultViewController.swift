@@ -8,9 +8,22 @@
 import UIKit
 import SnapKit
 import Then
+import RxSwift
+import RxCocoa
 
 
 class WorkoutResultViewController : BaseViewController {
+    
+    
+    private var viewModel = WorkoutResultViewModel()
+    private var selectedDate = PublishSubject<Int>()
+    private var loadView = PublishSubject<Void>()
+    
+    private lazy var input = WorkoutResultViewModel.Input(
+        loadView: loadView.asDriver(onErrorJustReturn: ()),
+        selectedData: selectedDate.asDriver(onErrorJustReturn: 0))
+    private lazy var output = viewModel.transform(input: input)
+    
     // MARK: - PROPERTIES
     private let deleteRecordButton = UIButton().then {
         $0.setTitle("기록 삭제", for: .normal)
@@ -19,6 +32,16 @@ class WorkoutResultViewController : BaseViewController {
         $0.backgroundColor = UIColor.colorFFEDF0
         $0.layer.cornerRadius = 5
     }
+    
+    private let todayEmptyWorkoutResultView = TodayEmptyWorkoutResultView().then {
+        $0.isHidden = true
+    }
+    
+    
+    private let todayWorkoutResultView = TodayWorkoutResultView().then {
+        $0.isHidden = true
+    }
+    
     // MARK: - LIFECYCLE
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -32,9 +55,34 @@ class WorkoutResultViewController : BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
     }
+    override func setupBinding() {
+        super.setupBinding()
+        
+        output.hasData.drive(onNext: { value in
+            if value {
+                DispatchQueue.main.async {
+                    self.todayEmptyWorkoutResultView.isHidden = true
+                    self.todayWorkoutResultView.isHidden = false
+                }
+            }
+            else {
+                DispatchQueue.main.async {
+                    self.todayEmptyWorkoutResultView.isHidden = false
+                    self.todayWorkoutResultView.isHidden = true
+                    self.deleteRecordButton.isHidden = true
+                }
+            }
+        })
+        .disposed(by: disposeBag)
+        
+        guard let homeVC = self.navigationController?.viewControllers.first as? HomeViewController else { return }
+        let homeVCDate = homeVC.calendarView.selectDate ?? Date()
+        selectedDate.onNext(homeVCDate.dateToInt())
+        loadView.onNext(())
+    }
     override func setComponents() {
         view.backgroundColor = .colorFFFFFF
-        navigationItem.title = "나의 기록"
+        navigationItem.title = "운동 기록"
         navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.color121212]
         navigationController?.isNavigationBarHidden = false
         let barButton = UIBarButtonItem()
@@ -43,12 +91,20 @@ class WorkoutResultViewController : BaseViewController {
         
     }
     override func setupLayout() {
-        
+        view.addSubviews(todayWorkoutResultView, todayEmptyWorkoutResultView)
     }
     override func setupConstraints() {
         deleteRecordButton.snp.makeConstraints {
             $0.height.equalTo(30)
             $0.width.equalTo(80)
+        }
+        todayWorkoutResultView.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide)
+            $0.leading.trailing.bottom.equalToSuperview()
+        }
+        todayEmptyWorkoutResultView.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide)
+            $0.leading.trailing.bottom.equalToSuperview()
         }
     }
     

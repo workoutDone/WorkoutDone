@@ -33,6 +33,15 @@ class DuringWorkoutViewController : BaseViewController {
     var currentCountdownSecond : Int = 0
 
     // MARK: - PROPERTIES
+    private let pageControl = UIPageControl().then {
+        $0.numberOfPages = 2
+        $0.currentPage = 0
+        $0.pageIndicatorTintColor = .colorE2E2E2
+        $0.currentPageIndicatorTintColor = .color7442FF
+    }
+    //TODO
+    
+    
     private let endWorkoutButton = RightBarButtonItem(title: "운동 종료", buttonBackgroundColor: .colorFFEDF0, titleColor: .colorF54968).then {
         $0.layer.cornerRadius = 5
     }
@@ -186,7 +195,7 @@ class DuringWorkoutViewController : BaseViewController {
     
     override func setupLayout() {
         self.addChild(pageViewController)
-        view.addSubviews(currentWorkoutView, workoutPlayView,restStackView, pageViewController.view)
+        view.addSubviews(currentWorkoutView, workoutPlayView,restStackView, pageViewController.view, pageControl)
         workoutPlayView.addSubviews(playButton, playButtonTitleLabel, nextWorkoutButton, nextWorkoutButtonTitleLabel, previousWorkoutButtonTitleLabel, previousWorkoutButton)
         currentWorkoutView.addSubviews(currentWorkoutTitleLabel, currentWorkoutLabel, totalWorkoutTimeTitleLabel, totalWorkoutTimeLabel, progressBackView, progressView, workoutCategoryBackView)
         workoutCategoryBackView.addSubview(workoutCategoryTitleLabel)
@@ -307,9 +316,14 @@ class DuringWorkoutViewController : BaseViewController {
             $0.top.equalTo(previousWorkoutButton.snp.bottom).offset(7)
         }
         
+        pageControl.snp.makeConstraints {
+            $0.top.equalTo(currentWorkoutView.snp.bottom).offset(19)
+            $0.centerX.equalToSuperview()
+            $0.height.equalTo(8)
+        }
         
         pageViewController.view.snp.makeConstraints {
-            $0.top.equalTo(currentWorkoutView.snp.bottom)
+            $0.top.equalTo(pageControl.snp.bottom).offset(3)
             $0.leading.trailing.equalToSuperview()
             $0.bottom.equalTo(restBackView.snp.top)
         }
@@ -491,9 +505,11 @@ class DuringWorkoutViewController : BaseViewController {
     @objc func swipeAction(_ sender : UISwipeGestureRecognizer) {
         if sender.direction == .right {
             pageViewController.setViewControllers([viewControllers[0]], direction: .reverse, animated: true)
+            pageControl.currentPage = 0
         }
         else if sender.direction == .left {
             pageViewController.setViewControllers([viewControllers[1]], direction: .forward, animated: true)
+            pageControl.currentPage = 1
         }
     }
     

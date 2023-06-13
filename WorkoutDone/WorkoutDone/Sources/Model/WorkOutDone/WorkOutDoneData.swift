@@ -13,7 +13,7 @@ class WorkOutDoneData : Object {
     @Persisted dynamic var date : String = Date().yyyyMMddToString()
     @Persisted dynamic var frameImage : FrameImage?
     @Persisted dynamic var bodyInfo : BodyInfo?
-    @Persisted dynamic var workOutTime : Date?
+    @Persisted dynamic var workOutTime : Int?
     @Persisted dynamic var routine : Routine?
     
     convenience init(id: Int, date: String) {
