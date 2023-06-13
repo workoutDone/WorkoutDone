@@ -187,14 +187,14 @@ class HomeViewController : BaseViewController {
         navigationController?.pushViewController(workoutViewController, animated: true)
     }
     @objc func workoutResultButtonTapped() {
-//        let workoutResultViewController = WorkoutResultViewController()
-//        navigationController?.pushViewController(workoutResultViewController, animated: true)
+        let workoutResultViewController = WorkoutResultViewController()
+        navigationController?.pushViewController(workoutResultViewController, animated: true)
         //MARK: - Todo 추후에 다시 코드 변경하기
-        let duringWorkoutViewController = DuringWorkoutViewController()
-        let navigationController = UINavigationController(rootViewController: duringWorkoutViewController)
-        navigationController.modalTransitionStyle = .crossDissolve
-        navigationController.modalPresentationStyle = .fullScreen
-        present(navigationController, animated: true)
+//        let duringWorkoutViewController = DuringWorkoutViewController()
+//        let navigationController = UINavigationController(rootViewController: duringWorkoutViewController)
+//        navigationController.modalTransitionStyle = .crossDissolve
+//        navigationController.modalPresentationStyle = .fullScreen
+//        present(navigationController, animated: true)
     }
     
 //    func setWorkOutDoneImage() {

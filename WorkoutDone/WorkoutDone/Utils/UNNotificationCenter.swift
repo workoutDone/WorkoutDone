@@ -12,8 +12,8 @@ extension UNUserNotificationCenter {
     func addNotificationRequest(viewController : DuringWorkoutViewController) {
         
         let notificationCentent = UNMutableNotificationContent()
-        notificationCentent.title = "야호"
-        notificationCentent.body = "야호오오오"
+        notificationCentent.title = "오운완"
+        notificationCentent.body = "휴식시간이 끝났어요! \n조금만 더 힘내서 운동해볼까요?"
         notificationCentent.sound = UNNotificationSound.default
         
         let trigger = UNTimeIntervalNotificationTrigger(timeInterval: TimeInterval(viewController.currentCountdownSecond), repeats: false)

@@ -41,7 +41,6 @@ class DuringEditRoutineViewController : BaseViewController {
     
     // MARK: - ACTIONS
     override func actions() {
-        super.actions()
     }
 }
 // MARK: - EXTENSIONs

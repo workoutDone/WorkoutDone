@@ -8,10 +8,11 @@
 import UIKit
 import AVFoundation
 import UserNotifications
+import NotificationCenter
 
 class DuringWorkoutViewController : BaseViewController {
     
-    let userNotificationCenter = UNUserNotificationCenter.current()
+    private let userNotificationCenter = UNUserNotificationCenter.current()
     
     
     private var dummy = ExBodyPart.dummy()
@@ -32,6 +33,15 @@ class DuringWorkoutViewController : BaseViewController {
     var currentCountdownSecond : Int = 0
 
     // MARK: - PROPERTIES
+    private let pageControl = UIPageControl().then {
+        $0.numberOfPages = 2
+        $0.currentPage = 0
+        $0.pageIndicatorTintColor = .colorE2E2E2
+        $0.currentPageIndicatorTintColor = .color7442FF
+    }
+    //TODO
+    
+    
     private let endWorkoutButton = RightBarButtonItem(title: "운동 종료", buttonBackgroundColor: .colorFFEDF0, titleColor: .colorF54968).then {
         $0.layer.cornerRadius = 5
     }
@@ -159,6 +169,7 @@ class DuringWorkoutViewController : BaseViewController {
         timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(timerCounter), userInfo: nil, repeats: true)
         setNotifications()
         calcCurrentWorkoutCount()
+        userNotificationDelegate()
     }
     override func setupBinding() {
         
@@ -184,7 +195,7 @@ class DuringWorkoutViewController : BaseViewController {
     
     override func setupLayout() {
         self.addChild(pageViewController)
-        view.addSubviews(currentWorkoutView, workoutPlayView,restStackView, pageViewController.view)
+        view.addSubviews(currentWorkoutView, workoutPlayView,restStackView, pageViewController.view, pageControl)
         workoutPlayView.addSubviews(playButton, playButtonTitleLabel, nextWorkoutButton, nextWorkoutButtonTitleLabel, previousWorkoutButtonTitleLabel, previousWorkoutButton)
         currentWorkoutView.addSubviews(currentWorkoutTitleLabel, currentWorkoutLabel, totalWorkoutTimeTitleLabel, totalWorkoutTimeLabel, progressBackView, progressView, workoutCategoryBackView)
         workoutCategoryBackView.addSubview(workoutCategoryTitleLabel)
@@ -305,9 +316,14 @@ class DuringWorkoutViewController : BaseViewController {
             $0.top.equalTo(previousWorkoutButton.snp.bottom).offset(7)
         }
         
+        pageControl.snp.makeConstraints {
+            $0.top.equalTo(currentWorkoutView.snp.bottom).offset(19)
+            $0.centerX.equalToSuperview()
+            $0.height.equalTo(8)
+        }
         
         pageViewController.view.snp.makeConstraints {
-            $0.top.equalTo(currentWorkoutView.snp.bottom)
+            $0.top.equalTo(pageControl.snp.bottom).offset(3)
             $0.leading.trailing.equalToSuperview()
             $0.bottom.equalTo(restBackView.snp.top)
         }
@@ -353,7 +369,7 @@ class DuringWorkoutViewController : BaseViewController {
     
     // MARK: - ACTIONS
     override func actions() {
-        super.actions()
+//        super.actions()
         
         let swipeLeftGesture = UISwipeGestureRecognizer(target: self, action: #selector(swipeAction(_:)))
         let swipeRightGesture = UISwipeGestureRecognizer(target: self, action: #selector(swipeAction(_:)))
@@ -366,6 +382,13 @@ class DuringWorkoutViewController : BaseViewController {
         playButton.addTarget(self, action: #selector(playButtonTapped), for: .touchUpInside)
         nextWorkoutButton.addTarget(self, action: #selector(nextWorkoutButtonTapped), for: .touchUpInside)
         previousWorkoutButton.addTarget(self, action: #selector(previousWorkoutButtonTapped), for: .touchUpInside)
+        endWorkoutButton.addTarget(self, action: #selector(endWorkoutButtonTapped), for: .touchUpInside)
+    }
+    @objc func endWorkoutButtonTapped() {
+        let endWorkoutViewController = EndWorkoutViewController()
+        endWorkoutViewController.modalTransitionStyle = .crossDissolve
+        endWorkoutViewController.modalPresentationStyle = .overFullScreen
+        present(endWorkoutViewController, animated: true)
     }
     @objc func nextWorkoutButtonTapped() {
         print(firstArrayIndexCount, "firstIndex카운트")
@@ -482,9 +505,11 @@ class DuringWorkoutViewController : BaseViewController {
     @objc func swipeAction(_ sender : UISwipeGestureRecognizer) {
         if sender.direction == .right {
             pageViewController.setViewControllers([viewControllers[0]], direction: .reverse, animated: true)
+            pageControl.currentPage = 0
         }
         else if sender.direction == .left {
             pageViewController.setViewControllers([viewControllers[1]], direction: .forward, animated: true)
+            pageControl.currentPage = 1
         }
     }
     
@@ -549,17 +574,25 @@ class DuringWorkoutViewController : BaseViewController {
 
 
 
-
-
-
-
-
-
-
-
 // MARK: - EXTENSIONs
-extension DuringWorkoutViewController {
-
+extension DuringWorkoutViewController : UNUserNotificationCenterDelegate {
+    
+    func userNotificationDelegate() {
+        UNUserNotificationCenter.current().delegate = self
+        let authrizationOptions = UNAuthorizationOptions(arrayLiteral: [.alert, .badge, .sound])
+        userNotificationCenter.requestAuthorization(options: authrizationOptions) { _, error in
+            if let error = error {
+                print(error.localizedDescription, "UNUserNotificationCenter")
+            }
+        }
+    }
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        completionHandler([.banner, .badge, .sound])
+    }
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        completionHandler()
+    }
 }
 
 struct ExBodyPart {
@@ -613,6 +646,8 @@ extension ExBodyPart {
     }
 }
 
+
+
 extension ExWegihtTraining {
     static func dummy() -> [ExWegihtTraining] {
         return [
@@ -635,3 +670,5 @@ extension ExWegihtTraining {
         ]
     }
 }
+
+

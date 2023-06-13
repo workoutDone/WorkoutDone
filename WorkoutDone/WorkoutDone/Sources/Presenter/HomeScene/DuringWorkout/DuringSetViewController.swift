@@ -15,8 +15,18 @@ class DuringSetViewController : BaseViewController {
     
     private var dummy = ExBodyPart.dummy()
     // MARK: - PROPERTIES
+    
+    private let tableBackView = UIView().then {
+        $0.backgroundColor = .colorF8F6FF
+        $0.layer.borderWidth = 1
+        $0.layer.cornerRadius = 15
+        $0.layer.borderColor = UIColor.colorE6E0FF.cgColor
+    }
     let tableView = UITableView(frame: .zero, style: .grouped).then {
-        $0.backgroundColor = .colorFFFFFF
+        $0.backgroundColor = .colorF8F6FF
+        $0.layer.borderWidth = 1
+        $0.layer.cornerRadius = 15
+        $0.layer.borderColor = UIColor.colorE6E0FF.cgColor
         $0.separatorStyle = .none
     }
     // MARK: - LIFECYCLE
@@ -37,7 +47,10 @@ class DuringSetViewController : BaseViewController {
     override func setupConstraints() {
         super.setupConstraints()
         tableView.snp.makeConstraints {
-            $0.edges.equalTo(view.safeAreaLayoutGuide)
+//            $0.edges.equalTo(view.safeAreaLayoutGuide)
+            $0.top.equalToSuperview().inset(29)
+            $0.bottom.equalToSuperview().inset(14)
+            $0.leading.trailing.equalToSuperview().inset(26)
         }
     }
     
@@ -82,6 +95,12 @@ extension DuringSetViewController : UITableViewDelegate, UITableViewDataSource, 
     }
     func addWorkoutButtonTapped() {
         print("?????????????????")
+    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let inputWorkoutDataViewController = InputWorkoutDataViewController()
+        inputWorkoutDataViewController.modalTransitionStyle = .crossDissolve
+        inputWorkoutDataViewController.modalPresentationStyle = .overFullScreen
+        present(inputWorkoutDataViewController, animated: true)
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
