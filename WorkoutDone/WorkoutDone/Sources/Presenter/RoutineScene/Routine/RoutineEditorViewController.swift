@@ -7,8 +7,13 @@
 
 import UIKit
 
-class RoutineEditorViewController: BaseViewController {
-    var sampleData = ["벤치 프레스", "벤치 프레스2", "벤치 프레스3", "벤치 프레스4", "ㅠㅠ"]
+class RoutineEditorViewController : BaseViewController {
+    var routineViewModel = RoutineViewModel()
+    var myRoutine = MyRoutine()
+    var myWeightTraining = [MyWeightTraining]()
+    var routineId : String?
+    var stamp : String?
+    
     var draggedItem: String = ""
     
     private let nameTextField = UITextField().then {
@@ -27,7 +32,6 @@ class RoutineEditorViewController: BaseViewController {
         $0.separatorStyle = .none
         $0.showsVerticalScrollIndicator = false
         $0.contentInset = UIEdgeInsets(top: -28, left: 0, bottom: -42, right: 0)
-        //$0.isEditing = true
         
         $0.backgroundColor = .colorF8F6FF
     }
@@ -45,7 +49,9 @@ class RoutineEditorViewController: BaseViewController {
         view.backgroundColor = .colorFFFFFF
         title = "루틴 만들기"
         
-        
+        setRoutineName()
+        setRoutineStamp()
+        setSaveButton()
     }
     
     override func setupLayout() {
@@ -87,6 +93,8 @@ class RoutineEditorViewController: BaseViewController {
     }
     
     override func setComponents() {
+        setBackButton()
+        
         routineTableView.delegate = self
         routineTableView.dataSource = self
         
@@ -102,6 +110,31 @@ class RoutineEditorViewController: BaseViewController {
         saveButton.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
     }
     
+    func setBackButton() {
+        let backButton = RoutineBackButton()
+        backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
+    }
+    
+    func setRoutineName() {
+        guard let id = routineId else { return }
+        nameTextField.text = routineViewModel.loadMyRoutineName(id: id)
+    }
+    
+    func setRoutineStamp() {
+        guard let id = routineId else { return }
+        stamp = routineViewModel.loadMyRoutineStamp(id: id)
+        
+        if let index = stampView.stampIamges.firstIndex(where: {$0 == stamp}) {
+            stampView.isSelectStampIndex = index
+        }
+    }
+    
+    @objc func backButtonTapped() {
+        navigationController?.popViewController(animated: false)
+    }
+    
+    
     @objc func didChangeTextField(_ sender: Any?) {
         if nameTextField.text != "" {
             nameTextField.font = .pretendard(.bold, size: 16)
@@ -116,33 +149,48 @@ class RoutineEditorViewController: BaseViewController {
         }
     }
     
+    func setSaveButton() {
+        guard let name = nameTextField.text, name != "", let _ = stamp else { return }
+        
+        saveButton.gradient.colors = [UIColor.color8E36FF.cgColor, UIColor.color7442FF.cgColor]
+    }
+    
     @objc func saveButtonTapped() {
-        if nameTextField.text != "" && stampView.isSelectStampIndex >= 0 {
+        if let name = nameTextField.text, name != "", let stamp = stamp {
+            routineViewModel.saveMyRoutine(id: routineId, name: nameTextField.text ?? "", stamp: stamp, weightTraining: myWeightTraining)
+            
+            if let routineVC = self.navigationController?.viewControllers.first as? RoutineViewController {
+                routineVC.loadMyRoutine()
+            }
+            
             self.navigationController?.popToRootViewController(animated: true)
         }
     }
 }
 
 extension RoutineEditorViewController : StampDelegate {
-    func stampTapped() {
+    func stampTapped(image: String) {
         if nameTextField.text != "" && stampView.isSelectStampIndex >= 0 {
             saveButton.gradient.colors = [UIColor.color8E36FF.cgColor, UIColor.color7442FF.cgColor]
+            stamp = image
         } else {
             saveButton.gradient.colors = [UIColor.colorCCCCCC.cgColor, UIColor.colorCCCCCC.cgColor]
+            stamp = nil
         }
     }
 }
 
 extension RoutineEditorViewController : UITableViewDelegate, UITableViewDataSource, UITableViewDragDelegate, UITableViewDropDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return sampleData.count
+        return myWeightTraining.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "routineEditorCell", for: indexPath) as? RoutineEditorCell else { return UITableViewCell() }
         cell.selectionStyle = .none
         
-        cell.weightTrainingLabel.text = sampleData[indexPath.row]
+        cell.bodyPartLabel.text = myWeightTraining[indexPath.row].myBodyPart
+        cell.weightTrainingLabel.text = myWeightTraining[indexPath.row].myWeightTraining
         cell.backgroundColor = .clear
         
         
@@ -159,15 +207,15 @@ extension RoutineEditorViewController : UITableViewDelegate, UITableViewDataSour
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if (editingStyle == .delete) {
-            sampleData.remove(at: indexPath.row)
+            myWeightTraining.remove(at: indexPath.row)
         }
         tableView.reloadData()
     }
     
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        let moveCell = sampleData[sourceIndexPath.row]
-        sampleData.remove(at: sourceIndexPath.row)
-        sampleData.insert(moveCell, at: destinationIndexPath.row)
+        let moveCell = myWeightTraining[sourceIndexPath.row]
+        myWeightTraining.remove(at: sourceIndexPath.row)
+        myWeightTraining.insert(moveCell, at: destinationIndexPath.row)
     }
     
     func tableView(_ tableView: UITableView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {

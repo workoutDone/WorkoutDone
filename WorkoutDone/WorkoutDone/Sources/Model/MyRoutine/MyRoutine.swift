@@ -9,6 +9,7 @@ import Foundation
 import RealmSwift
 
 class MyRoutine : Object {
+    @Persisted dynamic var id : String
     @Persisted dynamic var name : String
     @Persisted dynamic var stamp : String
     @Persisted dynamic var myWeightTraining: List<MyWeightTraining>
@@ -21,6 +22,6 @@ class MyRoutine : Object {
     }
     
     override class func primaryKey() -> String? {
-        return "name"
+        return "id"
     }
 }

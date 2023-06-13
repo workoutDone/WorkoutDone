@@ -7,7 +7,6 @@
 
 import UIKit
 
-
 class RoutineViewController : BaseViewController {
     let routineViewModel = RoutineViewModel()
     var selectedRoutines = [Bool]()
@@ -38,7 +37,6 @@ class RoutineViewController : BaseViewController {
         title = "나의 운동 루틴"
         
         myRoutines = routineViewModel.loadMyRoutine()
-   
         selectedRoutines = Array(repeating: false, count: myRoutines.count)
     }
     
@@ -72,6 +70,13 @@ class RoutineViewController : BaseViewController {
         createdButton.addTarget(self, action: #selector(createdButtonTapped), for: .touchUpInside)
     }
     
+    func loadMyRoutine() {
+        myRoutines = routineViewModel.loadMyRoutine()
+        selectedRoutines = Array(repeating: false, count: myRoutines.count)
+        
+        routineTableView.reloadData()
+    }
+    
     @objc func createdButtonTapped(sender: UIButton!) {
         let createRoutineVC = CreateRoutineViewController()
         createRoutineVC.hidesBottomBarWhenPushed = true
@@ -84,6 +89,7 @@ extension RoutineViewController : EditDelegate {
         let createRoutineVC = CreateRoutineViewController()
         createRoutineVC.hidesBottomBarWhenPushed = true
         createRoutineVC.myWeightTraining = Array(myRoutines[preSelectedIndex].myWeightTraining)
+        createRoutineVC.routineId = myRoutines[preSelectedIndex].id
         navigationController?.pushViewController(createRoutineVC, animated: false)
     }
 }
