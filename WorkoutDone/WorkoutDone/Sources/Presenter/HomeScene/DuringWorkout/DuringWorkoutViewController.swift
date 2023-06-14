@@ -14,14 +14,35 @@ class DuringWorkoutViewController : BaseViewController {
     
     private let userNotificationCenter = UNUserNotificationCenter.current()
     
-    
-    private var dummy = ExBodyPart.dummy()
-    var firstArrayIndex = 0
-    var secondArrayIndex = 0
-    var firstArrayIndexCount = 0
-    var secondArrayIndexCount = 0
+    private var dummy = ExRoutine.dummy()
+    var weightTrainingArrayIndex = 0 {
+        didSet {
+            if weightTrainingArrayIndex + 1 == weightTrainingArrayCount {
+                nextWorkoutButtonTitleLabel.textColor = .colorC8B4FF
+                nextWorkoutButton.isEnabled = false
+            }
+            else {
+                nextWorkoutButtonTitleLabel.textColor = .color7442FF
+                nextWorkoutButton.isEnabled = true
+            }
+            if weightTrainingArrayIndex == 0 {
+                previousWorkoutButtonTitleLabel.textColor = .colorC8B4FF
+                previousWorkoutButton.isEnabled = false
+            }
+            else {
+                previousWorkoutButtonTitleLabel.textColor = .color7442FF
+                previousWorkoutButton.isEnabled = true
+            }
+        }
+    }
+    var weightTrainingInfoArrayIndex = 0
+//    var firstArrayIndexCount = 0
+//    var secondArrayIndexCount = 0
+    var weightTrainingArrayCount = 0
+    var weightTrainingInfoArrayCount = 0
     var totalWorkoutCount : Double = 0
     var currentWorkoutCount : Double = 1
+    
     
     
     private var timer : Timer = Timer()
@@ -53,7 +74,6 @@ class DuringWorkoutViewController : BaseViewController {
     }
     private let currentWorkoutLabel = UILabel().then {
         $0.font = .pretendard(.bold, size: 24)
-//        $0.text = "뎀벨프레스"
         $0.textColor = .color121212
     }
     private let workoutCategoryBackView = UIView().then {
@@ -64,6 +84,7 @@ class DuringWorkoutViewController : BaseViewController {
     private let workoutCategoryTitleLabel = UILabel().then {
         $0.textColor = .colorC8B4FF
         $0.font = .pretendard(.regular, size: 14)
+        $0.textAlignment = .center
     }
         private let totalWorkoutTimeTitleLabel = UILabel().then {
             $0.text = "총 운동 시간"
@@ -125,7 +146,7 @@ class DuringWorkoutViewController : BaseViewController {
         $0.setImage(UIImage(named: "playImage"), for: .normal)
     }
     private let playButtonTitleLabel = UILabel().then {
-        $0.text = "운동 재개"
+        $0.text = "운동 정지"
         $0.font = .pretendard(.semiBold, size: 14)
         $0.textColor = .color7442FF
     }
@@ -142,12 +163,13 @@ class DuringWorkoutViewController : BaseViewController {
 
     private let previousWorkoutButton = UIButton().then {
         $0.setImage(UIImage(named: "previousWorkoutButton"), for: .normal)
+        $0.isEnabled = false
     }
 
     private let previousWorkoutButtonTitleLabel = UILabel().then {
         $0.text = "이전 운동"
         $0.font = .pretendard(.regular, size: 14)
-        $0.textColor = .color7442FF
+        $0.textColor = .colorC8B4FF
     }
     
     private lazy var duringSetViewController = DuringSetViewController()
@@ -186,10 +208,12 @@ class DuringWorkoutViewController : BaseViewController {
         pageViewController.setViewControllers([viewControllers[0]], direction: .forward, animated: true)
         workoutCategoryBackView.layer.cornerRadius = 23 / 2
         
-        secondArrayIndexCount = dummy[firstArrayIndex].weightTraining.count
-        firstArrayIndexCount = dummy.count
-        currentWorkoutLabel.text = dummy[firstArrayIndex].weightTraining[secondArrayIndex].name
-        workoutCategoryTitleLabel.text = dummy[firstArrayIndex].name
+//        secondArrayIndexCount = dummy[firstArrayIndex].weightTraining.count
+//        firstArrayIndexCount = dummy.count
+        totalWorkoutCount = Double(dummy.weightTraining.count)
+        weightTrainingArrayCount = dummy.weightTraining.count
+        currentWorkoutLabel.text = dummy.weightTraining[weightTrainingArrayIndex].weightTrainging
+        workoutCategoryTitleLabel.text = dummy.weightTraining[weightTrainingArrayIndex].bodyPart
     }
     
     
@@ -210,6 +234,7 @@ class DuringWorkoutViewController : BaseViewController {
         workoutCategoryTitleLabel.snp.makeConstraints {
             $0.centerY.centerX.equalToSuperview()
             $0.leading.trailing.equalToSuperview().inset(6)
+            $0.width.equalTo(37)
         }
         endWorkoutButton.snp.makeConstraints {
             $0.height.equalTo(30)
@@ -391,71 +416,35 @@ class DuringWorkoutViewController : BaseViewController {
         present(endWorkoutViewController, animated: true)
     }
     @objc func nextWorkoutButtonTapped() {
-        print(firstArrayIndexCount, "firstIndex카운트")
-        print(firstArrayIndex, "firstArrayIndex")
-        print(secondArrayIndexCount, "secondIndex카운트")
-        print(secondArrayIndex, "secondArrayIndex")
-        if firstArrayIndex == firstArrayIndexCount - 1 && secondArrayIndex == secondArrayIndexCount - 1 {
-            print("그만~")
-            currentWorkoutCount = totalWorkoutCount
-        }
-        else {
-            if secondArrayIndex == secondArrayIndexCount - 1 {
-                firstArrayIndex += 1
-                secondArrayIndex = 0
-                currentWorkoutCount += 1
-            }
-            else {
-                secondArrayIndex += 1
-                currentWorkoutCount += 1
-                
-            }
-        }
-        currentWorkoutLabel.text = dummy[firstArrayIndex].weightTraining[secondArrayIndex].name
-        workoutCategoryTitleLabel.text = dummy[firstArrayIndex].name
+        weightTrainingArrayIndex += 1
+        currentWorkoutCount += 1
+        currentWorkoutLabel.text = dummy.weightTraining[weightTrainingArrayIndex].weightTrainging
+        workoutCategoryTitleLabel.text = dummy.weightTraining[weightTrainingArrayIndex].bodyPart
         progressBarAnimation()
-        duringSetViewController.firstArrayIndex = firstArrayIndex
-        duringSetViewController.secondArrayIndex = secondArrayIndex
+        duringSetViewController.weightTrainingArrayIndex = weightTrainingArrayIndex
         duringSetViewController.tableView.reloadData()
-        print(duringSetViewController.firstArrayIndex, "전달?")
-        print(duringSetViewController.secondArrayIndex, "전달!")
     }
     @objc func previousWorkoutButtonTapped() {
-        if firstArrayIndex == 0 && secondArrayIndex == 0 {
-            currentWorkoutCount = 1
-        }
-        else {
-            if secondArrayIndex == 0 {
-                firstArrayIndex -= 1
-                secondArrayIndex = dummy[firstArrayIndex].weightTraining.count - 1
-                currentWorkoutCount -= 1
-            }
-            else {
-                currentWorkoutCount -= 1
-                secondArrayIndex -= 1
-            }
-        }
-        currentWorkoutLabel.text = dummy[firstArrayIndex].weightTraining[secondArrayIndex].name
-        workoutCategoryTitleLabel.text = dummy[firstArrayIndex].name
+        weightTrainingArrayIndex -= 1
+        currentWorkoutCount -= 1
         progressBarAnimation()
-        duringSetViewController.firstArrayIndex = firstArrayIndex
-        duringSetViewController.secondArrayIndex = secondArrayIndex
+        duringSetViewController.weightTrainingArrayIndex = weightTrainingArrayIndex
         duringSetViewController.tableView.reloadData()
-        print(duringSetViewController.firstArrayIndex, "전달?")
-        print(duringSetViewController.secondArrayIndex, "전달!")
+        currentWorkoutLabel.text = dummy.weightTraining[weightTrainingArrayIndex].weightTrainging
+        workoutCategoryTitleLabel.text = dummy.weightTraining[weightTrainingArrayIndex].bodyPart
     }
     
     @objc func playButtonTapped() {
         if timerCounting {
             timerCounting = false
             timer.invalidate()
-            self.userNotificationCenter.addNotificationRequest(viewController: self)
+//            self.userNotificationCenter.addNotificationRequest(viewController: self)
             //토글 해주기 todo
         }
         else {
             timerCounting = true
             timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(timerCounter), userInfo: nil, repeats: true)
-            self.userNotificationCenter.addNotificationRequest(viewController: self)
+//            self.userNotificationCenter.addNotificationRequest(viewController: self)
             //토글 해주기 todo
         }
     }
@@ -516,7 +505,8 @@ class DuringWorkoutViewController : BaseViewController {
     
     private func startCountdowmTimer() {
         if countdowmTimer == nil {
-            restButton.setTitle("휴식종료", for: .normal)
+            restButton.setTitle("휴식 끝내기", for: .normal)
+            restButton.backgroundColor = .colorFE8399
             countdowmTimer = DispatchSource.makeTimerSource(flags: [], queue: .main)
             countdowmTimer?.schedule(deadline: .now(), repeating: 1)
             countdowmTimer?.setEventHandler(handler: {
@@ -538,17 +528,13 @@ class DuringWorkoutViewController : BaseViewController {
     private func stopCountdownTimer() {
         countdownTimerCounting = false
         restButton.setTitle("휴식하기", for: .normal)
+        restButton.backgroundColor = .colorF54968
         countdowmTimer?.cancel()
         countdowmTimer = nil
         restTimerLabel.text = "00:00"
     }
     
     private func calcCurrentWorkoutCount() {
-        for i in dummy {
-            for _ in i.weightTraining {
-                totalWorkoutCount += 1
-            }
-        }
         progressView.snp.makeConstraints {
             $0.bottom.equalToSuperview()
             $0.leading.equalToSuperview()
@@ -672,3 +658,38 @@ extension ExWegihtTraining {
 }
 
 
+struct ExRoutine {
+    let name : String
+    let stamp : String
+    var weightTraining : [ExWegihtTraining2]
+}
+
+struct ExWegihtTraining2 {
+    let bodyPart : String
+    let weightTrainging : String
+    var weightTrainingInfo : [ExWegihtTrainingInfo2]
+}
+struct ExWegihtTrainingInfo2 {
+    let setCount : Int
+    var weight : Double?
+    var traingingCount : Int?
+}
+
+extension ExRoutine {
+    static func dummy() -> ExRoutine {
+        return ExRoutine(name: "등운동 조지자!", stamp: "1", weightTraining: [
+            ExWegihtTraining2(bodyPart: "등", weightTrainging: "랫 풀 다운", weightTrainingInfo: [
+                ExWegihtTrainingInfo2(setCount: 1, weight: nil, traingingCount: nil)
+            ]),
+            ExWegihtTraining2(bodyPart: "등", weightTrainging: "시티드 케이블 로우", weightTrainingInfo: [
+                ExWegihtTrainingInfo2(setCount: 1, weight: nil, traingingCount: nil)
+            ]),
+            ExWegihtTraining2(bodyPart: "등", weightTrainging: "덤벨 풀오버", weightTrainingInfo: [
+                ExWegihtTrainingInfo2(setCount: 1, weight: nil, traingingCount: nil)
+            ]),
+            ExWegihtTraining2(bodyPart: "등", weightTrainging: "언더그립 랫 풀 다운", weightTrainingInfo: [
+                ExWegihtTrainingInfo2(setCount: 1, weight: nil, traingingCount: nil)
+            ]),
+        ])
+    }
+}

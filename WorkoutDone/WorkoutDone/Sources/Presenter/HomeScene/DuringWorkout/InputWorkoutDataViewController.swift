@@ -10,6 +10,9 @@ import SnapKit
 import Then
 
 class InputWorkoutDataViewController : BaseViewController {
+    lazy var weightTrainingArrayIndex = 0
+    lazy var weightTrainingInfoArrayIndex = 0
+    let duringSetViewController = DuringSetViewController()
     // MARK: - PROPERTIES
     
     private let visualEffectView: UIVisualEffectView = {
@@ -172,9 +175,20 @@ class InputWorkoutDataViewController : BaseViewController {
     // MARK: - ACTIONS
     override func actions() {
         cancelButton.addTarget(self, action: #selector(cancelButtonTapped), for: .touchUpInside)
+        okayButton.addTarget(self, action: #selector(okayButtonTapped), for: .touchUpInside)
     }
     @objc func cancelButtonTapped() {
         dismiss(animated: true)
+    }
+    @objc func okayButtonTapped() {
+
+        duringSetViewController.dummy.weightTraining[weightTrainingArrayIndex].weightTrainingInfo[weightTrainingInfoArrayIndex].weight = Double(kgTextField.text ?? "")
+        duringSetViewController.dummy.weightTraining[weightTrainingArrayIndex].weightTrainingInfo[weightTrainingInfoArrayIndex].traingingCount = Int(countTextField.text ?? "")
+        
+        duringSetViewController.tableView.reloadData()
+        dismiss(animated: true)
+        print(duringSetViewController.dummy, "dkdkdk")
+        
     }
     @objc func keyboardUp(notification: NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
