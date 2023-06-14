@@ -38,6 +38,8 @@ class RoutineEditorCell: UITableViewCell {
         setupLayout()
         setupConstraints()
         
+        self.backgroundColor = .clear
+        
         contentView.layer.borderWidth = 1
         contentView.layer.borderColor = UIColor.colorC8B4FF.cgColor
         contentView.layer.cornerRadius = 8
@@ -52,7 +54,7 @@ class RoutineEditorCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
 
-        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 7, left: 16, bottom: 7, right: 16))
+        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 7, left: 10, bottom: 7, right: 10))
      
     }
     
