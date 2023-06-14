@@ -19,4 +19,10 @@ class WeightTraining : Object {
         self.weightTraining = weightTraining
         self.weightTrainingInfo = weightTrainingInfo
     }
+    
+    convenience init(bodyPart: String, weightTraining: String) {
+        self.init()
+        self.bodyPart = bodyPart
+        self.weightTraining = weightTraining
+    }
 }

@@ -9,8 +9,8 @@ import UIKit
 
 class RoutineViewController : BaseViewController {
     let routineViewModel = RoutineViewModel()
-    var selectedRoutines = [Bool]()
     var myRoutines = [MyRoutine]()
+    var selectedRoutines = [Bool]()
     var preSelectedIndex : Int = -1
     
     private let routineTableView = UITableView(frame: .zero, style: .grouped).then {
@@ -162,7 +162,7 @@ extension RoutineViewController : UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         let footer = UIView()
         
-        let outerView = UIView(frame: .init(x: 20, y: 0, width: tableView.bounds.width - 40, height: 20))
+        let outerView = UIView(frame: .init(x: 20, y: 0, width: tableView.bounds.width - 40, height: selectedRoutines[section] == true ? 19 : 17))
         footer.addSubview(outerView)
         
         outerView.backgroundColor = .colorF6F6F6

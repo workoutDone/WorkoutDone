@@ -10,8 +10,7 @@ import UIKit
 class WeightTrainingCell : UITableViewCell {
     var weightTraingView = UIView().then {
         $0.layer.cornerRadius = 8
-        $0.layer.borderWidth = 1
-        $0.layer.borderColor = UIColor.colorCCCCCC.cgColor
+        $0.backgroundColor = .colorF6F6F6
     }
     
     var weightTrainingLabel = UILabel().then {

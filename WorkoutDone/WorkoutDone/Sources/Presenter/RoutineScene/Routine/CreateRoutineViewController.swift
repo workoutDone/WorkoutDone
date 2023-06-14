@@ -120,7 +120,6 @@ class CreateRoutineViewController : BaseViewController {
         selectCompleteButton.addTarget(self, action: #selector(selectCompleteButtonTapped), for: .touchUpInside)
     }
     
-    
     func setBackButton() {
         let backButton = RoutineBackButton()
         backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
@@ -223,8 +222,7 @@ extension CreateRoutineViewController : UITableViewDelegate, UITableViewDataSour
         cell.selectionStyle = .none
         cell.weightTrainingLabel.text = sampleData[isSelectBodyPartIndex].weigthTraing[indexPath.row]
         
-        cell.weightTraingView.layer.borderColor = UIColor.colorCCCCCC.cgColor
-        cell.weightTraingView.backgroundColor = .colorFFFFFF
+        cell.weightTraingView.backgroundColor = .colorF6F6F6
         cell.weightTrainingLabel.font = .pretendard(.regular, size: 16)
         
         cell.selectedIndexView.isHidden = true
@@ -233,9 +231,8 @@ extension CreateRoutineViewController : UITableViewDelegate, UITableViewDataSour
             if weightTraining.myBodyPart == sampleData[isSelectBodyPartIndex].bodyPart && weightTraining.myWeightTraining == sampleData[isSelectBodyPartIndex].weigthTraing[indexPath.row] {
                 cell.selectedIndexLabel.text = "\(index + 1)"
                 cell.selectedIndexView.isHidden = false
-                
-                cell.weightTraingView.layer.borderColor = UIColor.color7442FF.cgColor
-                cell.weightTraingView.backgroundColor = .colorF8F6FF
+    
+                cell.weightTraingView.backgroundColor = .colorE6E0FF
                 cell.weightTrainingLabel.font = .pretendard(.semiBold, size: 16)
             }
         }

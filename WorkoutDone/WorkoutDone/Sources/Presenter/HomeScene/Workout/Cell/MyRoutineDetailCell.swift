@@ -9,13 +9,9 @@ import UIKit
 
 class MyRoutineDetailCell: UITableViewCell {
     let outerView = UIView().then {
-        $0.backgroundColor = .colorCCCCCC
+        $0.backgroundColor = .colorF8F6FF
     }
     
-    let innerView = UIView().then {
-        $0.backgroundColor = .colorFFFFFF
-    }
-
     private let routineView = UIView().then {
         $0.backgroundColor = .colorE6E0FF
         $0.layer.cornerRadius = 8
@@ -59,8 +55,7 @@ class MyRoutineDetailCell: UITableViewCell {
     // MARK: - ACTIONS
     func setupLayout() {
         contentView.addSubview(outerView)
-        outerView.addSubview(innerView)
-        innerView.addSubview(routineView)
+        outerView.addSubview(routineView)
         
         routineView.addSubview(bodyPartView)
         bodyPartView.addSubview(bodyPartLabel)
@@ -72,12 +67,6 @@ class MyRoutineDetailCell: UITableViewCell {
             $0.top.bottom.equalToSuperview()
             $0.leading.equalToSuperview().offset(20)
             $0.trailing.equalToSuperview().offset(-20)
-        }
-        
-        innerView.snp.makeConstraints {
-            $0.top.bottom.equalTo(outerView)
-            $0.leading.equalTo(outerView).offset(1)
-            $0.trailing.equalTo(outerView).offset(-1)
         }
         
         routineView.snp.makeConstraints {

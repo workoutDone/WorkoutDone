@@ -10,13 +10,7 @@ import UIKit
 class MyRoutineCell: UITableViewCell {
 
     let outerView = UIView().then {
-        $0.backgroundColor = .colorCCCCCC
-        $0.layer.cornerRadius = 10
-        $0.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-    }
-    
-    let innerView = UIView().then {
-        $0.backgroundColor = .colorFFFFFF
+        $0.backgroundColor = .colorF6F6F6
         $0.layer.cornerRadius = 10
         $0.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
     }
@@ -35,6 +29,18 @@ class MyRoutineCell: UITableViewCell {
     
     let openImage = UIImageView().then {
         $0.image = UIImage(named: "open")
+        $0.contentMode = .scaleAspectFit
+    }
+    
+    var selectedIndexView = UIView().then {
+        $0.backgroundColor = .color7442FF
+        $0.layer.cornerRadius = 12
+    }
+    
+    var selectedIndexLabel = UILabel().then {
+        $0.text = "0"
+        $0.textColor = .colorFFFFFF
+        $0.font = .pretendard(.semiBold, size: 15)
     }
     
     // MARK: - LIFECYCLE
@@ -43,10 +49,6 @@ class MyRoutineCell: UITableViewCell {
         
          setupLayout()
          setupConstraints()
-        
-        innerView.backgroundColor = .white
-        innerView.layer.cornerRadius = 10
-        
     }
     
     required init?(coder: NSCoder) {
@@ -61,23 +63,18 @@ class MyRoutineCell: UITableViewCell {
     // MARK: - ACTIONS
     func setupLayout() {
         contentView.addSubview(outerView)
-        outerView.addSubviews(innerView)
-        [routineIndexLabel, routineTitleLabel, openImage].forEach {
-            innerView.addSubviews($0)
+        [routineIndexLabel, routineTitleLabel, openImage, selectedIndexView].forEach {
+            outerView.addSubviews($0)
         }
+        selectedIndexView.addSubview(selectedIndexLabel)
     }
     
     func setupConstraints() {
         outerView.snp.makeConstraints {
-            $0.top.bottom.equalToSuperview()
+            $0.top.equalToSuperview().offset(8)
+            $0.bottom.equalToSuperview()
             $0.leading.equalToSuperview().offset(20)
             $0.trailing.equalToSuperview().offset(-20)
-        }
-        
-        innerView.snp.makeConstraints {
-            $0.top.leading.equalTo(outerView).offset(1)
-            $0.trailing.equalTo(outerView).offset(-1)
-            $0.bottom.equalTo(outerView)
         }
         
         routineIndexLabel.snp.makeConstraints {
@@ -95,6 +92,16 @@ class MyRoutineCell: UITableViewCell {
             $0.trailing.equalToSuperview().offset(-21)
             $0.width.equalTo(16)
             $0.height.equalTo(9)
+        }
+        
+        selectedIndexView.snp.makeConstraints {
+            $0.top.equalTo(outerView).offset(-8)
+            $0.trailing.equalTo(outerView).offset(8)
+            $0.width.height.equalTo(24)
+        }
+        
+        selectedIndexLabel.snp.makeConstraints {
+            $0.centerX.centerY.equalTo(selectedIndexView)
         }
     }
 }

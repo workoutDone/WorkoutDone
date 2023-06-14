@@ -10,7 +10,6 @@ import UIKit
 class RoutineBackButton: UIButton {
     private let backButtonImage = UIImageView().then {
         $0.image = UIImage(named: "routineBackButton")
-        //$0.image = UIImage(systemName: "chevron.backward")
         $0.tintColor = .color000000
     }
     
@@ -44,14 +43,14 @@ class RoutineBackButton: UIButton {
         
         backButtonImage.snp.makeConstraints {
             $0.centerY.equalToSuperview()
-            $0.leading.equalToSuperview().offset(-7)
-            $0.width.equalTo(10.5)
-            $0.height.equalTo(18.5)
+            $0.leading.equalToSuperview().offset(-6.8)
+            $0.width.equalTo(11)
+            $0.height.equalTo(19)
         }
 
         backButtonLabel.snp.makeConstraints {
             $0.centerY.equalToSuperview()
-            $0.leading.equalTo(backButtonImage.snp.trailing).offset(9.5)
+            $0.leading.equalTo(backButtonImage.snp.trailing).offset(10)
         }
     }
 }

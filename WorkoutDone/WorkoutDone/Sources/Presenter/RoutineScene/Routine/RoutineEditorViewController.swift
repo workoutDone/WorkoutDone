@@ -27,11 +27,12 @@ class RoutineEditorViewController : BaseViewController {
         $0.font = .pretendard(.regular, size: 16)
     }
     
-    private let routineTableView = UITableView(frame: .zero, style: .grouped).then {
+    private let routineTableView = UITableView(frame: .zero, style: .plain).then {
         $0.register(RoutineEditorCell.self, forCellReuseIdentifier: "routineEditorCell")
         $0.separatorStyle = .none
         $0.showsVerticalScrollIndicator = false
-        $0.contentInset = UIEdgeInsets(top: -28, left: 0, bottom: -42, right: 0)
+        $0.contentInset = UIEdgeInsets(top: 3, left: 0, bottom: 0, right: 3)
+        $0.layer.cornerRadius = 15
         
         $0.backgroundColor = .colorF8F6FF
     }
@@ -151,7 +152,7 @@ class RoutineEditorViewController : BaseViewController {
     
     func setSaveButton() {
         guard let name = nameTextField.text, name != "", let _ = stamp else { return }
-        
+
         saveButton.gradient.colors = [UIColor.color8E36FF.cgColor, UIColor.color7442FF.cgColor]
     }
     
@@ -191,12 +192,10 @@ extension RoutineEditorViewController : UITableViewDelegate, UITableViewDataSour
         
         cell.bodyPartLabel.text = myWeightTraining[indexPath.row].myBodyPart
         cell.weightTrainingLabel.text = myWeightTraining[indexPath.row].myWeightTraining
-        cell.backgroundColor = .clear
-        
         
         return cell
     }
-    
+
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 64
     }
