@@ -15,7 +15,9 @@ class WorkoutSequenceViewController: BaseViewController {
         $0.separatorStyle = .none
         $0.showsVerticalScrollIndicator = false
         $0.contentInset = UIEdgeInsets(top: -28, left: 0, bottom: -42, right: 0)
-        $0.isEditing = true
+        $0.layer.cornerRadius = 15
+        $0.layer.borderWidth = 1
+        $0.layer.borderColor = UIColor.colorC8B4FF.cgColor
         
         $0.backgroundColor = .colorF8F6FF
     }
@@ -35,6 +37,7 @@ class WorkoutSequenceViewController: BaseViewController {
         view.backgroundColor = .colorFFFFFF
        
         setNavigationBar()
+        setBackButton()
     }
     
     override func setupLayout() {
@@ -88,6 +91,17 @@ class WorkoutSequenceViewController: BaseViewController {
         navigationItem.rightBarButtonItem = rightBarButton
     }
     
+    func setBackButton() {
+        let backButton = RoutineBackButton()
+        backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
+    }
+
+    @objc func backButtonTapped() {
+        navigationController?.popViewController(animated: false)
+    }
+    
+    
     @objc func startWorkoutButtonTapped() {
         print("hi")
     }
@@ -101,34 +115,15 @@ extension WorkoutSequenceViewController : UITableViewDelegate, UITableViewDataSo
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "routineEditorCell", for: indexPath) as? RoutineEditorCell else { return UITableViewCell() }
         cell.selectionStyle = .none
+        cell.contentView.layoutMargins = UIEdgeInsets(top: 40, left: 0, bottom: 30, right: 0)
         
         cell.weightTrainingLabel.text = sampleData[indexPath.row]
-        cell.layer.borderWidth = 1
-        cell.layer.borderColor = UIColor.colorC8B4FF.cgColor
-        cell.layer.cornerRadius = 8
-        cell.backgroundColor = .colorFFFFFF
         
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 64
-    }
-    
-    // editing 버튼 제거
-    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
-        return .none
-    }
-    
-    // 버튼 여백 제거
-    func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
-        return false
-    }
-    
-    // 셀 이동
-    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        let removed = sampleData.remove(at: sourceIndexPath.row)
-        sampleData.insert(removed, at: destinationIndexPath.row)
     }
 }
 
