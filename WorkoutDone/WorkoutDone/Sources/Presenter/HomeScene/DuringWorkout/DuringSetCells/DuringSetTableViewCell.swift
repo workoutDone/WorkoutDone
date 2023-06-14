@@ -23,19 +23,14 @@ class DuringSetTableViewCell : UITableViewCell {
         $0.textColor = .color7442FF
     }
     
-    
-    private let weightTextField = UITextField()
-    
     private let kgLabel = UILabel().then {
-        $0.text = "kg"
+        $0.text = "-kg"
         $0.font = .pretendard(.medium, size: 16)
         $0.textColor = .color7442FF
     }
     
-    private let countTextField = UITextField()
-    
     private let countLabel = UILabel().then {
-        $0.text = "회"
+        $0.text = "-회"
         $0.font = .pretendard(.medium, size: 16)
         $0.textColor = .color7442FF
     }
@@ -55,15 +50,11 @@ class DuringSetTableViewCell : UITableViewCell {
         super.init(coder: coder)
     }
     func setStyle() {
-//        contentView.backgroundColor = .colorFFFFFF
-//        workoutCategoryBorderView.layer.cornerRadius = 23 / 2
+        
     }
     func setLayout() {
         contentView.addSubview(backView)
-        backView.addSubviews(setLabel)
-//        backView.addSubviews(workoutCategoryBorderView, workoutTitleLabel, sandwichImageView)
-//        workoutCategoryBorderView.addSubview(workoutCategoryLabel)
-//
+        backView.addSubviews(setLabel, kgLabel, countLabel)
         backView.snp.makeConstraints {
             $0.height.equalTo(50)
             $0.leading.trailing.equalToSuperview().inset(28)
@@ -72,21 +63,18 @@ class DuringSetTableViewCell : UITableViewCell {
             $0.centerY.equalToSuperview()
             $0.leading.equalToSuperview().inset(20)
         }
-//        workoutCategoryBorderView.snp.makeConstraints {
-//            $0.height.equalTo(23)
-//            $0.centerY.equalToSuperview()
-//            $0.leading.equalToSuperview().inset(10)
-//        }
-//        workoutCategoryLabel.snp.makeConstraints {
-//            $0.centerY.centerX.equalToSuperview()
-//            $0.leading.trailing.equalToSuperview().inset(6)
-//        }
-//        workoutTitleLabel.snp.makeConstraints {
-//            $0.centerY.centerX.equalToSuperview()
-//        }
-//        sandwichImageView.snp.makeConstraints {
-//            $0.centerY.equalToSuperview()
-//            $0.trailing.equalToSuperview().inset(10)
-//        }
+        kgLabel.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.centerY.equalToSuperview()
+        }
+        countLabel.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.trailing.equalToSuperview().inset(20)
+        }
+    }
+    func configureCell(_ wegihtTrainingInfo : ExWegihtTrainingInfo2) {
+        setLabel.text = "\(wegihtTrainingInfo.setCount)세트"
+        kgLabel.text = wegihtTrainingInfo.weight == nil ? "-kg" : "\(wegihtTrainingInfo.weight ?? 0)kg"
+        countLabel.text = wegihtTrainingInfo.traingingCount == nil ? "-회" : "\(wegihtTrainingInfo.traingingCount ?? 0)회"
     }
 }
