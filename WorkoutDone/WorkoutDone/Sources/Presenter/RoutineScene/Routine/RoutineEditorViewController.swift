@@ -120,6 +120,7 @@ class RoutineEditorViewController : BaseViewController {
     func setRoutineName() {
         guard let id = routineId else { return }
         nameTextField.text = routineViewModel.loadMyRoutineName(id: id)
+        nameTextField.font = .pretendard(.bold, size: 16)
     }
     
     func setRoutineStamp() {
@@ -229,4 +230,10 @@ extension RoutineEditorViewController : UITableViewDelegate, UITableViewDataSour
     }
     
     func tableView(_ tableView: UITableView, performDropWith coordinator: UITableViewDropCoordinator) { }
+}
+
+extension RoutineEditorViewController : UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        scrollView.contentOffset.x = 0
+    }
 }
