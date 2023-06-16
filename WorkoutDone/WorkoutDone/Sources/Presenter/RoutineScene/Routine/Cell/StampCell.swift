@@ -9,9 +9,7 @@ import UIKit
 
 class StampCell: UICollectionViewCell {
     var stampImage = UIImageView().then {
-        $0.layer.borderWidth = 3
-        $0.layer.borderColor = UIColor.colorFFFFFF.cgColor
-        $0.layer.cornerRadius = 46 / 2
+        $0.contentMode = .scaleAspectFill
     }
     
     // MARK: - LIFECYCLE
@@ -27,6 +25,11 @@ class StampCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+    }
+    
     // MARK: - ACTIONS
     func setupLayout() {
         contentView.addSubview(stampImage)
@@ -35,7 +38,7 @@ class StampCell: UICollectionViewCell {
     func setupConstraints() {
         stampImage.snp.makeConstraints {
             $0.centerX.centerY.equalToSuperview()
-            $0.width.height.equalTo(46)
+            $0.width.height.equalTo(40)
         }
     }
 }
