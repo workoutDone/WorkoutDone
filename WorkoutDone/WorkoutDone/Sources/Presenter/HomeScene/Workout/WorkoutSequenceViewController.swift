@@ -8,13 +8,14 @@
 import UIKit
 
 class WorkoutSequenceViewController: BaseViewController {
-    var sampleData = ["벤치 프레스", "벤치 프레스2", "벤치 프레스3", "벤치 프레스4", "ㅠㅠ"]
+    var sampleData = ["벤치 프레스", "벤치 프레스2", "벤치 프레스3", "벤치 프레스4", "ㅠㅠ", "ㅠㅠㅠ", "ㅠ_ㅠ", "ㅠㅇㅠ", "ㅠㅅㅠ", "ㅠㅁㅠ", "ㅠㅂㅠ", "ㅠㅠㅠㅠㅠㅠㅠㅠ"]
+    var isAddDeleteMode = false
     
-    private let weightTraingsTableView = UITableView(frame: .zero, style: .grouped).then {
-        $0.register(RoutineEditorCell.self, forCellReuseIdentifier: "routineEditorCell")
+    private var weightTrainingTableView = UITableView(frame: .zero, style: .plain).then {
+        $0.register(WorkoutSequenceCell.self, forCellReuseIdentifier: "workoutSequenceCell")
         $0.separatorStyle = .none
         $0.showsVerticalScrollIndicator = false
-        $0.contentInset = UIEdgeInsets(top: -28, left: 0, bottom: -42, right: 0)
+        $0.contentInset = UIEdgeInsets(top: 15, left: 0, bottom: 15, right: 0)
         $0.layer.cornerRadius = 15
         $0.layer.borderWidth = 1
         $0.layer.borderColor = UIColor.colorC8B4FF.cgColor
@@ -38,12 +39,13 @@ class WorkoutSequenceViewController: BaseViewController {
        
         setNavigationBar()
         setBackButton()
+    
     }
     
     override func setupLayout() {
         super.setupLayout()
         
-        [weightTraingsTableView, startWorkoutButton, adImage].forEach {
+        [weightTrainingTableView, startWorkoutButton, adImage].forEach {
             view.addSubview($0)
         }
     }
@@ -51,13 +53,13 @@ class WorkoutSequenceViewController: BaseViewController {
     override func setupConstraints() {
         super.setupConstraints()
         
-        weightTraingsTableView.snp.makeConstraints {
+        weightTrainingTableView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(119)
             $0.leading.equalToSuperview().offset(20)
             $0.trailing.equalToSuperview().offset(-20)
-            $0.bottom.equalTo(startWorkoutButton.snp.top)
+            $0.height.equalTo(0)
         }
-        
+
         startWorkoutButton.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(24)
             $0.trailing.equalToSuperview().offset(-24)
@@ -78,8 +80,20 @@ class WorkoutSequenceViewController: BaseViewController {
     }
     
     override func setComponents() {
-        weightTraingsTableView.delegate = self
-        weightTraingsTableView.dataSource = self
+        super.setComponents()
+        
+        weightTrainingTableView.delegate = self
+        weightTrainingTableView.dataSource = self
+        
+        weightTrainingTableView.dragDelegate = self
+        weightTrainingTableView.dropDelegate = self
+        weightTrainingTableView.dragInteractionEnabled = true
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        adjustTableViewHeight()
     }
 
     func setNavigationBar() {
@@ -103,19 +117,27 @@ class WorkoutSequenceViewController: BaseViewController {
     
     
     @objc func startWorkoutButtonTapped() {
-        print("hi")
+      
+    }
+    
+    func adjustTableViewHeight() {
+        let height = min((15 * 2 + sampleData.count * 58), Int(view.frame.height - 119 - 113 - 58 - 26))
+        weightTrainingTableView.snp.updateConstraints {
+            $0.height.equalTo(height)
+        }
+        
+        weightTrainingTableView.reloadData()
     }
 }
 
-extension WorkoutSequenceViewController : UITableViewDelegate, UITableViewDataSource {
+extension WorkoutSequenceViewController : UITableViewDelegate, UITableViewDataSource, UITableViewDragDelegate, UITableViewDropDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return sampleData.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "routineEditorCell", for: indexPath) as? RoutineEditorCell else { return UITableViewCell() }
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "workoutSequenceCell", for: indexPath) as? WorkoutSequenceCell else { return UITableViewCell() }
         cell.selectionStyle = .none
-        cell.contentView.layoutMargins = UIEdgeInsets(top: 40, left: 0, bottom: 30, right: 0)
         
         cell.weightTrainingLabel.text = sampleData[indexPath.row]
         
@@ -123,7 +145,37 @@ extension WorkoutSequenceViewController : UITableViewDelegate, UITableViewDataSo
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 64
+        return 58
     }
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if (editingStyle == .delete) {
+            sampleData.remove(at: indexPath.row)
+        }
+        tableView.reloadData()
+    }
+    
+    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        let moveCell = sampleData[sourceIndexPath.row]
+        sampleData.remove(at: sourceIndexPath.row)
+        sampleData.insert(moveCell, at: destinationIndexPath.row)
+    }
+    
+    func tableView(_ tableView: UITableView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
+        return [UIDragItem(itemProvider: NSItemProvider())]
+    }
+    
+    func tableView(_ tableView: UITableView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UITableViewDropProposal {
+        if session.localDragSession != nil {
+            return UITableViewDropProposal(operation: .move, intent: .insertAtDestinationIndexPath)
+        }
+        return UITableViewDropProposal(operation: .cancel, intent: .unspecified)
+    }
+    
+    func tableView(_ tableView: UITableView, performDropWith coordinator: UITableViewDropCoordinator) { }
 }
 

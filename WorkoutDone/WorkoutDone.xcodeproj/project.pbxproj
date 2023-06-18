@@ -80,6 +80,7 @@
 		9291583F2A2886150022BEF9 /* AddOrRemoveButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9291583E2A2886150022BEF9 /* AddOrRemoveButton.swift */; };
 		929158412A28DFEE0022BEF9 /* IndexPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929158402A28DFEE0022BEF9 /* IndexPath.swift */; };
 		929158432A28FDDD0022BEF9 /* RoutineViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929158422A28FDDD0022BEF9 /* RoutineViewModel.swift */; };
+		929158472A3D92E40022BEF9 /* WorkoutSequenceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929158462A3D92E40022BEF9 /* WorkoutSequenceCell.swift */; };
 		92DCF3EC29CDB38300F90002 /* BackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DCF3EB29CDB38300F90002 /* BackButton.swift */; };
 		92DCF47A29D0818A00F90002 /* WorkOutDoneData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DCF47929D0818A00F90002 /* WorkOutDoneData.swift */; };
 		92DCF47E29D0830B00F90002 /* FrameImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DCF47D29D0830B00F90002 /* FrameImage.swift */; };
@@ -249,6 +250,7 @@
 		9291583E2A2886150022BEF9 /* AddOrRemoveButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddOrRemoveButton.swift; sourceTree = "<group>"; };
 		929158402A28DFEE0022BEF9 /* IndexPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndexPath.swift; sourceTree = "<group>"; };
 		929158422A28FDDD0022BEF9 /* RoutineViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineViewModel.swift; sourceTree = "<group>"; };
+		929158462A3D92E40022BEF9 /* WorkoutSequenceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutSequenceCell.swift; sourceTree = "<group>"; };
 		92DCF3EB29CDB38300F90002 /* BackButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackButton.swift; sourceTree = "<group>"; };
 		92DCF47929D0818A00F90002 /* WorkOutDoneData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkOutDoneData.swift; sourceTree = "<group>"; };
 		92DCF47D29D0830B00F90002 /* FrameImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameImage.swift; sourceTree = "<group>"; };
@@ -659,6 +661,7 @@
 				9291580F2A23B16D0022BEF9 /* CreateRoutineCell.swift */,
 				929158112A24DC3E0022BEF9 /* MyRoutineCell.swift */,
 				929158142A2512E20022BEF9 /* MyRoutineDetailCell.swift */,
+				929158462A3D92E40022BEF9 /* WorkoutSequenceCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -1157,6 +1160,7 @@
 				A5021EE82A1906EB007DE096 /* Constants.swift in Sources */,
 				9264A5EC29C4B0610010856F /* HomeButtonCameraViewController.swift in Sources */,
 				92DCF54229D5B41700F90002 /* MonthHeaderView.swift in Sources */,
+				929158472A3D92E40022BEF9 /* WorkoutSequenceCell.swift in Sources */,
 				92DCF61229DCAE3D00F90002 /* GridView.swift in Sources */,
 				92DCF4D429D1B66F00F90002 /* ImageCell.swift in Sources */,
 				9200604929B1AD7200586063 /* HomeViewController.swift in Sources */,

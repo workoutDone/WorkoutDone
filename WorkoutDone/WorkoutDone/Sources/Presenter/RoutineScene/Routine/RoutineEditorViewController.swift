@@ -14,8 +14,6 @@ class RoutineEditorViewController : BaseViewController {
     var routineId : String?
     var stamp : String?
     
-    var draggedItem: String = ""
-    
     private let nameTextField = UITextField().then {
         $0.attributedPlaceholder = NSAttributedString(string: "이 루틴의 이름은 무엇인가요?", attributes: [NSAttributedString.Key.foregroundColor : UIColor.colorCCCCCC])
         $0.layer.borderWidth = 1.5

@@ -48,7 +48,7 @@ class RoutineViewController : BaseViewController {
     
     override func setupConstraints() {
         routineTableView.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(120)
+            $0.top.equalToSuperview()
             $0.leading.trailing.equalToSuperview()
             $0.bottom.equalTo(createdButton.snp.top)
         }
@@ -107,8 +107,10 @@ extension RoutineViewController : UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if myRoutines.count == 0 || section == 0 {
+        if myRoutines.count == 0 {
             return 0.1
+        } else if section == 0 {
+            return 23
         }
         return 14
     }

@@ -100,7 +100,7 @@ class WorkoutViewController : BaseViewController {
         routineTableView.snp.makeConstraints {
             $0.top.equalTo(bodyPartCollectionView.snp.bottom)
             $0.leading.trailing.equalToSuperview()
-            $0.bottom.equalTo(adImage.snp.top)
+            $0.bottom.equalTo(selectCompleteButton.snp.top)
         }
         
         selectCompleteButton.snp.makeConstraints {
@@ -369,7 +369,7 @@ extension WorkoutViewController : UITableViewDelegate, UITableViewDataSource {
             }
             return selectedRoutines[section] == true ? 11 : 17
         }
-        return 80
+        return 20
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
