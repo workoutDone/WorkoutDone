@@ -167,6 +167,16 @@ class WorkoutSequenceViewController: BaseViewController {
     }
 }
 
+extension WorkoutSequenceViewController : RemoveWorkoutDelegate {
+    func removeButtonTapped(forCell cell: WorkoutSequenceCell) {
+        guard let indexPath = weightTrainingTableView.indexPath(for: cell) else { return }
+        
+        sampleData.remove(at: indexPath.row)
+        weightTrainingTableView.deleteRows(at: [indexPath], with: .fade)
+    }
+    
+}
+
 extension WorkoutSequenceViewController : UITableViewDelegate, UITableViewDataSource, UITableViewDragDelegate, UITableViewDropDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return sampleData.count
@@ -175,6 +185,7 @@ extension WorkoutSequenceViewController : UITableViewDelegate, UITableViewDataSo
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "workoutSequenceCell", for: indexPath) as? WorkoutSequenceCell else { return UITableViewCell() }
         cell.selectionStyle = .none
+        cell.delegate = self
         
         cell.weightTrainingLabel.text = sampleData[indexPath.row]
         cell.editImage.isHidden = false

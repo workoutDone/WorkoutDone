@@ -7,7 +7,13 @@
 
 import UIKit
 
-class WorkoutSequenceCell: UITableViewCell {
+protocol RemoveWorkoutDelegate : AnyObject {
+    func removeButtonTapped(forCell cell: WorkoutSequenceCell)
+}
+
+class WorkoutSequenceCell : UITableViewCell {
+    weak var delegate : RemoveWorkoutDelegate?
+
     private let bodyPartView = UIView().then {
         $0.layer.borderWidth = 1
         $0.layer.borderColor = UIColor.colorE6E0FF.cgColor
@@ -30,7 +36,12 @@ class WorkoutSequenceCell: UITableViewCell {
     }
     
     let removeButton = UIButton().then {
-        $0.setImage(UIImage(named: "remove"), for: .normal)
+        $0.layer.cornerRadius = 12
+        $0.backgroundColor = .colorFFEDF0
+    }
+    
+    let removeImage = UIImageView().then {
+        $0.image = UIImage(named: "remove")
     }
 
     // MARK: - LIFECYCLE
@@ -48,6 +59,8 @@ class WorkoutSequenceCell: UITableViewCell {
         contentView.backgroundColor = .colorFFFFFF
         
         removeButton.isHidden = true
+        
+        removeButton.addTarget(self, action: #selector(removeButtonTapped), for: .touchUpInside)
         
     }
     
@@ -69,6 +82,7 @@ class WorkoutSequenceCell: UITableViewCell {
         }
 
         bodyPartView.addSubview(bodyPartLabel)
+        removeButton.addSubview(removeImage)
     }
     
     func setupConstraints() {
@@ -99,6 +113,15 @@ class WorkoutSequenceCell: UITableViewCell {
             $0.trailing.equalToSuperview().offset(-10)
             $0.width.height.equalTo(24)
         }
+        
+        removeImage.snp.makeConstraints {
+            $0.centerX.centerY.equalToSuperview()
+            $0.width.height.equalTo(8)
+        }
     }
 
+    @objc func removeButtonTapped() {
+        delegate?.removeButtonTapped(forCell: self)
+        
+    }
 }
