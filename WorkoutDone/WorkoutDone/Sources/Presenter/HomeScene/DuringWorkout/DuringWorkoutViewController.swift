@@ -10,7 +10,7 @@ import AVFoundation
 import UserNotifications
 import NotificationCenter
 
-class DuringWorkoutViewController : BaseViewController {
+final class DuringWorkoutViewController : BaseViewController {
     
     private let userNotificationCenter = UNUserNotificationCenter.current()
     
