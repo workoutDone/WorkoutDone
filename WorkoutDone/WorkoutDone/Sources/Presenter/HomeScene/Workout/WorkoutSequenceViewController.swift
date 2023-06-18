@@ -11,6 +11,8 @@ class WorkoutSequenceViewController: BaseViewController {
     var sampleData = ["벤치 프레스", "벤치 프레스2", "벤치 프레스3", "벤치 프레스4", "ㅠㅠ", "ㅠㅠㅠ", "ㅠ_ㅠ", "ㅠㅇㅠ", "ㅠㅅㅠ", "ㅠㅁㅠ", "ㅠㅂㅠ", "ㅠㅠㅠㅠㅠㅠㅠㅠ"]
     var isAddDeleteMode = false
     
+    private var editButton = EditButton()
+    
     private var weightTrainingTableView = UITableView(frame: .zero, style: .plain).then {
         $0.register(WorkoutSequenceCell.self, forCellReuseIdentifier: "workoutSequenceCell")
         $0.separatorStyle = .none
@@ -18,7 +20,7 @@ class WorkoutSequenceViewController: BaseViewController {
         $0.contentInset = UIEdgeInsets(top: 15, left: 0, bottom: 15, right: 0)
         $0.layer.cornerRadius = 15
         $0.layer.borderWidth = 1
-        $0.layer.borderColor = UIColor.colorC8B4FF.cgColor
+        $0.layer.borderColor = UIColor.colorE6E0FF.cgColor
         
         $0.backgroundColor = .colorF8F6FF
     }
@@ -27,6 +29,8 @@ class WorkoutSequenceViewController: BaseViewController {
         $0.setTitle("오늘의 운동 시작", for: .normal)
         $0.titleLabel?.font = .pretendard(.semiBold, size: 20)
     }
+    
+    private let createWeightTrainingButton = CreateWeightTrainingButton()
     
     private var adImage = UIImageView().then {
         $0.backgroundColor = .color3ED1FF.withAlphaComponent(0.2)
@@ -45,7 +49,7 @@ class WorkoutSequenceViewController: BaseViewController {
     override func setupLayout() {
         super.setupLayout()
         
-        [weightTrainingTableView, startWorkoutButton, adImage].forEach {
+        [weightTrainingTableView, startWorkoutButton,     createWeightTrainingButton, adImage].forEach {
             view.addSubview($0)
         }
     }
@@ -67,6 +71,13 @@ class WorkoutSequenceViewController: BaseViewController {
             $0.height.equalTo(58)
         }
         
+        createWeightTrainingButton.snp.makeConstraints {
+            $0.top.equalTo(weightTrainingTableView.snp.bottom).offset(26)
+            $0.leading.equalToSuperview().offset(20)
+            $0.trailing.equalToSuperview().offset(-20)
+            $0.height.equalTo(62)
+        }
+        
         adImage.snp.makeConstraints {
             $0.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
             $0.height.equalTo(50)
@@ -76,7 +87,8 @@ class WorkoutSequenceViewController: BaseViewController {
     override func actions() {
         super.actions()
         
-        //startWorkoutButton.addTarget(self, action: #selector(startWorkoutButtonTapped), for: .touchUpInside)
+        startWorkoutButton.addTarget(self, action: #selector(startWorkoutButtonTapped), for: .touchUpInside)
+        createWeightTrainingButton.addTarget(self, action: #selector(createWeightTrainingButtonTapped), for: .touchUpInside)
     }
     
     override func setComponents() {
@@ -88,6 +100,8 @@ class WorkoutSequenceViewController: BaseViewController {
         weightTrainingTableView.dragDelegate = self
         weightTrainingTableView.dropDelegate = self
         weightTrainingTableView.dragInteractionEnabled = true
+        
+        createWeightTrainingButton.isHidden = true
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -99,9 +113,9 @@ class WorkoutSequenceViewController: BaseViewController {
     func setNavigationBar() {
         title = "운동하기"
         
-        let addOrRemoveButton = AddOrRemoveButton(frame: CGRect(x: 0, y: 0, width: 80, height: 30))
-        addOrRemoveButton.addTarget(self, action: #selector(startWorkoutButtonTapped), for: .touchUpInside)
-        let rightBarButton = UIBarButtonItem(customView: addOrRemoveButton)
+        editButton = EditButton(frame: CGRect(x: 0, y: 0, width: 80, height: 30))
+        editButton.addTarget(self, action: #selector(startWorkoutButtonTapped), for: .touchUpInside)
+        let rightBarButton = UIBarButtonItem(customView: editButton)
         navigationItem.rightBarButtonItem = rightBarButton
     }
     
@@ -115,11 +129,6 @@ class WorkoutSequenceViewController: BaseViewController {
         navigationController?.popViewController(animated: false)
     }
     
-    
-    @objc func startWorkoutButtonTapped() {
-      
-    }
-    
     func adjustTableViewHeight() {
         let height = min((15 * 2 + sampleData.count * 58), Int(view.frame.height - 119 - 113 - 58 - 26))
         weightTrainingTableView.snp.updateConstraints {
@@ -127,6 +136,34 @@ class WorkoutSequenceViewController: BaseViewController {
         }
         
         weightTrainingTableView.reloadData()
+    }
+    
+    @objc func startWorkoutButtonTapped() {
+        isAddDeleteMode = !isAddDeleteMode
+        weightTrainingTableView.reloadData()
+        
+        if isAddDeleteMode {
+            switchToAddDeleteMode()
+        } else {
+            switchToModifyMode()
+        }
+    }
+    
+    func switchToAddDeleteMode() {
+        editButton.setText("수정 완료")
+        startWorkoutButton.isHidden = true
+        createWeightTrainingButton.isHidden = false
+    }
+    
+    func switchToModifyMode() {
+        editButton.setText("추가/삭제")
+        startWorkoutButton.isHidden = false
+        createWeightTrainingButton.isHidden = true
+    }
+    
+    @objc func createWeightTrainingButtonTapped() {
+        let workoutVC = WorkoutViewController()
+        navigationController?.pushViewController(workoutVC, animated: false)
     }
 }
 
@@ -140,6 +177,13 @@ extension WorkoutSequenceViewController : UITableViewDelegate, UITableViewDataSo
         cell.selectionStyle = .none
         
         cell.weightTrainingLabel.text = sampleData[indexPath.row]
+        cell.editImage.isHidden = false
+        cell.removeButton.isHidden = true
+        
+        if isAddDeleteMode {
+            cell.editImage.isHidden = true
+            cell.removeButton.isHidden = false
+        }
         
         return cell
     }

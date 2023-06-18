@@ -10,7 +10,7 @@ import UIKit
 class WorkoutSequenceCell: UITableViewCell {
     private let bodyPartView = UIView().then {
         $0.layer.borderWidth = 1
-        $0.layer.borderColor = UIColor.color7442FF.cgColor
+        $0.layer.borderColor = UIColor.colorE6E0FF.cgColor
         $0.layer.cornerRadius = 23 / 2
     }
     
@@ -28,6 +28,10 @@ class WorkoutSequenceCell: UITableViewCell {
     let editImage = UIImageView().then {
         $0.image = UIImage(named: "edit")
     }
+    
+    let removeButton = UIButton().then {
+        $0.setImage(UIImage(named: "remove"), for: .normal)
+    }
 
     // MARK: - LIFECYCLE
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -43,6 +47,8 @@ class WorkoutSequenceCell: UITableViewCell {
         contentView.layer.cornerRadius = 8
         contentView.backgroundColor = .colorFFFFFF
         
+        removeButton.isHidden = true
+        
     }
     
     required init?(coder: NSCoder) {
@@ -56,10 +62,9 @@ class WorkoutSequenceCell: UITableViewCell {
      
     }
     
-    
     // MARK: - ACTIONS
     func setupLayout() {
-        [bodyPartView, weightTrainingLabel, editImage].forEach {
+        [bodyPartView, weightTrainingLabel, editImage, removeButton].forEach {
             contentView.addSubview($0)
         }
 
@@ -87,6 +92,12 @@ class WorkoutSequenceCell: UITableViewCell {
             $0.trailing.equalToSuperview().offset(-20)
             $0.width.equalTo(15.5)
             $0.height.equalTo(9.3)
+        }
+        
+        removeButton.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.trailing.equalToSuperview().offset(-10)
+            $0.width.height.equalTo(24)
         }
     }
 
