@@ -21,6 +21,7 @@ class HomeButtonLessCameraViewController : BaseViewController {
     let photoOutput = AVCapturePhotoOutput()
     var isBack : Bool = true
     
+    let captureDevice = AVCaptureDevice.default(for: .video)
     let sesstionQueue = DispatchQueue(label: "sesstion Queue")
     let videoDeviceDiscoverySession = AVCaptureDevice.DiscoverySession(deviceTypes: [.builtInWideAngleCamera, .builtInTelephotoCamera], mediaType: .video, position: .unspecified)
     
@@ -72,6 +73,8 @@ class HomeButtonLessCameraViewController : BaseViewController {
         
         authorizedCameraView.defaultFrameButton.layer.borderWidth = 2
         authorizedCameraView.defaultFrameButton.layer.borderColor = UIColor.color7442FF.cgColor
+        let pinchRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(handlePinchCamera))
+        authorizedCameraView.previewView.addGestureRecognizer(pinchRecognizer)
     }
     override func setupConstraints() {
         super.setupConstraints()
@@ -83,6 +86,7 @@ class HomeButtonLessCameraViewController : BaseViewController {
             $0.top.bottom.equalTo(view.safeAreaLayoutGuide)
             $0.leading.trailing.equalToSuperview()
         }
+        
     }
 
 
@@ -188,6 +192,37 @@ class HomeButtonLessCameraViewController : BaseViewController {
         gridToggleButton.changeToggle()
         gridToggleButton.isOnToggle = !gridToggleButton.isOnToggle
     }
+    
+    @objc
+        func handlePinchCamera(_ pinch: UIPinchGestureRecognizer) {
+            guard let device = captureDevice else {return}
+            
+            var initialScale: CGFloat = device.videoZoomFactor
+            let minAvailableZoomScale = 1.0
+            let maxAvailableZoomScale = device.maxAvailableVideoZoomFactor
+            
+            do {
+                try device.lockForConfiguration()
+                if(pinch.state == UIPinchGestureRecognizer.State.began){
+                    initialScale = device.videoZoomFactor
+                }
+                else {
+                    if(initialScale*(pinch.scale) < minAvailableZoomScale){
+                        device.videoZoomFactor = minAvailableZoomScale
+                    }
+                    else if(initialScale*(pinch.scale) > maxAvailableZoomScale){
+                        device.videoZoomFactor = maxAvailableZoomScale
+                    }
+                    else {
+                        device.videoZoomFactor = initialScale * (pinch.scale)
+                    }
+                }
+                pinch.scale = 1.0
+            } catch {
+                return
+            }
+            device.unlockForConfiguration()
+        }
     private func requestAuth() {
         AVCaptureDevice.requestAccess(for: .video) { [weak self] granted in
             guard let self = self else { return }
@@ -291,4 +326,5 @@ extension HomeButtonLessCameraViewController: AVCapturePhotoCaptureDelegate {
             self.navigationController?.pushViewController(pressShutterVC, animated: false)
         }
     }
+    
 }

@@ -8,11 +8,19 @@
 import UIKit
 import SnapKit
 import Then
+import RxCocoa
+import RxSwift
 
 class InputWorkoutDataViewController : BaseViewController {
     lazy var weightTrainingArrayIndex = 0
     lazy var weightTrainingInfoArrayIndex = 0
     let duringSetViewController = DuringSetViewController()
+    
+    // MARK: - ViewModel
+    private var buttonTapped = PublishSubject<Void>()
+    private var viewModel = InputWorkoutDataViewModel()
+    private lazy var input = InputWorkoutDataViewModel.Input(countInputText: countTextField.rx.text.orEmpty.asDriver(), weightInputText: kgTextField.rx.text.orEmpty.asDriver(), buttonTapped: buttonTapped.asDriver(onErrorJustReturn: ()))
+    private lazy var output = viewModel.transform(input: input)
     // MARK: - PROPERTIES
     
     private let visualEffectView: UIVisualEffectView = {
@@ -127,6 +135,29 @@ class InputWorkoutDataViewController : BaseViewController {
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
+    override func setupBinding() {
+        super.setupBinding()
+        
+        okayButton.rx.tap
+            .bind { value in
+                self.buttonTapped.onNext(())
+            }
+            .disposed(by: disposeBag)
+        
+        output.outputData.drive(onNext: { value in
+            if value {
+                self.dismiss(animated: true)
+                print("오케")
+            }
+            else {
+                print("노노")
+                self.showToastMessage()
+            }
+        })
+        .disposed(by: disposeBag)
+        
+    }
+    
     override func setComponents() {
         view.backgroundColor = UIColor(hex: 0x000000, alpha: 0.15)
         visualEffectView.frame = view.frame
@@ -137,6 +168,10 @@ class InputWorkoutDataViewController : BaseViewController {
         inputDataBackView.addSubviews(buttonStackView, setLabel, inputWorkoutStackView)
     }
     override func setupConstraints() {
+        [countTextField, kgTextField].forEach {
+            $0.addRightPadding(padding: 10)
+            $0.addLeftPadding(padding: 10)
+        }
         inputWorkoutStackView.snp.makeConstraints {
             $0.top.equalTo(setLabel.snp.bottom).offset(25)
             $0.centerX.equalToSuperview()
@@ -170,26 +205,27 @@ class InputWorkoutDataViewController : BaseViewController {
             $0.centerX.equalToSuperview()
         }
     }
+    
 
     
     // MARK: - ACTIONS
     override func actions() {
         cancelButton.addTarget(self, action: #selector(cancelButtonTapped), for: .touchUpInside)
-        okayButton.addTarget(self, action: #selector(okayButtonTapped), for: .touchUpInside)
+//        okayButton.addTarget(self, action: #selector(okayButtonTapped), for: .touchUpInside)
     }
     @objc func cancelButtonTapped() {
         dismiss(animated: true)
     }
-    @objc func okayButtonTapped() {
-
-        duringSetViewController.dummy.weightTraining[weightTrainingArrayIndex].weightTrainingInfo[weightTrainingInfoArrayIndex].weight = Double(kgTextField.text ?? "")
-        duringSetViewController.dummy.weightTraining[weightTrainingArrayIndex].weightTrainingInfo[weightTrainingInfoArrayIndex].traingingCount = Int(countTextField.text ?? "")
-        
-        duringSetViewController.tableView.reloadData()
-        dismiss(animated: true)
-        print(duringSetViewController.dummy, "dkdkdk")
-        
-    }
+//    @objc func okayButtonTapped() {
+//
+//        duringSetViewController.dummy.weightTraining[weightTrainingArrayIndex].weightTrainingInfo[weightTrainingInfoArrayIndex].weight = Double(kgTextField.text ?? "")
+//        duringSetViewController.dummy.weightTraining[weightTrainingArrayIndex].weightTrainingInfo[weightTrainingInfoArrayIndex].traingingCount = Int(countTextField.text ?? "")
+//
+//        duringSetViewController.tableView.reloadData()
+//        dismiss(animated: true)
+//        print(duringSetViewController.dummy, "dkdkdk")
+//
+//    }
     @objc func keyboardUp(notification: NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             ///화면 사이즈의 중앙과 뷰의 중앙의 차이
@@ -205,6 +241,21 @@ class InputWorkoutDataViewController : BaseViewController {
     }
     @objc func keyboardDown() {
         self.inputDataBackView.transform = .identity
+    }
+    func showToastMessage() {
+        let saveImageToastMessageVC = SaveImageToastMessageViewController()
+        saveImageToastMessageVC.toastMesssageLabel.text = "지금보다 더 큰 수는 입력할 수 없어요!"
+        saveImageToastMessageVC.modalPresentationStyle = .overFullScreen
+        
+        UIView.animate(withDuration: 0.7, delay: 0.0, options: .curveEaseOut, animations: {
+            self.present(saveImageToastMessageVC, animated: false)
+        }) { (completed) in
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1) {
+                UIView.animate(withDuration: 0.5, delay: 0.0, options: .curveEaseOut) {
+                saveImageToastMessageVC.dismiss(animated: false)
+                }
+            }
+        }
     }
 }
 // MARK: - EXTENSIONs

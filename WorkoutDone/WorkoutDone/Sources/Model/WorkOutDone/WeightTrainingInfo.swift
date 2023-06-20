@@ -11,7 +11,7 @@ import RealmSwift
 class WeightTrainingInfo : Object {
     @Persisted dynamic var setCount : Int
     @Persisted dynamic var weight : Int?
-    @Persisted dynamic var trainingCount : Int
+    @Persisted dynamic var trainingCount : Int?
     
     convenience init(setCount: Int, weight: Int, trainingCount: Int) {
         self.init()
