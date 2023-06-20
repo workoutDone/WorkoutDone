@@ -17,7 +17,6 @@ class WorkoutViewController : BaseViewController {
     var isSelectBodyPartIndex : Int = -1 // 선택 카테고리 index
     var selectedMyRoutineCount : Int = 0 // 나의 루틴의 운동 갯수
     var selectedCount : Int = 0 // 운동 갯수
-    var selectedMyRoutineIndex : Int = -1 // 나의 루틴 순서
     
     let sampleData = [BodyPartData(bodyPart: "가슴", weigthTraing: ["벤치 프레스", "디클라인 푸시업", "버터플라이", "인클라인 덤벨 체스트플라이", "벤치 프레스2", "디클라인 푸시업2", "버터플라이2", "인클라인 덤벨 체스트플라이2", "벤치 프레스3", "디클라인 푸시업3", "버터플라이3", "인클라인 덤벨 체스트플라이3"]), BodyPartData(bodyPart: "등", weigthTraing: ["등0", "등1"]), BodyPartData(bodyPart: "하체", weigthTraing: ["하체0", "하체1", "하체2"]), BodyPartData(bodyPart: "어깨", weigthTraing: []), BodyPartData(bodyPart: "삼두", weigthTraing: []), BodyPartData(bodyPart: "이두", weigthTraing: []), BodyPartData(bodyPart: "졸려", weigthTraing: []), BodyPartData(bodyPart: "하암", weigthTraing: [])]
     
@@ -272,7 +271,9 @@ extension WorkoutViewController : UITableViewDelegate, UITableViewDataSource {
                 
                 if selectedRoutines[indexPath.section] == true {
                     cell.openImage.image = UIImage(named: "routineHide")
-                    cell.selectedIndexLabel.text = "\(selectedMyRoutineCount)"
+                    if let index = weightTraining.lastIndex(where: {$0.weightTraining == ""}) {
+                        cell.selectedIndexLabel.text = "\(index + 1)"
+                    }
                     
                     cell.selectedIndexView.isHidden = false
                     cell.outerView.backgroundColor = .colorF8F6FF
@@ -300,6 +301,7 @@ extension WorkoutViewController : UITableViewDelegate, UITableViewDataSource {
   
         for (index, training) in weightTraining.enumerated() {
             if training.bodyPart == sampleData[isSelectBodyPartIndex].bodyPart && training.weightTraining == sampleData[isSelectBodyPartIndex].weigthTraing[indexPath.row] {
+               
                 cell.selectedIndexLabel.text = "\(index + 1)"
                 cell.selectedIndexView.isHidden = false
                 
@@ -386,18 +388,25 @@ extension WorkoutViewController : UITableViewDelegate, UITableViewDataSource {
                     selectedRoutines[indexPath.section] = true
                     
                     selectedMyRoutineCount = myRoutines[indexPath.section].myWeightTraining.count
+                    
+                    for _ in 0..<selectedMyRoutineCount {
+                        weightTraining.append(WeightTraining(bodyPart: "", weightTraining: ""))
+                    }
+                    
                 } else {
                     selectedRoutines[indexPath.section] = false
                     selectedMyRoutineCount = 0
+                    
+                    weightTraining = weightTraining.filter{$0.weightTraining != ""}
                 }
-                
-                selectedMyRoutineIndex = weightTraining.count + 1
                 
                 tableView.reloadSections([indexPath.section], with: .none)
             }
+    
         } else {
             if let index = weightTraining.firstIndex(where: {$0.weightTraining == sampleData[isSelectBodyPartIndex].weigthTraing[indexPath.row]}) {
                 weightTraining.remove(at: index)
+                
             } else {
                 weightTraining.append(WeightTraining(bodyPart: sampleData[isSelectBodyPartIndex].bodyPart, weightTraining: sampleData[isSelectBodyPartIndex].weigthTraing[indexPath.row]))
             }
@@ -424,12 +433,17 @@ extension WorkoutViewController : UITableViewDelegate, UITableViewDataSource {
                 preSelectedIndex = section
                 selectedRoutines[section] = true
                 selectedMyRoutineCount = myRoutines[section].myWeightTraining.count
+                
+                for _ in 0..<selectedMyRoutineCount {
+                    weightTraining.append(WeightTraining(bodyPart: "", weightTraining: ""))
+                }
+                
             } else {
                 selectedRoutines[section] = false
                 selectedMyRoutineCount = 0
+                
+                weightTraining = weightTraining.filter{$0.weightTraining != ""}
             }
-            
-            selectedMyRoutineIndex = weightTraining.count + 1
             
             routineTableView.reloadSections([section], with: .none)
         }
