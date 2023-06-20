@@ -146,7 +146,7 @@ final class DuringWorkoutViewController : BaseViewController {
         return stackView
     }()
     private let playButton = UIButton().then {
-        $0.setImage(UIImage(named: "playImage"), for: .normal)
+        $0.setImage(UIImage(named: "pauseImage"), for: .normal)
     }
     private let playButtonTitleLabel = UILabel().then {
         $0.text = "운동 정지"
@@ -464,12 +464,16 @@ final class DuringWorkoutViewController : BaseViewController {
         if timerCounting {
             timerCounting = false
             timer.invalidate()
+            playButtonTitleLabel.text = "운동 재개"
+            playButton.setImage(UIImage(named: "playImage"), for: .normal)
 //            self.userNotificationCenter.addNotificationRequest(viewController: self)
             //토글 해주기 todo
         }
         else {
             timerCounting = true
             timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(timerCounter), userInfo: nil, repeats: true)
+            playButtonTitleLabel.text = "운동 정지"
+            playButton.setImage(UIImage(named: "pauseImage"), for: .normal)
 //            self.userNotificationCenter.addNotificationRequest(viewController: self)
             //토글 해주기 todo
         }
