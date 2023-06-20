@@ -36,8 +36,6 @@ final class DuringWorkoutViewController : BaseViewController {
         }
     }
     var weightTrainingInfoArrayIndex = 0
-//    var firstArrayIndexCount = 0
-//    var secondArrayIndexCount = 0
     var weightTrainingArrayCount = 0
     var weightTrainingInfoArrayCount = 0
     var totalWorkoutCount : Double = 0
@@ -81,6 +79,10 @@ final class DuringWorkoutViewController : BaseViewController {
         $0.layer.borderColor = UIColor.colorC8B4FF.cgColor
     }
     
+    private let workoutTitleScrollView = UIScrollView()
+    
+    private let workoutTitleScrollContentView = UIView()
+    
     private let workoutCategoryTitleLabel = UILabel().then {
         $0.textColor = .colorC8B4FF
         $0.font = .pretendard(.regular, size: 14)
@@ -96,6 +98,7 @@ final class DuringWorkoutViewController : BaseViewController {
             $0.text = "00:00:00"
             $0.textColor = .color121212
             $0.font = .pretendard(.semiBold, size: 20)
+            $0.textAlignment = .right
         }
     private let progressBackView = UIView().then {
         $0.backgroundColor = .colorE2E2E2
@@ -193,6 +196,10 @@ final class DuringWorkoutViewController : BaseViewController {
         calcCurrentWorkoutCount()
         userNotificationDelegate()
     }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        workoutTitleAnimation()
+    }
     override func setupBinding() {
         
     }
@@ -208,8 +215,6 @@ final class DuringWorkoutViewController : BaseViewController {
         pageViewController.setViewControllers([viewControllers[0]], direction: .forward, animated: true)
         workoutCategoryBackView.layer.cornerRadius = 23 / 2
         
-//        secondArrayIndexCount = dummy[firstArrayIndex].weightTraining.count
-//        firstArrayIndexCount = dummy.count
         totalWorkoutCount = Double(dummy.weightTraining.count)
         weightTrainingArrayCount = dummy.weightTraining.count
         currentWorkoutLabel.text = dummy.weightTraining[weightTrainingArrayIndex].weightTrainging
@@ -220,21 +225,41 @@ final class DuringWorkoutViewController : BaseViewController {
     override func setupLayout() {
         self.addChild(pageViewController)
         view.addSubviews(currentWorkoutView, workoutPlayView,restStackView, pageViewController.view, pageControl)
+        
         workoutPlayView.addSubviews(playButton, playButtonTitleLabel, nextWorkoutButton, nextWorkoutButtonTitleLabel, previousWorkoutButtonTitleLabel, previousWorkoutButton)
-        currentWorkoutView.addSubviews(currentWorkoutTitleLabel, currentWorkoutLabel, totalWorkoutTimeTitleLabel, totalWorkoutTimeLabel, progressBackView, progressView, workoutCategoryBackView)
+        currentWorkoutView.addSubviews(workoutTitleScrollView ,currentWorkoutTitleLabel, totalWorkoutTimeTitleLabel, totalWorkoutTimeLabel, progressBackView, progressView, workoutCategoryBackView)
+        workoutTitleScrollView.addSubview(workoutTitleScrollContentView)
+        workoutTitleScrollContentView.addSubviews(currentWorkoutLabel, workoutCategoryBackView)
+        
         workoutCategoryBackView.addSubview(workoutCategoryTitleLabel)
         restBackView.addSubviews(restTimeLeftLabel, restTimerLabel, restTimerUnderBarView)
     }
     override func setupConstraints() {
+        workoutTitleScrollView.snp.makeConstraints {
+            $0.leading.equalToSuperview().inset(26)
+            $0.bottom.equalToSuperview().inset(10)
+            $0.top.equalTo(currentWorkoutTitleLabel.snp.bottom)
+            $0.trailing.equalTo(totalWorkoutTimeLabel.snp.leading).offset(-10)
+            workoutTitleScrollView.translatesAutoresizingMaskIntoConstraints = false
+            workoutTitleScrollView.isUserInteractionEnabled = true
+            workoutTitleScrollView.isScrollEnabled = true
+            workoutTitleScrollView.isUserInteractionEnabled = true
+        }
+        
+        workoutTitleScrollContentView.snp.makeConstraints {
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalToSuperview()
+        }
         workoutCategoryBackView.snp.makeConstraints {
             $0.height.equalTo(23)
             $0.leading.equalTo(currentWorkoutLabel.snp.trailing).offset(8)
             $0.centerY.equalTo(currentWorkoutLabel.snp.centerY)
+            $0.trailing.equalToSuperview().inset(5)
         }
         workoutCategoryTitleLabel.snp.makeConstraints {
             $0.centerY.centerX.equalToSuperview()
             $0.leading.trailing.equalToSuperview().inset(6)
-            $0.width.equalTo(37)
+            $0.width.equalTo(30)
         }
         endWorkoutButton.snp.makeConstraints {
             $0.height.equalTo(30)
@@ -250,8 +275,8 @@ final class DuringWorkoutViewController : BaseViewController {
             $0.top.equalToSuperview().inset(12)
         }
         currentWorkoutLabel.snp.makeConstraints {
-            $0.leading.equalToSuperview().inset(26)
-            $0.bottom.equalToSuperview().inset(10)
+            $0.leading.equalToSuperview()
+            $0.bottom.equalToSuperview()
         }
         totalWorkoutTimeTitleLabel.snp.makeConstraints {
             $0.trailing.equalToSuperview().inset(26)
@@ -260,6 +285,7 @@ final class DuringWorkoutViewController : BaseViewController {
         totalWorkoutTimeLabel.snp.makeConstraints {
             $0.bottom.equalToSuperview().inset(10)
             $0.trailing.equalToSuperview().inset(26)
+            $0.width.equalTo(90)
         }
         progressBackView.snp.makeConstraints {
             $0.bottom.equalToSuperview()
@@ -394,14 +420,12 @@ final class DuringWorkoutViewController : BaseViewController {
     
     // MARK: - ACTIONS
     override func actions() {
-//        super.actions()
-        
         let swipeLeftGesture = UISwipeGestureRecognizer(target: self, action: #selector(swipeAction(_:)))
         let swipeRightGesture = UISwipeGestureRecognizer(target: self, action: #selector(swipeAction(_:)))
         swipeLeftGesture.direction = .left
         swipeRightGesture.direction = .right
-        view.addGestureRecognizer(swipeLeftGesture)
-        view.addGestureRecognizer(swipeRightGesture)
+        pageViewController.view.addGestureRecognizer(swipeLeftGesture)
+        pageViewController.view.addGestureRecognizer(swipeRightGesture)
         
         restButton.addTarget(self, action: #selector(restButtonTapped), for: .touchUpInside)
         playButton.addTarget(self, action: #selector(playButtonTapped), for: .touchUpInside)
@@ -423,15 +447,17 @@ final class DuringWorkoutViewController : BaseViewController {
         progressBarAnimation()
         duringSetViewController.weightTrainingArrayIndex = weightTrainingArrayIndex
         duringSetViewController.tableView.reloadData()
+        workoutTitleAnimation()
     }
     @objc func previousWorkoutButtonTapped() {
         weightTrainingArrayIndex -= 1
         currentWorkoutCount -= 1
         progressBarAnimation()
         duringSetViewController.weightTrainingArrayIndex = weightTrainingArrayIndex
-        duringSetViewController.tableView.reloadData()
         currentWorkoutLabel.text = dummy.weightTraining[weightTrainingArrayIndex].weightTrainging
         workoutCategoryTitleLabel.text = dummy.weightTraining[weightTrainingArrayIndex].bodyPart
+        duringSetViewController.tableView.reloadData()
+        workoutTitleAnimation()
     }
     
     @objc func playButtonTapped() {
@@ -553,6 +579,29 @@ final class DuringWorkoutViewController : BaseViewController {
             self.progressView.superview?.layoutIfNeeded()
         }
     }
+    
+    ///애니메이션 메서드
+    private func workoutTitleAnimation() {
+        workoutTitleScrollView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
+        let workoutLabelText = currentWorkoutLabel.text ?? ""
+        let workoutLabelFont = currentWorkoutLabel.font
+        let workouttextWidth = (workoutLabelText as NSString).boundingRect(with: CGSize(width: CGFloat.greatestFiniteMagnitude, height: currentWorkoutLabel.bounds.height), options: .usesLineFragmentOrigin, attributes: [NSAttributedString.Key.font: workoutLabelFont ?? .pretendard(.bold, size: 24)], context: nil).width
+        let contentWidth = workouttextWidth + 42 + 20
+        let scrollViewWidth = workoutTitleScrollView.bounds.width
+    
+        workoutTitleScrollView.layer.removeAllAnimations()
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            if scrollViewWidth < contentWidth {
+                UIView.animate(withDuration: 5.0, delay: 2.0, options: [.repeat, .autoreverse], animations: {
+                    self.workoutTitleScrollView.contentOffset = CGPoint(x: contentWidth - scrollViewWidth, y: 0)
+                }, completion: nil)
+            }
+            else {
+                self.workoutTitleScrollView.layer.removeAllAnimations()
+            }
+        }
+    }
 }
 
 
@@ -580,6 +629,13 @@ extension DuringWorkoutViewController : UNUserNotificationCenterDelegate {
         completionHandler()
     }
 }
+
+
+
+
+
+
+
 
 struct ExBodyPart {
     let name : String
@@ -678,16 +734,16 @@ struct ExWegihtTrainingInfo2 {
 extension ExRoutine {
     static func dummy() -> ExRoutine {
         return ExRoutine(name: "등운동 조지자!", stamp: "1", weightTraining: [
-            ExWegihtTraining2(bodyPart: "등", weightTrainging: "랫 풀 다운", weightTrainingInfo: [
+            ExWegihtTraining2(bodyPart: "등", weightTrainging: "가나다라마바사아자차랫 풀 다운", weightTrainingInfo: [
                 ExWegihtTrainingInfo2(setCount: 1, weight: nil, traingingCount: nil)
             ]),
-            ExWegihtTraining2(bodyPart: "등", weightTrainging: "시티드 케이블 로우", weightTrainingInfo: [
+            ExWegihtTraining2(bodyPart: "가슴", weightTrainging: "시티드 케이블 로우", weightTrainingInfo: [
                 ExWegihtTrainingInfo2(setCount: 1, weight: nil, traingingCount: nil)
             ]),
-            ExWegihtTraining2(bodyPart: "등", weightTrainging: "덤벨 풀오버", weightTrainingInfo: [
+            ExWegihtTraining2(bodyPart: "하체", weightTrainging: "덤벨 풀오버", weightTrainingInfo: [
                 ExWegihtTrainingInfo2(setCount: 1, weight: nil, traingingCount: nil)
             ]),
-            ExWegihtTraining2(bodyPart: "등", weightTrainging: "언더그립 랫 풀 다운", weightTrainingInfo: [
+            ExWegihtTraining2(bodyPart: "이두", weightTrainging: "가나다라마바사아자차랫 풀 다운", weightTrainingInfo: [
                 ExWegihtTrainingInfo2(setCount: 1, weight: nil, traingingCount: nil)
             ]),
         ])
