@@ -14,9 +14,7 @@ class WorkoutViewController : BaseViewController {
     var preSelectedIndex : Int = -1
     var weightTraining = [WeightTraining]()
     
-    var isSelectBodyPartIndex : Int = -1 // 선택 카테고리 index
-    var selectedMyRoutineCount : Int = 0 // 나의 루틴의 운동 갯수
-    var selectedCount : Int = 0 // 운동 갯수
+    var isSelectBodyPartIndex : Int = -1
     
     let sampleData = [BodyPartData(bodyPart: "가슴", weigthTraing: ["벤치 프레스", "디클라인 푸시업", "버터플라이", "인클라인 덤벨 체스트플라이", "벤치 프레스2", "디클라인 푸시업2", "버터플라이2", "인클라인 덤벨 체스트플라이2", "벤치 프레스3", "디클라인 푸시업3", "버터플라이3", "인클라인 덤벨 체스트플라이3"]), BodyPartData(bodyPart: "등", weigthTraing: ["등0", "등1"]), BodyPartData(bodyPart: "하체", weigthTraing: ["하체0", "하체1", "하체2"]), BodyPartData(bodyPart: "어깨", weigthTraing: []), BodyPartData(bodyPart: "삼두", weigthTraing: []), BodyPartData(bodyPart: "이두", weigthTraing: []), BodyPartData(bodyPart: "졸려", weigthTraing: []), BodyPartData(bodyPart: "하암", weigthTraing: [])]
     
@@ -137,17 +135,17 @@ class WorkoutViewController : BaseViewController {
     }
     
     func updateSelectCompleteButton() {
-        if selectedMyRoutineCount + selectedCount == 0 {
+        if weightTraining.count == 0 {
             selectCompleteButton.gradient.colors = [UIColor.colorCCCCCC.cgColor, UIColor.colorCCCCCC.cgColor]
             selectCompleteButtonCountLabel.text = ""
         } else {
             selectCompleteButton.gradient.colors = [UIColor.color8E36FF.cgColor, UIColor.color7442FF.cgColor]
-            selectCompleteButtonCountLabel.text = "\(selectedMyRoutineCount + selectedCount)"
+            selectCompleteButtonCountLabel.text = "\(weightTraining.count)"
         }
     }
     
     @objc func selectCompleteButtonTapped(sender: UIButton!) {
-        if selectedMyRoutineCount + selectedCount > 0 {
+        if weightTraining.count > 0 {
             let workoutSequenceVC = WorkoutSequenceViewController()
             navigationController?.pushViewController(workoutSequenceVC, animated: false)
         }
@@ -387,15 +385,13 @@ extension WorkoutViewController : UITableViewDelegate, UITableViewDataSource {
                     preSelectedIndex = indexPath.section
                     selectedRoutines[indexPath.section] = true
                     
-                    selectedMyRoutineCount = myRoutines[indexPath.section].myWeightTraining.count
-                    
+                    let selectedMyRoutineCount = myRoutines[indexPath.section].myWeightTraining.count
                     for _ in 0..<selectedMyRoutineCount {
                         weightTraining.append(WeightTraining(bodyPart: "", weightTraining: ""))
                     }
                     
                 } else {
                     selectedRoutines[indexPath.section] = false
-                    selectedMyRoutineCount = 0
                     
                     weightTraining = weightTraining.filter{$0.weightTraining != ""}
                 }
@@ -410,8 +406,6 @@ extension WorkoutViewController : UITableViewDelegate, UITableViewDataSource {
             } else {
                 weightTraining.append(WeightTraining(bodyPart: sampleData[isSelectBodyPartIndex].bodyPart, weightTraining: sampleData[isSelectBodyPartIndex].weigthTraing[indexPath.row]))
             }
-            
-            selectedCount = weightTraining.count
         }
         
         routineTableView.reloadData()
@@ -432,15 +426,14 @@ extension WorkoutViewController : UITableViewDelegate, UITableViewDataSource {
                 
                 preSelectedIndex = section
                 selectedRoutines[section] = true
-                selectedMyRoutineCount = myRoutines[section].myWeightTraining.count
                 
+                let selectedMyRoutineCount = myRoutines[section].myWeightTraining.count
                 for _ in 0..<selectedMyRoutineCount {
                     weightTraining.append(WeightTraining(bodyPart: "", weightTraining: ""))
                 }
                 
             } else {
                 selectedRoutines[section] = false
-                selectedMyRoutineCount = 0
                 
                 weightTraining = weightTraining.filter{$0.weightTraining != ""}
             }
