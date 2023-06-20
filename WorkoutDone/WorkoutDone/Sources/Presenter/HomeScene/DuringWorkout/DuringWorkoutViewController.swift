@@ -36,8 +36,6 @@ final class DuringWorkoutViewController : BaseViewController {
         }
     }
     var weightTrainingInfoArrayIndex = 0
-//    var firstArrayIndexCount = 0
-//    var secondArrayIndexCount = 0
     var weightTrainingArrayCount = 0
     var weightTrainingInfoArrayCount = 0
     var totalWorkoutCount : Double = 0
@@ -198,19 +196,9 @@ final class DuringWorkoutViewController : BaseViewController {
         calcCurrentWorkoutCount()
         userNotificationDelegate()
     }
-//    override func viewWillAppear(_ animated: Bool) {
-//        super.viewWillAppear(animated)
-//        workoutTitleAnimation()
-////        print(workoutTitleScrollView.bounds.width, "스크롤뷰 가로")
-//    }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         workoutTitleAnimation()
-    }
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-//        workoutTitleAnimation()
-//        print(workoutTitleScrollView.bounds.width, "스크롤뷰 가로")
     }
     override func setupBinding() {
         
@@ -432,8 +420,6 @@ final class DuringWorkoutViewController : BaseViewController {
     
     // MARK: - ACTIONS
     override func actions() {
-//        super.actions()
-        
         let swipeLeftGesture = UISwipeGestureRecognizer(target: self, action: #selector(swipeAction(_:)))
         let swipeRightGesture = UISwipeGestureRecognizer(target: self, action: #selector(swipeAction(_:)))
         swipeLeftGesture.direction = .left
@@ -600,8 +586,6 @@ final class DuringWorkoutViewController : BaseViewController {
         let workoutLabelText = currentWorkoutLabel.text ?? ""
         let workoutLabelFont = currentWorkoutLabel.font
         let workouttextWidth = (workoutLabelText as NSString).boundingRect(with: CGSize(width: CGFloat.greatestFiniteMagnitude, height: currentWorkoutLabel.bounds.height), options: .usesLineFragmentOrigin, attributes: [NSAttributedString.Key.font: workoutLabelFont ?? .pretendard(.bold, size: 24)], context: nil).width
-
-//        let contentWidth = workoutTitleScrollView.contentSize.width
         let contentWidth = workouttextWidth + 42 + 20
         let scrollViewWidth = workoutTitleScrollView.bounds.width
     
@@ -611,18 +595,12 @@ final class DuringWorkoutViewController : BaseViewController {
             if scrollViewWidth < contentWidth {
                 UIView.animate(withDuration: 5.0, delay: 2.0, options: [.repeat, .autoreverse], animations: {
                     self.workoutTitleScrollView.contentOffset = CGPoint(x: contentWidth - scrollViewWidth, y: 0)
-//                    print(contentWidth2 - scrollViewWidth, "dddd")
                 }, completion: nil)
             }
             else {
                 self.workoutTitleScrollView.layer.removeAllAnimations()
             }
         }
-        
-//        print(contentWidth2, scrollViewWidth, workouttextWidth, "<- 텍스트 길이")
-    }
-    private func workoutTitlePauseAnimation() {
-        
     }
 }
 
