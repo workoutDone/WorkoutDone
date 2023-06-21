@@ -1,5 +1,5 @@
 //
-//  addOrRemoveButton.swift
+//  EditButton.swift
 //  WorkoutDone
 //
 //  Created by hyemi on 2023/06/01.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class AddOrRemoveButton: UIButton {
+class EditButton: UIButton {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -27,6 +27,10 @@ class AddOrRemoveButton: UIButton {
         self.titleLabel?.font = .pretendard(.semiBold, size: 16)
         
         self.layer.cornerRadius = 5
+    }
+    
+    func setText(_ text: String) {
+        self.setTitle(text, for: .normal)
     }
 }
 
