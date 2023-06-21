@@ -10,7 +10,6 @@ import UIKit
 class WorkoutSequenceViewController: BaseViewController {
     var weightTraining = [WeightTraining]()
     
-    var sampleData = ["벤치 프레스", "벤치 프레스2", "벤치 프레스3", "벤치 프레스4", "ㅠㅠ", "ㅠㅠㅠ", "ㅠ_ㅠ", "ㅠㅇㅠ", "ㅠㅅㅠ", "ㅠㅁㅠ", "ㅠㅂㅠ", "ㅠㅠㅠㅠㅠㅠㅠㅠ"]
     var isAddDeleteMode = false
     
     private var editButton = EditButton()
@@ -51,7 +50,7 @@ class WorkoutSequenceViewController: BaseViewController {
     override func setupLayout() {
         super.setupLayout()
         
-        [weightTrainingTableView, startWorkoutButton,     createWeightTrainingButton, adImage].forEach {
+        [weightTrainingTableView, startWorkoutButton, createWeightTrainingButton, adImage].forEach {
             view.addSubview($0)
         }
     }
@@ -132,7 +131,7 @@ class WorkoutSequenceViewController: BaseViewController {
     }
     
     func adjustTableViewHeight() {
-        let height = min((15 * 2 + sampleData.count * 58), Int(view.frame.height - 119 - 113 - 58 - 26))
+        let height = min((15 * 2 + weightTraining.count * 58), Int(view.frame.height - 119 - 113 - 58 - 26))
         weightTrainingTableView.snp.updateConstraints {
             $0.height.equalTo(height)
         }
@@ -173,8 +172,10 @@ extension WorkoutSequenceViewController : RemoveWorkoutDelegate {
     func removeButtonTapped(forCell cell: WorkoutSequenceCell) {
         guard let indexPath = weightTrainingTableView.indexPath(for: cell) else { return }
         
-        sampleData.remove(at: indexPath.row)
+        weightTraining.remove(at: indexPath.row)
         weightTrainingTableView.deleteRows(at: [indexPath], with: .fade)
+        
+        adjustTableViewHeight()
     }
     
 }
@@ -212,15 +213,15 @@ extension WorkoutSequenceViewController : UITableViewDelegate, UITableViewDataSo
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if (editingStyle == .delete) {
-            sampleData.remove(at: indexPath.row)
+            weightTraining.remove(at: indexPath.row)
         }
         tableView.reloadData()
     }
     
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        let moveCell = sampleData[sourceIndexPath.row]
-        sampleData.remove(at: sourceIndexPath.row)
-        sampleData.insert(moveCell, at: destinationIndexPath.row)
+        let moveCell = weightTraining[sourceIndexPath.row]
+        weightTraining.remove(at: sourceIndexPath.row)
+        weightTraining.insert(moveCell, at: destinationIndexPath.row)
     }
     
     func tableView(_ tableView: UITableView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
