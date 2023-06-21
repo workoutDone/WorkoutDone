@@ -389,6 +389,8 @@ extension WorkoutViewController : UITableViewDelegate, UITableViewDataSource {
                     if preSelectedIndex >= 0 {
                         selectedRoutines[preSelectedIndex] = false
                         
+                        weightTraining = weightTraining.filter{$0.weightTraining != ""}
+                        
                         tableView.reloadSections([preSelectedIndex], with: .none)
                     }
                     
@@ -432,6 +434,8 @@ extension WorkoutViewController : UITableViewDelegate, UITableViewDataSource {
             if !selectedRoutines[section] {
                 if preSelectedIndex >= 0 {
                     selectedRoutines[preSelectedIndex] = false
+                    
+                    weightTraining = weightTraining.filter{$0.weightTraining != ""}
                     
                     routineTableView.reloadSections([preSelectedIndex], with: .none)
                 }
