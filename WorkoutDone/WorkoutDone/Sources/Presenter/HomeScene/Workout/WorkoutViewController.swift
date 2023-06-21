@@ -14,10 +14,8 @@ class WorkoutViewController : BaseViewController {
     var preSelectedIndex : Int = -1
     var weightTraining = [WeightTraining]()
     
-    var isSelectBodyPartIndex : Int = -1 // 선택 카테고리 index
-    var selectedMyRoutineCount : Int = 0 // 나의 루틴의 운동 갯수
-    var selectedCount : Int = 0 // 운동 갯수
-    var selectedMyRoutineIndex : Int = -1 // 나의 루틴 순서
+    var isSelectBodyPartIndex : Int = -1
+    var selectedMyRoutine : Int = -1
     
     let sampleData = [BodyPartData(bodyPart: "가슴", weigthTraing: ["벤치 프레스", "디클라인 푸시업", "버터플라이", "인클라인 덤벨 체스트플라이", "벤치 프레스2", "디클라인 푸시업2", "버터플라이2", "인클라인 덤벨 체스트플라이2", "벤치 프레스3", "디클라인 푸시업3", "버터플라이3", "인클라인 덤벨 체스트플라이3"]), BodyPartData(bodyPart: "등", weigthTraing: ["등0", "등1"]), BodyPartData(bodyPart: "하체", weigthTraing: ["하체0", "하체1", "하체2"]), BodyPartData(bodyPart: "어깨", weigthTraing: []), BodyPartData(bodyPart: "삼두", weigthTraing: []), BodyPartData(bodyPart: "이두", weigthTraing: []), BodyPartData(bodyPart: "졸려", weigthTraing: []), BodyPartData(bodyPart: "하암", weigthTraing: [])]
     
@@ -100,7 +98,7 @@ class WorkoutViewController : BaseViewController {
         routineTableView.snp.makeConstraints {
             $0.top.equalTo(bodyPartCollectionView.snp.bottom)
             $0.leading.trailing.equalToSuperview()
-            $0.bottom.equalTo(adImage.snp.top)
+            $0.bottom.equalTo(selectCompleteButton.snp.top)
         }
         
         selectCompleteButton.snp.makeConstraints {
@@ -138,18 +136,27 @@ class WorkoutViewController : BaseViewController {
     }
     
     func updateSelectCompleteButton() {
-        if selectedMyRoutineCount + selectedCount == 0 {
+        if weightTraining.count == 0 {
             selectCompleteButton.gradient.colors = [UIColor.colorCCCCCC.cgColor, UIColor.colorCCCCCC.cgColor]
             selectCompleteButtonCountLabel.text = ""
         } else {
             selectCompleteButton.gradient.colors = [UIColor.color8E36FF.cgColor, UIColor.color7442FF.cgColor]
-            selectCompleteButtonCountLabel.text = "\(selectedMyRoutineCount + selectedCount)"
+            selectCompleteButtonCountLabel.text = "\(weightTraining.count)"
         }
     }
     
     @objc func selectCompleteButtonTapped(sender: UIButton!) {
-        if selectedMyRoutineCount + selectedCount > 0 {
+        if weightTraining.count > 0 {
             let workoutSequenceVC = WorkoutSequenceViewController()
+            if var index = weightTraining.firstIndex(where: {$0.weightTraining == ""}) {
+                for myWeightTraining in myRoutines[selectedMyRoutine].myWeightTraining {
+                    weightTraining[index].bodyPart = myWeightTraining.myBodyPart
+                    weightTraining[index].weightTraining = myWeightTraining.myWeightTraining
+                    
+                    index += 1
+                }
+            }
+            workoutSequenceVC.weightTraining = weightTraining
             navigationController?.pushViewController(workoutSequenceVC, animated: false)
         }
     }
@@ -272,7 +279,9 @@ extension WorkoutViewController : UITableViewDelegate, UITableViewDataSource {
                 
                 if selectedRoutines[indexPath.section] == true {
                     cell.openImage.image = UIImage(named: "routineHide")
-                    cell.selectedIndexLabel.text = "\(selectedMyRoutineCount)"
+                    if let index = weightTraining.lastIndex(where: {$0.weightTraining == ""}) {
+                        cell.selectedIndexLabel.text = "\(index + 1)"
+                    }
                     
                     cell.selectedIndexView.isHidden = false
                     cell.outerView.backgroundColor = .colorF8F6FF
@@ -300,6 +309,7 @@ extension WorkoutViewController : UITableViewDelegate, UITableViewDataSource {
   
         for (index, training) in weightTraining.enumerated() {
             if training.bodyPart == sampleData[isSelectBodyPartIndex].bodyPart && training.weightTraining == sampleData[isSelectBodyPartIndex].weigthTraing[indexPath.row] {
+               
                 cell.selectedIndexLabel.text = "\(index + 1)"
                 cell.selectedIndexView.isHidden = false
                 
@@ -369,7 +379,7 @@ extension WorkoutViewController : UITableViewDelegate, UITableViewDataSource {
             }
             return selectedRoutines[section] == true ? 11 : 17
         }
-        return 80
+        return 20
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -379,30 +389,37 @@ extension WorkoutViewController : UITableViewDelegate, UITableViewDataSource {
                     if preSelectedIndex >= 0 {
                         selectedRoutines[preSelectedIndex] = false
                         
+                        weightTraining = weightTraining.filter{$0.weightTraining != ""}
+                        
                         tableView.reloadSections([preSelectedIndex], with: .none)
                     }
                     
                     preSelectedIndex = indexPath.section
                     selectedRoutines[indexPath.section] = true
+                    selectedMyRoutine = indexPath.section
                     
-                    selectedMyRoutineCount = myRoutines[indexPath.section].myWeightTraining.count
+                    let selectedMyRoutineCount = myRoutines[indexPath.section].myWeightTraining.count
+                    for _ in 0..<selectedMyRoutineCount {
+                        weightTraining.append(WeightTraining(bodyPart: "", weightTraining: ""))
+                    }
+                    
                 } else {
                     selectedRoutines[indexPath.section] = false
-                    selectedMyRoutineCount = 0
+                    selectedMyRoutine = -1
+                    
+                    weightTraining = weightTraining.filter{$0.weightTraining != ""}
                 }
-                
-                selectedMyRoutineIndex = weightTraining.count + 1
                 
                 tableView.reloadSections([indexPath.section], with: .none)
             }
+    
         } else {
             if let index = weightTraining.firstIndex(where: {$0.weightTraining == sampleData[isSelectBodyPartIndex].weigthTraing[indexPath.row]}) {
                 weightTraining.remove(at: index)
+                
             } else {
                 weightTraining.append(WeightTraining(bodyPart: sampleData[isSelectBodyPartIndex].bodyPart, weightTraining: sampleData[isSelectBodyPartIndex].weigthTraing[indexPath.row]))
             }
-            
-            selectedCount = weightTraining.count
         }
         
         routineTableView.reloadData()
@@ -418,18 +435,26 @@ extension WorkoutViewController : UITableViewDelegate, UITableViewDataSource {
                 if preSelectedIndex >= 0 {
                     selectedRoutines[preSelectedIndex] = false
                     
+                    weightTraining = weightTraining.filter{$0.weightTraining != ""}
+                    
                     routineTableView.reloadSections([preSelectedIndex], with: .none)
                 }
                 
                 preSelectedIndex = section
                 selectedRoutines[section] = true
-                selectedMyRoutineCount = myRoutines[section].myWeightTraining.count
+                selectedMyRoutine = section
+                
+                let selectedMyRoutineCount = myRoutines[section].myWeightTraining.count
+                for _ in 0..<selectedMyRoutineCount {
+                    weightTraining.append(WeightTraining(bodyPart: "", weightTraining: ""))
+                }
+                
             } else {
                 selectedRoutines[section] = false
-                selectedMyRoutineCount = 0
+                selectedMyRoutine = -1
+                
+                weightTraining = weightTraining.filter{$0.weightTraining != ""}
             }
-            
-            selectedMyRoutineIndex = weightTraining.count + 1
             
             routineTableView.reloadSections([section], with: .none)
         }

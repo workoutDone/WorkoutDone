@@ -81,8 +81,15 @@ extension StampView : UICollectionViewDelegate, UICollectionViewDataSource, UICo
         cell.contentView.layer.borderWidth = 1
         cell.contentView.layer.borderColor = UIColor.clear.cgColor
         
+        cell.layer.shadowOpacity = 0
+        
         if isSelectStampIndex == indexPath.row {
             cell.contentView.layer.borderColor = UIColor.color7442FF.cgColor
+
+            cell.layer.shadowColor = UIColor.color7442FF.withAlphaComponent(0.5).cgColor
+            cell.layer.shadowOpacity = 1
+            cell.layer.shadowOffset = CGSize(width: 0, height: 0)
+            cell.layer.shadowRadius = 5
         }
     
         return cell

@@ -11,7 +11,7 @@ protocol MyRoutineDelegate : AnyObject {
     func myRoutineButtonTapped()
 }
 
-class MyRoutineHeaderView: UICollectionReusableView {
+class MyRoutineHeaderView : UICollectionReusableView {
     var isSelected : Bool = true
     
     weak var delegate : MyRoutineDelegate?
