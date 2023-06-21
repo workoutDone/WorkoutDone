@@ -59,6 +59,13 @@ class DuringSetViewController : BaseViewController {
 
 extension DuringSetViewController : UITableViewDelegate, UITableViewDataSource, DuringSetFooterDelegate {
     
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            dummy.weightTraining[indexPath.section].weightTrainingInfo.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+        }
+    }
+    
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -71,6 +78,7 @@ extension DuringSetViewController : UITableViewDelegate, UITableViewDataSource, 
         guard let cell = tableView.dequeueReusableCell(withIdentifier: DuringSetTableViewCell.identifier, for: indexPath) as? DuringSetTableViewCell else { return UITableViewCell() }
         cell.selectionStyle = .none
         cell.configureCell(dummy.weightTraining[weightTrainingArrayIndex].weightTrainingInfo[indexPath.row])
+        cell.checkWorkout(dummy.weightTraining[weightTrainingArrayIndex])
         return cell
     }
     
@@ -82,7 +90,6 @@ extension DuringSetViewController : UITableViewDelegate, UITableViewDataSource, 
     func addWorkoutButtonTapped() {
         let currentSetCount = dummy.weightTraining[weightTrainingArrayIndex].weightTrainingInfo.count
         dummy.weightTraining[weightTrainingArrayIndex].weightTrainingInfo.append(ExWegihtTrainingInfo2(setCount: currentSetCount + 1, weight: nil, traingingCount: nil))
-        print(dummy, "???????")
         self.tableView.reloadData()
         
     }
