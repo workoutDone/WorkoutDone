@@ -6,12 +6,11 @@
 //
 
 import UIKit
-import SnapKit
-import Then
 
 class FrameCategoryCell : UICollectionViewCell {
     let frameImage = UIImageView().then {
         $0.contentMode = .scaleAspectFill
+        $0.layer.cornerRadius = 10
     }
     
     // MARK: - LIFECYCLE
@@ -21,7 +20,6 @@ class FrameCategoryCell : UICollectionViewCell {
         setupLayout()
         setupConstraints()
         
-        layer.cornerRadius = 5
     }
     
     required init?(coder: NSCoder) {
