@@ -8,6 +8,8 @@
 import UIKit
 
 class WorkoutSequenceViewController: BaseViewController {
+    var weightTraining = [WeightTraining]()
+    
     var sampleData = ["벤치 프레스", "벤치 프레스2", "벤치 프레스3", "벤치 프레스4", "ㅠㅠ", "ㅠㅠㅠ", "ㅠ_ㅠ", "ㅠㅇㅠ", "ㅠㅅㅠ", "ㅠㅁㅠ", "ㅠㅂㅠ", "ㅠㅠㅠㅠㅠㅠㅠㅠ"]
     var isAddDeleteMode = false
     
@@ -179,7 +181,7 @@ extension WorkoutSequenceViewController : RemoveWorkoutDelegate {
 
 extension WorkoutSequenceViewController : UITableViewDelegate, UITableViewDataSource, UITableViewDragDelegate, UITableViewDropDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return sampleData.count
+        return weightTraining.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -187,7 +189,8 @@ extension WorkoutSequenceViewController : UITableViewDelegate, UITableViewDataSo
         cell.selectionStyle = .none
         cell.delegate = self
         
-        cell.weightTrainingLabel.text = sampleData[indexPath.row]
+        cell.bodyPartLabel.text = weightTraining[indexPath.row].bodyPart
+        cell.weightTrainingLabel.text = weightTraining[indexPath.row].weightTraining
         cell.editImage.isHidden = false
         cell.removeButton.isHidden = true
         
