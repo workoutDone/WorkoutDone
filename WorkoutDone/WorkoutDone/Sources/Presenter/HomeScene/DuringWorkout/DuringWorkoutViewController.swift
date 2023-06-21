@@ -146,7 +146,7 @@ final class DuringWorkoutViewController : BaseViewController {
         return stackView
     }()
     private let playButton = UIButton().then {
-        $0.setImage(UIImage(named: "playImage"), for: .normal)
+        $0.setImage(UIImage(named: "pauseImage"), for: .normal)
     }
     private let playButtonTitleLabel = UILabel().then {
         $0.text = "운동 정지"
@@ -195,6 +195,8 @@ final class DuringWorkoutViewController : BaseViewController {
         setNotifications()
         calcCurrentWorkoutCount()
         userNotificationDelegate()
+        pageViewController.delegate = self
+        pageViewController.dataSource = self
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -420,12 +422,12 @@ final class DuringWorkoutViewController : BaseViewController {
     
     // MARK: - ACTIONS
     override func actions() {
-        let swipeLeftGesture = UISwipeGestureRecognizer(target: self, action: #selector(swipeAction(_:)))
-        let swipeRightGesture = UISwipeGestureRecognizer(target: self, action: #selector(swipeAction(_:)))
-        swipeLeftGesture.direction = .left
-        swipeRightGesture.direction = .right
-        pageViewController.view.addGestureRecognizer(swipeLeftGesture)
-        pageViewController.view.addGestureRecognizer(swipeRightGesture)
+//        let swipeLeftGesture = UISwipeGestureRecognizer(target: self, action: #selector(swipeAction(_:)))
+//        let swipeRightGesture = UISwipeGestureRecognizer(target: self, action: #selector(swipeAction(_:)))
+//        swipeLeftGesture.direction = .left
+//        swipeRightGesture.direction = .right
+//        pageViewController.view.addGestureRecognizer(swipeLeftGesture)
+//        pageViewController.view.addGestureRecognizer(swipeRightGesture)
         
         restButton.addTarget(self, action: #selector(restButtonTapped), for: .touchUpInside)
         playButton.addTarget(self, action: #selector(playButtonTapped), for: .touchUpInside)
@@ -464,12 +466,16 @@ final class DuringWorkoutViewController : BaseViewController {
         if timerCounting {
             timerCounting = false
             timer.invalidate()
+            playButtonTitleLabel.text = "운동 재개"
+            playButton.setImage(UIImage(named: "playImage"), for: .normal)
 //            self.userNotificationCenter.addNotificationRequest(viewController: self)
             //토글 해주기 todo
         }
         else {
             timerCounting = true
             timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(timerCounter), userInfo: nil, repeats: true)
+            playButtonTitleLabel.text = "운동 정지"
+            playButton.setImage(UIImage(named: "pauseImage"), for: .normal)
 //            self.userNotificationCenter.addNotificationRequest(viewController: self)
             //토글 해주기 todo
         }
@@ -517,16 +523,16 @@ final class DuringWorkoutViewController : BaseViewController {
         }
     }
     
-    @objc func swipeAction(_ sender : UISwipeGestureRecognizer) {
-        if sender.direction == .right {
-            pageViewController.setViewControllers([viewControllers[0]], direction: .reverse, animated: true)
-            pageControl.currentPage = 0
-        }
-        else if sender.direction == .left {
-            pageViewController.setViewControllers([viewControllers[1]], direction: .forward, animated: true)
-            pageControl.currentPage = 1
-        }
-    }
+//    @objc func swipeAction(_ sender : UISwipeGestureRecognizer) {
+//        if sender.direction == .right {
+//            pageViewController.setViewControllers([viewControllers[0]], direction: .reverse, animated: true)
+//            pageControl.currentPage = 0
+//        }
+//        else if sender.direction == .left {
+//            pageViewController.setViewControllers([viewControllers[1]], direction: .forward, animated: true)
+//            pageControl.currentPage = 1
+//        }
+//    }
     
     
     private func startCountdowmTimer() {
@@ -610,6 +616,44 @@ final class DuringWorkoutViewController : BaseViewController {
 
 
 // MARK: - EXTENSIONs
+extension DuringWorkoutViewController : UIPageViewControllerDelegate, UIPageViewControllerDataSource {
+    func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
+        guard let index = viewControllers.firstIndex(of: viewController) else { return nil }
+        let previousIndex = index - 1
+        if previousIndex < 0 {
+            return nil
+        }
+//        pageControl.currentPage = previousIndex
+        return viewControllers[previousIndex]
+    }
+    func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
+        guard let index = viewControllers.firstIndex(of: viewController) else { return nil }
+        let nextIndex = index + 1
+        if nextIndex == viewControllers.count {
+            return nil
+        }
+//        pageControl.currentPage = nextIndex
+        return viewControllers[nextIndex]
+    }
+    func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
+        if completed {
+            guard let currentViewController = pageViewController.viewControllers?.first,
+                  let currentIndex = viewControllerIndex(viewController: currentViewController) else { return }
+            pageControl.currentPage = currentIndex
+            print(currentIndex)
+        }
+     }
+    func viewControllerIndex(viewController: UIViewController) -> Int? {
+        guard let viewControllers = pageViewController.viewControllers,
+              let currentViewController = viewControllers.first else {
+            return nil
+        }
+        
+        return viewControllers.firstIndex(of: currentViewController)
+    }
+    
+}
+
 extension DuringWorkoutViewController : UNUserNotificationCenterDelegate {
     
     func userNotificationDelegate() {
@@ -748,4 +792,8 @@ extension ExRoutine {
             ]),
         ])
     }
+}
+
+struct Calisthenics {
+    static var calisthenicsArray : [String] = ["덤벨 풀오버", "시티드 케이블 로우"]
 }
