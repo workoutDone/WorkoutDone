@@ -10,12 +10,12 @@ import SnapKit
 import Then
 import AVFoundation
 
-class HomeButtonLessCameraViewController : BaseViewController {
+final class HomeButtonLessCameraViewController : BaseViewController {
     
 
     var isSelectFrameImagesIndex = 0
-    var backCameraOn: Bool = true
-    var takePicture = false
+//    var backCameraOn: Bool = true
+//    var takePicture = false
     let captureSettion = AVCaptureSession()
     var videoDeviceInput : AVCaptureDeviceInput!
     let photoOutput = AVCapturePhotoOutput()
@@ -180,7 +180,6 @@ class HomeButtonLessCameraViewController : BaseViewController {
     }
     @objc func permisstionButtonTapped() {
         UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
-
     }
     @objc func gridToggleButtonTapped(sender: UIButton!) {
         if gridToggleButton.isOnToggle {
