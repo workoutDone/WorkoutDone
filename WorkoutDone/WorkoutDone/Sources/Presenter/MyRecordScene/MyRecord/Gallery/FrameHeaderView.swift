@@ -12,7 +12,7 @@ protocol FrameDelegate: AnyObject {
 }
 
 class FrameHeaderView : UICollectionReusableView {
-    let frames : [String] = ["frame1", "frame2", "frame3", "frame4", "frame5", "frame6"]
+    let frames : [String] = ["unselectedDefaultImage", "frame1", "frame2", "frame3", "frame4", "frame5", "frame6"]
     var isSelectFrameIndex = 0
     weak var delegate : FrameDelegate?
     
@@ -55,23 +55,28 @@ class FrameHeaderView : UICollectionReusableView {
 
 extension FrameHeaderView : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return frames.count + 1
+        return frames.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "frameCategoryCell", for: indexPath) as? FrameCategoryCell else { return UICollectionViewCell() }
+        cell.frameImage.image = UIImage(named: frames[indexPath.row])
+        
+        cell.frameImage.layer.borderWidth = 1
+        cell.frameImage.layer.borderColor = UIColor.colorCCCCCC.cgColor
+        cell.frameImage.backgroundColor = .colorFFFFFF
+        
         if indexPath.row == 0 {
-            cell.frameImage.image = nil
-        } else {
-            cell.frameImage.image = UIImage(named: frames[indexPath.row - 1])
+            cell.frameImage.layer.borderWidth = 0
+            if isSelectFrameIndex == 0 {
+                cell.frameImage.image = UIImage(named: "selectedDefaultImage")
+            }
         }
+        
         if indexPath.row == isSelectFrameIndex {
-            cell.layer.borderWidth = 2
-            cell.layer.borderColor = UIColor.color7442FF.cgColor
-            cell.backgroundColor = .colorE6E0FF
-        } else {
-            cell.layer.borderWidth = 0
-            cell.backgroundColor = .colorFFFFFF
+            cell.frameImage.layer.borderWidth = 2
+            cell.frameImage.layer.borderColor = UIColor.color7442FF.cgColor
+            cell.frameImage.backgroundColor = .colorE6E0FF
         }
         return cell
     }

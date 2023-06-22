@@ -136,21 +136,21 @@ class ImageSelectionViewController : BaseViewController {
     @objc func cameraButtonTapped() {
         let device = Device.current
         print(device)
-        if DeviceManager.shared.isHomeButtonDevice() || DeviceManager.shared.isSimulatorIsHomeButtonDevice() {
-            print("홈버튼이 있는 기종")
-            let homeButtonCameraViewController = HomeButtonCameraViewController()
-            homeButtonCameraViewController.hidesBottomBarWhenPushed = true
-            dismiss(animated: false) {
-                self.rootView?.navigationController?.pushViewController(homeButtonCameraViewController, animated: false)
-            }
-        }
-        else {
+//        if DeviceManager.shared.isHomeButtonDevice() || DeviceManager.shared.isSimulatorIsHomeButtonDevice() {
+//            print("홈버튼이 있는 기종")
+//            let homeButtonCameraViewController = HomeButtonCameraViewController()
+//            homeButtonCameraViewController.hidesBottomBarWhenPushed = true
+//            dismiss(animated: false) {
+//                self.rootView?.navigationController?.pushViewController(homeButtonCameraViewController, animated: false)
+//            }
+//        }
+//        else {
             print("홈 버튼이 없는 기종")
             let homeButtonLessCameraViewController = HomeButtonLessCameraViewController()
             dismiss(animated: false) {
                 self.rootView?.navigationController?.pushViewController(homeButtonLessCameraViewController, animated: true)
             }
-        }
+//        }
     }
     @objc func galleryButtonTapped() {
         let photoGalleryViewController = PhotoGalleryViewController()
