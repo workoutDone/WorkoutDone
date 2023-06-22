@@ -13,17 +13,17 @@ import AVFoundation
 final class HomeButtonLessCameraViewController : BaseViewController {
     
 
-    var isSelectFrameImagesIndex = 0
+    private var isSelectFrameImagesIndex = 0
 //    var backCameraOn: Bool = true
 //    var takePicture = false
-    let captureSettion = AVCaptureSession()
-    var videoDeviceInput : AVCaptureDeviceInput!
-    let photoOutput = AVCapturePhotoOutput()
-    var isBack : Bool = true
+    private let captureSettion = AVCaptureSession()
+    private var videoDeviceInput : AVCaptureDeviceInput!
+    private let photoOutput = AVCapturePhotoOutput()
+    private var isBack : Bool = true
     
-    let captureDevice = AVCaptureDevice.default(for: .video)
-    let sesstionQueue = DispatchQueue(label: "sesstion Queue")
-    let videoDeviceDiscoverySession = AVCaptureDevice.DiscoverySession(deviceTypes: [.builtInWideAngleCamera, .builtInTelephotoCamera], mediaType: .video, position: .unspecified)
+    private let captureDevice = AVCaptureDevice.default(for: .video)
+    private let sesstionQueue = DispatchQueue(label: "sesstion Queue")
+    private let videoDeviceDiscoverySession = AVCaptureDevice.DiscoverySession(deviceTypes: [.builtInWideAngleCamera, .builtInTelephotoCamera], mediaType: .video, position: .unspecified)
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -101,7 +101,6 @@ final class HomeButtonLessCameraViewController : BaseViewController {
         authorizedCameraView.switchCameraButton.addTarget(self, action: #selector(switchCameraButtonTapped), for: .touchUpInside)
     }
     @objc func switchCameraButtonTapped() {
-        print("dddd")
         guard videoDeviceDiscoverySession.devices.count > 1 else {
             return
         }

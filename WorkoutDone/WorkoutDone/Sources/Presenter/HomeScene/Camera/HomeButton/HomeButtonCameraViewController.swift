@@ -12,18 +12,16 @@ import AVFoundation
 
 final class HomeButtonCameraViewController : BaseViewController {
     
-//    var frameImages: [String] = ["frame1", "frame2", "frame3", "frame4", "frame5", "frame6"]
-//    var isSelectFrameImagesIndex = 0
-    var backCameraOn: Bool = true
+    private var backCameraOn: Bool = true
     
-    var takePicture = false
-    let captureSettion = AVCaptureSession()
-    var videoDeviceInput : AVCaptureDeviceInput!
-    let photoOutput = AVCapturePhotoOutput()
-    var isBack : Bool = true
-    
-    let sesstionQueue = DispatchQueue(label: "sesstion Queue")
-    let videoDeviceDiscoverySession = AVCaptureDevice.DiscoverySession(deviceTypes: [.builtInWideAngleCamera, .builtInTelephotoCamera, .builtInTrueDepthCamera], mediaType: .video, position: .unspecified)
+    private var takePicture = false
+    private let captureSettion = AVCaptureSession()
+    private var videoDeviceInput : AVCaptureDeviceInput!
+    private let photoOutput = AVCapturePhotoOutput()
+    private var isBack : Bool = true
+    private let captureDevice = AVCaptureDevice.default(for: .video)
+    private let sesstionQueue = DispatchQueue(label: "sesstion Queue")
+    private let videoDeviceDiscoverySession = AVCaptureDevice.DiscoverySession(deviceTypes: [.builtInWideAngleCamera, .builtInTelephotoCamera, .builtInTrueDepthCamera], mediaType: .video, position: .unspecified)
     
     private let deniedCameraView = PermissionDeniedView(permissionTitle: "카메라")
     private let authorizedCameraView = HomeButtonAuthorizedCameraView()
@@ -44,6 +42,8 @@ final class HomeButtonCameraViewController : BaseViewController {
         
         deniedCameraView.isHidden = true
         authorizedCameraView.isHidden = true
+        let pinchRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(handlePinchCamera))
+        authorizedCameraView.previewView.addGestureRecognizer(pinchRecognizer)
     }
     
     override func setupLayout() {
@@ -137,6 +137,36 @@ final class HomeButtonCameraViewController : BaseViewController {
             }
         }
     }
+    @objc
+        func handlePinchCamera(_ pinch: UIPinchGestureRecognizer) {
+            guard let device = captureDevice else {return}
+            
+            var initialScale: CGFloat = device.videoZoomFactor
+            let minAvailableZoomScale = 1.0
+            let maxAvailableZoomScale = device.maxAvailableVideoZoomFactor
+            
+            do {
+                try device.lockForConfiguration()
+                if(pinch.state == UIPinchGestureRecognizer.State.began){
+                    initialScale = device.videoZoomFactor
+                }
+                else {
+                    if(initialScale*(pinch.scale) < minAvailableZoomScale){
+                        device.videoZoomFactor = minAvailableZoomScale
+                    }
+                    else if(initialScale*(pinch.scale) > maxAvailableZoomScale){
+                        device.videoZoomFactor = maxAvailableZoomScale
+                    }
+                    else {
+                        device.videoZoomFactor = initialScale * (pinch.scale)
+                    }
+                }
+                pinch.scale = 1.0
+            } catch {
+                return
+            }
+            device.unlockForConfiguration()
+        }
     private func requestAuth() {
         AVCaptureDevice.requestAccess(for: .video) { [weak self] granted in
             guard let self = self else { return }
