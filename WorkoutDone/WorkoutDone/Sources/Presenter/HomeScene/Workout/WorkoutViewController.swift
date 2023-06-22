@@ -15,7 +15,9 @@ class WorkoutViewController : BaseViewController {
     var weightTraining = [WeightTraining]()
     
     var isSelectBodyPartIndex : Int = -1
-    var selectedMyRoutine : Int = -1
+    var selectedMyRoutineIndex : Int?
+    
+    var completionHandler : (() -> (Void))?
     
     let sampleData = [BodyPartData(bodyPart: "가슴", weigthTraing: ["벤치 프레스", "디클라인 푸시업", "버터플라이", "인클라인 덤벨 체스트플라이", "벤치 프레스2", "디클라인 푸시업2", "버터플라이2", "인클라인 덤벨 체스트플라이2", "벤치 프레스3", "디클라인 푸시업3", "버터플라이3", "인클라인 덤벨 체스트플라이3"]), BodyPartData(bodyPart: "등", weigthTraing: ["등0", "등1"]), BodyPartData(bodyPart: "하체", weigthTraing: ["하체0", "하체1", "하체2"]), BodyPartData(bodyPart: "어깨", weigthTraing: []), BodyPartData(bodyPart: "삼두", weigthTraing: []), BodyPartData(bodyPart: "이두", weigthTraing: []), BodyPartData(bodyPart: "졸려", weigthTraing: []), BodyPartData(bodyPart: "하암", weigthTraing: [])]
     
@@ -149,14 +151,19 @@ class WorkoutViewController : BaseViewController {
         if weightTraining.count > 0 {
             let workoutSequenceVC = WorkoutSequenceViewController()
             if var index = weightTraining.firstIndex(where: {$0.weightTraining == ""}) {
-                for myWeightTraining in myRoutines[selectedMyRoutine].myWeightTraining {
+                guard let myRoutineIndex = selectedMyRoutineIndex else { return }
+                for myWeightTraining in myRoutines[myRoutineIndex].myWeightTraining {
                     weightTraining[index].bodyPart = myWeightTraining.myBodyPart
                     weightTraining[index].weightTraining = myWeightTraining.myWeightTraining
                     
                     index += 1
                 }
             }
+            workoutSequenceVC.selectedMyRoutineIndex = selectedMyRoutineIndex
             workoutSequenceVC.weightTraining = weightTraining
+            workoutSequenceVC.completionHandler = {
+                self.completionHandler?()
+            }
             navigationController?.pushViewController(workoutSequenceVC, animated: false)
         }
     }
@@ -396,7 +403,7 @@ extension WorkoutViewController : UITableViewDelegate, UITableViewDataSource {
                     
                     preSelectedIndex = indexPath.section
                     selectedRoutines[indexPath.section] = true
-                    selectedMyRoutine = indexPath.section
+                    selectedMyRoutineIndex = indexPath.section
                     
                     let selectedMyRoutineCount = myRoutines[indexPath.section].myWeightTraining.count
                     for _ in 0..<selectedMyRoutineCount {
@@ -405,7 +412,7 @@ extension WorkoutViewController : UITableViewDelegate, UITableViewDataSource {
                     
                 } else {
                     selectedRoutines[indexPath.section] = false
-                    selectedMyRoutine = -1
+                    selectedMyRoutineIndex = nil
                     
                     weightTraining = weightTraining.filter{$0.weightTraining != ""}
                 }
@@ -442,7 +449,7 @@ extension WorkoutViewController : UITableViewDelegate, UITableViewDataSource {
                 
                 preSelectedIndex = section
                 selectedRoutines[section] = true
-                selectedMyRoutine = section
+                selectedMyRoutineIndex = section
                 
                 let selectedMyRoutineCount = myRoutines[section].myWeightTraining.count
                 for _ in 0..<selectedMyRoutineCount {
@@ -451,7 +458,7 @@ extension WorkoutViewController : UITableViewDelegate, UITableViewDataSource {
                 
             } else {
                 selectedRoutines[section] = false
-                selectedMyRoutine = -1
+                selectedMyRoutineIndex = nil
                 
                 weightTraining = weightTraining.filter{$0.weightTraining != ""}
             }

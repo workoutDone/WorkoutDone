@@ -67,5 +67,32 @@ struct RoutineViewModel {
             }
         }
     }
+    
+    func setRoutine(routineIndex: Int?, weightTraining: [WeightTraining]) -> Routine {
+        let routine = Routine()
+        
+        if let index = routineIndex {
+            let realm = try! Realm()
+            
+            let myRoutine = realm.objects(MyRoutine.self)[index]
+            routine.name = myRoutine.name
+            routine.stamp = myRoutine.stamp
+        } else {
+            routine.name = ""
+            routine.stamp = ""
+        }
+        
+        routine.weightTraining.append(objectsIn: setWeightTraining(weightTraining))
+        
+        return routine
+    }
+    
+    func setWeightTraining(_ weightTraining: [WeightTraining]) -> [WeightTraining] {
+        for training in weightTraining {
+            training.weightTrainingInfo.append(objectsIn: [WeightTrainingInfo(setCount: 1, weight: 0, trainingCount: 0)])
+        }
+        return weightTraining
+    }
+    
 }
 

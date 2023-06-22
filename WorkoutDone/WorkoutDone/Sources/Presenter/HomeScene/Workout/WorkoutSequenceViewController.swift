@@ -9,8 +9,12 @@ import UIKit
 
 class WorkoutSequenceViewController: BaseViewController {
     var weightTraining = [WeightTraining]()
+    var routineViewModel = RoutineViewModel()
+    var selectedMyRoutineIndex : Int?
     
     var isAddDeleteMode = false
+    
+    var completionHandler : (() -> (Void))?
     
     private var editButton = EditButton()
     
@@ -115,7 +119,7 @@ class WorkoutSequenceViewController: BaseViewController {
         title = "운동하기"
         
         editButton = EditButton(frame: CGRect(x: 0, y: 0, width: 80, height: 30))
-        editButton.addTarget(self, action: #selector(startWorkoutButtonTapped), for: .touchUpInside)
+        editButton.addTarget(self, action: #selector(editButtonTapped), for: .touchUpInside)
         let rightBarButton = UIBarButtonItem(customView: editButton)
         navigationItem.rightBarButtonItem = rightBarButton
     }
@@ -139,15 +143,23 @@ class WorkoutSequenceViewController: BaseViewController {
         weightTrainingTableView.reloadData()
     }
     
-    @objc func startWorkoutButtonTapped() {
+    @objc func editButtonTapped() {
         isAddDeleteMode = !isAddDeleteMode
         weightTrainingTableView.reloadData()
-        
+
         if isAddDeleteMode {
             switchToAddDeleteMode()
         } else {
             switchToModifyMode()
         }
+    }
+    
+    @objc func startWorkoutButtonTapped() {
+        let routine = routineViewModel.setRoutine(routineIndex: selectedMyRoutineIndex, weightTraining: weightTraining)
+        DuringWorkoutRoutine.shared.duringWorkoutRoutine = routine
+        
+        completionHandler?()
+        navigationController?.popViewController(animated: false)
     }
     
     func switchToAddDeleteMode() {

@@ -179,10 +179,17 @@ class HomeViewController : BaseViewController {
         registerMyBodyInfoViewController.completionHandler = { [weak self] dateValue in
             guard let self else { return }
             self.selectedDate.onNext(dateValue)
-        }
+        } 
     }
     @objc func workoutRoutineChoiceButtonTapped() {
         let workoutViewController = WorkoutViewController()
+        workoutViewController.completionHandler = {
+            let duringWorkoutViewController = DuringWorkoutViewController()
+            let navigationController = UINavigationController(rootViewController: duringWorkoutViewController)
+            navigationController.modalTransitionStyle = .crossDissolve
+            navigationController.modalPresentationStyle = .fullScreen
+            self.present(navigationController, animated: true)
+        }
         workoutViewController.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(workoutViewController, animated: true)
     }
