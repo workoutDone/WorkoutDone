@@ -92,7 +92,6 @@
 		92DCF54A29D6BD8200F90002 /* SortButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DCF54929D6BD8200F90002 /* SortButtonCell.swift */; };
 		92DCF54C29D6D15600F90002 /* FrameHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DCF54B29D6D15600F90002 /* FrameHeaderView.swift */; };
 		92DCF55A29D878FB00F90002 /* GalleryDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DCF55929D878FB00F90002 /* GalleryDetailViewController.swift */; };
-		92DCF61229DCAE3D00F90002 /* GridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DCF61129DCAE3D00F90002 /* GridView.swift */; };
 		A5021EE82A1906EB007DE096 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5021EE72A1906EB007DE096 /* Constants.swift */; };
 		A5021EEA2A194E78007DE096 /* RightBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5021EE92A194E78007DE096 /* RightBarButtonItem.swift */; };
 		A5021EEC2A1A8AF4007DE096 /* PermissionDeniedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5021EEB2A1A8AF4007DE096 /* PermissionDeniedView.swift */; };
@@ -266,7 +265,6 @@
 		92DCF54929D6BD8200F90002 /* SortButtonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortButtonCell.swift; sourceTree = "<group>"; };
 		92DCF54B29D6D15600F90002 /* FrameHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameHeaderView.swift; sourceTree = "<group>"; };
 		92DCF55929D878FB00F90002 /* GalleryDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryDetailViewController.swift; sourceTree = "<group>"; };
-		92DCF61129DCAE3D00F90002 /* GridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridView.swift; sourceTree = "<group>"; };
 		A5021EE72A1906EB007DE096 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		A5021EE92A194E78007DE096 /* RightBarButtonItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RightBarButtonItem.swift; sourceTree = "<group>"; };
 		A5021EEB2A1A8AF4007DE096 /* PermissionDeniedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionDeniedView.swift; sourceTree = "<group>"; };
@@ -619,7 +617,6 @@
 				9264A5EB29C4B0610010856F /* HomeButtonCameraViewController.swift */,
 				A5FD2BDC2A44228900295EF9 /* HomeButtonAuthorizedCameraView.swift */,
 				92DCF3EB29CDB38300F90002 /* BackButton.swift */,
-				92DCF61129DCAE3D00F90002 /* GridView.swift */,
 				9264A5ED29C550220010856F /* FrameCell.swift */,
 				926DBC9129DDC905007BE22A /* PressShutterViewController.swift */,
 				926DBC9329DEA31C007BE22A /* SaveImageToastMessageView.swift */,
@@ -1177,7 +1174,6 @@
 				9264A5EC29C4B0610010856F /* HomeButtonCameraViewController.swift in Sources */,
 				92DCF54229D5B41700F90002 /* MonthHeaderView.swift in Sources */,
 				929158472A3D92E40022BEF9 /* WorkoutSequenceCell.swift in Sources */,
-				92DCF61229DCAE3D00F90002 /* GridView.swift in Sources */,
 				92DCF4D429D1B66F00F90002 /* ImageCell.swift in Sources */,
 				9200604929B1AD7200586063 /* HomeViewController.swift in Sources */,
 				92DCF47A29D0818A00F90002 /* WorkOutDoneData.swift in Sources */,
