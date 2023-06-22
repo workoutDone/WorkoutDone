@@ -42,6 +42,10 @@ final class HomeButtonLessCameraViewController : BaseViewController {
         super.viewDidLoad()
         requestAuth()
     }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        authorizedCameraView.captureButton.isEnabled = true
+    }
     override func setupLayout() {
         super.setupLayout()
         view.addSubviews(deniedCameraView, authorizedCameraView)
@@ -172,8 +176,8 @@ final class HomeButtonLessCameraViewController : BaseViewController {
             connection?.videoOrientation = videoPreviewLayerOrientation!
             let setting = AVCapturePhotoSettings()
             self.photoOutput.capturePhoto(with: setting, delegate: self)
-            
         }
+        authorizedCameraView.captureButton.isEnabled = false
     }
     @objc func permisstionButtonTapped() {
         UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)

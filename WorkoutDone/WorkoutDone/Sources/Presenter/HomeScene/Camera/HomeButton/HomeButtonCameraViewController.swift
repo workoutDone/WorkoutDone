@@ -32,6 +32,10 @@ final class HomeButtonCameraViewController : BaseViewController {
         super.viewDidLoad()
         requestAuth()
     }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        authorizedCameraView.shutterButton.isEnabled = true
+    }
 
     
     override func setComponents() {
@@ -94,6 +98,7 @@ final class HomeButtonCameraViewController : BaseViewController {
             let setting = AVCapturePhotoSettings()
             self.photoOutput.capturePhoto(with: setting, delegate: self)
         }
+        authorizedCameraView.shutterButton.isEnabled = false
     }
     
     @objc func switchCameraButtonTapped(sender: UIButton!) {
