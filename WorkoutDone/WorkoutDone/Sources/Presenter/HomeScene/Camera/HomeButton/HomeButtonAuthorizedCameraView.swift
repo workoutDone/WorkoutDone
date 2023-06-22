@@ -50,6 +50,7 @@ final class HomeButtonAuthorizedCameraView : BaseUIView {
     
     override func setUI() {
         super.setUI()
+        gridImageView.isHidden = true
     }
     
     override func setupLayout() {
@@ -62,7 +63,8 @@ final class HomeButtonAuthorizedCameraView : BaseUIView {
     override func setupConstraints() {
         super.setupConstraints()
         previewView.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(10)
+            $0.top.equalToSuperview().inset(20)
+//            $0.top.equalTo(self.safeAreaLayoutGuide)
             $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(UIScreen.main.bounds.size.width * 4 / 3)
         }

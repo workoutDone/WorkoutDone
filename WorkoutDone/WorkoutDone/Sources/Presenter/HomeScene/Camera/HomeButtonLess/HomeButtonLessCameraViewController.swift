@@ -14,8 +14,6 @@ final class HomeButtonLessCameraViewController : BaseViewController {
     
 
     private var isSelectFrameImagesIndex = 0
-//    var backCameraOn: Bool = true
-//    var takePicture = false
     private let captureSettion = AVCaptureSession()
     private var videoDeviceInput : AVCaptureDeviceInput!
     private let photoOutput = AVCapturePhotoOutput()

@@ -25,9 +25,6 @@ final class HomeButtonCameraViewController : BaseViewController {
     
     private let deniedCameraView = PermissionDeniedView(permissionTitle: "카메라")
     private let authorizedCameraView = HomeButtonAuthorizedCameraView()
-    
-    private let backButton = BackButton()
-    
     private let gridToggleButton = GridToggleButton()
     
 
@@ -38,10 +35,15 @@ final class HomeButtonCameraViewController : BaseViewController {
 
     
     override func setComponents() {
-        view.backgroundColor = .colorFFFFFF
+        super.setComponents()
         
+        view.backgroundColor = .colorFFFFFF
         deniedCameraView.isHidden = true
         authorizedCameraView.isHidden = true
+        let barButton = UIBarButtonItem()
+        barButton.customView = gridToggleButton
+        navigationItem.rightBarButtonItem = barButton
+        navigationController?.isNavigationBarHidden = false
         let pinchRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(handlePinchCamera))
         authorizedCameraView.previewView.addGestureRecognizer(pinchRecognizer)
     }
@@ -66,12 +68,11 @@ final class HomeButtonCameraViewController : BaseViewController {
         authorizedCameraView.shutterButton.addTarget(self, action: #selector(captureButtonTapped), for: .touchUpInside)
         authorizedCameraView.switchCameraButton.addTarget(self, action: #selector(switchCameraButtonTapped), for: .touchUpInside)
         
+        gridToggleButton.addTarget(self, action: #selector(gridToggleButtonTapped), for: .touchUpInside)
     }
+    
     @objc func permisstionButtonTapped() {
         UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
-    }
-    @objc func backButtonTapped(sender: UIButton!) {
-        self.navigationController?.popViewController(animated: true)
     }
     
     @objc func gridToggleButtonTapped(sender: UIButton!) {
