@@ -28,7 +28,7 @@ final class DuringWorkoutViewController : BaseViewController {
     
     private let duringWorkoutRoutine = DuringWorkoutRoutine.shared
 
-    private var dummy = ExRoutine.dummy()
+//    private var dummy = ExRoutine.dummy()
     var weightTrainingArrayIndex = 0 {
         didSet {
             if weightTrainingArrayIndex + 1 == weightTrainingArrayCount {

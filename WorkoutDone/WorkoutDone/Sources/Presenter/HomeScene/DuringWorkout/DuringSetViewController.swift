@@ -6,8 +6,10 @@
 //
 
 import UIKit
+import RxCocoa
+import RxSwift
 
-class DuringSetViewController : BaseViewController {
+final class DuringSetViewController : BaseViewController {
     var dummy = ExRoutine.dummy()
     lazy var weightTrainingArrayIndex = 0
     lazy var weightTrainingInfoArrayIndex = 0

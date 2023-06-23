@@ -109,6 +109,7 @@
 		A52F65F82A09FE9D00D398DF /* NotificationCenterManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52F65F72A09FE9D00D398DF /* NotificationCenterManager.swift */; };
 		A52F65FA2A0A015F00D398DF /* NotificationName.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52F65F92A0A015F00D398DF /* NotificationName.swift */; };
 		A53FF90C2A3E354C0086693D /* DuringWorkoutRoutine.swift in Sources */ = {isa = PBXBuildFile; fileRef = A53FF90B2A3E354C0086693D /* DuringWorkoutRoutine.swift */; };
+		A5489BC72A45942A00D74370 /* DuringSetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5489BC62A45942A00D74370 /* DuringSetViewModel.swift */; };
 		A54C485E29FF9FB1004CEE3D /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54C485D29FF9FB1004CEE3D /* RealmManager.swift */; };
 		A54C486129FFA176004CEE3D /* HomeButtonLessPhotoFrameTypeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54C486029FFA176004CEE3D /* HomeButtonLessPhotoFrameTypeViewController.swift */; };
 		A54C486329FFA1A0004CEE3D /* HomeButtonPhotoFrameTypeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54C486229FFA1A0004CEE3D /* HomeButtonPhotoFrameTypeViewController.swift */; };
@@ -283,6 +284,7 @@
 		A52F65F72A09FE9D00D398DF /* NotificationCenterManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCenterManager.swift; sourceTree = "<group>"; };
 		A52F65F92A0A015F00D398DF /* NotificationName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationName.swift; sourceTree = "<group>"; };
 		A53FF90B2A3E354C0086693D /* DuringWorkoutRoutine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuringWorkoutRoutine.swift; sourceTree = "<group>"; };
+		A5489BC62A45942A00D74370 /* DuringSetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuringSetViewModel.swift; sourceTree = "<group>"; };
 		A54C485D29FF9FB1004CEE3D /* RealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
 		A54C486029FFA176004CEE3D /* HomeButtonLessPhotoFrameTypeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeButtonLessPhotoFrameTypeViewController.swift; sourceTree = "<group>"; };
 		A54C486229FFA1A0004CEE3D /* HomeButtonPhotoFrameTypeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeButtonPhotoFrameTypeViewController.swift; sourceTree = "<group>"; };
@@ -881,6 +883,7 @@
 				A5E2DEED2A17611B002A60A4 /* DuringWorkoutViewController.swift */,
 				A5FD2BDE2A45777300295EF9 /* DuringWorkoutViewModel.swift */,
 				A58327772A20C110002F8F6E /* DuringSetViewController.swift */,
+				A5489BC62A45942A00D74370 /* DuringSetViewModel.swift */,
 				A58327792A20C135002F8F6E /* DuringEditRoutineViewController.swift */,
 				A583277B2A20D30A002F8F6E /* DuringWorkoutTimerViewController.swift */,
 				A5091F262A31A896002FE6DA /* EndWorkoutViewController.swift */,
@@ -1160,6 +1163,7 @@
 				A5021EEA2A194E78007DE096 /* RightBarButtonItem.swift in Sources */,
 				926999502A172F4E003DDAD2 /* RoutineDetailCell.swift in Sources */,
 				926999542A1CEBA8003DDAD2 /* RoutineAlertViewController.swift in Sources */,
+				A5489BC72A45942A00D74370 /* DuringSetViewModel.swift in Sources */,
 				A551491A2A0FE64900222A72 /* UILabel.swift in Sources */,
 				A576693B29B6EB4900673DFE /* ImageSelectionViewController.swift in Sources */,
 				A52F65FA2A0A015F00D398DF /* NotificationName.swift in Sources */,
