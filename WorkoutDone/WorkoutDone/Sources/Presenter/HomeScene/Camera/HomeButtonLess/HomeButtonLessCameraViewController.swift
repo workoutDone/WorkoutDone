@@ -10,20 +10,18 @@ import SnapKit
 import Then
 import AVFoundation
 
-class HomeButtonLessCameraViewController : BaseViewController {
+final class HomeButtonLessCameraViewController : BaseViewController {
     
 
-    var isSelectFrameImagesIndex = 0
-    var backCameraOn: Bool = true
-    var takePicture = false
-    let captureSettion = AVCaptureSession()
-    var videoDeviceInput : AVCaptureDeviceInput!
-    let photoOutput = AVCapturePhotoOutput()
-    var isBack : Bool = true
+    private var isSelectFrameImagesIndex = 0
+    private let captureSettion = AVCaptureSession()
+    private var videoDeviceInput : AVCaptureDeviceInput!
+    private let photoOutput = AVCapturePhotoOutput()
+    private var isBack : Bool = true
     
-    let captureDevice = AVCaptureDevice.default(for: .video)
-    let sesstionQueue = DispatchQueue(label: "sesstion Queue")
-    let videoDeviceDiscoverySession = AVCaptureDevice.DiscoverySession(deviceTypes: [.builtInWideAngleCamera, .builtInTelephotoCamera], mediaType: .video, position: .unspecified)
+    private let captureDevice = AVCaptureDevice.default(for: .video)
+    private let sesstionQueue = DispatchQueue(label: "sesstion Queue")
+    private let videoDeviceDiscoverySession = AVCaptureDevice.DiscoverySession(deviceTypes: [.builtInWideAngleCamera, .builtInTelephotoCamera], mediaType: .video, position: .unspecified)
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -43,6 +41,10 @@ class HomeButtonLessCameraViewController : BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         requestAuth()
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        authorizedCameraView.captureButton.isEnabled = true
     }
     override func setupLayout() {
         super.setupLayout()
@@ -101,7 +103,6 @@ class HomeButtonLessCameraViewController : BaseViewController {
         authorizedCameraView.switchCameraButton.addTarget(self, action: #selector(switchCameraButtonTapped), for: .touchUpInside)
     }
     @objc func switchCameraButtonTapped() {
-        print("dddd")
         guard videoDeviceDiscoverySession.devices.count > 1 else {
             return
         }
@@ -175,12 +176,11 @@ class HomeButtonLessCameraViewController : BaseViewController {
             connection?.videoOrientation = videoPreviewLayerOrientation!
             let setting = AVCapturePhotoSettings()
             self.photoOutput.capturePhoto(with: setting, delegate: self)
-            
         }
+        authorizedCameraView.captureButton.isEnabled = false
     }
     @objc func permisstionButtonTapped() {
         UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
-
     }
     @objc func gridToggleButtonTapped(sender: UIButton!) {
         if gridToggleButton.isOnToggle {

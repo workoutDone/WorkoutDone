@@ -10,171 +10,95 @@ import SnapKit
 import Then
 import AVFoundation
 
-class HomeButtonCameraViewController : BaseViewController {
+final class HomeButtonCameraViewController : BaseViewController {
     
-    var frameImages: [String] = ["frame1", "frame2", "frame3", "frame4", "frame5", "frame6"]
-    var isSelectFrameImagesIndex = 0
-    var backCameraOn: Bool = true
+    private var backCameraOn: Bool = true
     
-    var takePicture = false
-    let captureSettion = AVCaptureSession()
-    var videoDeviceInput : AVCaptureDeviceInput!
-    let photoOutput = AVCapturePhotoOutput()
-    var isBack : Bool = true
+    private var takePicture = false
+    private let captureSettion = AVCaptureSession()
+    private var videoDeviceInput : AVCaptureDeviceInput!
+    private let photoOutput = AVCapturePhotoOutput()
+    private var isBack : Bool = true
+    private let captureDevice = AVCaptureDevice.default(for: .video)
+    private let sesstionQueue = DispatchQueue(label: "sesstion Queue")
+    private let videoDeviceDiscoverySession = AVCaptureDevice.DiscoverySession(deviceTypes: [.builtInWideAngleCamera, .builtInTelephotoCamera, .builtInTrueDepthCamera], mediaType: .video, position: .unspecified)
     
-    let sesstionQueue = DispatchQueue(label: "sesstion Queue")
-    let videoDeviceDiscoverySession = AVCaptureDevice.DiscoverySession(deviceTypes: [.builtInDualCamera, .builtInTrueDepthCamera, .builtInTrueDepthCamera], mediaType: .video, position: .unspecified)
-    
-
-    let previewView = PreviewView()
-    
-    private let frameImage = UIImageView()
-    
-    private let backButton = BackButton()
-    
+    private let deniedCameraView = PermissionDeniedView(permissionTitle: "카메라")
+    private let authorizedCameraView = HomeButtonAuthorizedCameraView()
     private let gridToggleButton = GridToggleButton()
     
-    private let gridView = GridView()
-    
-    private let collectionView : UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.register(FrameCell.self, forCellWithReuseIdentifier: "FrameCell")
-        collectionView.showsHorizontalScrollIndicator = false
-        
-        return collectionView
-    }()
-    
-    private let shutterButton = UIButton().then {
-        $0.setImage(UIImage(named: "shutter"), for: .normal)
-    }
-    
-    private let switchCameraButton = UIButton().then {
-        $0.setImage(UIImage(named: "switchCamera"), for: .normal)
-    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        setDelegateDataSource()
+        requestAuth()
     }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        previewView.session = captureSettion
-        sesstionQueue.async {
-            self.setupSession()
-            self.startSession()
-        }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        authorizedCameraView.shutterButton.isEnabled = true
     }
+
     
     override func setComponents() {
-        //saveButton.isHidden = true
-        gridView.isHidden = true
+        super.setComponents()
+        
         view.backgroundColor = .colorFFFFFF
+        deniedCameraView.isHidden = true
+        authorizedCameraView.isHidden = true
+        let barButton = UIBarButtonItem()
+        barButton.customView = gridToggleButton
+        navigationItem.rightBarButtonItem = barButton
+        navigationController?.isNavigationBarHidden = false
+        let pinchRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(handlePinchCamera))
+        authorizedCameraView.previewView.addGestureRecognizer(pinchRecognizer)
     }
     
     override func setupLayout() {
         super.setupLayout()
-        
-        [previewView, gridView, backButton, gridToggleButton, collectionView, shutterButton, switchCameraButton, frameImage].forEach {
-            view.addSubview($0)
-        }
+        view.addSubviews(deniedCameraView, authorizedCameraView)
     }
     
     override func setupConstraints() {
         super.setupConstraints()
-    
-        previewView.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(10)
-            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide)
-            $0.height.equalTo(view.frame.width * (4 / 3))
+        authorizedCameraView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
         }
-        
-        backButton.snp.makeConstraints {
-            $0.top.equalTo(previewView).offset(24)
-            $0.leading.equalToSuperview().offset(16)
+        deniedCameraView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
         }
-        
-        gridToggleButton.snp.makeConstraints {
-            $0.top.equalTo(previewView).offset(23)
-            $0.trailing.equalToSuperview().offset(-10)
-        }
-        
-        gridView.snp.makeConstraints {
-            $0.top.leading.trailing.bottom.equalTo(previewView)
-        }
-        
-        frameImage.snp.makeConstraints {
-            $0.top.bottom.equalTo(previewView).offset(10)
-            $0.leading.trailing.equalTo(previewView)
-        }
-        
-        collectionView.snp.makeConstraints {
-            $0.top.equalTo(previewView.snp.bottom).offset(20)
-            $0.leading.equalToSuperview()
-            $0.trailing.equalToSuperview()
-            $0.height.equalTo(66)
-        }
-        
-        shutterButton.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
-            $0.bottom.equalTo(view.safeAreaLayoutGuide).offset(-16)
-            $0.width.height.equalTo(50)
-        }
-        
-        switchCameraButton.snp.makeConstraints {
-            $0.bottom.equalTo(shutterButton)
-            $0.trailing.equalTo(view.safeAreaLayoutGuide).offset(-17)
-            $0.width.height.equalTo(42)
-        }
-        
-//        saveButton.snp.makeConstraints {
-//            $0.bottom.equalTo(view.safeAreaLayoutGuide).offset(-13)
-//            $0.leading.equalTo(view.safeAreaLayoutGuide).offset(20)
-//            $0.trailing.equalTo(view.safeAreaLayoutGuide).offset(-20)
-//            $0.height.equalTo(58)
-//        }
     }
     
     override func actions() {
-        shutterButton.addTarget(self, action: #selector(captureButtonTapped), for: .touchUpInside)
-        switchCameraButton.addTarget(self, action: #selector(switchCameraButtonTapped), for: .touchUpInside)
-        backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
+        deniedCameraView.permisstionButton.addTarget(self, action: #selector(permisstionButtonTapped), for: .touchUpInside)
+        authorizedCameraView.shutterButton.addTarget(self, action: #selector(captureButtonTapped), for: .touchUpInside)
+        authorizedCameraView.switchCameraButton.addTarget(self, action: #selector(switchCameraButtonTapped), for: .touchUpInside)
+        
         gridToggleButton.addTarget(self, action: #selector(gridToggleButtonTapped), for: .touchUpInside)
     }
     
-    func setDelegateDataSource() {
-        collectionView.delegate = self
-        collectionView.dataSource = self
-    }
-    
-    @objc func backButtonTapped(sender: UIButton!) {
-        self.navigationController?.popViewController(animated: true)
+    @objc func permisstionButtonTapped() {
+        UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
     }
     
     @objc func gridToggleButtonTapped(sender: UIButton!) {
         if gridToggleButton.isOnToggle {
-           gridView.isHidden = true
+            authorizedCameraView.gridImageView.isHidden = true
             
         } else {
-            gridView.isHidden = false
+            authorizedCameraView.gridImageView.isHidden = false
         }
         gridToggleButton.changeToggle()
         gridToggleButton.isOnToggle = !gridToggleButton.isOnToggle
     }
 
-    @objc func captureButtonTapped(sender: UIButton!) {
-        let videoPreviewLayerOrientaion = self.previewView.previewLayer.connection?.videoOrientation
+    @objc func captureButtonTapped() {
+        let videoPreviewLayerOrientaion = self.authorizedCameraView.previewView.previewLayer.connection?.videoOrientation
         sesstionQueue.async {
             let connection = self.photoOutput.connection(with: .video)
             connection?.videoOrientation = videoPreviewLayerOrientaion!
             let setting = AVCapturePhotoSettings()
             self.photoOutput.capturePhoto(with: setting, delegate: self)
         }
+        authorizedCameraView.shutterButton.isEnabled = false
     }
     
     @objc func switchCameraButtonTapped(sender: UIButton!) {
@@ -209,7 +133,8 @@ class HomeButtonCameraViewController : BaseViewController {
                     self.captureSettion.commitConfiguration()
                     
                     DispatchQueue.main.async {
-                        self.previewView.session = self.captureSettion
+                        self.authorizedCameraView.previewView.session = self.captureSettion
+                        print("?????????????")
                     }
                     
                 } catch let error  {
@@ -218,57 +143,75 @@ class HomeButtonCameraViewController : BaseViewController {
             }
         }
     }
-}
+    @objc
+        func handlePinchCamera(_ pinch: UIPinchGestureRecognizer) {
+            guard let device = captureDevice else {return}
+            
+            var initialScale: CGFloat = device.videoZoomFactor
+            let minAvailableZoomScale = 1.0
+            let maxAvailableZoomScale = device.maxAvailableVideoZoomFactor
+            
+            do {
+                try device.lockForConfiguration()
+                if(pinch.state == UIPinchGestureRecognizer.State.began){
+                    initialScale = device.videoZoomFactor
+                }
+                else {
+                    if(initialScale*(pinch.scale) < minAvailableZoomScale){
+                        device.videoZoomFactor = minAvailableZoomScale
+                    }
+                    else if(initialScale*(pinch.scale) > maxAvailableZoomScale){
+                        device.videoZoomFactor = maxAvailableZoomScale
+                    }
+                    else {
+                        device.videoZoomFactor = initialScale * (pinch.scale)
+                    }
+                }
+                pinch.scale = 1.0
+            } catch {
+                return
+            }
+            device.unlockForConfiguration()
+        }
+    private func requestAuth() {
+        AVCaptureDevice.requestAccess(for: .video) { [weak self] granted in
+            guard let self = self else { return }
+            if granted {
+                self.requestAuthResponseView(granted: true) { _ in
+                    DispatchQueue.main.async {
+                        self.deniedCameraView.isHidden = true
+                        self.authorizedCameraView.isHidden = false
+                        self.authorizedCameraView.previewView.session = self.captureSettion
+                        print(self.authorizedCameraView.isHidden, "dd")
+                    }
+                    self.sesstionQueue.async {
+                        self.setupSession()
+                        self.startSession()
+                    }
+                }
+            }
+            else {
+                self.requestAuthResponseView(granted: false) { _ in
+                    DispatchQueue.main.async {
+                        self.deniedCameraView.isHidden = false
+                        self.authorizedCameraView.isHidden = true
+                    }
+                }
+            }
+        }
+    }
 
-extension HomeButtonCameraViewController : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return frameImages.count + 1
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FrameCell", for: indexPath) as? FrameCell else { return UICollectionViewCell() }
-        if indexPath.row == 0 {
-            cell.frameImage.image = nil
-            cell.basicLabel.isHidden = false
-        } else {
-            cell.frameImage.image = UIImage(named: frameImages[indexPath.row - 1])
-            cell.basicLabel.isHidden = true
+    private func requestAuthResponseView(granted: Bool, completion : @escaping ((Bool) -> Void)) {
+        if granted {
+            completion(true)
         }
-        
-        if indexPath.row == isSelectFrameImagesIndex {
-            cell.layer.borderWidth = 2
-            cell.layer.borderColor = UIColor.color7442FF.cgColor
-            cell.backgroundColor = .colorE6E0FF
-        } else {
-            cell.layer.borderWidth = 0
-            cell.backgroundColor = .clear
+        else {
+            completion(false)
         }
-        return cell
     }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 66 , height: 66)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-            return UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-            return 10
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        isSelectFrameImagesIndex = indexPath.row
-        if indexPath.row == 0 {
-            frameImage.image = nil
-        } else {
-            frameImage.image = UIImage(named: frameImages[indexPath.row - 1])
-        }
-        collectionView.reloadData()
-    }
-}
 
+
+}
 
 extension HomeButtonCameraViewController {
     func setupSession() {
@@ -332,7 +275,7 @@ extension HomeButtonCameraViewController: AVCapturePhotoCaptureDelegate {
         DispatchQueue.main.async {
             let pressShutterVC = PressShutterViewController()
             pressShutterVC.captureImage = self.isBack ? image : flippedImage
-            pressShutterVC.isSelectFrame = self.isSelectFrameImagesIndex
+            pressShutterVC.isSelectFrame = self.authorizedCameraView.isSelectFrameImagesIndex
             self.navigationController?.pushViewController(pressShutterVC, animated: false)
         }
     }

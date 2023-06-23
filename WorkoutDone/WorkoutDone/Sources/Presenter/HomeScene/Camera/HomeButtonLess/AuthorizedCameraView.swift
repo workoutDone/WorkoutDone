@@ -7,7 +7,7 @@
 
 import UIKit
 
-class AuthorizedCameraView : BaseUIView {
+final class AuthorizedCameraView : BaseUIView {
     // MARK: - PROPERTIES
     lazy var previewView = PreviewView()
 

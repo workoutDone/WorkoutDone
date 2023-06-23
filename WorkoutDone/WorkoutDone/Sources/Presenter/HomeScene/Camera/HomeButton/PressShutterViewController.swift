@@ -20,8 +20,6 @@ class PressShutterViewController: BaseViewController {
         $0.contentMode = .scaleAspectFit
     }
     
-    private let backButton = BackButton()
-    
     let againButton = UIButton().then {
         $0.backgroundColor = .colorE6E0FF
         $0.layer.cornerRadius = 31
@@ -72,14 +70,13 @@ class PressShutterViewController: BaseViewController {
     
     override func setComponents() {
         view.backgroundColor = .colorFFFFFF
-  
     }
     
     override func setupLayout() {
         
         captureImageView = UIImageView(image: self.captureImage)
         
-        [captureImageView, backButton, againButton, againLabel, saveButton, saveLabel, instaButton, instaLabel].forEach {
+        [captureImageView, againButton, againLabel, saveButton, saveLabel, instaButton, instaLabel].forEach {
             view.addSubview($0)
         }
         
@@ -93,11 +90,6 @@ class PressShutterViewController: BaseViewController {
             $0.top.equalToSuperview().offset(20)
             $0.leading.trailing.equalTo(view.safeAreaLayoutGuide)
             $0.height.equalTo(view.frame.width * (4 / 3))
-        }
-        
-        backButton.snp.makeConstraints {
-            $0.top.equalTo(captureImageView).offset(13.5)
-            $0.leading.equalToSuperview().offset(16)
         }
         
         againButton.snp.makeConstraints {
@@ -150,16 +142,10 @@ class PressShutterViewController: BaseViewController {
     }
     
     override func actions() {
-        backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
         againButton.addTarget(self, action: #selector(againButtonTapped), for: .touchUpInside)
         saveButton.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
         instaButton.addTarget(self, action: #selector(instaButtonTapped), for: .touchUpInside)
     }
-    
-    @objc func backButtonTapped(sender: UIButton!) {
-        self.navigationController?.popViewController(animated: false)
-    }
-    
     @objc func againButtonTapped(sender: UIButton!) {
         self.navigationController?.popViewController(animated: false)
     }
