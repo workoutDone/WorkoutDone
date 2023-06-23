@@ -13,6 +13,18 @@ final class DuringSetViewController : BaseViewController {
     var dummy = ExRoutine.dummy()
     lazy var weightTrainingArrayIndex = 0
     lazy var weightTrainingInfoArrayIndex = 0
+    lazy var weightTrainingInfoCount = 0
+    
+    
+    // MARK: - ViewModel
+    private let viewModel = DuringSetViewModel()
+    private let didLoad = PublishSubject<Void>()
+    let weightTrainingArrayIndexRx = PublishSubject<Int>()
+    
+    private lazy var input = DuringSetViewModel.Input(
+        loadView: didLoad.asDriver(onErrorJustReturn: ()),
+        weightTraingingArrayIndex: weightTrainingArrayIndexRx.asDriver(onErrorJustReturn: 0))
+    private lazy var output = viewModel.transform(input: input)
     // MARK: - PROPERTIES
     
     private let tableBackView = UIView().then {
@@ -31,6 +43,17 @@ final class DuringSetViewController : BaseViewController {
     // MARK: - LIFECYCLE
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+    override func setupBinding() {
+        super.setupBinding()
+        
+        output.weightTrainingInfoCount.drive { value in
+            self.weightTrainingInfoCount = value
+        }
+        .disposed(by: disposeBag)
+        
+        didLoad.onNext(())
+        weightTrainingArrayIndexRx.onNext(0)
     }
     override func setComponents() {
         super.setComponents()
@@ -73,7 +96,8 @@ extension DuringSetViewController : UITableViewDelegate, UITableViewDataSource, 
         return 1
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-            return dummy.weightTraining[weightTrainingArrayIndex].weightTrainingInfo.count
+//            return dummy.weightTraining[weightTrainingArrayIndex].weightTrainingInfo.count
+        return weightTrainingInfoCount
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

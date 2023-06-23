@@ -26,9 +26,6 @@ final class DuringWorkoutViewController : BaseViewController {
     
     private let userNotificationCenter = UNUserNotificationCenter.current()
     
-    private let duringWorkoutRoutine = DuringWorkoutRoutine.shared
-
-//    private var dummy = ExRoutine.dummy()
     var weightTrainingArrayIndex = 0 {
         didSet {
             if weightTrainingArrayIndex + 1 == weightTrainingArrayCount {
@@ -212,8 +209,7 @@ final class DuringWorkoutViewController : BaseViewController {
         pageViewController.delegate = self
         pageViewController.dataSource = self
         
-        
-        print(duringWorkoutRoutine.routine, "?이건가??")
+
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -224,13 +220,11 @@ final class DuringWorkoutViewController : BaseViewController {
         
         output.totalWorkoutCount.drive(onNext: { value in
             self.totalWorkoutCount = value
-            print(self.totalWorkoutCount, "토탈 운동 수")
         })
         .disposed(by: disposeBag)
         output.weightTrainingArrayCount.drive { value in
             self.weightTrainingArrayCount = value
             
-            print(value, "시발")
 
         }
         .disposed(by: disposeBag)
@@ -251,8 +245,7 @@ final class DuringWorkoutViewController : BaseViewController {
                 self.weightTrainingArrayIndexRx.onNext(self.weightTrainingArrayIndex)
                 self.progressBarAnimation()
                 self.workoutTitleAnimation()
-                //MARK: - todo
-                self.duringSetViewController.weightTrainingArrayIndex = self.weightTrainingArrayIndex
+                self.duringSetViewController.weightTrainingArrayIndexRx.onNext(self.weightTrainingArrayIndex)
                 self.duringSetViewController.tableView.reloadData()
             }
             .disposed(by: disposeBag)
@@ -264,8 +257,7 @@ final class DuringWorkoutViewController : BaseViewController {
                 self.weightTrainingArrayIndexRx.onNext(self.weightTrainingArrayIndex)
                 self.progressBarAnimation()
                 self.workoutTitleAnimation()
-                //MARK: - todo
-                self.duringSetViewController.weightTrainingArrayIndex = self.weightTrainingArrayIndex
+                self.duringSetViewController.weightTrainingArrayIndexRx.onNext(self.weightTrainingArrayIndex)
                 self.duringSetViewController.tableView.reloadData()
             }
             .disposed(by: disposeBag)
