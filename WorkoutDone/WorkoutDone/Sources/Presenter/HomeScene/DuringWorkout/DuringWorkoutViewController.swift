@@ -243,9 +243,16 @@ final class DuringWorkoutViewController : BaseViewController {
                 self.weightTrainingArrayIndex += 1
                 self.currentWorkoutCount += 1
                 self.weightTrainingArrayIndexRx.onNext(self.weightTrainingArrayIndex)
+                print(self.weightTrainingArrayIndex, "인덱스 비교!!!")
                 self.progressBarAnimation()
                 self.workoutTitleAnimation()
-                self.duringSetViewController.weightTrainingArrayIndexRx.onNext(self.weightTrainingArrayIndex)
+//                self.duringSetViewController.weightTrainingArrayIndexRx.onNext(self.weightTrainingArrayIndex)
+                self.duringSetViewController.weightTrainingArrayIndex = self.weightTrainingArrayIndex
+                let routine = DuringWorkoutRoutine.shared
+//                print(routine.routine?.weightTraining[self.weightTrainingArrayIndex].weightTraining)
+//                print(routine.routine?.weightTraining[self.weightTrainingArrayIndex].weightTrainingInfo)
+//                let routine = DuringWorkoutRoutine.shared
+                print(routine.routine?.weightTraining[self.weightTrainingArrayIndex].weightTraining, "인포")
                 self.duringSetViewController.tableView.reloadData()
             }
             .disposed(by: disposeBag)
@@ -255,9 +262,16 @@ final class DuringWorkoutViewController : BaseViewController {
                 self.weightTrainingArrayIndex -= 1
                 self.currentWorkoutCount -= 1
                 self.weightTrainingArrayIndexRx.onNext(self.weightTrainingArrayIndex)
+                print(self.weightTrainingArrayIndex, "인덱스 비교!!!")
                 self.progressBarAnimation()
                 self.workoutTitleAnimation()
-                self.duringSetViewController.weightTrainingArrayIndexRx.onNext(self.weightTrainingArrayIndex)
+//                self.duringSetViewController.weightTrainingArrayIndexRx.onNext(self.weightTrainingArrayIndex)
+                self.duringSetViewController.weightTrainingArrayIndex = self.weightTrainingArrayIndex
+                
+                let routine = DuringWorkoutRoutine.shared
+                print(routine.routine?.weightTraining[self.weightTrainingArrayIndex].weightTraining, "인포")
+//   print(routine.routine?.weightTraining[self.weightTrainingArrayIndex].weightTraining)
+//                print(routine.routine?.weightTraining[self.weightTrainingArrayIndex].weightTrainingInfo)
                 self.duringSetViewController.tableView.reloadData()
             }
             .disposed(by: disposeBag)
