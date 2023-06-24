@@ -16,26 +16,30 @@ class GalleryDetailViewController: BaseViewController {
     
     var scaleX : CGFloat = 0
     var scaleY : CGFloat = 0
+    
+    var deleteButtonFrameY : CGFloat = 0
 
+    var image = UIImageView().then {
+        $0.contentMode = .scaleAspectFill
+    }
+    
     private let deleteButton = UIButton().then {
-        $0.setTitle("삭제", for: .normal)
+        $0.setTitle("사진 삭제", for: .normal)
         $0.setTitleColor(.colorF54968, for: .normal)
         $0.titleLabel?.font = .pretendard(.semiBold, size: 16)
         $0.backgroundColor = .colorFFEDF0
         $0.layer.cornerRadius = 5
     }
     
-    var image = UIImageView().then {
-        $0.contentMode = .scaleAspectFill
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
     
+        setupDeleteButtonConstraints()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         performImageClickAnimation()
+     
     }
     
     override func setComponents() {
@@ -48,17 +52,21 @@ class GalleryDetailViewController: BaseViewController {
     }
     
     override func setupConstraints() {
-        deleteButton.snp.makeConstraints {
-            $0.trailing.equalToSuperview().offset(-16)
-            $0.bottom.equalTo(image.snp.top).offset(15.5)
-            $0.width.equalTo(80)
-            $0.height.equalTo(30)
-        }
-        
         image.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide).offset(frameY + 73)
             $0.leading.equalToSuperview().offset(frameX)
             $0.width.height.equalTo(size)
+        }
+    }
+    
+    func setupDeleteButtonConstraints() {
+        deleteButtonFrameY = view.frame.midY - ((view.frame.width * (4 / 3)) / 2) - 45.5
+        
+        deleteButton.snp.makeConstraints {
+            $0.trailing.equalToSuperview().offset(-16)
+            $0.top.equalToSuperview().offset(deleteButtonFrameY)
+            $0.width.equalTo(80)
+            $0.height.equalTo(30)
         }
     }
     
