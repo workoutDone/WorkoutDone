@@ -11,33 +11,19 @@ import RxSwift
 
 final class DuringSetViewController : BaseViewController {
     var dummy = ExRoutine.dummy()
-    var weightTrainingArrayIndex = 0 {
-        didSet {
-            print(weightTrainingArrayIndex, "왜!!")
-            weightTrainingArrayIndexRx.onNext(weightTrainingArrayIndex)
-        }
-    }
+    lazy var weightTrainingArrayIndex = 0
     lazy var weightTrainingInfoArrayIndex = 0
     lazy var weightTrainingInfoCount = 0
     
     
-    
-    let routine = DuringWorkoutRoutine.shared
-    lazy var weightTrainingInfoArray : [WeightTrainingInfo] = []
-    
     // MARK: - ViewModel
     private let viewModel = DuringSetViewModel()
     private let didLoad = PublishSubject<Void>()
-    private let addtrainingInfoTrigger = PublishSubject<Void>()
     let weightTrainingArrayIndexRx = PublishSubject<Int>()
-    private let addWightTrainingInfoIndexTrigger = PublishSubject<Int>()
-//    let weightTrainingArrayIndexRx = BehaviorSubject(value: 0)
     
     private lazy var input = DuringSetViewModel.Input(
         loadView: didLoad.asDriver(onErrorJustReturn: ()),
-        weightTrainingArrayIndex: weightTrainingArrayIndexRx.asDriver(onErrorJustReturn: 0),
-        addWeightTrainingInfoTrigger: addtrainingInfoTrigger.asDriver(onErrorJustReturn: ()),
-        addWightTrainingInfoIndexTrigger: addWightTrainingInfoIndexTrigger.asDriver(onErrorJustReturn: 0))
+        weightTraingingArrayIndex: weightTrainingArrayIndexRx.asDriver(onErrorJustReturn: 0))
     private lazy var output = viewModel.transform(input: input)
     // MARK: - PROPERTIES
     
@@ -57,7 +43,6 @@ final class DuringSetViewController : BaseViewController {
     // MARK: - LIFECYCLE
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(routine.routine, "!!!!!!!")
     }
     override func setupBinding() {
         super.setupBinding()
@@ -67,6 +52,7 @@ final class DuringSetViewController : BaseViewController {
         }
         .disposed(by: disposeBag)
         
+<<<<<<< HEAD
         output.weightTrainingInfo.drive { value in
             self.weightTrainingInfoArray = value
 
@@ -75,20 +61,17 @@ final class DuringSetViewController : BaseViewController {
         
         output.addData.drive(onNext: { value in
             if value {
-                let routine = DuringWorkoutRoutine.shared
-                print("이게 뒤로 와야함")
                 self.weightTrainingArrayIndexRx.onNext(self.weightTrainingArrayIndex)
                 self.tableView.reloadData()
-            }
-            else {
-
             }
         })
         .disposed(by: disposeBag)
         
         
+=======
+>>>>>>> parent of 8306a47 (운동 세트 추가 구현)
         didLoad.onNext(())
-        weightTrainingArrayIndexRx.onNext(weightTrainingArrayIndex)
+        weightTrainingArrayIndexRx.onNext(0)
     }
     override func setComponents() {
         super.setComponents()
@@ -138,8 +121,8 @@ extension DuringSetViewController : UITableViewDelegate, UITableViewDataSource, 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: DuringSetTableViewCell.identifier, for: indexPath) as? DuringSetTableViewCell else { return UITableViewCell() }
         cell.selectionStyle = .none
-        cell.configureCell(weightTrainingInfoArray[indexPath.row])
-//        cell.checkWorkout(dummy.weightTraining[weightTrainingArrayIndex])
+        cell.configureCell(dummy.weightTraining[weightTrainingArrayIndex].weightTrainingInfo[indexPath.row])
+        cell.checkWorkout(dummy.weightTraining[weightTrainingArrayIndex])
         return cell
     }
     
@@ -149,12 +132,10 @@ extension DuringSetViewController : UITableViewDelegate, UITableViewDataSource, 
             return footerView
         }
     func addWorkoutButtonTapped() {
-        print("!!!!!!트리거")
-        addWightTrainingInfoIndexTrigger.onNext(weightTrainingArrayIndex)
-        addtrainingInfoTrigger.onNext(())
-        print(weightTrainingArrayIndex, "같아라 좀")
-        print("???????트리거")
+        let currentSetCount = dummy.weightTraining[weightTrainingArrayIndex].weightTrainingInfo.count
+        dummy.weightTraining[weightTrainingArrayIndex].weightTrainingInfo.append(ExWegihtTrainingInfo2(setCount: currentSetCount + 1, weight: nil, traingingCount: nil))
         self.tableView.reloadData()
+        
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let inputWorkoutDataViewController = InputWorkoutDataViewController()

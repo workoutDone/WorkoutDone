@@ -72,10 +72,10 @@ class DuringSetTableViewCell : UITableViewCell {
             $0.trailing.equalToSuperview().inset(20)
         }
     }
-    func configureCell(_ wegihtTrainingInfo : WeightTrainingInfo) {
+    func configureCell(_ wegihtTrainingInfo : ExWegihtTrainingInfo2) {
         setLabel.text = "\(wegihtTrainingInfo.setCount)세트"
-        kgLabel.text = wegihtTrainingInfo.weight == 0 ? "-kg" : "\(wegihtTrainingInfo.weight ?? 0)kg"
-        countLabel.text = wegihtTrainingInfo.trainingCount == 0 ? "-회" : "\(wegihtTrainingInfo.trainingCount ?? 0)회"
+        kgLabel.text = wegihtTrainingInfo.weight == nil ? "-kg" : "\(wegihtTrainingInfo.weight ?? 0)kg"
+        countLabel.text = wegihtTrainingInfo.traingingCount == nil ? "-회" : "\(wegihtTrainingInfo.traingingCount ?? 0)회"
     }
     func checkWorkout(_ weightTraining : ExWegihtTraining2) {
         if Calisthenics.calisthenicsArray.contains(weightTraining.weightTrainging) {

@@ -16,28 +16,23 @@ class DuringSetViewModel {
     
     struct Input {
         let loadView : Driver<Void>
-        let weightTrainingArrayIndex : Driver<Int>
-        let addWeightTrainingInfoTrigger : Driver<Void>
-        let addWightTrainingInfoIndexTrigger : Driver<Int>
-//        let weightTrainingName : Driver<String> //셀 구분할때
-//        let weightTrainingInfoArrayCount : Driver<Int>
+        let weightTraingingArrayIndex : Driver<Int>
     }
     
     struct Output {
         let weightTrainingInfoCount : Driver<Int>
-        let weightTrainingInfo : Driver<[WeightTrainingInfo]>
-        let addData : Driver<Bool>
         
     }
     func transform(input : Input) -> Output {
         
 
-        let weightTrainingInfoCount = Driver<Int>.combineLatest(input.loadView, input.weightTrainingArrayIndex, resultSelector: { (load, index) in
+        let weightTrainingInfoCount = Driver<Int>.combineLatest(input.loadView, input.weightTraingingArrayIndex, resultSelector: { (load, index) in
             let routine = self.duringWorkoutRoutine.routine
             let count = routine?.weightTraining[index].weightTrainingInfo.count ?? 0
             return count
         })
         
+<<<<<<< HEAD
         let weightTrainingInfo = Driver<[WeightTrainingInfo]>.combineLatest(input.loadView, input.weightTrainingArrayIndex, resultSelector: { (_, index) in
             let routine = self.duringWorkoutRoutine.routine
 
@@ -52,13 +47,14 @@ class DuringSetViewModel {
         let addData = Driver<Bool>.zip( input.addWeightTrainingInfoTrigger, input.addWightTrainingInfoIndexTrigger,  resultSelector: { (_, index) in
             let routine = self.duringWorkoutRoutine.routine
             let count = routine?.weightTraining[index].weightTrainingInfo.count
-            routine?.weightTraining[index].weightTrainingInfo.append(objectsIn: [WeightTrainingInfo(setCount: (count ?? 0) + 1, weight: 0, trainingCount: 0)])
-            print(routine?.weightTraining[index].weightTrainingInfo, routine?.weightTraining[index].weightTraining)
             return true
         })
         
         return Output(weightTrainingInfoCount: weightTrainingInfoCount,
                       weightTrainingInfo: weightTrainingInfo,
                       addData: addData)
+=======
+        return Output(weightTrainingInfoCount: weightTrainingInfoCount)
+>>>>>>> parent of 8306a47 (운동 세트 추가 구현)
     }
 }
