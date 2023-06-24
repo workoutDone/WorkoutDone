@@ -16,10 +16,18 @@ class GalleryDetailViewController: BaseViewController {
     
     var scaleX : CGFloat = 0
     var scaleY : CGFloat = 0
+
+    private let deleteButton = UIButton().then {
+        $0.setTitle("삭제", for: .normal)
+        $0.setTitleColor(.colorF54968, for: .normal)
+        $0.titleLabel?.font = .pretendard(.semiBold, size: 16)
+        $0.backgroundColor = .colorFFEDF0
+        $0.layer.cornerRadius = 5
+    }
     
-    var deltaValue: CGFloat = 0
-    
-    var image = UIImageView()
+    var image = UIImageView().then {
+        $0.contentMode = .scaleAspectFill
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,10 +43,18 @@ class GalleryDetailViewController: BaseViewController {
     }
     
     override func setupLayout() {
+        view.addSubview(deleteButton)
         view.addSubview(image)
     }
     
     override func setupConstraints() {
+        deleteButton.snp.makeConstraints {
+            $0.trailing.equalToSuperview().offset(-16)
+            $0.bottom.equalTo(image.snp.top).offset(15.5)
+            $0.width.equalTo(80)
+            $0.height.equalTo(30)
+        }
+        
         image.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide).offset(frameY + 73)
             $0.leading.equalToSuperview().offset(frameX)
@@ -64,7 +80,7 @@ class GalleryDetailViewController: BaseViewController {
     func performImageClickAnimation() {
         frameY = image.frame.minY
         scaleX = view.frame.width / size
-        scaleY = 487 / size
+        scaleY = view.frame.width / size
         
         UIView.animate(withDuration: 0.3, delay: 0.0, options: .curveEaseInOut, animations: {
             self.image.frame.origin.x = self.view.frame.midX - (self.size / 2)
