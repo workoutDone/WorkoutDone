@@ -14,16 +14,19 @@ final class DuringSetViewController : BaseViewController {
     lazy var weightTrainingArrayIndex = 0
     lazy var weightTrainingInfoArrayIndex = 0
     lazy var weightTrainingInfoCount = 0
-    
+    private lazy var weightTrainingInfoArray : [WeightTrainingInfo] = []
     
     // MARK: - ViewModel
     private let viewModel = DuringSetViewModel()
     private let didLoad = PublishSubject<Void>()
     let weightTrainingArrayIndexRx = PublishSubject<Int>()
-    
+    private let addWeightTrainingInfoTrigger = PublishSubject<Void>()
+    private let addWeightTrainingInfoIndexTrigger = PublishSubject<Int>()
     private lazy var input = DuringSetViewModel.Input(
         loadView: didLoad.asDriver(onErrorJustReturn: ()),
-        weightTraingingArrayIndex: weightTrainingArrayIndexRx.asDriver(onErrorJustReturn: 0))
+        weightTrainingArrayIndex: weightTrainingArrayIndexRx.asDriver(onErrorJustReturn: 0),
+        addWeightTrainingInfoTrigger: addWeightTrainingInfoTrigger.asDriver(onErrorJustReturn: ()),
+        addWightTrainingInfoIndexTrigger: addWeightTrainingInfoIndexTrigger.asDriver(onErrorJustReturn: 0))
     private lazy var output = viewModel.transform(input: input)
     // MARK: - PROPERTIES
     
@@ -52,7 +55,6 @@ final class DuringSetViewController : BaseViewController {
         }
         .disposed(by: disposeBag)
         
-<<<<<<< HEAD
         output.weightTrainingInfo.drive { value in
             self.weightTrainingInfoArray = value
 
@@ -67,9 +69,7 @@ final class DuringSetViewController : BaseViewController {
         })
         .disposed(by: disposeBag)
         
-        
-=======
->>>>>>> parent of 8306a47 (운동 세트 추가 구현)
+
         didLoad.onNext(())
         weightTrainingArrayIndexRx.onNext(0)
     }
@@ -114,15 +114,13 @@ extension DuringSetViewController : UITableViewDelegate, UITableViewDataSource, 
         return 1
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//            return dummy.weightTraining[weightTrainingArrayIndex].weightTrainingInfo.count
         return weightTrainingInfoCount
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: DuringSetTableViewCell.identifier, for: indexPath) as? DuringSetTableViewCell else { return UITableViewCell() }
         cell.selectionStyle = .none
-        cell.configureCell(dummy.weightTraining[weightTrainingArrayIndex].weightTrainingInfo[indexPath.row])
-        cell.checkWorkout(dummy.weightTraining[weightTrainingArrayIndex])
+        cell.configureCell(weightTrainingInfoArray[indexPath.row])
         return cell
     }
     
@@ -132,9 +130,8 @@ extension DuringSetViewController : UITableViewDelegate, UITableViewDataSource, 
             return footerView
         }
     func addWorkoutButtonTapped() {
-        let currentSetCount = dummy.weightTraining[weightTrainingArrayIndex].weightTrainingInfo.count
-        dummy.weightTraining[weightTrainingArrayIndex].weightTrainingInfo.append(ExWegihtTrainingInfo2(setCount: currentSetCount + 1, weight: nil, traingingCount: nil))
-        self.tableView.reloadData()
+        addWeightTrainingInfoTrigger.onNext(())
+        addWeightTrainingInfoIndexTrigger.onNext(weightTrainingArrayIndex)
         
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

@@ -245,11 +245,8 @@ final class DuringWorkoutViewController : BaseViewController {
                 self.weightTrainingArrayIndexRx.onNext(self.weightTrainingArrayIndex)
                 self.progressBarAnimation()
                 self.workoutTitleAnimation()
-<<<<<<< HEAD
                 self.duringSetViewController.weightTrainingArrayIndex = self.weightTrainingArrayIndex
-=======
                 self.duringSetViewController.weightTrainingArrayIndexRx.onNext(self.weightTrainingArrayIndex)
->>>>>>> parent of 8306a47 (운동 세트 추가 구현)
                 self.duringSetViewController.tableView.reloadData()
             }
             .disposed(by: disposeBag)
@@ -261,11 +258,8 @@ final class DuringWorkoutViewController : BaseViewController {
                 self.weightTrainingArrayIndexRx.onNext(self.weightTrainingArrayIndex)
                 self.progressBarAnimation()
                 self.workoutTitleAnimation()
-<<<<<<< HEAD
                 self.duringSetViewController.weightTrainingArrayIndex = self.weightTrainingArrayIndex
-=======
                 self.duringSetViewController.weightTrainingArrayIndexRx.onNext(self.weightTrainingArrayIndex)
->>>>>>> parent of 8306a47 (운동 세트 추가 구현)
                 self.duringSetViewController.tableView.reloadData()
             }
             .disposed(by: disposeBag)
