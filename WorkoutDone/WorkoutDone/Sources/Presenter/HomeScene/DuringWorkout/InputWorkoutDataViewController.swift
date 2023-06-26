@@ -11,10 +11,11 @@ import Then
 import RxCocoa
 import RxSwift
 
-class InputWorkoutDataViewController : BaseViewController {
+final class InputWorkoutDataViewController : BaseViewController {
     var weightTrainingArrayIndex = 0
     var weightTrainingInfoArrayIndex = 0
     var completionHandler : ((()) -> Void)?
+    var isCalisthenics : Bool = false
     
     // MARK: - ViewModel
     private var buttonTapped = PublishSubject<Void>()
@@ -51,6 +52,7 @@ class InputWorkoutDataViewController : BaseViewController {
         $0.backgroundColor = UIColor.colorF3F3F3
         $0.layer.cornerRadius = 12
         $0.keyboardType = .decimalPad
+        $0.font = .pretendard(.medium, size: 36)
     }
     
     private let kgLabel = UILabel().then {
@@ -70,6 +72,7 @@ class InputWorkoutDataViewController : BaseViewController {
     
     private let countTextField = UITextField().then {
         $0.backgroundColor = UIColor.colorF3F3F3
+        $0.font = .pretendard(.medium, size: 36)
         $0.layer.cornerRadius = 12
         $0.keyboardType = .numberPad
     }
@@ -93,10 +96,31 @@ class InputWorkoutDataViewController : BaseViewController {
          stackView.axis = .horizontal
          stackView.distribution = .fill
          stackView.alignment = .center
-         stackView.spacing = 27
+         stackView.spacing = 21
          return stackView
      }()
-    let cancelButton = UIButton().then {
+    
+    private let calisthenicsCountTextField = UITextField().then {
+        $0.backgroundColor = UIColor.colorF3F3F3
+        $0.font = .pretendard(.medium, size: 36)
+        $0.layer.cornerRadius = 12
+        $0.keyboardType = .numberPad
+    }
+    private let calisthenicsCountLabel = UILabel().then {
+        $0.text = "회"
+        $0.textColor = .color5E5E5E
+        $0.font = .pretendard(.regular, size: 18)
+    }
+    private lazy var calisthenicsCountStackView  : UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [calisthenicsCountTextField, calisthenicsCountLabel])
+         stackView.axis = .horizontal
+         stackView.distribution = .fill
+         stackView.alignment = .bottom
+         stackView.spacing = 5
+         return stackView
+     }()
+    
+    private let cancelButton = UIButton().then {
         $0.setTitle("취소", for: .normal)
         $0.setTitleColor(UIColor.color5E5E5E, for: .normal)
         $0.layer.cornerRadius = 10
@@ -105,7 +129,7 @@ class InputWorkoutDataViewController : BaseViewController {
         $0.titleLabel?.font = UIFont.pretendard(.semiBold, size: 20)
     }
     
-    let okayButton = UIButton().then {
+    private let okayButton = UIButton().then {
         $0.setTitle("확인", for: .normal)
         $0.setTitleColor(UIColor.colorFFFFFF, for: .normal)
         $0.layer.cornerRadius = 10
@@ -128,6 +152,7 @@ class InputWorkoutDataViewController : BaseViewController {
     // MARK: - LIFECYCLE
     override func viewDidLoad() {
         super.viewDidLoad()
+        print(isCalisthenics, "얍")
     }
     deinit {
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
@@ -175,11 +200,13 @@ class InputWorkoutDataViewController : BaseViewController {
     override func setComponents() {
         view.backgroundColor = UIColor(hex: 0x000000, alpha: 0.15)
         visualEffectView.frame = view.frame
+        inputWorkoutStackView.isHidden = isCalisthenics ? true : false
+        calisthenicsCountStackView.isHidden = isCalisthenics ? false : true
     }
     
     override func setupLayout() {
         view.addSubviews(visualEffectView, inputDataBackView)
-        inputDataBackView.addSubviews(buttonStackView, setLabel, inputWorkoutStackView)
+        inputDataBackView.addSubviews(buttonStackView, setLabel, inputWorkoutStackView, calisthenicsCountStackView)
     }
     override func setupConstraints() {
         [countTextField, kgTextField].forEach {
@@ -190,13 +217,21 @@ class InputWorkoutDataViewController : BaseViewController {
             $0.top.equalTo(setLabel.snp.bottom).offset(25)
             $0.centerX.equalToSuperview()
         }
+        calisthenicsCountStackView.snp.makeConstraints {
+            $0.top.equalTo(setLabel.snp.bottom).offset(25)
+            $0.centerX.equalToSuperview()
+        }
+        calisthenicsCountTextField.snp.makeConstraints {
+            $0.height.equalTo(40)
+            $0.width.equalTo(115)
+        }
         kgTextField.snp.makeConstraints {
             $0.height.equalTo(40)
-            $0.width.equalTo(68)
+            $0.width.equalTo(115)
         }
         countTextField.snp.makeConstraints {
             $0.height.equalTo(40)
-            $0.width.equalTo(68)
+            $0.width.equalTo(62)
         }
         inputDataBackView.snp.makeConstraints {
             $0.centerY.centerX.equalToSuperview()

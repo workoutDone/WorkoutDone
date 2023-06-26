@@ -10,7 +10,6 @@ import RxCocoa
 import RxSwift
 
 final class DuringSetViewController : BaseViewController {
-    var dummy = ExRoutine.dummy()
     lazy var weightTrainingArrayIndex = 0
     private lazy var weightTrainingInfoArrayIndex = 0
     private lazy var weightTrainingInfoCount = 0
@@ -108,13 +107,13 @@ final class DuringSetViewController : BaseViewController {
 
 extension DuringSetViewController : UITableViewDelegate, UITableViewDataSource, DuringSetFooterDelegate {
     
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            dummy.weightTraining[indexPath.section].weightTrainingInfo.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        }
-    }
-    
+//    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+//        if editingStyle == .delete {
+//            dummy.weightTraining[indexPath.section].weightTrainingInfo.remove(at: indexPath.row)
+//            tableView.deleteRows(at: [indexPath], with: .fade)
+//        }
+//    }
+//
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -127,8 +126,7 @@ extension DuringSetViewController : UITableViewDelegate, UITableViewDataSource, 
         guard let cell = tableView.dequeueReusableCell(withIdentifier: DuringSetTableViewCell.identifier, for: indexPath) as? DuringSetTableViewCell else { return UITableViewCell() }
         cell.selectionStyle = .none
         cell.configureCell(weightTrainingInfoArray[indexPath.row])
-//        guard let weightTraining = weightTraining else { retuWei}
-        cell.checkCalisthenics(weightTraining ?? WeightTraining(bodyPart: "", weightTraining: ""))
+        cell.checkCalisthenics(weightTraining ?? WeightTraining(bodyPart: "", weightTraining: "") )
         return cell
     }
     
@@ -148,6 +146,8 @@ extension DuringSetViewController : UITableViewDelegate, UITableViewDataSource, 
         inputWorkoutDataViewController.modalPresentationStyle = .overFullScreen
         inputWorkoutDataViewController.weightTrainingArrayIndex = weightTrainingArrayIndex
         inputWorkoutDataViewController.weightTrainingInfoArrayIndex = indexPath.row
+        let isCalisthenics = Calisthenics.calisthenicsArray.contains(weightTraining?.weightTraining ?? "") ? true : false
+        inputWorkoutDataViewController.isCalisthenics = isCalisthenics
         inputWorkoutDataViewController.completionHandler = { [weak self] _ in
             guard let self else { return }
             self.tableView.reloadData()
