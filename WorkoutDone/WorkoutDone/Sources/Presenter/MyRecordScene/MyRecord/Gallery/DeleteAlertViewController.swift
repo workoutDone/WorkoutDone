@@ -1,20 +1,15 @@
 //
-//  RoutineAlertViewController.swift
+//  DeleteAlertViewController.swift
 //  WorkoutDone
 //
-//  Created by hyemi on 2023/05/23.
+//  Created by hyemi on 2023/06/26.
 //
 
 import UIKit
 
-protocol RoutineAlertDelegate: AnyObject {
-    func returnToRoot()
-}
-
-class RoutineAlertViewController : BaseViewController {
-    
+class DeleteAlertViewController : BaseViewController {
     // MARK: - PROPERTIES
-    private var deleteAlertView = DeleteAlertView(deleteButtonTitle: "네 그만둘게요", title: "루틴 작성을 그만둘까요?", hasSubTitle: true, subTitle: "작성하던 내용은 저장되지 않아요!")
+    private var deleteAlertView = DeleteAlertView(deleteButtonTitle: "네, 지울게요", title: "이 사진을\n삭제할까요?", hasSubTitle: false, subTitle: "")
     
     weak var delegate: RoutineAlertDelegate?
     
@@ -44,4 +39,5 @@ class RoutineAlertViewController : BaseViewController {
         dismiss(animated: false)
         delegate?.returnToRoot()
     }
+
 }

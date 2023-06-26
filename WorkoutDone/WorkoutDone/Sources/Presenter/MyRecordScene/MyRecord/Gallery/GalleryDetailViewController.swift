@@ -59,6 +59,13 @@ class GalleryDetailViewController: BaseViewController {
         }
     }
     
+    override func actions() {
+        super.actions()
+        
+        deleteButton.addTarget(self, action: #selector(deleteButtonTapped), for: .touchUpInside)
+    }
+    
+    
     func setupDeleteButtonConstraints() {
         deleteButtonFrameY = view.frame.midY - ((view.frame.width * (4 / 3)) / 2) - 45.5
         
@@ -100,5 +107,11 @@ class GalleryDetailViewController: BaseViewController {
                 self.image.transform = CGAffineTransform(scaleX: self.scaleX, y: self.scaleY)
             })
         })
+    }
+    
+    @objc func deleteButtonTapped() {
+        let deleteAlertVC = DeleteAlertViewController()
+        deleteAlertVC.modalPresentationStyle = .overCurrentContext
+        self.present(deleteAlertVC, animated: false)
     }
 }
