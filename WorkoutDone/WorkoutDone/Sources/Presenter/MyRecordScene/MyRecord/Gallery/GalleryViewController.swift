@@ -11,9 +11,9 @@ import Then
 
 class GalleryViewController : BaseViewController {
     var galleryViewModel = GalleryViewModel()
-    var monthImages = [String : [UIImage]]()
+    var monthImages = [String : [(date: String, image: UIImage)]]()
     var month = [String]()
-    var frameImages = [UIImage]()
+    var frameImages = [(date: String, image: UIImage)]()
     var sortFrame : Bool = false
     
     private let imageCollectionView : UICollectionView = {
@@ -35,7 +35,7 @@ class GalleryViewController : BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         monthImages = galleryViewModel.loadImagesForMonth()
         month = monthImages.keys.sorted(by: >)
-
+       
         frameImages = galleryViewModel.loadImagesForFrame(frameIndex: 0)
         imageCollectionView.reloadData()
     }
@@ -75,12 +75,13 @@ class GalleryViewController : BaseViewController {
 extension GalleryViewController : SortButtonTappedDelegate, FrameDelegate {
     func sortButtonTapped(sortDelegate: Bool) {
         sortFrame = sortDelegate
-       
+    
         imageCollectionView.reloadData()
     }
     
     func didSelectFrame(frameIndex: Int) {
         frameImages = galleryViewModel.loadImagesForFrame(frameIndex: frameIndex)
+      
         imageCollectionView.reloadData()
     }
 }
@@ -148,7 +149,7 @@ extension GalleryViewController : UICollectionViewDelegate, UICollectionViewData
             if monthImages.count == 0 {
                 return emptyImagecell
             }
-            imageCell.image.image = monthImages[month[indexPath.section-1]]?[indexPath.row]
+            imageCell.image.image = monthImages[month[indexPath.section-1]]?[indexPath.row].image
             
             return imageCell
         }
@@ -156,7 +157,7 @@ extension GalleryViewController : UICollectionViewDelegate, UICollectionViewData
         if frameImages.count == 0 {
             return emptyImagecell
         }
-        imageCell.image.image = frameImages[indexPath.row]
+        imageCell.image.image = frameImages[indexPath.row].image
     
         return imageCell
     }
@@ -205,7 +206,7 @@ extension GalleryViewController : UICollectionViewDelegate, UICollectionViewData
         galleryDetailVC.frameX = positionOfCell?.minX ?? 0
         galleryDetailVC.frameY = positionOfCell?.minY ?? 0
         galleryDetailVC.size = positionOfCell?.width ?? 0
-        galleryDetailVC.image.image = sortFrame ? frameImages[indexPath.row] : monthImages[month[indexPath.section-1]]?[indexPath.row]
+        galleryDetailVC.image.image = sortFrame ? frameImages[indexPath.row].image : monthImages[month[indexPath.section-1]]?[indexPath.row].image
         galleryDetailVC.modalPresentationStyle = .overFullScreen
         self.present(galleryDetailVC, animated: false)
         
