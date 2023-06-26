@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 import Then
 
-class GalleryDetailViewController: BaseViewController {
+class GalleryDetailViewController : BaseViewController {
     var frameX : CGFloat = 0
     var frameY : CGFloat = 0
     var size : CGFloat = 0
@@ -19,6 +19,8 @@ class GalleryDetailViewController: BaseViewController {
     
     var deleteButtonFrameY : CGFloat = 0
 
+    var date : String = ""
+    
     var image = UIImageView().then {
         $0.contentMode = .scaleAspectFill
     }
@@ -65,7 +67,6 @@ class GalleryDetailViewController: BaseViewController {
         deleteButton.addTarget(self, action: #selector(deleteButtonTapped), for: .touchUpInside)
     }
     
-    
     func setupDeleteButtonConstraints() {
         deleteButtonFrameY = view.frame.midY - ((view.frame.width * (4 / 3)) / 2) - 45.5
         
@@ -111,6 +112,7 @@ class GalleryDetailViewController: BaseViewController {
     
     @objc func deleteButtonTapped() {
         let deleteAlertVC = DeleteAlertViewController()
+        deleteAlertVC.date = date
         deleteAlertVC.modalPresentationStyle = .overCurrentContext
         self.present(deleteAlertVC, animated: false)
     }

@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol RoutineAlertDelegate: AnyObject {
+protocol RoutineAlertDelegate : AnyObject {
     func returnToRoot()
 }
 

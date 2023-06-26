@@ -8,10 +8,12 @@
 import UIKit
 
 class DeleteAlertViewController : BaseViewController {
+    var date : String = ""
+    
+    var galleryViewModel = GalleryViewModel()
+    
     // MARK: - PROPERTIES
     private var deleteAlertView = DeleteAlertView(deleteButtonTitle: "네, 지울게요", title: "이 사진을\n삭제할까요?", hasSubTitle: false, subTitle: "")
-    
-    weak var delegate: RoutineAlertDelegate?
     
     // MARK: - LIFECYCLE
     override func viewDidLoad() {
@@ -36,8 +38,12 @@ class DeleteAlertViewController : BaseViewController {
     }
     
     @objc func deleteButtonTapped() {
-        dismiss(animated: false)
-        delegate?.returnToRoot()
-    }
+        galleryViewModel.deleteImage(date: date)
+       
+        NotificationCenter.default.post(name: Notification.Name("DismissNotification"), object: nil)
+        
+        self.presentingViewController?.presentingViewController?.dismiss(animated: false)
 
+    }
 }
+

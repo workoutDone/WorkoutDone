@@ -46,4 +46,16 @@ struct GalleryViewModel {
         
         return year == currentYear
     }
+    
+    func deleteImage(date: String) {
+        let realm = try! Realm()
+        
+        let imageData = realm.objects(WorkOutDoneData.self).filter("date == %@", date).first!
+        
+        guard let frameImage = imageData.frameImage else { return }
+        
+        try! realm.write {
+            realm.delete(frameImage)
+        }
+    }
 }

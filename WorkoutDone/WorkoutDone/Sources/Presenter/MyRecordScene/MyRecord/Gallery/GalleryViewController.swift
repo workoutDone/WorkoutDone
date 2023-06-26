@@ -15,6 +15,7 @@ class GalleryViewController : BaseViewController {
     var month = [String]()
     var frameImages = [(date: String, image: UIImage)]()
     var sortFrame : Bool = false
+    var selectedFrameIndex = 0
     
     private let imageCollectionView : UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -36,8 +37,14 @@ class GalleryViewController : BaseViewController {
         monthImages = galleryViewModel.loadImagesForMonth()
         month = monthImages.keys.sorted(by: >)
        
-        frameImages = galleryViewModel.loadImagesForFrame(frameIndex: 0)
+        frameImages = galleryViewModel.loadImagesForFrame(frameIndex: selectedFrameIndex)
         imageCollectionView.reloadData()
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(returnToRoot), name: Notification.Name("DismissNotification"), object: nil)
     }
     
     override func setupLayout() {
@@ -70,22 +77,16 @@ class GalleryViewController : BaseViewController {
         }
         return nil
     }
-}
+    
+    @objc func returnToRoot() {
+        monthImages = galleryViewModel.loadImagesForMonth()
+        month = monthImages.keys.sorted(by: >)
 
-extension GalleryViewController : SortButtonTappedDelegate, FrameDelegate {
-    func sortButtonTapped(sortDelegate: Bool) {
-        sortFrame = sortDelegate
-    
-        imageCollectionView.reloadData()
-    }
-    
-    func didSelectFrame(frameIndex: Int) {
-        frameImages = galleryViewModel.loadImagesForFrame(frameIndex: frameIndex)
-      
+        frameImages = galleryViewModel.loadImagesForFrame(frameIndex: selectedFrameIndex)
+
         imageCollectionView.reloadData()
     }
 }
-
 
 extension GalleryViewController : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -207,8 +208,28 @@ extension GalleryViewController : UICollectionViewDelegate, UICollectionViewData
         galleryDetailVC.frameY = positionOfCell?.minY ?? 0
         galleryDetailVC.size = positionOfCell?.width ?? 0
         galleryDetailVC.image.image = sortFrame ? frameImages[indexPath.row].image : monthImages[month[indexPath.section-1]]?[indexPath.row].image
+        galleryDetailVC.date = sortFrame ? frameImages[indexPath.row].date : monthImages[month[indexPath.section-1]]?[indexPath.row].date ?? ""
         galleryDetailVC.modalPresentationStyle = .overFullScreen
         self.present(galleryDetailVC, animated: false)
         
     }
 }
+
+extension GalleryViewController : SortButtonTappedDelegate, FrameDelegate {
+    
+    func sortButtonTapped(sortDelegate: Bool) {
+        sortFrame = sortDelegate
+    
+        imageCollectionView.reloadData()
+    }
+    
+    func didSelectFrame(frameIndex: Int) {
+        selectedFrameIndex = frameIndex
+        frameImages = galleryViewModel.loadImagesForFrame(frameIndex: selectedFrameIndex)
+      
+        imageCollectionView.reloadData()
+    }
+    
+}
+
+
