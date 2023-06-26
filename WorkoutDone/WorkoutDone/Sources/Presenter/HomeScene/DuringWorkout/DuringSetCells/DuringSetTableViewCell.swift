@@ -77,8 +77,8 @@ class DuringSetTableViewCell : UITableViewCell {
         kgLabel.text = wegihtTrainingInfo.weight == 0 ? "-kg" : "\(wegihtTrainingInfo.weight ?? 0)kg"
         countLabel.text = wegihtTrainingInfo.trainingCount == 0 ? "-회" : "\(wegihtTrainingInfo.trainingCount ?? 0)회"
     }
-    func checkWorkout(_ weightTraining : ExWegihtTraining2) {
-        if Calisthenics.calisthenicsArray.contains(weightTraining.weightTrainging) {
+    func checkCalisthenics(_ weightTraining : WeightTraining) {
+        if Calisthenics.calisthenicsArray.contains(weightTraining.weightTraining) {
             kgLabel.isHidden = true
         }
         else {

@@ -12,8 +12,9 @@ import RxSwift
 final class DuringSetViewController : BaseViewController {
     var dummy = ExRoutine.dummy()
     lazy var weightTrainingArrayIndex = 0
-    lazy var weightTrainingInfoArrayIndex = 0
-    lazy var weightTrainingInfoCount = 0
+    private lazy var weightTrainingInfoArrayIndex = 0
+    private lazy var weightTrainingInfoCount = 0
+    private var weightTraining : WeightTraining?
     private lazy var weightTrainingInfoArray : [WeightTrainingInfo] = []
     
     // MARK: - ViewModel
@@ -69,6 +70,11 @@ final class DuringSetViewController : BaseViewController {
         })
         .disposed(by: disposeBag)
         
+        output.weightTraining.drive(onNext: { value in
+            self.weightTraining = value
+        })
+        .disposed(by: disposeBag)
+        
 
         didLoad.onNext(())
         weightTrainingArrayIndexRx.onNext(0)
@@ -121,6 +127,8 @@ extension DuringSetViewController : UITableViewDelegate, UITableViewDataSource, 
         guard let cell = tableView.dequeueReusableCell(withIdentifier: DuringSetTableViewCell.identifier, for: indexPath) as? DuringSetTableViewCell else { return UITableViewCell() }
         cell.selectionStyle = .none
         cell.configureCell(weightTrainingInfoArray[indexPath.row])
+//        guard let weightTraining = weightTraining else { retuWei}
+        cell.checkCalisthenics(weightTraining ?? WeightTraining(bodyPart: "", weightTraining: ""))
         return cell
     }
     
