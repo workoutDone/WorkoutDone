@@ -107,8 +107,6 @@
 		A526C1302A1C783A00DAC0EF /* HomeButtonLessPressShutterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A526C12F2A1C783A00DAC0EF /* HomeButtonLessPressShutterViewController.swift */; };
 		A52F65F82A09FE9D00D398DF /* NotificationCenterManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52F65F72A09FE9D00D398DF /* NotificationCenterManager.swift */; };
 		A52F65FA2A0A015F00D398DF /* NotificationName.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52F65F92A0A015F00D398DF /* NotificationName.swift */; };
-		A53FF9082A3E0A720086693D /* FacebookCore in Frameworks */ = {isa = PBXBuildFile; productRef = A53FF9072A3E0A720086693D /* FacebookCore */; };
-		A53FF90A2A3E0A720086693D /* FacebookShare in Frameworks */ = {isa = PBXBuildFile; productRef = A53FF9092A3E0A720086693D /* FacebookShare */; };
 		A54C485E29FF9FB1004CEE3D /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54C485D29FF9FB1004CEE3D /* RealmManager.swift */; };
 		A54C486129FFA176004CEE3D /* HomeButtonLessPhotoFrameTypeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54C486029FFA176004CEE3D /* HomeButtonLessPhotoFrameTypeViewController.swift */; };
 		A54C486329FFA1A0004CEE3D /* HomeButtonPhotoFrameTypeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54C486229FFA1A0004CEE3D /* HomeButtonPhotoFrameTypeViewController.swift */; };
@@ -345,8 +343,6 @@
 				9200600129B1A51F00586063 /* RxSwift in Frameworks */,
 				92005FFF29B1A51F00586063 /* RxRelay in Frameworks */,
 				92005FFA29B1A4D800586063 /* Then in Frameworks */,
-				A53FF9082A3E0A720086693D /* FacebookCore in Frameworks */,
-				A53FF90A2A3E0A720086693D /* FacebookShare in Frameworks */,
 				9200600429B1A53A00586063 /* DeviceKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -908,8 +904,6 @@
 				9200600329B1A53A00586063 /* DeviceKit */,
 				9200600629B1A55A00586063 /* Realm */,
 				9200600829B1A55A00586063 /* RealmSwift */,
-				A53FF9072A3E0A720086693D /* FacebookCore */,
-				A53FF9092A3E0A720086693D /* FacebookShare */,
 			);
 			productName = WorkoutDone;
 			productReference = 92005FC229B1A49400586063 /* WorkoutDone.app */;
@@ -989,7 +983,6 @@
 				92005FFB29B1A51F00586063 /* XCRemoteSwiftPackageReference "RxSwift" */,
 				9200600229B1A53A00586063 /* XCRemoteSwiftPackageReference "DeviceKit" */,
 				9200600529B1A55A00586063 /* XCRemoteSwiftPackageReference "realm-swift" */,
-				A53FF9062A3E0A720086693D /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */,
 			);
 			productRefGroup = 92005FC329B1A49400586063 /* Products */;
 			projectDirPath = "";
@@ -1554,14 +1547,6 @@
 				kind = branch;
 			};
 		};
-		A53FF9062A3E0A720086693D /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/facebook/facebook-ios-sdk";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 9.0.0;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1604,16 +1589,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 9200600529B1A55A00586063 /* XCRemoteSwiftPackageReference "realm-swift" */;
 			productName = RealmSwift;
-		};
-		A53FF9072A3E0A720086693D /* FacebookCore */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = A53FF9062A3E0A720086693D /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */;
-			productName = FacebookCore;
-		};
-		A53FF9092A3E0A720086693D /* FacebookShare */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = A53FF9062A3E0A720086693D /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */;
-			productName = FacebookShare;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
