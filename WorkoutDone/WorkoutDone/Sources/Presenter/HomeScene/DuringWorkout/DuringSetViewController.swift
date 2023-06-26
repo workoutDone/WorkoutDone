@@ -138,6 +138,12 @@ extension DuringSetViewController : UITableViewDelegate, UITableViewDataSource, 
         let inputWorkoutDataViewController = InputWorkoutDataViewController()
         inputWorkoutDataViewController.modalTransitionStyle = .crossDissolve
         inputWorkoutDataViewController.modalPresentationStyle = .overFullScreen
+        inputWorkoutDataViewController.weightTrainingArrayIndex = weightTrainingArrayIndex
+        inputWorkoutDataViewController.weightTrainingInfoArrayIndex = indexPath.row
+        inputWorkoutDataViewController.completionHandler = { [weak self] _ in
+            guard let self else { return }
+            self.tableView.reloadData()
+        }
         present(inputWorkoutDataViewController, animated: true)
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

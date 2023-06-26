@@ -10,11 +10,14 @@ import RxSwift
 import RxCocoa
 
 class InputWorkoutDataViewModel {
+    let duringWorkoutRoutine = DuringWorkoutRoutine.shared
     
     struct Input {
         let countInputText : Driver<String>
         let weightInputText : Driver<String>
         let buttonTapped : Driver<Void>
+        let weightTrainingArrayIndex : Driver<Int>
+        let weightTrainingInfoArrayIndex : Driver<Int>
     }
     
     struct Output {
@@ -23,6 +26,7 @@ class InputWorkoutDataViewModel {
     
     func checkValidInputData(weight: Double, count: Int) -> Bool {
         if weight > 1000 || count > 1000 {
+            print(weight, count)
             return false
         }
         else {
@@ -31,11 +35,21 @@ class InputWorkoutDataViewModel {
     }
     
     func transform(input: Input) -> Output {
-        let inputData = Driver<Bool>.combineLatest(input.countInputText, input.weightInputText, input.buttonTapped, resultSelector: { (count, weight, _) in
+        let inputData = Driver<Bool>.combineLatest(
+            input.countInputText,
+            input.weightInputText,
+            input.weightTrainingArrayIndex,
+            input.weightTrainingInfoArrayIndex,
+            input.buttonTapped,
+            resultSelector: { (count, weight, arrayIndex, infoArrayIndex, _) in
             let IntCount = Int(count) ?? 0
             let doubleWeight = Double(weight) ?? 0
             
             if self.checkValidInputData(weight: doubleWeight, count: IntCount) {
+                let routine = self.duringWorkoutRoutine.routine
+                routine?.weightTraining[arrayIndex].weightTrainingInfo[infoArrayIndex].weight = doubleWeight
+                routine?.weightTraining[arrayIndex].weightTrainingInfo[infoArrayIndex].trainingCount = IntCount
+                print(routine?.weightTraining)
                 return true
             }
             else {

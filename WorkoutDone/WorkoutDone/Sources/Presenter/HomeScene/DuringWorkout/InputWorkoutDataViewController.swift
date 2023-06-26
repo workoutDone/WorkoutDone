@@ -12,14 +12,36 @@ import RxCocoa
 import RxSwift
 
 class InputWorkoutDataViewController : BaseViewController {
-    lazy var weightTrainingArrayIndex = 0
-    lazy var weightTrainingInfoArrayIndex = 0
+    var weightTrainingArrayIndex = 0
+    var weightTrainingInfoArrayIndex = 0
+    var completionHandler : ((()) -> Void)?
+//    lazy var weightTrainingArrayIndex = 0 {
+//        didSet {
+//            print(weightTrainingArrayIndex, "weightTrainingArrayIndex")
+//            weightTrainingArrayIndexRx.onNext(weightTrainingArrayIndex)
+//        }
+//    }
+//    lazy var weightTrainingInfoArrayIndex = 0 {
+//        didSet {
+//            print(weightTrainingInfoArrayIndex, "weightTrainingInfoArrayIndex")
+//            weightTrainingInfoArrayIndexRx.onNext(weightTrainingInfoArrayIndex)
+//        }
+//    }
     let duringSetViewController = DuringSetViewController()
     
     // MARK: - ViewModel
     private var buttonTapped = PublishSubject<Void>()
+    private var weightTrainingArrayIndexRx = PublishSubject<Int>()
+    private var weightTrainingInfoArrayIndexRx = PublishSubject<Int>()
+    private var weightData = PublishSubject<String>()
+    private var countData = PublishSubject<String>()
     private var viewModel = InputWorkoutDataViewModel()
-    private lazy var input = InputWorkoutDataViewModel.Input(countInputText: countTextField.rx.text.orEmpty.asDriver(), weightInputText: kgTextField.rx.text.orEmpty.asDriver(), buttonTapped: buttonTapped.asDriver(onErrorJustReturn: ()))
+    private lazy var input = InputWorkoutDataViewModel.Input(
+        countInputText: countData.asDriver(onErrorJustReturn: ""),
+        weightInputText: weightData.asDriver(onErrorJustReturn: ""),
+        buttonTapped: buttonTapped.asDriver(onErrorJustReturn: ()),
+        weightTrainingArrayIndex: weightTrainingArrayIndexRx.asDriver(onErrorJustReturn: 0),
+        weightTrainingInfoArrayIndex: weightTrainingInfoArrayIndexRx.asDriver(onErrorJustReturn: 0))
     private lazy var output = viewModel.transform(input: input)
     // MARK: - PROPERTIES
     
@@ -138,15 +160,22 @@ class InputWorkoutDataViewController : BaseViewController {
     override func setupBinding() {
         super.setupBinding()
         
+        
         okayButton.rx.tap
-            .bind { value in
+            .bind { [weak self] value in
+                guard let self else { return }
                 self.buttonTapped.onNext(())
+                self.countData.onNext(self.countTextField.text ?? "")
+                self.weightData.onNext(self.kgTextField.text ?? "")
+                self.weightTrainingArrayIndexRx.onNext(self.weightTrainingArrayIndex)
+                self.weightTrainingInfoArrayIndexRx.onNext(self.weightTrainingInfoArrayIndex)
             }
             .disposed(by: disposeBag)
         
         output.outputData.drive(onNext: { value in
             if value {
                 self.dismiss(animated: true)
+                self.completionHandler?(())
                 print("오케")
             }
             else {
