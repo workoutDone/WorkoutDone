@@ -12,7 +12,7 @@ import Photos
 import RxSwift
 import RxCocoa
 
-class HomeButtonLessPressShutterViewController : BaseViewController {
+final class HomeButtonLessPressShutterViewController : BaseViewController {
     
     var isSelectFrame: Int = 0
     var captureImage: UIImage?
