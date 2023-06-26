@@ -15,19 +15,6 @@ class InputWorkoutDataViewController : BaseViewController {
     var weightTrainingArrayIndex = 0
     var weightTrainingInfoArrayIndex = 0
     var completionHandler : ((()) -> Void)?
-//    lazy var weightTrainingArrayIndex = 0 {
-//        didSet {
-//            print(weightTrainingArrayIndex, "weightTrainingArrayIndex")
-//            weightTrainingArrayIndexRx.onNext(weightTrainingArrayIndex)
-//        }
-//    }
-//    lazy var weightTrainingInfoArrayIndex = 0 {
-//        didSet {
-//            print(weightTrainingInfoArrayIndex, "weightTrainingInfoArrayIndex")
-//            weightTrainingInfoArrayIndexRx.onNext(weightTrainingInfoArrayIndex)
-//        }
-//    }
-    let duringSetViewController = DuringSetViewController()
     
     // MARK: - ViewModel
     private var buttonTapped = PublishSubject<Void>()
@@ -176,10 +163,8 @@ class InputWorkoutDataViewController : BaseViewController {
             if value {
                 self.dismiss(animated: true)
                 self.completionHandler?(())
-                print("오케")
             }
             else {
-                print("노노")
                 self.showToastMessage()
             }
         })
@@ -240,21 +225,10 @@ class InputWorkoutDataViewController : BaseViewController {
     // MARK: - ACTIONS
     override func actions() {
         cancelButton.addTarget(self, action: #selector(cancelButtonTapped), for: .touchUpInside)
-//        okayButton.addTarget(self, action: #selector(okayButtonTapped), for: .touchUpInside)
     }
     @objc func cancelButtonTapped() {
         dismiss(animated: true)
     }
-//    @objc func okayButtonTapped() {
-//
-//        duringSetViewController.dummy.weightTraining[weightTrainingArrayIndex].weightTrainingInfo[weightTrainingInfoArrayIndex].weight = Double(kgTextField.text ?? "")
-//        duringSetViewController.dummy.weightTraining[weightTrainingArrayIndex].weightTrainingInfo[weightTrainingInfoArrayIndex].traingingCount = Int(countTextField.text ?? "")
-//
-//        duringSetViewController.tableView.reloadData()
-//        dismiss(animated: true)
-//        print(duringSetViewController.dummy, "dkdkdk")
-//
-//    }
     @objc func keyboardUp(notification: NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             ///화면 사이즈의 중앙과 뷰의 중앙의 차이
