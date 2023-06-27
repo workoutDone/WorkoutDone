@@ -12,7 +12,7 @@ import Photos
 import RxSwift
 import RxCocoa
 
-class HomeButtonLessPressShutterViewController : BaseViewController {
+final class HomeButtonLessPressShutterViewController : BaseViewController {
     
     var isSelectFrame: Int = 0
     var captureImage: UIImage?
@@ -205,7 +205,7 @@ class HomeButtonLessPressShutterViewController : BaseViewController {
         againButton.addTarget(self, action: #selector(againButtonTapped), for: .touchUpInside)
     }
     @objc func instaButtonTapped() {
-        if let storyShareURL = URL(string: "instagram-stories://share") {
+        if let storyShareURL = URL(string: "instagram-stories://share?source_application=279031477992220") {
             if UIApplication.shared.canOpenURL(storyShareURL) {
                 let targetSize = CGSize(width: captureImageView.frame.width, height: captureImageView.frame.height)
                 let renderer = UIGraphicsImageRenderer(size: targetSize)
