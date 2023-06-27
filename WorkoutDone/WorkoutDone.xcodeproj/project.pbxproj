@@ -109,6 +109,7 @@
 		A52F65F82A09FE9D00D398DF /* NotificationCenterManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52F65F72A09FE9D00D398DF /* NotificationCenterManager.swift */; };
 		A52F65FA2A0A015F00D398DF /* NotificationName.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52F65F92A0A015F00D398DF /* NotificationName.swift */; };
 		A53FF90C2A3E354C0086693D /* DuringWorkoutRoutine.swift in Sources */ = {isa = PBXBuildFile; fileRef = A53FF90B2A3E354C0086693D /* DuringWorkoutRoutine.swift */; };
+		A5489BC72A45942A00D74370 /* DuringSetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5489BC62A45942A00D74370 /* DuringSetViewModel.swift */; };
 		A54C485E29FF9FB1004CEE3D /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54C485D29FF9FB1004CEE3D /* RealmManager.swift */; };
 		A54C486129FFA176004CEE3D /* HomeButtonLessPhotoFrameTypeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54C486029FFA176004CEE3D /* HomeButtonLessPhotoFrameTypeViewController.swift */; };
 		A54C486329FFA1A0004CEE3D /* HomeButtonPhotoFrameTypeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54C486229FFA1A0004CEE3D /* HomeButtonPhotoFrameTypeViewController.swift */; };
@@ -162,6 +163,7 @@
 		A5DA464F2A37A6410022710C /* DuringWorkoutResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5DA464E2A37A6410022710C /* DuringWorkoutResultViewController.swift */; };
 		A5E2DEEE2A17611B002A60A4 /* DuringWorkoutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E2DEED2A17611B002A60A4 /* DuringWorkoutViewController.swift */; };
 		A5FD2BDD2A44228900295EF9 /* HomeButtonAuthorizedCameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5FD2BDC2A44228900295EF9 /* HomeButtonAuthorizedCameraView.swift */; };
+		A5FD2BDF2A45777300295EF9 /* DuringWorkoutViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5FD2BDE2A45777300295EF9 /* DuringWorkoutViewModel.swift */; };
 		A5FD469829DDDB4C003AC96E /* SkeletalMuslemassViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5FD469729DDDB4C003AC96E /* SkeletalMuslemassViewModel.swift */; };
 		A5FD469A29DDF18E003AC96E /* FatPercentageGraphViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5FD469929DDF18E003AC96E /* FatPercentageGraphViewModel.swift */; };
 /* End PBXBuildFile section */
@@ -282,6 +284,7 @@
 		A52F65F72A09FE9D00D398DF /* NotificationCenterManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCenterManager.swift; sourceTree = "<group>"; };
 		A52F65F92A0A015F00D398DF /* NotificationName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationName.swift; sourceTree = "<group>"; };
 		A53FF90B2A3E354C0086693D /* DuringWorkoutRoutine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuringWorkoutRoutine.swift; sourceTree = "<group>"; };
+		A5489BC62A45942A00D74370 /* DuringSetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuringSetViewModel.swift; sourceTree = "<group>"; };
 		A54C485D29FF9FB1004CEE3D /* RealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
 		A54C486029FFA176004CEE3D /* HomeButtonLessPhotoFrameTypeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeButtonLessPhotoFrameTypeViewController.swift; sourceTree = "<group>"; };
 		A54C486229FFA1A0004CEE3D /* HomeButtonPhotoFrameTypeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeButtonPhotoFrameTypeViewController.swift; sourceTree = "<group>"; };
@@ -335,6 +338,7 @@
 		A5DA464E2A37A6410022710C /* DuringWorkoutResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuringWorkoutResultViewController.swift; sourceTree = "<group>"; };
 		A5E2DEED2A17611B002A60A4 /* DuringWorkoutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuringWorkoutViewController.swift; sourceTree = "<group>"; };
 		A5FD2BDC2A44228900295EF9 /* HomeButtonAuthorizedCameraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeButtonAuthorizedCameraView.swift; sourceTree = "<group>"; };
+		A5FD2BDE2A45777300295EF9 /* DuringWorkoutViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuringWorkoutViewModel.swift; sourceTree = "<group>"; };
 		A5FD469729DDDB4C003AC96E /* SkeletalMuslemassViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkeletalMuslemassViewModel.swift; sourceTree = "<group>"; };
 		A5FD469929DDF18E003AC96E /* FatPercentageGraphViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FatPercentageGraphViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -877,7 +881,9 @@
 			children = (
 				A53FF90B2A3E354C0086693D /* DuringWorkoutRoutine.swift */,
 				A5E2DEED2A17611B002A60A4 /* DuringWorkoutViewController.swift */,
+				A5FD2BDE2A45777300295EF9 /* DuringWorkoutViewModel.swift */,
 				A58327772A20C110002F8F6E /* DuringSetViewController.swift */,
+				A5489BC62A45942A00D74370 /* DuringSetViewModel.swift */,
 				A58327792A20C135002F8F6E /* DuringEditRoutineViewController.swift */,
 				A583277B2A20D30A002F8F6E /* DuringWorkoutTimerViewController.swift */,
 				A5091F262A31A896002FE6DA /* EndWorkoutViewController.swift */,
@@ -1102,6 +1108,7 @@
 				A59ACBC029B6E2310084C73E /* DeviceManager.swift in Sources */,
 				9204827F29FF0D230015A02F /* FrameImageViewModel.swift in Sources */,
 				926998E72A147918003DDAD2 /* BodyPartCell.swift in Sources */,
+				A5FD2BDF2A45777300295EF9 /* DuringWorkoutViewModel.swift in Sources */,
 				A5FD2BDD2A44228900295EF9 /* HomeButtonAuthorizedCameraView.swift in Sources */,
 				A59EF6F129C4C909005DE9B5 /* PreviewView.swift in Sources */,
 				A53FF90C2A3E354C0086693D /* DuringWorkoutRoutine.swift in Sources */,
@@ -1156,6 +1163,7 @@
 				A5021EEA2A194E78007DE096 /* RightBarButtonItem.swift in Sources */,
 				926999502A172F4E003DDAD2 /* RoutineDetailCell.swift in Sources */,
 				926999542A1CEBA8003DDAD2 /* RoutineAlertViewController.swift in Sources */,
+				A5489BC72A45942A00D74370 /* DuringSetViewModel.swift in Sources */,
 				A551491A2A0FE64900222A72 /* UILabel.swift in Sources */,
 				A576693B29B6EB4900673DFE /* ImageSelectionViewController.swift in Sources */,
 				A52F65FA2A0A015F00D398DF /* NotificationName.swift in Sources */,
@@ -1350,7 +1358,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = U4YRB4XYPR;
+				DEVELOPMENT_TEAM = JB8T59WMFR;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = WorkoutDone/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "오운완";
@@ -1383,7 +1391,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = U4YRB4XYPR;
+				DEVELOPMENT_TEAM = JB8T59WMFR;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = WorkoutDone/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "오운완";
