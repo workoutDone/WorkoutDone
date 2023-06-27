@@ -12,12 +12,6 @@ import Then
 class FrameCell: UICollectionViewCell {
 
     // MARK: - PROPERTIES
-    let basicLabel = UILabel().then {
-        $0.text = "기본"
-        $0.font = .pretendard(.regular, size: 18)
-        $0.textColor = .color7442FF
-    }
-    
     var frameImage = UIImageView().then {
         $0.contentMode = .scaleAspectFill
         $0.layer.cornerRadius = 10
@@ -27,11 +21,8 @@ class FrameCell: UICollectionViewCell {
         super.init(frame: frame)
         
         contentView.addSubview(frameImage)
-        contentView.addSubview(basicLabel)
         
         layer.cornerRadius = 10
-        
-        basicLabel.isHidden = true
         
         setLayout()
     }
@@ -43,10 +34,6 @@ class FrameCell: UICollectionViewCell {
     func setLayout() {
         frameImage.snp.makeConstraints {
             $0.top.leading.trailing.bottom.equalToSuperview()
-        }
-        
-        basicLabel.snp.makeConstraints {
-            $0.centerX.centerY.equalToSuperview()
         }
     }
 }

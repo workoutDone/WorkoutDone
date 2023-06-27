@@ -78,6 +78,7 @@ extension FrameHeaderView : UICollectionViewDelegate, UICollectionViewDataSource
             cell.frameImage.layer.borderColor = UIColor.color7442FF.cgColor
             cell.frameImage.backgroundColor = .colorE6E0FF
         }
+        
         return cell
     }
     

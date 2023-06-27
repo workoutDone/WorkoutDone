@@ -65,7 +65,6 @@ final class PressShutterViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-
     }
     
     override func setComponents() {

@@ -8,7 +8,7 @@
 import UIKit
 
 final class HomeButtonAuthorizedCameraView : BaseUIView {
-    private let frameImages: [String] = ["frame1", "frame2", "frame3", "frame4", "frame5", "frame6"]
+    private let frameImages: [String] = ["unselectedDefaultImage", "frame1", "frame2", "frame3", "frame4", "frame5", "frame6"]
     var isSelectFrameImagesIndex = 0
     // MARK: - PROPERTIES
     lazy var previewView = PreviewView()
@@ -103,27 +103,30 @@ final class HomeButtonAuthorizedCameraView : BaseUIView {
 
 extension HomeButtonAuthorizedCameraView : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return frameImages.count + 1
+        return frameImages.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FrameCell", for: indexPath) as? FrameCell else { return UICollectionViewCell() }
+        cell.frameImage.image = UIImage(named: frameImages[indexPath.row])
+  
+        cell.frameImage.layer.borderWidth = 1
+        cell.frameImage.layer.borderColor = UIColor.colorCCCCCC.cgColor
+        cell.frameImage.backgroundColor = .colorFFFFFF
+        
         if indexPath.row == 0 {
-            cell.frameImage.image = nil
-            cell.basicLabel.isHidden = false
-        } else {
-            cell.frameImage.image = UIImage(named: frameImages[indexPath.row - 1])
-            cell.basicLabel.isHidden = true
+            cell.frameImage.layer.borderWidth = 0
+            if isSelectFrameImagesIndex == 0 {
+                cell.frameImage.image = UIImage(named: "selectedDefaultImage")
+            }
         }
         
         if indexPath.row == isSelectFrameImagesIndex {
-            cell.layer.borderWidth = 2
-            cell.layer.borderColor = UIColor.color7442FF.cgColor
-            cell.backgroundColor = .colorE6E0FF
-        } else {
-            cell.layer.borderWidth = 0
-            cell.backgroundColor = .clear
+            cell.frameImage.layer.borderWidth = 2
+            cell.frameImage.layer.borderColor = UIColor.color7442FF.cgColor
+            cell.frameImage.backgroundColor = .colorE6E0FF
         }
+        
         return cell
     }
     
