@@ -92,6 +92,8 @@
 		92DCF54A29D6BD8200F90002 /* SortButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DCF54929D6BD8200F90002 /* SortButtonCell.swift */; };
 		92DCF54C29D6D15600F90002 /* FrameHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DCF54B29D6D15600F90002 /* FrameHeaderView.swift */; };
 		92DCF55A29D878FB00F90002 /* GalleryDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DCF55929D878FB00F90002 /* GalleryDetailViewController.swift */; };
+		92DCF61229DCAE3D00F90002 /* GridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DCF61129DCAE3D00F90002 /* GridView.swift */; };
+		92FE26062A49BF4600BCDB82 /* DeleteAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92FE26052A49BF4600BCDB82 /* DeleteAlertViewController.swift */; };
 		A5021EE82A1906EB007DE096 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5021EE72A1906EB007DE096 /* Constants.swift */; };
 		A5021EEA2A194E78007DE096 /* RightBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5021EE92A194E78007DE096 /* RightBarButtonItem.swift */; };
 		A5021EEC2A1A8AF4007DE096 /* PermissionDeniedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5021EEB2A1A8AF4007DE096 /* PermissionDeniedView.swift */; };
@@ -267,6 +269,8 @@
 		92DCF54929D6BD8200F90002 /* SortButtonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortButtonCell.swift; sourceTree = "<group>"; };
 		92DCF54B29D6D15600F90002 /* FrameHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameHeaderView.swift; sourceTree = "<group>"; };
 		92DCF55929D878FB00F90002 /* GalleryDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryDetailViewController.swift; sourceTree = "<group>"; };
+		92DCF61129DCAE3D00F90002 /* GridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridView.swift; sourceTree = "<group>"; };
+		92FE26052A49BF4600BCDB82 /* DeleteAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAlertViewController.swift; sourceTree = "<group>"; };
 		A5021EE72A1906EB007DE096 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		A5021EE92A194E78007DE096 /* RightBarButtonItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RightBarButtonItem.swift; sourceTree = "<group>"; };
 		A5021EEB2A1A8AF4007DE096 /* PermissionDeniedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionDeniedView.swift; sourceTree = "<group>"; };
@@ -742,6 +746,7 @@
 				92DCF54129D5B41700F90002 /* MonthHeaderView.swift */,
 				92DCF54B29D6D15600F90002 /* FrameHeaderView.swift */,
 				92DCF55929D878FB00F90002 /* GalleryDetailViewController.swift */,
+				92FE26052A49BF4600BCDB82 /* DeleteAlertViewController.swift */,
 				925963482A09A20000F5B67C /* GalleryViewModel.swift */,
 				92DCF4EF29D2CD2E00F90002 /* Cell */,
 			);
@@ -1089,6 +1094,7 @@
 				A5021EEC2A1A8AF4007DE096 /* PermissionDeniedView.swift in Sources */,
 				A551F5C42A2923E300F96860 /* UNNotificationCenter.swift in Sources */,
 				9291583F2A2886150022BEF9 /* EditButton.swift in Sources */,
+				92FE26062A49BF4600BCDB82 /* DeleteAlertViewController.swift in Sources */,
 				92DCF4D229D1B64100F90002 /* FrameCategoryCell.swift in Sources */,
 				A5FD469829DDDB4C003AC96E /* SkeletalMuslemassViewModel.swift in Sources */,
 				A583278B2A23AA54002F8F6E /* DuringEditRoutineFooterCell.swift in Sources */,

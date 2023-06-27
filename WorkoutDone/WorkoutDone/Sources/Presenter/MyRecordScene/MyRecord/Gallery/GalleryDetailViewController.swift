@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 import Then
 
-class GalleryDetailViewController: BaseViewController {
+class GalleryDetailViewController : BaseViewController {
     var frameX : CGFloat = 0
     var frameY : CGFloat = 0
     var size : CGFloat = 0
@@ -17,17 +17,31 @@ class GalleryDetailViewController: BaseViewController {
     var scaleX : CGFloat = 0
     var scaleY : CGFloat = 0
     
-    var deltaValue: CGFloat = 0
-    
-    var image = UIImageView()
+    var deleteButtonFrameY : CGFloat = 0
 
+    var date : String = ""
+    
+    var image = UIImageView().then {
+        $0.contentMode = .scaleAspectFill
+    }
+    
+    private let deleteButton = UIButton().then {
+        $0.setTitle("사진 삭제", for: .normal)
+        $0.setTitleColor(.colorF54968, for: .normal)
+        $0.titleLabel?.font = .pretendard(.semiBold, size: 16)
+        $0.backgroundColor = .colorFFEDF0
+        $0.layer.cornerRadius = 5
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     
+        setupDeleteButtonConstraints()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         performImageClickAnimation()
+     
     }
     
     override func setComponents() {
@@ -35,6 +49,7 @@ class GalleryDetailViewController: BaseViewController {
     }
     
     override func setupLayout() {
+        view.addSubview(deleteButton)
         view.addSubview(image)
     }
     
@@ -43,6 +58,23 @@ class GalleryDetailViewController: BaseViewController {
             $0.top.equalTo(view.safeAreaLayoutGuide).offset(frameY + 73)
             $0.leading.equalToSuperview().offset(frameX)
             $0.width.height.equalTo(size)
+        }
+    }
+    
+    override func actions() {
+        super.actions()
+        
+        deleteButton.addTarget(self, action: #selector(deleteButtonTapped), for: .touchUpInside)
+    }
+    
+    func setupDeleteButtonConstraints() {
+        deleteButtonFrameY = view.frame.midY - ((view.frame.width * (4 / 3)) / 2) - 45.5
+        
+        deleteButton.snp.makeConstraints {
+            $0.trailing.equalToSuperview().offset(-16)
+            $0.top.equalToSuperview().offset(deleteButtonFrameY)
+            $0.width.equalTo(80)
+            $0.height.equalTo(30)
         }
     }
     
@@ -64,7 +96,7 @@ class GalleryDetailViewController: BaseViewController {
     func performImageClickAnimation() {
         frameY = image.frame.minY
         scaleX = view.frame.width / size
-        scaleY = 487 / size
+        scaleY = view.frame.width / size
         
         UIView.animate(withDuration: 0.3, delay: 0.0, options: .curveEaseInOut, animations: {
             self.image.frame.origin.x = self.view.frame.midX - (self.size / 2)
@@ -76,5 +108,12 @@ class GalleryDetailViewController: BaseViewController {
                 self.image.transform = CGAffineTransform(scaleX: self.scaleX, y: self.scaleY)
             })
         })
+    }
+    
+    @objc func deleteButtonTapped() {
+        let deleteAlertVC = DeleteAlertViewController()
+        deleteAlertVC.date = date
+        deleteAlertVC.modalPresentationStyle = .overCurrentContext
+        self.present(deleteAlertVC, animated: false)
     }
 }
