@@ -62,13 +62,6 @@ final class DuringWorkoutViewController : BaseViewController {
     var currentCountdownSecond : Int = 0
 
     // MARK: - PROPERTIES
-//    private let pageControl = UIPageControl().then {
-//        $0.numberOfPages = 2
-//        $0.currentPage = 0
-//        $0.pageIndicatorTintColor = .colorE2E2E2
-//        $0.currentPageIndicatorTintColor = .color7442FF
-//    }
-    //TODO
     private let pageSwitchView = UIView().then {
         $0.backgroundColor = .colorFFFFFF
         $0.layer.cornerRadius = 10    }
@@ -91,6 +84,7 @@ final class DuringWorkoutViewController : BaseViewController {
         $0.layer.cornerRadius = 10
         $0.layer.borderWidth = 1
         $0.layer.borderColor = UIColor.color929292.cgColor
+        $0.backgroundColor = .colorFFFFFF
     }
     
     
@@ -229,10 +223,7 @@ final class DuringWorkoutViewController : BaseViewController {
         calcCurrentWorkoutCount()
         userNotificationDelegate()
         pageViewController.delegate = self
-        pageViewController.dataSource = self
         
-        
-//        pageViewController.view.backgroundColor = .red
 
     }
     override func viewDidAppear(_ animated: Bool) {
@@ -299,14 +290,6 @@ final class DuringWorkoutViewController : BaseViewController {
         pageViewController.view.frame = self.view.frame
         pageViewController.setViewControllers([viewControllers[0]], direction: .forward, animated: true)
         workoutCategoryBackView.layer.cornerRadius = 23 / 2
-        
-//        totalWorkoutCount = Double(dummy.weightTraining.count)
-//        totalWorkoutCount = Double(duringWorkoutRoutine.routine?.weightTraining.count ?? 0)
-//        weightTrainingArrayCount = dummy.weightTraining.count
-//        weightTrainingArrayCount = duringWorkoutRoutine.routine?.weightTraining.count ?? 0
-//        currentWorkoutLabel.text = dummy.weightTraining[weightTrainingArrayIndex].weightTrainging
-//        currentWorkoutLabel.text = duringWorkoutRoutine.routine?.weightTraining.
-//        workoutCategoryTitleLabel.text = dummy.weightTraining[weightTrainingArrayIndex].bodyPart
     }
     
     
@@ -464,12 +447,6 @@ final class DuringWorkoutViewController : BaseViewController {
             $0.centerX.equalTo(previousWorkoutButton.snp.centerX)
             $0.top.equalTo(previousWorkoutButton.snp.bottom).offset(7)
         }
-        
-//        pageControl.snp.makeConstraints {
-//            $0.top.equalTo(currentWorkoutView.snp.bottom).offset(19)
-//            $0.centerX.equalToSuperview()
-//            $0.height.equalTo(8)
-//        }
         pageSwitchView.snp.makeConstraints {
             $0.height.equalTo(32)
             $0.leading.trailing.equalToSuperview().inset(24)
@@ -522,16 +499,18 @@ final class DuringWorkoutViewController : BaseViewController {
     
     // MARK: - ACTIONS
     override func actions() {
-//        let swipeLeftGesture = UISwipeGestureRecognizer(target: self, action: #selector(swipeAction(_:)))
-//        let swipeRightGesture = UISwipeGestureRecognizer(target: self, action: #selector(swipeAction(_:)))
-//        swipeLeftGesture.direction = .left
-//        swipeRightGesture.direction = .right
-//        pageViewController.view.addGestureRecognizer(swipeLeftGesture)
-//        pageViewController.view.addGestureRecognizer(swipeRightGesture)
         
         restButton.addTarget(self, action: #selector(restButtonTapped), for: .touchUpInside)
         playButton.addTarget(self, action: #selector(playButtonTapped), for: .touchUpInside)
         endWorkoutButton.addTarget(self, action: #selector(endWorkoutButtonTapped), for: .touchUpInside)
+        setpageButton.addTarget(self, action: #selector(setpageButtonTapped), for: .touchUpInside)
+        editRoutinepageButton.addTarget(self, action: #selector(editRoutinepageButtonTapped), for: .touchUpInside)
+    }
+    @objc func setpageButtonTapped() {
+        isSetpage(true)
+    }
+    @objc func editRoutinepageButtonTapped() {
+        isSetpage(false)
     }
     @objc func endWorkoutButtonTapped() {
         let endWorkoutViewController = EndWorkoutViewController()
@@ -599,18 +578,6 @@ final class DuringWorkoutViewController : BaseViewController {
             present(duringWorkoutTimerViewController, animated: true)
         }
     }
-    
-//    @objc func swipeAction(_ sender : UISwipeGestureRecognizer) {
-//        if sender.direction == .right {
-//            pageViewController.setViewControllers([viewControllers[0]], direction: .reverse, animated: true)
-//            pageControl.currentPage = 0
-//        }
-//        else if sender.direction == .left {
-//            pageViewController.setViewControllers([viewControllers[1]], direction: .forward, animated: true)
-//            pageControl.currentPage = 1
-//        }
-//    }
-    
     
     private func startCountdowmTimer() {
         if countdowmTimer == nil {
@@ -685,6 +652,28 @@ final class DuringWorkoutViewController : BaseViewController {
             }
         }
     }
+    private func isSetpage(_ isSetpage : Bool) {
+        if isSetpage {
+            setpageButton.setTitleColor(UIColor.color121212, for: .normal)
+            setpageButton.backgroundColor = .colorE6E0FF
+            setpageButton.layer.borderColor = UIColor.color7442FF.cgColor
+            
+            editRoutinepageButton.setTitleColor(UIColor.color929292, for: .normal)
+            editRoutinepageButton.layer.borderColor = UIColor.color929292.cgColor
+            editRoutinepageButton.backgroundColor = .colorFFFFFF
+            pageViewController.setViewControllers([viewControllers[0]], direction: .reverse, animated: true)
+        }
+        else {
+            setpageButton.setTitleColor(UIColor.color929292, for: .normal)
+            setpageButton.layer.borderColor = UIColor.color929292.cgColor
+            setpageButton.backgroundColor = .colorFFFFFF
+            
+            editRoutinepageButton.setTitleColor(UIColor.color121212, for: .normal)
+            editRoutinepageButton.backgroundColor = .colorE6E0FF
+            editRoutinepageButton.layer.borderColor = UIColor.color7442FF.cgColor
+            pageViewController.setViewControllers([viewControllers[1]], direction: .forward, animated: true)
+        }
+    }
 }
 
 
@@ -693,42 +682,11 @@ final class DuringWorkoutViewController : BaseViewController {
 
 
 // MARK: - EXTENSIONs
-extension DuringWorkoutViewController : UIPageViewControllerDelegate, UIPageViewControllerDataSource {
-    func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
-        guard let index = viewControllers.firstIndex(of: viewController) else { return nil }
-        let previousIndex = index - 1
-        if previousIndex < 0 {
-            return nil
-        }
-//        pageControl.currentPage = previousIndex
-        return viewControllers[previousIndex]
+extension DuringWorkoutViewController : UIPageViewControllerDelegate {
+    func pageViewController(_ pageViewController: UIPageViewController, willTransitionTo pendingViewControllers: [UIViewController]) {
+        pageViewController.setViewControllers([], direction: .forward, animated: false, completion: nil)
     }
-    func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
-        guard let index = viewControllers.firstIndex(of: viewController) else { return nil }
-        let nextIndex = index + 1
-        if nextIndex == viewControllers.count {
-            return nil
-        }
-//        pageControl.currentPage = nextIndex
-        return viewControllers[nextIndex]
-    }
-    func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
-        if completed {
-            guard let currentViewController = pageViewController.viewControllers?.first,
-                  let currentIndex = viewControllerIndex(viewController: currentViewController) else { return }
-//            pageControl.currentPage = currentIndex
-            print(currentIndex)
-        }
-     }
-    func viewControllerIndex(viewController: UIViewController) -> Int? {
-        guard let viewControllers = pageViewController.viewControllers,
-              let currentViewController = viewControllers.first else {
-            return nil
-        }
-        
-        return viewControllers.firstIndex(of: currentViewController)
-    }
-    
+
 }
 
 extension DuringWorkoutViewController : UNUserNotificationCenterDelegate {

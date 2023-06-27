@@ -107,13 +107,13 @@ final class DuringSetViewController : BaseViewController {
 
 extension DuringSetViewController : UITableViewDelegate, UITableViewDataSource, DuringSetFooterDelegate {
     
-//    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-//        if editingStyle == .delete {
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
 //            dummy.weightTraining[indexPath.section].weightTrainingInfo.remove(at: indexPath.row)
-//            tableView.deleteRows(at: [indexPath], with: .fade)
-//        }
-//    }
-//
+            tableView.deleteRows(at: [indexPath], with: .fade)
+        }
+    }
+
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
