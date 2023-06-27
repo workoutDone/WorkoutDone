@@ -6,11 +6,28 @@
 //
 
 import UIKit
+import RxCocoa
+import RxSwift
 
-class DuringSetViewController : BaseViewController {
-    var dummy = ExRoutine.dummy()
+final class DuringSetViewController : BaseViewController {
     lazy var weightTrainingArrayIndex = 0
-    lazy var weightTrainingInfoArrayIndex = 0
+    private lazy var weightTrainingInfoArrayIndex = 0
+    private lazy var weightTrainingInfoCount = 0
+    private var weightTraining : WeightTraining?
+    private lazy var weightTrainingInfoArray : [WeightTrainingInfo] = []
+    
+    // MARK: - ViewModel
+    private let viewModel = DuringSetViewModel()
+    private let didLoad = PublishSubject<Void>()
+    let weightTrainingArrayIndexRx = PublishSubject<Int>()
+    private let addWeightTrainingInfoTrigger = PublishSubject<Void>()
+    private let addWeightTrainingInfoIndexTrigger = PublishSubject<Int>()
+    private lazy var input = DuringSetViewModel.Input(
+        loadView: didLoad.asDriver(onErrorJustReturn: ()),
+        weightTrainingArrayIndex: weightTrainingArrayIndexRx.asDriver(onErrorJustReturn: 0),
+        addWeightTrainingInfoTrigger: addWeightTrainingInfoTrigger.asDriver(onErrorJustReturn: ()),
+        addWightTrainingInfoIndexTrigger: addWeightTrainingInfoIndexTrigger.asDriver(onErrorJustReturn: 0))
+    private lazy var output = viewModel.transform(input: input)
     // MARK: - PROPERTIES
     
     private let tableBackView = UIView().then {
@@ -29,6 +46,37 @@ class DuringSetViewController : BaseViewController {
     // MARK: - LIFECYCLE
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+    override func setupBinding() {
+        super.setupBinding()
+        
+        output.weightTrainingInfoCount.drive { value in
+            self.weightTrainingInfoCount = value
+        }
+        .disposed(by: disposeBag)
+        
+        output.weightTrainingInfo.drive { value in
+            self.weightTrainingInfoArray = value
+
+        }
+        .disposed(by: disposeBag)
+        
+        output.addData.drive(onNext: { value in
+            if value {
+                self.weightTrainingArrayIndexRx.onNext(self.weightTrainingArrayIndex)
+                self.tableView.reloadData()
+            }
+        })
+        .disposed(by: disposeBag)
+        
+        output.weightTraining.drive(onNext: { value in
+            self.weightTraining = value
+        })
+        .disposed(by: disposeBag)
+        
+
+        didLoad.onNext(())
+        weightTrainingArrayIndexRx.onNext(0)
     }
     override func setComponents() {
         super.setComponents()
@@ -59,26 +107,26 @@ class DuringSetViewController : BaseViewController {
 
 extension DuringSetViewController : UITableViewDelegate, UITableViewDataSource, DuringSetFooterDelegate {
     
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            dummy.weightTraining[indexPath.section].weightTrainingInfo.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        }
-    }
-    
+//    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+//        if editingStyle == .delete {
+//            dummy.weightTraining[indexPath.section].weightTrainingInfo.remove(at: indexPath.row)
+//            tableView.deleteRows(at: [indexPath], with: .fade)
+//        }
+//    }
+//
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-            return dummy.weightTraining[weightTrainingArrayIndex].weightTrainingInfo.count
+        return weightTrainingInfoCount
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: DuringSetTableViewCell.identifier, for: indexPath) as? DuringSetTableViewCell else { return UITableViewCell() }
         cell.selectionStyle = .none
-        cell.configureCell(dummy.weightTraining[weightTrainingArrayIndex].weightTrainingInfo[indexPath.row])
-        cell.checkWorkout(dummy.weightTraining[weightTrainingArrayIndex])
+        cell.configureCell(weightTrainingInfoArray[indexPath.row])
+        cell.checkCalisthenics(weightTraining ?? WeightTraining(bodyPart: "", weightTraining: "") )
         return cell
     }
     
@@ -88,15 +136,22 @@ extension DuringSetViewController : UITableViewDelegate, UITableViewDataSource, 
             return footerView
         }
     func addWorkoutButtonTapped() {
-        let currentSetCount = dummy.weightTraining[weightTrainingArrayIndex].weightTrainingInfo.count
-        dummy.weightTraining[weightTrainingArrayIndex].weightTrainingInfo.append(ExWegihtTrainingInfo2(setCount: currentSetCount + 1, weight: nil, traingingCount: nil))
-        self.tableView.reloadData()
+        addWeightTrainingInfoTrigger.onNext(())
+        addWeightTrainingInfoIndexTrigger.onNext(weightTrainingArrayIndex)
         
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let inputWorkoutDataViewController = InputWorkoutDataViewController()
         inputWorkoutDataViewController.modalTransitionStyle = .crossDissolve
         inputWorkoutDataViewController.modalPresentationStyle = .overFullScreen
+        inputWorkoutDataViewController.weightTrainingArrayIndex = weightTrainingArrayIndex
+        inputWorkoutDataViewController.weightTrainingInfoArrayIndex = indexPath.row
+        let isCalisthenics = Calisthenics.calisthenicsArray.contains(weightTraining?.weightTraining ?? "") ? true : false
+        inputWorkoutDataViewController.isCalisthenics = isCalisthenics
+        inputWorkoutDataViewController.completionHandler = { [weak self] _ in
+            guard let self else { return }
+            self.tableView.reloadData()
+        }
         present(inputWorkoutDataViewController, animated: true)
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

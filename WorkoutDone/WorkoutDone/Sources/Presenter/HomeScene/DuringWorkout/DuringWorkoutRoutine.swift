@@ -10,5 +10,5 @@ import UIKit
 class DuringWorkoutRoutine {
     static let shared = DuringWorkoutRoutine()
     private init() {}
-    var duringWorkoutRoutine: Routine?
+    var routine: Routine?
 }

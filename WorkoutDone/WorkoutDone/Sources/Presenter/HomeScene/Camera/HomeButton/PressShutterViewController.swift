@@ -8,7 +8,7 @@
 import UIKit
 import Photos
 
-class PressShutterViewController: BaseViewController {
+final class PressShutterViewController: BaseViewController {
     let frameImageViewModel = FrameImageViewModel()
     
     var isSelectFrame: Int = 0
@@ -19,8 +19,6 @@ class PressShutterViewController: BaseViewController {
     var captureImageView = UIImageView().then {
         $0.contentMode = .scaleAspectFit
     }
-    
-    private let backButton = BackButton()
     
     let againButton = UIButton().then {
         $0.backgroundColor = .colorE6E0FF
@@ -72,14 +70,13 @@ class PressShutterViewController: BaseViewController {
     
     override func setComponents() {
         view.backgroundColor = .colorFFFFFF
-  
     }
     
     override func setupLayout() {
         
         captureImageView = UIImageView(image: self.captureImage)
         
-        [captureImageView, backButton, againButton, againLabel, saveButton, saveLabel, instaButton, instaLabel].forEach {
+        [captureImageView, againButton, againLabel, saveButton, saveLabel, instaButton, instaLabel].forEach {
             view.addSubview($0)
         }
         
@@ -93,11 +90,6 @@ class PressShutterViewController: BaseViewController {
             $0.top.equalToSuperview().offset(20)
             $0.leading.trailing.equalTo(view.safeAreaLayoutGuide)
             $0.height.equalTo(view.frame.width * (4 / 3))
-        }
-        
-        backButton.snp.makeConstraints {
-            $0.top.equalTo(captureImageView).offset(13.5)
-            $0.leading.equalToSuperview().offset(16)
         }
         
         againButton.snp.makeConstraints {
@@ -150,16 +142,10 @@ class PressShutterViewController: BaseViewController {
     }
     
     override func actions() {
-        backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
         againButton.addTarget(self, action: #selector(againButtonTapped), for: .touchUpInside)
         saveButton.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
         instaButton.addTarget(self, action: #selector(instaButtonTapped), for: .touchUpInside)
     }
-    
-    @objc func backButtonTapped(sender: UIButton!) {
-        self.navigationController?.popViewController(animated: false)
-    }
-    
     @objc func againButtonTapped(sender: UIButton!) {
         self.navigationController?.popViewController(animated: false)
     }
@@ -188,16 +174,43 @@ class PressShutterViewController: BaseViewController {
                 saveImageToastMessageVC.dismiss(animated: false)
                 }
                 self.navigationController?.popToRootViewController(animated: true)
-                
-//                if let homeVC = self.navigationController?.viewControllers.first as? HomeViewController {
-//                    homeVC.setWorkOutDoneImage()
-//                }
+
             }
         }
     }
     
     @objc func instaButtonTapped(sender: UIButton!) {
-        print("^-^")
+        if let storyShareURL = URL(string: "instagram-stories://share?source_application=279031477992220") {
+            if UIApplication.shared.canOpenURL(storyShareURL) {
+                let targetSize = CGSize(width: captureImageView.frame.width, height: captureImageView.frame.height)
+                let renderer = UIGraphicsImageRenderer(size: targetSize)
+
+                let renderImage = renderer.image { _ in
+                    captureImageView.drawHierarchy(in: (captureImageView.bounds), afterScreenUpdates: true)
+                }
+                guard let imageData = renderImage.pngData() else { return }
+                let pasteboardItems : [String:Any] = [
+                          "com.instagram.sharedSticker.backgroundImage": imageData,
+                          "com.instagram.sharedSticker.backgroundTopColor" : "#636e72",
+                          "com.instagram.sharedSticker.backgroundBottomColor" : "#b2bec3",
+                      ]
+                let pasteboardOptions = [
+                     UIPasteboard.OptionsKey.expirationDate : Date().addingTimeInterval(300)
+                 ]
+                 
+                 UIPasteboard.general.setItems([pasteboardItems], options: pasteboardOptions)
+                 
+                 
+                 UIApplication.shared.open(storyShareURL, options: [:], completionHandler: nil)
+            }
+            else {
+                
+                let alert = UIAlertController(title: "알림", message: "인스타그램이 필요합니다", preferredStyle: .alert)
+                let ok = UIAlertAction(title: "확인", style: .default, handler: nil)
+                alert.addAction(ok)
+                self.present(alert, animated: true, completion: nil)
+            }
+        }
     }
     
     func resizeImage(image: UIImage, newSize: CGSize) -> UIImage {

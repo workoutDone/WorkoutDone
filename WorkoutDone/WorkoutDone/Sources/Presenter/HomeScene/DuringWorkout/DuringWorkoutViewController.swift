@@ -9,12 +9,23 @@ import UIKit
 import AVFoundation
 import UserNotifications
 import NotificationCenter
+import RxSwift
+import RxCocoa
 
 final class DuringWorkoutViewController : BaseViewController {
     
+    
+    // MARK: - ViewModel
+    private let viewModel = DuringWorkoutViewModel()
+    private var didLoad = PublishSubject<Void>()
+    private var weightTrainingArrayIndexRx = PublishSubject<Int>()
+    private lazy var input = DuringWorkoutViewModel.Input(
+        loadView: didLoad.asDriver(onErrorJustReturn: ()),
+        weightTrainingArrayIndex: weightTrainingArrayIndexRx.asDriver(onErrorJustReturn: 0))
+    private lazy var output = viewModel.transtorm(input: input)
+    
     private let userNotificationCenter = UNUserNotificationCenter.current()
     
-    private var dummy = ExRoutine.dummy()
     var weightTrainingArrayIndex = 0 {
         didSet {
             if weightTrainingArrayIndex + 1 == weightTrainingArrayCount {
@@ -197,13 +208,61 @@ final class DuringWorkoutViewController : BaseViewController {
         userNotificationDelegate()
         pageViewController.delegate = self
         pageViewController.dataSource = self
+        
+
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         workoutTitleAnimation()
     }
     override func setupBinding() {
+        super.setupBinding()
         
+        output.totalWorkoutCount.drive(onNext: { value in
+            self.totalWorkoutCount = value
+        })
+        .disposed(by: disposeBag)
+        output.weightTrainingArrayCount.drive { value in
+            self.weightTrainingArrayCount = value
+            
+
+        }
+        .disposed(by: disposeBag)
+        
+        output.currentWorkoutBodyPart.drive(workoutCategoryTitleLabel.rx.text)
+            .disposed(by: disposeBag)
+        output.currentWorkoutName.drive(currentWorkoutLabel.rx.text)
+            .disposed(by: disposeBag)
+        
+        didLoad.onNext(())
+        weightTrainingArrayIndexRx.onNext(0)
+        
+        nextWorkoutButton.rx.tap
+            .bind { [weak self] value in
+                guard let self = self else { return }
+                self.weightTrainingArrayIndex += 1
+                self.currentWorkoutCount += 1
+                self.weightTrainingArrayIndexRx.onNext(self.weightTrainingArrayIndex)
+                self.progressBarAnimation()
+                self.workoutTitleAnimation()
+                self.duringSetViewController.weightTrainingArrayIndex = self.weightTrainingArrayIndex
+                self.duringSetViewController.weightTrainingArrayIndexRx.onNext(self.weightTrainingArrayIndex)
+                self.duringSetViewController.tableView.reloadData()
+            }
+            .disposed(by: disposeBag)
+        previousWorkoutButton.rx.tap
+            .bind { [weak self] value in
+                guard let self = self else { return }
+                self.weightTrainingArrayIndex -= 1
+                self.currentWorkoutCount -= 1
+                self.weightTrainingArrayIndexRx.onNext(self.weightTrainingArrayIndex)
+                self.progressBarAnimation()
+                self.workoutTitleAnimation()
+                self.duringSetViewController.weightTrainingArrayIndex = self.weightTrainingArrayIndex
+                self.duringSetViewController.weightTrainingArrayIndexRx.onNext(self.weightTrainingArrayIndex)
+                self.duringSetViewController.tableView.reloadData()
+            }
+            .disposed(by: disposeBag)
     }
     override func setComponents() {
         super.setComponents()
@@ -217,10 +276,13 @@ final class DuringWorkoutViewController : BaseViewController {
         pageViewController.setViewControllers([viewControllers[0]], direction: .forward, animated: true)
         workoutCategoryBackView.layer.cornerRadius = 23 / 2
         
-        totalWorkoutCount = Double(dummy.weightTraining.count)
-        weightTrainingArrayCount = dummy.weightTraining.count
-        currentWorkoutLabel.text = dummy.weightTraining[weightTrainingArrayIndex].weightTrainging
-        workoutCategoryTitleLabel.text = dummy.weightTraining[weightTrainingArrayIndex].bodyPart
+//        totalWorkoutCount = Double(dummy.weightTraining.count)
+//        totalWorkoutCount = Double(duringWorkoutRoutine.routine?.weightTraining.count ?? 0)
+//        weightTrainingArrayCount = dummy.weightTraining.count
+//        weightTrainingArrayCount = duringWorkoutRoutine.routine?.weightTraining.count ?? 0
+//        currentWorkoutLabel.text = dummy.weightTraining[weightTrainingArrayIndex].weightTrainging
+//        currentWorkoutLabel.text = duringWorkoutRoutine.routine?.weightTraining.
+//        workoutCategoryTitleLabel.text = dummy.weightTraining[weightTrainingArrayIndex].bodyPart
     }
     
     
@@ -431,8 +493,6 @@ final class DuringWorkoutViewController : BaseViewController {
         
         restButton.addTarget(self, action: #selector(restButtonTapped), for: .touchUpInside)
         playButton.addTarget(self, action: #selector(playButtonTapped), for: .touchUpInside)
-        nextWorkoutButton.addTarget(self, action: #selector(nextWorkoutButtonTapped), for: .touchUpInside)
-        previousWorkoutButton.addTarget(self, action: #selector(previousWorkoutButtonTapped), for: .touchUpInside)
         endWorkoutButton.addTarget(self, action: #selector(endWorkoutButtonTapped), for: .touchUpInside)
     }
     @objc func endWorkoutButtonTapped() {
@@ -441,27 +501,6 @@ final class DuringWorkoutViewController : BaseViewController {
         endWorkoutViewController.modalPresentationStyle = .overFullScreen
         present(endWorkoutViewController, animated: true)
     }
-    @objc func nextWorkoutButtonTapped() {
-        weightTrainingArrayIndex += 1
-        currentWorkoutCount += 1
-        currentWorkoutLabel.text = dummy.weightTraining[weightTrainingArrayIndex].weightTrainging
-        workoutCategoryTitleLabel.text = dummy.weightTraining[weightTrainingArrayIndex].bodyPart
-        progressBarAnimation()
-        duringSetViewController.weightTrainingArrayIndex = weightTrainingArrayIndex
-        duringSetViewController.tableView.reloadData()
-        workoutTitleAnimation()
-    }
-    @objc func previousWorkoutButtonTapped() {
-        weightTrainingArrayIndex -= 1
-        currentWorkoutCount -= 1
-        progressBarAnimation()
-        duringSetViewController.weightTrainingArrayIndex = weightTrainingArrayIndex
-        currentWorkoutLabel.text = dummy.weightTraining[weightTrainingArrayIndex].weightTrainging
-        workoutCategoryTitleLabel.text = dummy.weightTraining[weightTrainingArrayIndex].bodyPart
-        duringSetViewController.tableView.reloadData()
-        workoutTitleAnimation()
-    }
-    
     @objc func playButtonTapped() {
         if timerCounting {
             timerCounting = false
@@ -795,5 +834,5 @@ extension ExRoutine {
 }
 
 struct Calisthenics {
-    static var calisthenicsArray : [String] = ["덤벨 풀오버", "시티드 케이블 로우"]
+    static var calisthenicsArray : [String] = ["벤치 프레스", "디클라인 푸시업"]
 }
