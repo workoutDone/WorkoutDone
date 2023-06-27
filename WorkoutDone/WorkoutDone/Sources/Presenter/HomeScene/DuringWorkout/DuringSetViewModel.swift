@@ -25,7 +25,7 @@ class DuringSetViewModel {
         let weightTrainingInfoCount : Driver<Int>
         let weightTrainingInfo : Driver<[WeightTrainingInfo]>
         let addData : Driver<Bool>
-        
+        let weightTraining : Driver<WeightTraining?>
     }
     func transform(input : Input) -> Output {
         
@@ -51,12 +51,20 @@ class DuringSetViewModel {
             let count = routine?.weightTraining[index].weightTrainingInfo.count
             
             routine?.weightTraining[index].weightTrainingInfo.append(objectsIn: [WeightTrainingInfo(setCount: (count ?? 0) + 1, weight: 0, trainingCount: 0)])
+//            routine?.weightTraining[index].
             print(routine?.weightTraining)
             return true
+        })
+        let weightTraining = Driver<WeightTraining?>.combineLatest(input.loadView, input.weightTrainingArrayIndex, resultSelector: { (_, index) in
+            let routine = self.duringWorkoutRoutine.routine
+//            guard let wegihtTrainingValue = routine?.weightTraining[index] else { WeightTraining(bodyPart: "", weightTraining: "") }
+            let weightTrainingValue = routine?.weightTraining[index]
+            return weightTrainingValue
         })
         
         return Output(weightTrainingInfoCount: weightTrainingInfoCount,
                       weightTrainingInfo: weightTrainingInfo,
-                      addData: addData)
+                      addData: addData,
+                      weightTraining: weightTraining)
     }
 }

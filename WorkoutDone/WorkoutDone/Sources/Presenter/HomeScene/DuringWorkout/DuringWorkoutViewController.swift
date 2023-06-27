@@ -834,5 +834,5 @@ extension ExRoutine {
 }
 
 struct Calisthenics {
-    static var calisthenicsArray : [String] = ["덤벨 풀오버", "시티드 케이블 로우"]
+    static var calisthenicsArray : [String] = ["벤치 프레스", "디클라인 푸시업"]
 }
