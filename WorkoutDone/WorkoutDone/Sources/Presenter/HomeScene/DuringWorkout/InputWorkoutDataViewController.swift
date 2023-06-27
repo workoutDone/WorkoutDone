@@ -23,13 +23,15 @@ final class InputWorkoutDataViewController : BaseViewController {
     private var weightTrainingInfoArrayIndexRx = PublishSubject<Int>()
     private var weightData = PublishSubject<String>()
     private var countData = PublishSubject<String>()
+    private var calisthenicsCountData = PublishSubject<String>()
     private var viewModel = InputWorkoutDataViewModel()
     private lazy var input = InputWorkoutDataViewModel.Input(
         countInputText: countData.asDriver(onErrorJustReturn: ""),
         weightInputText: weightData.asDriver(onErrorJustReturn: ""),
         buttonTapped: buttonTapped.asDriver(onErrorJustReturn: ()),
         weightTrainingArrayIndex: weightTrainingArrayIndexRx.asDriver(onErrorJustReturn: 0),
-        weightTrainingInfoArrayIndex: weightTrainingInfoArrayIndexRx.asDriver(onErrorJustReturn: 0))
+        weightTrainingInfoArrayIndex: weightTrainingInfoArrayIndexRx.asDriver(onErrorJustReturn: 0),
+        calisthenicsCountInputText: calisthenicsCountData.asDriver(onErrorJustReturn: ""))
     private lazy var output = viewModel.transform(input: input)
     // MARK: - PROPERTIES
     
@@ -103,6 +105,7 @@ final class InputWorkoutDataViewController : BaseViewController {
     private let calisthenicsCountTextField = UITextField().then {
         $0.backgroundColor = UIColor.colorF3F3F3
         $0.font = .pretendard(.medium, size: 36)
+        $0.textColor = .color5E5E5E
         $0.layer.cornerRadius = 12
         $0.keyboardType = .numberPad
     }
@@ -176,11 +179,19 @@ final class InputWorkoutDataViewController : BaseViewController {
         okayButton.rx.tap
             .bind { [weak self] value in
                 guard let self else { return }
-                self.buttonTapped.onNext(())
-                self.countData.onNext(self.countTextField.text ?? "")
-                self.weightData.onNext(self.kgTextField.text ?? "")
-                self.weightTrainingArrayIndexRx.onNext(self.weightTrainingArrayIndex)
-                self.weightTrainingInfoArrayIndexRx.onNext(self.weightTrainingInfoArrayIndex)
+                if self.isCalisthenics {
+                    self.buttonTapped.onNext(())
+                    self.weightTrainingArrayIndexRx.onNext(self.weightTrainingArrayIndex)
+                    self.weightTrainingInfoArrayIndexRx.onNext(self.weightTrainingInfoArrayIndex)
+                    self.calisthenicsCountData.onNext(self.calisthenicsCountTextField.text ?? "")
+                }
+                else {
+                    self.buttonTapped.onNext(())
+                    self.countData.onNext(self.countTextField.text ?? "")
+                    self.weightData.onNext(self.kgTextField.text ?? "")
+                    self.weightTrainingArrayIndexRx.onNext(self.weightTrainingArrayIndex)
+                    self.weightTrainingInfoArrayIndexRx.onNext(self.weightTrainingInfoArrayIndex)
+                }
             }
             .disposed(by: disposeBag)
         
@@ -195,6 +206,16 @@ final class InputWorkoutDataViewController : BaseViewController {
         })
         .disposed(by: disposeBag)
         
+        output.calisthenicsOutputData.drive(onNext: { value in
+            if value {
+                self.dismiss(animated: true)
+                self.completionHandler?(())
+            }
+            else {
+                self.showToastMessage()
+            }
+        })
+        .disposed(by: disposeBag)
     }
     
     override func setComponents() {
@@ -202,6 +223,10 @@ final class InputWorkoutDataViewController : BaseViewController {
         visualEffectView.frame = view.frame
         inputWorkoutStackView.isHidden = isCalisthenics ? true : false
         calisthenicsCountStackView.isHidden = isCalisthenics ? false : true
+        
+        kgTextField.delegate = self
+        calisthenicsCountTextField.delegate = self
+        countTextField.delegate = self
     }
     
     override func setupLayout() {
@@ -209,7 +234,7 @@ final class InputWorkoutDataViewController : BaseViewController {
         inputDataBackView.addSubviews(buttonStackView, setLabel, inputWorkoutStackView, calisthenicsCountStackView)
     }
     override func setupConstraints() {
-        [countTextField, kgTextField].forEach {
+        [countTextField, kgTextField, calisthenicsCountTextField].forEach {
             $0.addRightPadding(padding: 10)
             $0.addLeftPadding(padding: 10)
         }
@@ -231,7 +256,7 @@ final class InputWorkoutDataViewController : BaseViewController {
         }
         countTextField.snp.makeConstraints {
             $0.height.equalTo(40)
-            $0.width.equalTo(62)
+            $0.width.equalTo(66)
         }
         inputDataBackView.snp.makeConstraints {
             $0.centerY.centerX.equalToSuperview()
@@ -296,8 +321,25 @@ final class InputWorkoutDataViewController : BaseViewController {
         }
     }
 }
-// MARK: - EXTENSIONs
-extension InputWorkoutDataViewController {
-    
+// MARK: - EXTENSIONS
+extension InputWorkoutDataViewController : UITextFieldDelegate {
+    func updateTextFieldAppearance(_ textField: UITextField, isActive: Bool) {
+        let backgroundColor: UIColor = isActive ? .colorE2E2E2 : .colorF3F3F3
+        let textColor: UIColor = isActive ? .color121212 : .color5E5E5E
+        
+        textField.backgroundColor = backgroundColor
+        textField.textColor = textColor
+    }
+
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        let textFields = [kgTextField, countTextField, calisthenicsCountTextField]
+        
+        for field in textFields {
+            let isActive = (field == textField)
+            updateTextFieldAppearance(field, isActive: isActive)
+        }
+        
+        return true
+    }
 }
 
