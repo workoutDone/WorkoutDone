@@ -23,7 +23,6 @@ final class DuringWorkoutViewController : BaseViewController {
         loadView: didLoad.asDriver(onErrorJustReturn: ()),
         weightTrainingArrayIndex: weightTrainingArrayIndexRx.asDriver(onErrorJustReturn: 0))
     private lazy var output = viewModel.transtorm(input: input)
-    
     private let userNotificationCenter = UNUserNotificationCenter.current()
     
     var weightTrainingArrayIndex = 0 {
@@ -63,13 +62,36 @@ final class DuringWorkoutViewController : BaseViewController {
     var currentCountdownSecond : Int = 0
 
     // MARK: - PROPERTIES
-    private let pageControl = UIPageControl().then {
-        $0.numberOfPages = 2
-        $0.currentPage = 0
-        $0.pageIndicatorTintColor = .colorE2E2E2
-        $0.currentPageIndicatorTintColor = .color7442FF
-    }
+//    private let pageControl = UIPageControl().then {
+//        $0.numberOfPages = 2
+//        $0.currentPage = 0
+//        $0.pageIndicatorTintColor = .colorE2E2E2
+//        $0.currentPageIndicatorTintColor = .color7442FF
+//    }
     //TODO
+    private let pageSwitchView = UIView().then {
+        $0.backgroundColor = .colorFFFFFF
+        $0.layer.cornerRadius = 10    }
+    private let setpageButton = UIButton().then {
+        $0.setTitle("진행 중인 세트", for: .normal)
+        $0.setTitleColor(UIColor.color121212, for: .normal)
+        $0.titleLabel?.font = UIFont.pretendard(.regular, size: 14)
+        $0.backgroundColor = .colorE6E0FF
+        $0.layer.maskedCorners = [.layerMinXMinYCorner, .layerMinXMaxYCorner]
+        $0.layer.cornerRadius = 10
+        $0.layer.borderWidth = 1
+        $0.layer.borderColor = UIColor.color7442FF.cgColor
+    }
+    
+    private let editRoutinepageButton = UIButton().then {
+        $0.setTitle("오늘 할 운동", for: .normal)
+        $0.setTitleColor(UIColor.color929292, for: .normal)
+        $0.titleLabel?.font = UIFont.pretendard(.regular, size: 14)
+        $0.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMaxXMinYCorner]
+        $0.layer.cornerRadius = 10
+        $0.layer.borderWidth = 1
+        $0.layer.borderColor = UIColor.color929292.cgColor
+    }
     
     
     private let endWorkoutButton = RightBarButtonItem(title: "운동 종료", buttonBackgroundColor: .colorFFEDF0, titleColor: .colorF54968).then {
@@ -209,6 +231,8 @@ final class DuringWorkoutViewController : BaseViewController {
         pageViewController.delegate = self
         pageViewController.dataSource = self
         
+        
+//        pageViewController.view.backgroundColor = .red
 
     }
     override func viewDidAppear(_ animated: Bool) {
@@ -288,7 +312,8 @@ final class DuringWorkoutViewController : BaseViewController {
     
     override func setupLayout() {
         self.addChild(pageViewController)
-        view.addSubviews(currentWorkoutView, workoutPlayView,restStackView, pageViewController.view, pageControl)
+        view.addSubviews(currentWorkoutView, workoutPlayView,restStackView, pageViewController.view, pageSwitchView)
+        pageSwitchView.addSubviews(setpageButton, editRoutinepageButton)
         
         workoutPlayView.addSubviews(playButton, playButtonTitleLabel, nextWorkoutButton, nextWorkoutButtonTitleLabel, previousWorkoutButtonTitleLabel, previousWorkoutButton)
         currentWorkoutView.addSubviews(workoutTitleScrollView ,currentWorkoutTitleLabel, totalWorkoutTimeTitleLabel, totalWorkoutTimeLabel, progressBackView, progressView, workoutCategoryBackView)
@@ -299,6 +324,15 @@ final class DuringWorkoutViewController : BaseViewController {
         restBackView.addSubviews(restTimeLeftLabel, restTimerLabel, restTimerUnderBarView)
     }
     override func setupConstraints() {
+        setpageButton.snp.makeConstraints {
+            $0.top.leading.bottom.equalToSuperview()
+            $0.width.equalToSuperview().dividedBy(2)
+        }
+        editRoutinepageButton.snp.makeConstraints {
+            $0.top.trailing.bottom.equalToSuperview()
+            $0.width.equalToSuperview().dividedBy(2)
+        }
+        
         workoutTitleScrollView.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(26)
             $0.bottom.equalToSuperview().inset(10)
@@ -431,14 +465,18 @@ final class DuringWorkoutViewController : BaseViewController {
             $0.top.equalTo(previousWorkoutButton.snp.bottom).offset(7)
         }
         
-        pageControl.snp.makeConstraints {
-            $0.top.equalTo(currentWorkoutView.snp.bottom).offset(19)
-            $0.centerX.equalToSuperview()
-            $0.height.equalTo(8)
+//        pageControl.snp.makeConstraints {
+//            $0.top.equalTo(currentWorkoutView.snp.bottom).offset(19)
+//            $0.centerX.equalToSuperview()
+//            $0.height.equalTo(8)
+//        }
+        pageSwitchView.snp.makeConstraints {
+            $0.height.equalTo(32)
+            $0.leading.trailing.equalToSuperview().inset(24)
+            $0.top.equalTo(currentWorkoutView.snp.bottom).offset(15)
         }
-        
         pageViewController.view.snp.makeConstraints {
-            $0.top.equalTo(pageControl.snp.bottom).offset(3)
+            $0.top.equalTo(pageSwitchView.snp.bottom).offset(9)
             $0.leading.trailing.equalToSuperview()
             $0.bottom.equalTo(restBackView.snp.top)
         }
@@ -678,7 +716,7 @@ extension DuringWorkoutViewController : UIPageViewControllerDelegate, UIPageView
         if completed {
             guard let currentViewController = pageViewController.viewControllers?.first,
                   let currentIndex = viewControllerIndex(viewController: currentViewController) else { return }
-            pageControl.currentPage = currentIndex
+//            pageControl.currentPage = currentIndex
             print(currentIndex)
         }
      }

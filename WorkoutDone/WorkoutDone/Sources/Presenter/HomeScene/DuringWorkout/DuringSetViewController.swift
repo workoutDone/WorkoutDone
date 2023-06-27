@@ -92,7 +92,7 @@ final class DuringSetViewController : BaseViewController {
     override func setupConstraints() {
         super.setupConstraints()
         tableView.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(29)
+            $0.top.equalToSuperview()
             $0.bottom.equalToSuperview().inset(14)
             $0.leading.trailing.equalToSuperview().inset(26)
         }
