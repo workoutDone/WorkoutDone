@@ -18,7 +18,9 @@ class DuringSetViewModel {
         let loadView : Driver<Void>
         let weightTrainingArrayIndex : Driver<Int>
         let addWeightTrainingInfoTrigger : Driver<Void>
-        let addWightTrainingInfoIndexTrigger : Driver<Int>
+        let addWeightTrainingInfoIndexTrigger : Driver<Int>
+        let deleteSetTrigger : Driver<Void>
+        let deleteSetIndex : Driver<Int>
     }
     
     struct Output {
@@ -26,6 +28,7 @@ class DuringSetViewModel {
         let weightTrainingInfo : Driver<[WeightTrainingInfo]>
         let addData : Driver<Bool>
         let weightTraining : Driver<WeightTraining?>
+        let deleteSetData : Driver<Bool>
     }
     func transform(input : Input) -> Output {
         
@@ -46,7 +49,7 @@ class DuringSetViewModel {
         })
 
         
-        let addData = Driver<Bool>.zip( input.addWeightTrainingInfoTrigger, input.addWightTrainingInfoIndexTrigger,  resultSelector: { (_, index) in
+        let addData = Driver<Bool>.zip( input.addWeightTrainingInfoTrigger, input.addWeightTrainingInfoIndexTrigger,  resultSelector: { (_, index) in
             let routine = self.duringWorkoutRoutine.routine
             let count = routine?.weightTraining[index].weightTrainingInfo.count
             
@@ -62,9 +65,23 @@ class DuringSetViewModel {
             return weightTrainingValue
         })
         
+        let deleteSetData = Driver<Bool>.combineLatest(input.deleteSetTrigger, input.deleteSetIndex, input.weightTrainingArrayIndex, resultSelector: { (_, setIndex, arrayIndex) in
+            let routine = self.duringWorkoutRoutine.routine
+            
+            let weightTrainingInfoValue = routine?.weightTraining[arrayIndex].weightTrainingInfo[setIndex]
+            
+//            routine?.weightTraining[arrayIndex].weightTrainingInfo.remove(at: setIndex)
+    
+//            self.realm.delete(weightTrainingInfoValue!)
+            routine?.weightTraining[arrayIndex].weightTrainingInfo.realm?.delete((routine?.weightTraining[arrayIndex].weightTrainingInfo[setIndex])!)
+            print(routine?.weightTraining, "확인용!")
+            return true
+        })
+        
         return Output(weightTrainingInfoCount: weightTrainingInfoCount,
                       weightTrainingInfo: weightTrainingInfo,
                       addData: addData,
-                      weightTraining: weightTraining)
+                      weightTraining: weightTraining,
+                      deleteSetData: deleteSetData)
     }
 }
