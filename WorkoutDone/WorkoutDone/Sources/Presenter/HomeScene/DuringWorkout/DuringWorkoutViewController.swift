@@ -54,7 +54,7 @@ final class DuringWorkoutViewController : BaseViewController {
     
     
     private var timer : Timer = Timer()
-    private var count : Int = 0
+    var count : Int = 0
     private var timerCounting : Bool = false
     
     var countdownTimerCounting : Bool = false
@@ -122,7 +122,7 @@ final class DuringWorkoutViewController : BaseViewController {
         }
     
         private let totalWorkoutTimeLabel = UILabel().then {
-            $0.text = "00:00:00"
+//            $0.text = "00:00:00"
             $0.textColor = .color121212
             $0.font = .pretendard(.semiBold, size: 20)
             $0.textAlignment = .right
@@ -219,7 +219,7 @@ final class DuringWorkoutViewController : BaseViewController {
         super.viewDidLoad()
         timerCounting = true
         timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(timerCounter), userInfo: nil, repeats: true)
-        setNotifications()
+//        setNotifications()
         userNotificationDelegate()
         pageViewController.delegate = self
         
@@ -228,10 +228,28 @@ final class DuringWorkoutViewController : BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         calcCurrentWorkoutCount()
+        setNotifications()
+        guard let start = UserDefaults.standard.object(forKey: "sceneDidEnterBackground") as? Date else { return }
+        let interval = Int(Date().timeIntervalSince(start))
+        if let existingCountData = UserDefaults.standard.object(forKey: "existingCountData") {
+            print(existingCountData, "제발좀 되라 제발")
+            count = existingCountData as! Int
+            count += interval
+        }
+        else {
+            count = interval
+        }
+        print("intervalllllll", interval)
+        UserDefaults.standard.removeObject(forKey: "sceneDidEnterBackground")
+        UserDefaults.standard.removeObject(forKey: "existingCountData")
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         workoutTitleAnimation()
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        print("ㅅ사라진다")
     }
     override func setupBinding() {
         super.setupBinding()
@@ -486,7 +504,10 @@ final class DuringWorkoutViewController : BaseViewController {
     }
 
     @objc func addbackGroundTime(_ notification:Notification) {
+        print("쩨발")
+        print(notification.object)
         let time = notification.userInfo?["time"] as? Int ?? 0
+        print(time, "타임!!")
         count += time
         print(count, "이걸로 되어야하는데?")
         let updatedTime = secondsToHoursMinutesSeconds(seconds: count)
