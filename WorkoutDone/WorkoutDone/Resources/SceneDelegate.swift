@@ -16,21 +16,50 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
 
         setRootViewController(scene)
-        
         let realm = try! Realm()
         print(Realm.Configuration.defaultConfiguration.fileURL)
+        print("willConnectTo")
     }
 
     func sceneWillEnterForeground(_ scene: UIScene) {
         guard let start = UserDefaults.standard.object(forKey: "sceneDidEnterBackground") as? Date else { return }
         let interval = Int(Date().timeIntervalSince(start))
-        NotificationCenter.default.post(name: NSNotification.Name("sceneWillEnterForeground"), object: nil,userInfo: ["time" : interval])
+        NotificationCenter.default.post(name: NSNotification.Name("sceneWillEnterForeground"), object: nil, userInfo: ["time" : interval])
+        print(interval, "인터벌")
+//        print("sceneWillEnterForeground")
     }
+    
 
     func sceneDidEnterBackground(_ scene: UIScene) {
         NotificationCenter.default.post(name: NSNotification.Name("sceneDidEnterBackground"), object: nil)
-                UserDefaults.standard.setValue(Date(), forKey: "sceneDidEnterBackground")
+        UserDefaults.standard.setValue(Date(), forKey: "sceneDidEnterBackground")
+//        print("sceneDidEnterBackground")
+        if let navigationController = window?.rootViewController as? UINavigationController {
+            if let duringWorkoutViewController = navigationController.viewControllers.first as? DuringWorkoutViewController {
+                // 데이터에 접근하여 사용할 수 있습니다.
+                let count = duringWorkoutViewController.count
+                print(count, "제발")
+                UserDefaults.standard.setValue(count, forKey: "existingCountData")
+                // 데이터 사용
+            }
+        }
     }
+    func sceneDidDisconnect(_ scene: UIScene) {
+        print("sceneDidDisconnect")
+        let defaults = UserDefaults.standard
+//        if let value = defaults.object(forKey: "sceneDidEnterBackground") {
+//            print("값이 있다", value)
+//        } else {
+//            NotificationCenter.default.post(name: NSNotification.Name("sceneDidEnterBackground"), object: nil)
+//            UserDefaults.standard.setValue(Date(), forKey: "sceneDidEnterBackground")
+//        }
+        let value = defaults.object(forKey: "sceneDidEnterBackground")
+        NotificationCenter.default.post(name: NSNotification.Name("sceneDidEnterBackground"), object: nil)
+        UserDefaults.standard.removeObject(forKey: "sceneDidEnterBackground")
+        UserDefaults.standard.setValue(value, forKey: "sceneDidEnterBackground")
+
+    }
+    
 }
 
 extension SceneDelegate {
