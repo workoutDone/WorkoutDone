@@ -10,6 +10,15 @@ import UIKit
 class GradientButton: UIButton {
     let gradient = CAGradientLayer()
     
+    var colors : [CGColor] {
+        get {
+            return gradient.colors as? [CGColor] ?? []
+        }
+        set {
+            gradient.colors = newValue
+        }
+    }
+    
     init(colors: [CGColor]) {
         super.init(frame: .zero)
 

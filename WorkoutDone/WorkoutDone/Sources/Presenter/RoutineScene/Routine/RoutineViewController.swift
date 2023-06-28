@@ -13,6 +13,11 @@ class RoutineViewController : BaseViewController {
     var selectedRoutines = [Bool]()
     var preSelectedIndex : Int = -1
     
+    var isDeleteMode : Bool = false
+    var selectedDeleteRoutines = [Bool]()
+    
+    private var deleteRoutineButton = DeleteRoutineButton()
+    
     private let routineTableView = UITableView(frame: .zero, style: .grouped).then {
         $0.register(RoutineCell.self, forCellReuseIdentifier: "routineCell")
         $0.register(RoutineDetailCell.self, forCellReuseIdentifier: "routineDetailCell")
@@ -25,7 +30,7 @@ class RoutineViewController : BaseViewController {
     
     let tableViewContainerView = UIView(frame:.zero)
     
-    private let createdButton = GradientButton(colors: [UIColor.color8E36FF.cgColor, UIColor.color7442FF.cgColor]).then {
+    private var createdButton = GradientButton(colors: [UIColor.color8E36FF.cgColor, UIColor.color7442FF.cgColor]).then {
         $0.setTitle("루틴 만들기", for: .normal)
         $0.titleLabel?.font = .pretendard(.semiBold, size: 20)
     }
@@ -36,8 +41,10 @@ class RoutineViewController : BaseViewController {
         view.backgroundColor = .colorFFFFFF
         title = "나의 운동 루틴"
         
+        setDeleteRoutineButton()
         myRoutines = routineViewModel.loadMyRoutine()
         selectedRoutines = Array(repeating: false, count: myRoutines.count)
+        selectedDeleteRoutines = Array(repeating: false, count: myRoutines.count)
     }
     
     override func setupLayout() {
@@ -77,10 +84,50 @@ class RoutineViewController : BaseViewController {
         routineTableView.reloadData()
     }
     
+    func setDeleteRoutineButton() {
+        deleteRoutineButton = DeleteRoutineButton(frame: CGRect(x: 0, y: 0, width: 80, height: 30))
+        deleteRoutineButton.addTarget(self, action: #selector(deleteRoutineButtonTapped), for: .touchUpInside)
+        let rightBarButton = UIBarButtonItem(customView: deleteRoutineButton)
+        navigationItem.rightBarButtonItem = rightBarButton
+    }
+    
+    @objc func deleteRoutineButtonTapped() {
+        selectedRoutines = Array(repeating: false, count: myRoutines.count)
+        selectedDeleteRoutines = Array(repeating: false, count: myRoutines.count)
+        
+        if !isDeleteMode {
+            enterDeleteMode()
+        } else {
+            exitDeleteMode()
+        }
+        
+        isDeleteMode = !isDeleteMode
+
+        routineTableView.reloadData()
+    }
+    
+    func enterDeleteMode() {
+        deleteRoutineButton.setDeleteRoutineButton(text: "뒤로 가기", textColor: .color363636, backgroundColor: .colorF3F3F3)
+        createdButton.setTitle("루틴 삭제하기", for: .normal)
+        createdButton.colors = [UIColor.colorF54968.cgColor, UIColor.colorF54968.cgColor]
+    }
+    
+    func exitDeleteMode() {
+        deleteRoutineButton.setDeleteRoutineButton(text: "루틴 삭제", textColor: .colorF54968, backgroundColor: .colorFFEDF0)
+        createdButton.setTitle("루틴 만들기", for: .normal)
+        createdButton.colors = [UIColor.color8E36FF.cgColor, UIColor.color7442FF.cgColor]
+    }
+    
     @objc func createdButtonTapped(sender: UIButton!) {
-        let createRoutineVC = CreateRoutineViewController()
-        createRoutineVC.hidesBottomBarWhenPushed = true
-        navigationController?.pushViewController(createRoutineVC, animated: false)
+        if !isDeleteMode {
+            let createRoutineVC = CreateRoutineViewController()
+            createRoutineVC.hidesBottomBarWhenPushed = true
+            navigationController?.pushViewController(createRoutineVC, animated: false)
+        } else {
+            let deleteRoutineAlertVC = DeleteRoutineAlertViewController()
+            deleteRoutineAlertVC.modalPresentationStyle = .overFullScreen
+            self.present(deleteRoutineAlertVC, animated: false)
+        }
     }
 }
 
@@ -129,14 +176,28 @@ extension RoutineViewController : UITableViewDelegate, UITableViewDataSource {
             
             cell.routineIndexLabel.text = "routine \(indexPath.routineOrder)"
             cell.routineTitleLabel.text = myRoutines[indexPath.section].name
+            
+            cell.routineIndexLabel.textColor = .color7442FF
+            cell.outerView.backgroundColor = .colorF6F6F6
+            cell.innerBackgroundView.backgroundColor = .clear
+            cell.innerView.backgroundColor = .clear
             cell.editButton.isHidden = true
             cell.openImage.isHidden = false
-            cell.outerView.backgroundColor = .colorF6F6F6
             
             if selectedRoutines[indexPath.section] {
                 cell.editButton.isHidden = false
                 cell.openImage.isHidden = true
                 cell.outerView.backgroundColor = .colorF8F6FF
+            }
+            
+            if isDeleteMode {
+                cell.openImage.isHidden = true
+                if selectedDeleteRoutines[indexPath.section] {
+                    cell.routineIndexLabel.textColor = .colorF54968
+                    cell.outerView.backgroundColor = .colorF54968
+                    cell.innerBackgroundView.backgroundColor = .colorFFFFFF
+                    cell.innerView.backgroundColor = .colorF54968.withAlphaComponent(0.2)
+                }
             }
             
             return cell
@@ -165,14 +226,33 @@ extension RoutineViewController : UITableViewDelegate, UITableViewDataSource {
         let footer = UIView()
         
         let outerView = UIView(frame: .init(x: 20, y: 0, width: tableView.bounds.width - 40, height: selectedRoutines[section] == true ? 19 : 17))
+        let innerBackgroundView = UIView(frame: .init(x: 1, y: 0, width: outerView.bounds.width - 2, height: outerView.bounds.height - 1))
+        let innerView = UIView(frame: .init(x: 0, y: 0, width: innerBackgroundView.bounds.width, height: innerBackgroundView.bounds.height))
+        
         footer.addSubview(outerView)
+        outerView.addSubview(innerBackgroundView)
+        innerBackgroundView.addSubview(innerView)
         
         outerView.backgroundColor = .colorF6F6F6
         outerView.layer.cornerRadius = 10
         outerView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         
+        innerBackgroundView.backgroundColor = .clear
+        innerBackgroundView.layer.cornerRadius = 10
+        innerBackgroundView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+        
+        innerView.backgroundColor = .clear
+        innerView.layer.cornerRadius = 10
+        innerView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+        
         if selectedRoutines[section] {
             outerView.backgroundColor = .colorF8F6FF
+        }
+        
+        if isDeleteMode && selectedDeleteRoutines[section] {
+            outerView.backgroundColor = .colorF54968
+            innerBackgroundView.backgroundColor = .colorFFFFFF
+            innerView.backgroundColor = .colorF54968.withAlphaComponent(0.2)
         }
 
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(routineCellTapped))
@@ -190,37 +270,49 @@ extension RoutineViewController : UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if myRoutines.count > 0 && indexPath.row == 0 {
-            if !selectedRoutines[indexPath.section] {
-                if preSelectedIndex >= 0 {
-                    selectedRoutines[preSelectedIndex] = false
-                    tableView.reloadSections([preSelectedIndex], with: .none)
+        if myRoutines.count > 0, indexPath.row == 0 {
+            if !isDeleteMode {
+                if !selectedRoutines[indexPath.section] {
+                    if preSelectedIndex >= 0 {
+                        selectedRoutines[preSelectedIndex] = false
+                        tableView.reloadSections([preSelectedIndex], with: .none)
+                    }
+                    
+                    preSelectedIndex = indexPath.section
                 }
                 
-                preSelectedIndex = indexPath.section
+                selectedRoutines[indexPath.section] = !selectedRoutines[indexPath.section]
+                
+                tableView.reloadSections([indexPath.section], with: .none)
+            } else {
+                selectedDeleteRoutines[indexPath.section] = !selectedDeleteRoutines[indexPath.section]
+                
+                tableView.reloadData()
             }
-            
-            selectedRoutines[indexPath.section] = !selectedRoutines[indexPath.section]
-            
-            tableView.reloadSections([indexPath.section], with: .none)
         }
     }
     
     @objc func routineCellTapped(_ gestureRecognizer: UITapGestureRecognizer) {
         guard let footerView = gestureRecognizer.view else { return }
         let section = footerView.tag
-
-        if !selectedRoutines[section] {
-            if preSelectedIndex >= 0 {
-                selectedRoutines[preSelectedIndex] = false
-                routineTableView.reloadSections([preSelectedIndex], with: .none)
-            }
-            
-            preSelectedIndex = section
-        }
-
-        selectedRoutines[section] = !selectedRoutines[section]
         
-        routineTableView.reloadSections([section], with: .none)
+        if !isDeleteMode {
+            if !selectedRoutines[section] {
+                if preSelectedIndex >= 0 {
+                    selectedRoutines[preSelectedIndex] = false
+                    routineTableView.reloadSections([preSelectedIndex], with: .none)
+                }
+                
+                preSelectedIndex = section
+            }
+
+            selectedRoutines[section] = !selectedRoutines[section]
+            
+            routineTableView.reloadSections([section], with: .none)
+        } else {
+            selectedDeleteRoutines[section] = !selectedDeleteRoutines[section]
+            
+            routineTableView.reloadData()
+        }
     }
 }

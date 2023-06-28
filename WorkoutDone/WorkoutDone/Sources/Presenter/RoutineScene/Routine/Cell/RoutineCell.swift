@@ -24,6 +24,18 @@ class RoutineCell : UITableViewCell {
         $0.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
     }
     
+    let innerBackgroundView = UIView().then {
+        $0.backgroundColor = .clear
+        $0.layer.cornerRadius = 10
+        $0.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+    }
+    
+    let innerView = UIView().then {
+        $0.backgroundColor = .clear
+        $0.layer.cornerRadius = 10
+        $0.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+    }
+    
     let routineIndexLabel = UILabel().then {
         $0.text = "routine A"
         $0.textColor = .color7442FF
@@ -72,8 +84,10 @@ class RoutineCell : UITableViewCell {
     // MARK: - ACTIONS
     func setupLayout() {
         contentView.addSubview(outerView)
+        outerView.addSubview(innerBackgroundView)
+        innerBackgroundView.addSubview(innerView)
         [routineIndexLabel, routineTitleLabel, openImage, editButton].forEach {
-            outerView.addSubviews($0)
+            innerView.addSubviews($0)
         }
     }
     
@@ -84,25 +98,37 @@ class RoutineCell : UITableViewCell {
             $0.trailing.equalToSuperview().offset(-20)
         }
         
+        innerBackgroundView.snp.makeConstraints {
+            $0.top.leading.equalTo(outerView).offset(1)
+            $0.trailing.equalTo(outerView).offset(-1)
+            $0.bottom.equalTo(outerView)
+        }
+        
+        innerView.snp.makeConstraints {
+            $0.top.leading.equalTo(innerBackgroundView)
+            $0.trailing.equalTo(innerBackgroundView)
+            $0.bottom.equalTo(innerBackgroundView)
+        }
+        
         routineIndexLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(15)
-            $0.leading.equalToSuperview().offset(19)
+            $0.top.equalTo(outerView).offset(15)
+            $0.leading.equalTo(outerView).offset(19)
         }
         
         routineTitleLabel.snp.makeConstraints {
-            $0.leading.equalToSuperview().offset(19)
-            $0.top.equalToSuperview().offset(31)
+            $0.leading.equalTo(outerView).offset(19)
+            $0.top.equalTo(outerView).offset(31)
         }
         
         openImage.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(29)
-            $0.trailing.equalTo(-20)
+            $0.top.equalTo(outerView).offset(29)
+            $0.trailing.equalTo(outerView).offset(-20)
             $0.width.height.equalTo(16.3)
         }
         
         editButton.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(20)
-            $0.trailing.equalToSuperview().offset(-20)
+            $0.top.equalTo(outerView).offset(20)
+            $0.trailing.equalTo(outerView).offset(-20)
             $0.width.equalTo(65)
             $0.height.equalTo(27)
         }
