@@ -188,6 +188,7 @@ class HomeViewController : BaseViewController {
             let navigationController = UINavigationController(rootViewController: duringWorkoutViewController)
             navigationController.modalTransitionStyle = .crossDissolve
             navigationController.modalPresentationStyle = .fullScreen
+            UserDefaultsManager.shared.save(value: true, forkey: .isWorkout)
             self.present(navigationController, animated: true)
         }
         workoutViewController.hidesBottomBarWhenPushed = true
