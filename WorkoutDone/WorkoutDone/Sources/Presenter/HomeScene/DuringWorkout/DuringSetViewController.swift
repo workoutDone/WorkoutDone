@@ -22,11 +22,15 @@ final class DuringSetViewController : BaseViewController {
     let weightTrainingArrayIndexRx = PublishSubject<Int>()
     private let addWeightTrainingInfoTrigger = PublishSubject<Void>()
     private let addWeightTrainingInfoIndexTrigger = PublishSubject<Int>()
+    private let deleteSetTrigger = PublishSubject<Void>()
+    private let deleteSetIndex = PublishSubject<Int>()
     private lazy var input = DuringSetViewModel.Input(
         loadView: didLoad.asDriver(onErrorJustReturn: ()),
         weightTrainingArrayIndex: weightTrainingArrayIndexRx.asDriver(onErrorJustReturn: 0),
         addWeightTrainingInfoTrigger: addWeightTrainingInfoTrigger.asDriver(onErrorJustReturn: ()),
-        addWightTrainingInfoIndexTrigger: addWeightTrainingInfoIndexTrigger.asDriver(onErrorJustReturn: 0))
+        addWeightTrainingInfoIndexTrigger: addWeightTrainingInfoIndexTrigger.asDriver(onErrorJustReturn: 0),
+        deleteSetTrigger: deleteSetTrigger.asDriver(onErrorJustReturn: ()),
+        deleteSetIndex: deleteSetIndex.asDriver(onErrorJustReturn: 0))
     private lazy var output = viewModel.transform(input: input)
     // MARK: - PROPERTIES
     
@@ -69,8 +73,17 @@ final class DuringSetViewController : BaseViewController {
         })
         .disposed(by: disposeBag)
         
+        output.deleteSetData.drive(onNext: { value in
+            if value {
+                self.weightTrainingArrayIndexRx.onNext(self.weightTrainingArrayIndex)
+                self.tableView.reloadData()
+            }
+        })
+        .disposed(by: disposeBag)
+        
         output.weightTraining.drive(onNext: { value in
             self.weightTraining = value
+            print("????????????")
         })
         .disposed(by: disposeBag)
         
@@ -108,9 +121,19 @@ final class DuringSetViewController : BaseViewController {
 extension DuringSetViewController : UITableViewDelegate, UITableViewDataSource, DuringSetFooterDelegate {
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        deleteSetTrigger.onNext(())
+        deleteSetIndex.onNext(indexPath.row)
+        weightTrainingArrayIndexRx.onNext(weightTrainingArrayIndex)
         if editingStyle == .delete {
+            tableView.beginUpdates()
 //            dummy.weightTraining[indexPath.section].weightTrainingInfo.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .fade)
+//            tableView.deleteRows(at: [indexPath], with: .fade)
+            deleteSetTrigger.onNext(())
+            deleteSetIndex.onNext(indexPath.row)
+            weightTrainingArrayIndexRx.onNext(weightTrainingArrayIndex)
+//            tableView.deleteRows(at: weightTrainingInfoArray[indexPath], with: .fade)
+            tableView.endUpdates()
+            print(indexPath.row)
         }
     }
 
@@ -136,8 +159,12 @@ extension DuringSetViewController : UITableViewDelegate, UITableViewDataSource, 
             return footerView
         }
     func addWorkoutButtonTapped() {
-        addWeightTrainingInfoTrigger.onNext(())
-        addWeightTrainingInfoIndexTrigger.onNext(weightTrainingArrayIndex)
+//        addWeightTrainingInfoTrigger.onNext(())
+//        addWeightTrainingInfoIndexTrigger.onNext(weightTrainingArrayIndex)
+        
+        deleteSetTrigger.onNext(())
+        deleteSetIndex.onNext(0)
+        weightTrainingArrayIndexRx.onNext(weightTrainingArrayIndex)
         
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
