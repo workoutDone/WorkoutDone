@@ -11,17 +11,25 @@ class UserDefaultsManager {
     enum Key: String {
         case hasOnboarded
         case isMonthlyCalendar
+        case isWorkout
     }
     
     let defaults = UserDefaults.standard
     static let shared = UserDefaultsManager()
+    private init() {}
     
     var hasOnboarded: Bool {
         if load(.hasOnboarded) == nil {
-            save(value: false, forkey: .hasOnboarded)
-            return true
-        } else {
             return false
+        } else {
+            return true
+        }
+    }
+    var isWorkout: Bool {
+        if load(.isWorkout) == nil {
+            return false
+        } else {
+            return true
         }
     }
     
@@ -38,6 +46,8 @@ class UserDefaultsManager {
         case .hasOnboarded:
             return loadBool(key)
         case .isMonthlyCalendar:
+            return loadBool(key)
+        case .isWorkout:
             return loadBool(key)
         }
     }

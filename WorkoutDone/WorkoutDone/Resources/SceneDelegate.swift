@@ -7,52 +7,18 @@
 
 import UIKit
 import RealmSwift
-//import FacebookCore
-//import FacebookShare
 
 
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
-
-//    func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
-//        guard let url = URLContexts.first?.url else {
-//            return
-//        }
-//
-//        ApplicationDelegate.shared.application(
-//            UIApplication.shared,
-//            open: url,
-//            sourceApplication: nil,
-//            annotation: [UIApplication.OpenURLOptionsKey.annotation]
-//        )
-//    }
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
-        // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
-        // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
+
         setRootViewController(scene)
         
         let realm = try! Realm()
         print(Realm.Configuration.defaultConfiguration.fileURL)
-    }
-
-    func sceneDidDisconnect(_ scene: UIScene) {
-        // Called as the scene is being released by the system.
-        // This occurs shortly after the scene enters the background, or when its session is discarded.
-        // Release any resources associated with this scene that can be re-created the next time the scene connects.
-        // The scene may re-connect later, as its session was not necessarily discarded (see `application:didDiscardSceneSessions` instead).
-    }
-
-    func sceneDidBecomeActive(_ scene: UIScene) {
-        // Called when the scene has moved from an inactive state to an active state.
-        // Use this method to restart any tasks that were paused (or not yet started) when the scene was inactive.
-    }
-
-    func sceneWillResignActive(_ scene: UIScene) {
-        // Called when the scene will move from an active state to an inactive state.
-        // This may occur due to temporary interruptions (ex. an incoming phone call).
     }
 
     func sceneWillEnterForeground(_ scene: UIScene) {
@@ -69,10 +35,22 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 extension SceneDelegate {
     private func setRootViewController(_ scene: UIScene) {
-        if UserDefaultsManager.shared.hasOnboarded {
+        let manager = UserDefaultsManager.shared
+        ///온보딩 마쳤을 때
+        if manager.hasOnboarded {
+            ///운동 중일때
+            if manager.isWorkout {
+                let duringWorkoutViewController = DuringWorkoutViewController()
+                setRootViewController(scene, viewController: UINavigationController(rootViewController: duringWorkoutViewController))
+            }
+            else {
+                ///홈 화면
+                setRootViewController(scene, viewController: TabBarController())
+            }
+        }
+        else {
+            ///온보딩을 마치지 못했을 때
             setRootViewController(scene, viewController: OnboardingViewController())
-        } else {
-            setRootViewController(scene, viewController: TabBarController())
         }
     }
     

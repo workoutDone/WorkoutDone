@@ -114,6 +114,7 @@ class OnboardingViewController : BaseViewController {
             let tabBarC = TabBarController()
             tabBarC.modalPresentationStyle = .fullScreen
             self.present(tabBarC, animated: false)
+            UserDefaultsManager.shared.save(value: true, forkey: .hasOnboarded)
         }
     }
 }

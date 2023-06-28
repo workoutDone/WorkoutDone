@@ -220,11 +220,14 @@ final class DuringWorkoutViewController : BaseViewController {
         timerCounting = true
         timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(timerCounter), userInfo: nil, repeats: true)
         setNotifications()
-        calcCurrentWorkoutCount()
         userNotificationDelegate()
         pageViewController.delegate = self
         
 
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        calcCurrentWorkoutCount()
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -614,7 +617,7 @@ final class DuringWorkoutViewController : BaseViewController {
         progressView.snp.makeConstraints {
             $0.bottom.equalToSuperview()
             $0.leading.equalToSuperview()
-            $0.width.equalTo(UIScreen.main.bounds.width / totalWorkoutCount * 1)
+//            $0.width.equalTo(UIScreen.main.bounds.width / totalWorkoutCount * 1)
             $0.height.equalTo(1.5)
         }
     }
