@@ -13,6 +13,7 @@ final class DuringSetViewController : BaseViewController {
     lazy var weightTrainingArrayIndex = 0
     private lazy var weightTrainingInfoArrayIndex = 0
     private lazy var weightTrainingInfoCount = 0
+    private var temporaryRoutine : Routine?
     private var weightTraining : WeightTraining?
     private lazy var weightTrainingInfoArray : [WeightTrainingInfo] = []
     
@@ -159,12 +160,12 @@ extension DuringSetViewController : UITableViewDelegate, UITableViewDataSource, 
             return footerView
         }
     func addWorkoutButtonTapped() {
-//        addWeightTrainingInfoTrigger.onNext(())
-//        addWeightTrainingInfoIndexTrigger.onNext(weightTrainingArrayIndex)
+        addWeightTrainingInfoTrigger.onNext(())
+        addWeightTrainingInfoIndexTrigger.onNext(weightTrainingArrayIndex)
         
-        deleteSetTrigger.onNext(())
-        deleteSetIndex.onNext(0)
-        weightTrainingArrayIndexRx.onNext(weightTrainingArrayIndex)
+//        deleteSetTrigger.onNext(())
+//        deleteSetIndex.onNext(0)
+//        weightTrainingArrayIndexRx.onNext(weightTrainingArrayIndex)
         
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
