@@ -93,6 +93,7 @@
 		92DCF54C29D6D15600F90002 /* FrameHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DCF54B29D6D15600F90002 /* FrameHeaderView.swift */; };
 		92DCF55A29D878FB00F90002 /* GalleryDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DCF55929D878FB00F90002 /* GalleryDetailViewController.swift */; };
 		92FE26062A49BF4600BCDB82 /* DeleteAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92FE26052A49BF4600BCDB82 /* DeleteAlertViewController.swift */; };
+		92FE26192A4C30EE00BCDB82 /* DeleteRoutineButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92FE26182A4C30EE00BCDB82 /* DeleteRoutineButton.swift */; };
 		A5021EE82A1906EB007DE096 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5021EE72A1906EB007DE096 /* Constants.swift */; };
 		A5021EEA2A194E78007DE096 /* RightBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5021EE92A194E78007DE096 /* RightBarButtonItem.swift */; };
 		A5021EEC2A1A8AF4007DE096 /* PermissionDeniedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5021EEB2A1A8AF4007DE096 /* PermissionDeniedView.swift */; };
@@ -270,6 +271,7 @@
 		92DCF54B29D6D15600F90002 /* FrameHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameHeaderView.swift; sourceTree = "<group>"; };
 		92DCF55929D878FB00F90002 /* GalleryDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryDetailViewController.swift; sourceTree = "<group>"; };
 		92FE26052A49BF4600BCDB82 /* DeleteAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAlertViewController.swift; sourceTree = "<group>"; };
+		92FE26182A4C30EE00BCDB82 /* DeleteRoutineButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteRoutineButton.swift; sourceTree = "<group>"; };
 		A5021EE72A1906EB007DE096 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		A5021EE92A194E78007DE096 /* RightBarButtonItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RightBarButtonItem.swift; sourceTree = "<group>"; };
 		A5021EEB2A1A8AF4007DE096 /* PermissionDeniedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionDeniedView.swift; sourceTree = "<group>"; };
@@ -825,6 +827,7 @@
 			isa = PBXGroup;
 			children = (
 				A59ACB7929B4BC740084C73E /* RoutineViewController.swift */,
+				92FE26182A4C30EE00BCDB82 /* DeleteRoutineButton.swift */,
 				926998E12A1473FA003DDAD2 /* CreateRoutineViewController.swift */,
 				926999552A1D25F5003DDAD2 /* RoutineBackButton.swift */,
 				926999532A1CEBA8003DDAD2 /* RoutineAlertViewController.swift */,
@@ -1096,6 +1099,7 @@
 				A5021EEC2A1A8AF4007DE096 /* PermissionDeniedView.swift in Sources */,
 				A551F5C42A2923E300F96860 /* UNNotificationCenter.swift in Sources */,
 				9291583F2A2886150022BEF9 /* EditButton.swift in Sources */,
+				92FE26192A4C30EE00BCDB82 /* DeleteRoutineButton.swift in Sources */,
 				92FE26062A49BF4600BCDB82 /* DeleteAlertViewController.swift in Sources */,
 				92DCF4D229D1B64100F90002 /* FrameCategoryCell.swift in Sources */,
 				A5FD469829DDDB4C003AC96E /* SkeletalMuslemassViewModel.swift in Sources */,

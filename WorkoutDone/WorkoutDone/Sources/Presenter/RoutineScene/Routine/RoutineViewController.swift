@@ -13,6 +13,8 @@ class RoutineViewController : BaseViewController {
     var selectedRoutines = [Bool]()
     var preSelectedIndex : Int = -1
     
+    private var deleteRoutineButton = DeleteRoutineButton()
+    
     private let routineTableView = UITableView(frame: .zero, style: .grouped).then {
         $0.register(RoutineCell.self, forCellReuseIdentifier: "routineCell")
         $0.register(RoutineDetailCell.self, forCellReuseIdentifier: "routineDetailCell")
@@ -36,6 +38,7 @@ class RoutineViewController : BaseViewController {
         view.backgroundColor = .colorFFFFFF
         title = "나의 운동 루틴"
         
+        setDeleteRoutineButton()
         myRoutines = routineViewModel.loadMyRoutine()
         selectedRoutines = Array(repeating: false, count: myRoutines.count)
     }
@@ -69,6 +72,18 @@ class RoutineViewController : BaseViewController {
     override func actions() {
         createdButton.addTarget(self, action: #selector(createdButtonTapped), for: .touchUpInside)
     }
+    
+    func setDeleteRoutineButton() {
+        deleteRoutineButton = DeleteRoutineButton(frame: CGRect(x: 0, y: 0, width: 80, height: 30))
+        deleteRoutineButton.addTarget(self, action: #selector(deleteRoutineButtonTapped), for: .touchUpInside)
+        let rightBarButton = UIBarButtonItem(customView: deleteRoutineButton)
+        navigationItem.rightBarButtonItem = rightBarButton
+    }
+    
+    @objc func deleteRoutineButtonTapped() {
+        
+    }
+    
     
     func loadMyRoutine() {
         myRoutines = routineViewModel.loadMyRoutine()
