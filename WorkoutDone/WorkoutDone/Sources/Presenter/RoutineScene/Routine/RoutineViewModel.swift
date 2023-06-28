@@ -11,7 +11,6 @@ import RealmSwift
 struct RoutineViewModel {
     func loadMyRoutine() -> [MyRoutine] {
         let realm = try! Realm()
-        
         let myRoutine = realm.objects(MyRoutine.self)
         
         return Array(myRoutine)
@@ -68,23 +67,23 @@ struct RoutineViewModel {
         }
     }
     
-    func setRoutine(routineIndex: Int?, weightTraining: [WeightTraining]) -> Routine {
-        let routine = Routine()
+    func setRoutine(routineIndex: Int?, weightTraining: [WeightTraining]) {
+        let temporaryRoutine = TemporaryRoutine()
         
         if let index = routineIndex {
             let realm = try! Realm()
             
             let myRoutine = realm.objects(MyRoutine.self)[index]
-            routine.name = myRoutine.name
-            routine.stamp = myRoutine.stamp
+            temporaryRoutine.name = myRoutine.name
+            temporaryRoutine.stamp = myRoutine.stamp
         } else {
-            routine.name = ""
-            routine.stamp = ""
+            temporaryRoutine.name = ""
+            temporaryRoutine.stamp = ""
         }
         
-        routine.weightTraining.append(objectsIn: setWeightTraining(weightTraining))
-        
-        return routine
+        temporaryRoutine.weightTraining.append(objectsIn: setWeightTraining(weightTraining))
+        let realmManager = RealmManager.shared
+        realmManager.createData(data: temporaryRoutine)
     }
     
     func setWeightTraining(_ weightTraining: [WeightTraining]) -> [WeightTraining] {
@@ -93,6 +92,8 @@ struct RoutineViewModel {
         }
         return weightTraining
     }
+    
+    
     
 }
 
