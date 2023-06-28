@@ -82,6 +82,7 @@
 		929158432A28FDDD0022BEF9 /* RoutineViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929158422A28FDDD0022BEF9 /* RoutineViewModel.swift */; };
 		929158472A3D92E40022BEF9 /* WorkoutSequenceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929158462A3D92E40022BEF9 /* WorkoutSequenceCell.swift */; };
 		929158492A3F74D10022BEF9 /* CreateWeightTrainingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929158482A3F74D10022BEF9 /* CreateWeightTrainingButton.swift */; };
+		92A7B6492A4C7EB7009C9293 /* DeleteRoutineAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A7B6482A4C7EB7009C9293 /* DeleteRoutineAlertViewController.swift */; };
 		92DCF3EC29CDB38300F90002 /* BackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DCF3EB29CDB38300F90002 /* BackButton.swift */; };
 		92DCF47A29D0818A00F90002 /* WorkOutDoneData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DCF47929D0818A00F90002 /* WorkOutDoneData.swift */; };
 		92DCF47E29D0830B00F90002 /* FrameImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DCF47D29D0830B00F90002 /* FrameImage.swift */; };
@@ -260,6 +261,7 @@
 		929158422A28FDDD0022BEF9 /* RoutineViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineViewModel.swift; sourceTree = "<group>"; };
 		929158462A3D92E40022BEF9 /* WorkoutSequenceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutSequenceCell.swift; sourceTree = "<group>"; };
 		929158482A3F74D10022BEF9 /* CreateWeightTrainingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateWeightTrainingButton.swift; sourceTree = "<group>"; };
+		92A7B6482A4C7EB7009C9293 /* DeleteRoutineAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteRoutineAlertViewController.swift; sourceTree = "<group>"; };
 		92DCF3EB29CDB38300F90002 /* BackButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackButton.swift; sourceTree = "<group>"; };
 		92DCF47929D0818A00F90002 /* WorkOutDoneData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkOutDoneData.swift; sourceTree = "<group>"; };
 		92DCF47D29D0830B00F90002 /* FrameImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameImage.swift; sourceTree = "<group>"; };
@@ -828,6 +830,7 @@
 			children = (
 				A59ACB7929B4BC740084C73E /* RoutineViewController.swift */,
 				92FE26182A4C30EE00BCDB82 /* DeleteRoutineButton.swift */,
+				92A7B6482A4C7EB7009C9293 /* DeleteRoutineAlertViewController.swift */,
 				926998E12A1473FA003DDAD2 /* CreateRoutineViewController.swift */,
 				926999552A1D25F5003DDAD2 /* RoutineBackButton.swift */,
 				926999532A1CEBA8003DDAD2 /* RoutineAlertViewController.swift */,
@@ -1182,6 +1185,7 @@
 				A5E2DEEE2A17611B002A60A4 /* DuringWorkoutViewController.swift in Sources */,
 				A52573EA29EDB8A9004FBAC0 /* UIView.swift in Sources */,
 				A5DA464B2A379FCE0022710C /* TodayEmptyWorkoutResultView.swift in Sources */,
+				92A7B6492A4C7EB7009C9293 /* DeleteRoutineAlertViewController.swift in Sources */,
 				926999562A1D25F5003DDAD2 /* RoutineBackButton.swift in Sources */,
 				A55149162A0FBEA800222A72 /* WorkoutResultViewModel.swift in Sources */,
 				A57061DA29D09D5C0083ECDD /* WeightGraphViewModel.swift in Sources */,

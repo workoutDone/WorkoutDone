@@ -119,9 +119,15 @@ class RoutineViewController : BaseViewController {
     }
     
     @objc func createdButtonTapped(sender: UIButton!) {
-        let createRoutineVC = CreateRoutineViewController()
-        createRoutineVC.hidesBottomBarWhenPushed = true
-        navigationController?.pushViewController(createRoutineVC, animated: false)
+        if !isDeleteMode {
+            let createRoutineVC = CreateRoutineViewController()
+            createRoutineVC.hidesBottomBarWhenPushed = true
+            navigationController?.pushViewController(createRoutineVC, animated: false)
+        } else {
+            let deleteRoutineAlertVC = DeleteRoutineAlertViewController()
+            deleteRoutineAlertVC.modalPresentationStyle = .overFullScreen
+            self.present(deleteRoutineAlertVC, animated: false)
+        }
     }
 }
 
