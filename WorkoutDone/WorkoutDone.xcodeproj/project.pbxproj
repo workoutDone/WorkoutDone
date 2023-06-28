@@ -92,7 +92,6 @@
 		92DCF54A29D6BD8200F90002 /* SortButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DCF54929D6BD8200F90002 /* SortButtonCell.swift */; };
 		92DCF54C29D6D15600F90002 /* FrameHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DCF54B29D6D15600F90002 /* FrameHeaderView.swift */; };
 		92DCF55A29D878FB00F90002 /* GalleryDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DCF55929D878FB00F90002 /* GalleryDetailViewController.swift */; };
-		92DCF61229DCAE3D00F90002 /* GridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DCF61129DCAE3D00F90002 /* GridView.swift */; };
 		92FE26062A49BF4600BCDB82 /* DeleteAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92FE26052A49BF4600BCDB82 /* DeleteAlertViewController.swift */; };
 		A5021EE82A1906EB007DE096 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5021EE72A1906EB007DE096 /* Constants.swift */; };
 		A5021EEA2A194E78007DE096 /* RightBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5021EE92A194E78007DE096 /* RightBarButtonItem.swift */; };
@@ -121,6 +120,7 @@
 		A551491A2A0FE64900222A72 /* UILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A55149192A0FE64900222A72 /* UILabel.swift */; };
 		A551F5C22A25AFF600F96860 /* ImportPhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A551F5C12A25AFF600F96860 /* ImportPhotoCollectionViewCell.swift */; };
 		A551F5C42A2923E300F96860 /* UNNotificationCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A551F5C32A2923E300F96860 /* UNNotificationCenter.swift */; };
+		A553A5E62A4BFAB30027F502 /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A553A5E52A4BFAB30027F502 /* UIViewController.swift */; };
 		A5550A9229F302DC00CBD1BF /* AuthorizedPhotoGalleryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5550A9129F302DC00CBD1BF /* AuthorizedPhotoGalleryView.swift */; };
 		A5550A9429F3092600CBD1BF /* PhotoGalleryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5550A9329F3092600CBD1BF /* PhotoGalleryViewModel.swift */; };
 		A5550A9629F310D500CBD1BF /* PhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5550A9529F310D500CBD1BF /* PhotoCollectionViewCell.swift */; };
@@ -269,7 +269,6 @@
 		92DCF54929D6BD8200F90002 /* SortButtonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortButtonCell.swift; sourceTree = "<group>"; };
 		92DCF54B29D6D15600F90002 /* FrameHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameHeaderView.swift; sourceTree = "<group>"; };
 		92DCF55929D878FB00F90002 /* GalleryDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryDetailViewController.swift; sourceTree = "<group>"; };
-		92DCF61129DCAE3D00F90002 /* GridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridView.swift; sourceTree = "<group>"; };
 		92FE26052A49BF4600BCDB82 /* DeleteAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAlertViewController.swift; sourceTree = "<group>"; };
 		A5021EE72A1906EB007DE096 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		A5021EE92A194E78007DE096 /* RightBarButtonItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RightBarButtonItem.swift; sourceTree = "<group>"; };
@@ -298,6 +297,7 @@
 		A55149192A0FE64900222A72 /* UILabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILabel.swift; sourceTree = "<group>"; };
 		A551F5C12A25AFF600F96860 /* ImportPhotoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportPhotoCollectionViewCell.swift; sourceTree = "<group>"; };
 		A551F5C32A2923E300F96860 /* UNNotificationCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UNNotificationCenter.swift; sourceTree = "<group>"; };
+		A553A5E52A4BFAB30027F502 /* UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
 		A5550A9129F302DC00CBD1BF /* AuthorizedPhotoGalleryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizedPhotoGalleryView.swift; sourceTree = "<group>"; };
 		A5550A9329F3092600CBD1BF /* PhotoGalleryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoGalleryViewModel.swift; sourceTree = "<group>"; };
 		A5550A9529F310D500CBD1BF /* PhotoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -554,6 +554,7 @@
 				A5632CD92A0E30F5007EC335 /* UIImage.swift */,
 				A5552D302A121D4600835B40 /* Double.swift */,
 				929158402A28DFEE0022BEF9 /* IndexPath.swift */,
+				A553A5E52A4BFAB30027F502 /* UIViewController.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1078,6 +1079,7 @@
 				92DCF55A29D878FB00F90002 /* GalleryDetailViewController.swift in Sources */,
 				A52573EE29EDB9B9004FBAC0 /* ViewModelType.swift in Sources */,
 				92DCF54A29D6BD8200F90002 /* SortButtonCell.swift in Sources */,
+				A553A5E62A4BFAB30027F502 /* UIViewController.swift in Sources */,
 				A59ACB7829B46DEB0084C73E /* TabBarController.swift in Sources */,
 				A576694029BF1A9900673DFE /* UITextField.swift in Sources */,
 				9200602729B1A7F400586063 /* UIColor.swift in Sources */,
