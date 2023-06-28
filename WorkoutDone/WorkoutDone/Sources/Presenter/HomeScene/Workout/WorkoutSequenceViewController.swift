@@ -155,8 +155,7 @@ class WorkoutSequenceViewController: BaseViewController {
     }
     
     @objc func startWorkoutButtonTapped() {
-        let routine = routineViewModel.setRoutine(routineIndex: selectedMyRoutineIndex, weightTraining: weightTraining)
-        DuringWorkoutRoutine.shared.routine = routine
+       routineViewModel.setRoutine(routineIndex: selectedMyRoutineIndex, weightTraining: weightTraining)
         
         completionHandler?()
         navigationController?.popViewController(animated: false)
