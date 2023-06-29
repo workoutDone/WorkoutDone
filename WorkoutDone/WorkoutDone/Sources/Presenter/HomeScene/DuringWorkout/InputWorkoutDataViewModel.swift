@@ -37,7 +37,6 @@ class InputWorkoutDataViewModel {
     
     func updateCalisthenicsTemporaryRoutineData(count : Int, infoArrayIndex : Int, arrayIndex : Int) {
         let temporaryRoutineData = readTemporaryRoutineData()
-        let weightTrainingInfo = WeightTrainingInfo()
         if let weightTrainingInfo = temporaryRoutineData?.weightTraining[arrayIndex].weightTrainingInfo[infoArrayIndex] {
             do {
                 try realm.write {
@@ -54,7 +53,6 @@ class InputWorkoutDataViewModel {
     
     func updateTemporaryRoutineData(count : Int, weight : Double, infoArrayIndex : Int, arrayIndex : Int) {
         let temporaryRoutineData = readTemporaryRoutineData()
-        let weightTrainingInfo = WeightTrainingInfo()
         if let weightTrainingInfo = temporaryRoutineData?.weightTraining[arrayIndex].weightTrainingInfo[infoArrayIndex] {
             do {
                 try realm.write {

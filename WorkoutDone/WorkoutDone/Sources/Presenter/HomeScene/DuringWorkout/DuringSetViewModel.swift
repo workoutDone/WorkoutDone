@@ -22,6 +22,7 @@ class DuringSetViewModel {
         let addWeightTrainingInfoIndexTrigger : Driver<Int>
         let deleteSetTrigger : Driver<Void>
         let deleteSetIndex : Driver<Int>
+        let deleteWeightTrainingArrayIndex : Driver<Int>
     }
     
     struct Output {
@@ -35,6 +36,13 @@ class DuringSetViewModel {
     func readTemporaryRoutineData() -> TemporaryRoutine? {
         let temporaryRoutineData = realmManager.readData(id: 0, type: TemporaryRoutine.self)
         return temporaryRoutineData
+    }
+    
+    func deleteTemporaryRoutineData(infoArrayIndex : Int, arrayIndex : Int) {
+        let temporaryRoutineData = readTemporaryRoutineData()
+        if let weightTrainingInfo = temporaryRoutineData?.weightTraining[arrayIndex].weightTrainingInfo[infoArrayIndex] {
+            realmManager.deleteData(weightTrainingInfo)
+        }
     }
     
     func transform(input : Input) -> Output {
@@ -74,21 +82,12 @@ class DuringSetViewModel {
         })
         let weightTraining = Driver<WeightTraining?>.combineLatest(input.loadView, input.weightTrainingArrayIndex, resultSelector: { (_, index) in
             let routine = self.readTemporaryRoutineData()
-//            guard let wegihtTrainingValue = routine?.weightTraining[index] else { WeightTraining(bodyPart: "", weightTraining: "") }
             let weightTrainingValue = routine?.weightTraining[index]
             return weightTrainingValue
         })
         
-        let deleteSetData = Driver<Bool>.combineLatest(input.deleteSetTrigger, input.deleteSetIndex, input.weightTrainingArrayIndex, resultSelector: { (_, setIndex, arrayIndex) in
-            let routine = self.readTemporaryRoutineData()
-            
-            let weightTrainingInfoValue = routine?.weightTraining[arrayIndex].weightTrainingInfo[setIndex]
-            
-//            routine?.weightTraining[arrayIndex].weightTrainingInfo.remove(at: setIndex)
-    
-//            self.realm.delete(weightTrainingInfoValue!)
-            routine?.weightTraining[arrayIndex].weightTrainingInfo.realm?.delete((routine?.weightTraining[arrayIndex].weightTrainingInfo[setIndex])!)
-            print(routine?.weightTraining, "확인용!")
+        let deleteSetData = Driver<Bool>.zip(input.deleteSetTrigger, input.deleteSetIndex, input.deleteWeightTrainingArrayIndex, resultSelector: { (_, setIndex, arrayIndex) in
+            self.deleteTemporaryRoutineData(infoArrayIndex: setIndex, arrayIndex: arrayIndex)
             return true
         })
         
