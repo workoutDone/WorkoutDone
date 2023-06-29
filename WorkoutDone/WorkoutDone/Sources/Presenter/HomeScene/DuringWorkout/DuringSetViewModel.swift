@@ -45,6 +45,24 @@ class DuringSetViewModel {
         }
     }
     
+    func updateTemporaryRoutineSet(infoArrayIndex : Int, arrayIndex : Int) {
+        let temporaryRoutineData = readTemporaryRoutineData()
+        let weightTrainingInfoCount = temporaryRoutineData?.weightTraining[arrayIndex].weightTrainingInfo.count
+        if let weightTrainingInfoArray = temporaryRoutineData?.weightTraining[arrayIndex].weightTrainingInfo {
+            for (index, weightTrainingInfo) in weightTrainingInfoArray.enumerated() {
+                do {
+                    try realm.write {
+                        weightTrainingInfo.setCount = index + 1
+                    }
+                }
+                catch {
+                    print(error)
+                }
+            }
+        }
+        
+    }
+    
     func transform(input : Input) -> Output {
         
 
@@ -88,6 +106,7 @@ class DuringSetViewModel {
         
         let deleteSetData = Driver<Bool>.zip(input.deleteSetTrigger, input.deleteSetIndex, input.deleteWeightTrainingArrayIndex, resultSelector: { (_, setIndex, arrayIndex) in
             self.deleteTemporaryRoutineData(infoArrayIndex: setIndex, arrayIndex: arrayIndex)
+            self.updateTemporaryRoutineSet(infoArrayIndex: setIndex, arrayIndex: arrayIndex)
             return true
         })
         
