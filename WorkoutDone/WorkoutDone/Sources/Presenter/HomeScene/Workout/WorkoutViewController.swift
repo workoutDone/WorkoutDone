@@ -59,10 +59,6 @@ class WorkoutViewController : BaseViewController {
         $0.font = .pretendard(.bold, size: 20)
     }
     
-    private var adImage = UIImageView().then {
-        $0.backgroundColor = .color3ED1FF.withAlphaComponent(0.2)
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -78,7 +74,7 @@ class WorkoutViewController : BaseViewController {
     override func setupLayout() {
         super.setupLayout()
         
-        [bodyPartCollectionView, routineTableView, selectCompleteButton, adImage].forEach {
+        [bodyPartCollectionView, routineTableView, selectCompleteButton].forEach {
             view.addSubview($0)
         }
         
@@ -105,7 +101,7 @@ class WorkoutViewController : BaseViewController {
         selectCompleteButton.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(24)
             $0.trailing.equalToSuperview().offset(-24)
-            $0.bottom.equalTo(adImage.snp.top).offset(-29)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide).offset(-21)
             $0.height.equalTo(58)
         }
         
@@ -116,11 +112,6 @@ class WorkoutViewController : BaseViewController {
         selectCompleteButtonCountLabel.snp.makeConstraints {
             $0.centerY.equalTo(selectCompleteButton)
             $0.trailing.equalTo(selectCompleteButtonLabel.snp.leading).offset(-5)
-        }
-        
-        adImage.snp.makeConstraints {
-            $0.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
-            $0.height.equalTo(50)
         }
     }
     
