@@ -96,6 +96,8 @@ class RoutineEditorViewController : BaseViewController {
     override func setComponents() {
         setBackButton()
         
+        nameTextField.delegate = self
+        
         routineTableView.delegate = self
         routineTableView.dataSource = self
         
@@ -235,5 +237,12 @@ extension RoutineEditorViewController : UITableViewDelegate, UITableViewDataSour
 extension RoutineEditorViewController : UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         scrollView.contentOffset.x = 0
+    }
+}
+
+extension RoutineEditorViewController : UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool{
+        textField.resignFirstResponder()
+        return true
     }
 }
