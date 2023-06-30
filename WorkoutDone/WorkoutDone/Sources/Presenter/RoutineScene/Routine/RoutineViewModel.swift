@@ -93,7 +93,16 @@ struct RoutineViewModel {
         return weightTraining
     }
     
-    
-    
+    func deleteRoutine(id: [String]) {
+        let realm = try! Realm()
+        
+        for myRoutineId in id {
+            if let myRoutine = realm.object(ofType: MyRoutine.self, forPrimaryKey: myRoutineId) {
+                try! realm.write {
+                    realm.delete(myRoutine)
+                }
+            }
+        }
+    }
 }
 
