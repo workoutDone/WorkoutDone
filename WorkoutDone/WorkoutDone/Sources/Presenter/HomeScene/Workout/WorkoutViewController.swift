@@ -164,6 +164,7 @@ class WorkoutViewController : BaseViewController {
             
             if let navigationController = tabBarController.selectedViewController as? UINavigationController {
                 let createRoutineVC = CreateRoutineViewController()
+                createRoutineVC.hidesBottomBarWhenPushed = true
                 navigationController.pushViewController(createRoutineVC, animated: false)
             }
         }
@@ -377,7 +378,7 @@ extension WorkoutViewController : UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if myRoutines.count == 0 {
+        if myRoutines.count == 0 && isSelectBodyPartIndex == -1 {
             moveToCreateRoutine()
         } else {
             if isSelectBodyPartIndex == -1 {
