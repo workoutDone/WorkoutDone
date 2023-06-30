@@ -55,7 +55,7 @@ class RoutineViewController : BaseViewController {
     
     override func setupConstraints() {
         routineTableView.snp.makeConstraints {
-            $0.top.equalToSuperview()
+            $0.top.equalTo(view.safeAreaLayoutGuide)
             $0.leading.trailing.equalToSuperview()
             $0.bottom.equalTo(createdButton.snp.top)
         }
