@@ -7,13 +7,7 @@
 
 import UIKit
 
-protocol CreateRoutineDelegate : AnyObject {
-    func createRoutineButtonTapped()
-}
-
 class CreateRoutineCell: UITableViewCell {
-    weak var delegate: CreateRoutineDelegate?
-    
     private let borderImage = UIImageView().then {
         $0.image = UIImage(named: "border")
     }
@@ -47,7 +41,6 @@ class CreateRoutineCell: UITableViewCell {
         setupLayout()
         setupConstraints()
 
-        createRoutineButton.addTarget(self, action: #selector(createRoutineButtonTapped), for: .touchUpInside)
     }
     
     required init?(coder: NSCoder) {
@@ -96,9 +89,5 @@ class CreateRoutineCell: UITableViewCell {
             $0.centerX.centerY.equalTo(createRoutineButton)
             $0.width.height.equalTo(16)
         }
-    }
-    
-    @objc func createRoutineButtonTapped() {
-        delegate?.createRoutineButtonTapped()
     }
 }
