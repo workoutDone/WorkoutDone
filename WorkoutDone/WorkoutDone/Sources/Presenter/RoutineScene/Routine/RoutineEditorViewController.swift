@@ -51,6 +51,8 @@ class RoutineEditorViewController : BaseViewController {
         setRoutineName()
         setRoutineStamp()
         setSaveButton()
+        
+        hideKeyboardWhenTappedAround()
     }
     
     override func setupLayout() {
