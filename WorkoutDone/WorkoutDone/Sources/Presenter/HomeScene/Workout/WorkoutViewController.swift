@@ -166,6 +166,17 @@ class WorkoutViewController : BaseViewController {
             navigationController?.pushViewController(workoutSequenceVC, animated: false)
         }
     }
+    
+    func moveToCreateRoutine() {
+        if let tabBarController = tabBarController {
+            tabBarController.selectedIndex = 1
+            
+            if let navigationController = tabBarController.selectedViewController as? UINavigationController {
+                let createRoutineVC = CreateRoutineViewController()
+                navigationController.pushViewController(createRoutineVC, animated: false)
+            }
+        }
+    }
 }
 
 extension WorkoutViewController : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
@@ -376,8 +387,7 @@ extension WorkoutViewController : UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if myRoutines.count == 0 {
-            
-            
+            moveToCreateRoutine()
         } else {
             if isSelectBodyPartIndex == -1 {
                 if indexPath.row == 0 {
