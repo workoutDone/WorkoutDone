@@ -331,6 +331,10 @@ extension RoutineViewController : EditDelegate, AlertDismissDelegate {
         selectedRoutines = Array(repeating: false, count: myRoutines.count)
         selectedDeleteRoutines = Array(repeating: false, count: myRoutines.count)
         
+        if myRoutines.isEmpty {
+            deleteRoutineButtonTapped()
+        }
+        
         routineTableView.reloadData()
     }
 }
