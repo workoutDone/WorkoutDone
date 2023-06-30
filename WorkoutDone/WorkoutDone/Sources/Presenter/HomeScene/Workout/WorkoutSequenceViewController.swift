@@ -165,8 +165,7 @@ class WorkoutSequenceViewController: BaseViewController {
     }
     
     @objc func createWeightTrainingButtonTapped() {
-        let workoutVC = WorkoutViewController()
-        navigationController?.pushViewController(workoutVC, animated: false)
+        navigationController?.popViewController(animated: false)
     }
 }
 
