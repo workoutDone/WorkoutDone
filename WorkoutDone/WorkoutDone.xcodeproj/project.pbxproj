@@ -83,6 +83,7 @@
 		929158472A3D92E40022BEF9 /* WorkoutSequenceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929158462A3D92E40022BEF9 /* WorkoutSequenceCell.swift */; };
 		929158492A3F74D10022BEF9 /* CreateWeightTrainingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929158482A3F74D10022BEF9 /* CreateWeightTrainingButton.swift */; };
 		92A7B6492A4C7EB7009C9293 /* DeleteRoutineAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A7B6482A4C7EB7009C9293 /* DeleteRoutineAlertViewController.swift */; };
+		92A7B66A2A4EEFDC009C9293 /* WorkOutData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A7B6692A4EEFDC009C9293 /* WorkOutData.swift */; };
 		92DCF3EC29CDB38300F90002 /* BackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DCF3EB29CDB38300F90002 /* BackButton.swift */; };
 		92DCF47A29D0818A00F90002 /* WorkOutDoneData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DCF47929D0818A00F90002 /* WorkOutDoneData.swift */; };
 		92DCF47E29D0830B00F90002 /* FrameImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DCF47D29D0830B00F90002 /* FrameImage.swift */; };
@@ -263,6 +264,7 @@
 		929158462A3D92E40022BEF9 /* WorkoutSequenceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutSequenceCell.swift; sourceTree = "<group>"; };
 		929158482A3F74D10022BEF9 /* CreateWeightTrainingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateWeightTrainingButton.swift; sourceTree = "<group>"; };
 		92A7B6482A4C7EB7009C9293 /* DeleteRoutineAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteRoutineAlertViewController.swift; sourceTree = "<group>"; };
+		92A7B6692A4EEFDC009C9293 /* WorkOutData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkOutData.swift; sourceTree = "<group>"; };
 		92DCF3EB29CDB38300F90002 /* BackButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackButton.swift; sourceTree = "<group>"; };
 		92DCF47929D0818A00F90002 /* WorkOutDoneData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkOutDoneData.swift; sourceTree = "<group>"; };
 		92DCF47D29D0830B00F90002 /* FrameImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameImage.swift; sourceTree = "<group>"; };
@@ -644,6 +646,7 @@
 		9269981D2A0EBD30003DDAD2 /* WorkOutDone */ = {
 			isa = PBXGroup;
 			children = (
+				92A7B6692A4EEFDC009C9293 /* WorkOutData.swift */,
 				92DCF47929D0818A00F90002 /* WorkOutDoneData.swift */,
 				92DCF47D29D0830B00F90002 /* FrameImage.swift */,
 				92DCF47F29D0846B00F90002 /* BodyInfo.swift */,
@@ -1145,6 +1148,7 @@
 				A57FCCDD2A0828C600576812 /* PhotoFrameTypeViewModel.swift in Sources */,
 				A5DA464D2A379FDC0022710C /* TodayWorkoutResultView.swift in Sources */,
 				A551F5C22A25AFF600F96860 /* ImportPhotoCollectionViewCell.swift in Sources */,
+				92A7B66A2A4EEFDC009C9293 /* WorkOutData.swift in Sources */,
 				9200604529B1ACD900586063 /* WorkoutView.swift in Sources */,
 				929158152A2512E20022BEF9 /* MyRoutineDetailCell.swift in Sources */,
 				A5552D312A121D4600835B40 /* Double.swift in Sources */,

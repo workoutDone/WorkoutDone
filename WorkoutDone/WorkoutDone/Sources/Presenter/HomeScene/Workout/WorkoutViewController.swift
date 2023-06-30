@@ -10,6 +10,7 @@ import UIKit
 class WorkoutViewController : BaseViewController {
     let routineViewModel = RoutineViewModel()
     var myRoutines = [MyRoutine]()
+    var workOutData : [WorkOut] = WorkOutData.workOutData
     var selectedRoutines = [Bool]()
     var preSelectedIndex : Int = -1
     var weightTraining = [WeightTraining]()
@@ -18,8 +19,6 @@ class WorkoutViewController : BaseViewController {
     var selectedMyRoutineIndex : Int?
     
     var completionHandler : (() -> (Void))?
-    
-    let sampleData = [BodyPartData(bodyPart: "가슴", weigthTraing: ["벤치 프레스", "디클라인 푸시업", "버터플라이", "인클라인 덤벨 체스트플라이", "벤치 프레스2", "디클라인 푸시업2", "버터플라이2", "인클라인 덤벨 체스트플라이2", "벤치 프레스3", "디클라인 푸시업3", "버터플라이3", "인클라인 덤벨 체스트플라이3"]), BodyPartData(bodyPart: "등", weigthTraing: ["등0", "등1"]), BodyPartData(bodyPart: "하체", weigthTraing: ["하체0", "하체1", "하체2"]), BodyPartData(bodyPart: "어깨", weigthTraing: []), BodyPartData(bodyPart: "삼두", weigthTraing: []), BodyPartData(bodyPart: "이두", weigthTraing: []), BodyPartData(bodyPart: "졸려", weigthTraing: []), BodyPartData(bodyPart: "하암", weigthTraing: [])]
     
     private let bodyPartCollectionView : UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -205,12 +204,12 @@ extension WorkoutViewController : UICollectionViewDelegate, UICollectionViewData
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return sampleData.count
+        return workOutData.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "bodyPartCell", for: indexPath) as? BodyPartCell else { return UICollectionViewCell() }
-        cell.bodyPartLabel.text = sampleData[indexPath.row].bodyPart
+        cell.bodyPartLabel.text = workOutData[indexPath.row].bodyPart
 
         cell.layer.cornerRadius = 31 / 2
         cell.backgroundColor = .clear
@@ -231,7 +230,7 @@ extension WorkoutViewController : UICollectionViewDelegate, UICollectionViewData
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = sampleData[indexPath.row].bodyPart.size(withAttributes: nil).width + 7.3
+        let width = workOutData[indexPath.row].bodyPart.size(withAttributes: nil).width + 7.3
         return CGSize(width: width + 24, height: 31)
     }
 
@@ -262,7 +261,7 @@ extension WorkoutViewController : UITableViewDelegate, UITableViewDataSource {
             }
             return 1
         }
-        return sampleData[isSelectBodyPartIndex].weigthTraing.count
+        return workOutData[isSelectBodyPartIndex].weightTraining.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -307,7 +306,7 @@ extension WorkoutViewController : UITableViewDelegate, UITableViewDataSource {
 
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "weightTrainingCell", for: indexPath) as? WeightTrainingCell else { return UITableViewCell() }
         cell.selectionStyle = .none
-        cell.weightTrainingLabel.text = sampleData[isSelectBodyPartIndex].weigthTraing[indexPath.row]
+        cell.weightTrainingLabel.text = workOutData[isSelectBodyPartIndex].weightTraining[indexPath.row]
 
         cell.weightTraingView.backgroundColor = .colorF6F6F6
         cell.weightTrainingLabel.font = .pretendard(.regular, size: 16)
@@ -315,7 +314,7 @@ extension WorkoutViewController : UITableViewDelegate, UITableViewDataSource {
         cell.selectedIndexView.isHidden = true
   
         for (index, training) in weightTraining.enumerated() {
-            if training.bodyPart == sampleData[isSelectBodyPartIndex].bodyPart && training.weightTraining == sampleData[isSelectBodyPartIndex].weigthTraing[indexPath.row] {
+            if training.bodyPart == workOutData[isSelectBodyPartIndex].bodyPart && training.weightTraining == workOutData[isSelectBodyPartIndex].weightTraining[indexPath.row] {
                
                 cell.selectedIndexLabel.text = "\(index + 1)"
                 cell.selectedIndexView.isHidden = false
@@ -421,11 +420,11 @@ extension WorkoutViewController : UITableViewDelegate, UITableViewDataSource {
             }
     
         } else {
-            if let index = weightTraining.firstIndex(where: {$0.weightTraining == sampleData[isSelectBodyPartIndex].weigthTraing[indexPath.row]}) {
+            if let index = weightTraining.firstIndex(where: {$0.weightTraining == workOutData[isSelectBodyPartIndex].weightTraining[indexPath.row]}) {
                 weightTraining.remove(at: index)
                 
             } else {
-                weightTraining.append(WeightTraining(bodyPart: sampleData[isSelectBodyPartIndex].bodyPart, weightTraining: sampleData[isSelectBodyPartIndex].weigthTraing[indexPath.row]))
+                weightTraining.append(WeightTraining(bodyPart: workOutData[isSelectBodyPartIndex].bodyPart, weightTraining: workOutData[isSelectBodyPartIndex].weightTraining[indexPath.row]))
             }
         }
         
