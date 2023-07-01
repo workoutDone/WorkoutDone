@@ -63,8 +63,8 @@ class RegisterMyBodyInfoViewModel {
         let selectedWorkoutDoneData = realm.object(ofType: WorkOutDoneData.self, forPrimaryKey: id)
         return selectedWorkoutDoneData == nil ? false : true
     }
-    ///id값으로 BodyInfoData 가져오기
-    func readBodyInfoData(id : Int) -> WorkOutDoneData?  {
+    ///id값으로 workoutDoneData 가져오기
+    func readWorkoutDoneData(id : Int) -> WorkOutDoneData?  {
         let workoutDoneData = RealmManager.shared.readData(id: id, type: WorkOutDoneData.self)
         return workoutDoneData
     }
@@ -113,7 +113,7 @@ class RegisterMyBodyInfoViewModel {
         ///몸무게 데이터 확인(read)
         let readWeightData = Driver<String>.combineLatest(input.loadView, input.selectedDate, resultSelector: { (load, date) in
             if self.validBodyInfoData(id: date) {
-                let weight = self.readBodyInfoData(id: date)?.bodyInfo?.weight
+                let weight = self.readWorkoutDoneData(id: date)?.bodyInfo?.weight
                 if let doubleWeight = weight {
                     return String(doubleWeight)
                 }
@@ -128,7 +128,7 @@ class RegisterMyBodyInfoViewModel {
         ///골격근량 데이터 확인(read)
         let readSkeletalMusleMassData = Driver<String>.combineLatest(input.loadView, input.selectedDate, resultSelector: { (load, date) in
             if self.validBodyInfoData(id: date) {
-                let skeletalMusleMass = self.readBodyInfoData(id: date)?.bodyInfo?.skeletalMuscleMass
+                let skeletalMusleMass = self.readWorkoutDoneData(id: date)?.bodyInfo?.skeletalMuscleMass
                 if let doubleSkeletalMusleMass = skeletalMusleMass {
                     return String(doubleSkeletalMusleMass)
                 }
@@ -144,7 +144,7 @@ class RegisterMyBodyInfoViewModel {
         ///체지방량 데이터  확인(read)
         let readFatPercentageData = Driver<String>.combineLatest(input.loadView, input.selectedDate, resultSelector: { (load, date) in
             if self.validBodyInfoData(id: date) {
-                let fatPercentage = self.readBodyInfoData(id: date)?.bodyInfo?.fatPercentage
+                let fatPercentage = self.readWorkoutDoneData(id: date)?.bodyInfo?.fatPercentage
                 if let doubleFatPercentage = fatPercentage {
                     return String(doubleFatPercentage)
                 }
@@ -171,7 +171,7 @@ class RegisterMyBodyInfoViewModel {
                 if self.validWorkoutDoneData(id: id) {
                     ///BodyInfo 데이터 존재하는 경우 - update
                     if self.validBodyInfoData(id: id) {
-                        let workoutDoneData = self.readBodyInfoData(id: id)
+                        let workoutDoneData = self.readWorkoutDoneData(id: id)
                         try! self.realm.write {
                             workoutDoneData?.bodyInfo?.weight = Double(inputData.weight ?? "")
                             workoutDoneData?.bodyInfo?.fatPercentage = Double(inputData.fatPercentage ?? "")
@@ -179,7 +179,7 @@ class RegisterMyBodyInfoViewModel {
                         }
                     }
                     else {
-                        guard let workOutDoneData = self.readBodyInfoData(id: id) else { return false }
+                        guard let workOutDoneData = self.readWorkoutDoneData(id: id) else { return false }
                         let bodyInfo = BodyInfo()
                         bodyInfo.weight = Double(inputData.weight ?? "")
                         bodyInfo.skeletalMuscleMass = Double(inputData.skeletalMusleMass ?? "")
