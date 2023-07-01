@@ -12,6 +12,7 @@ import RealmSwift
 
 class DuringSetViewModel {
     let realm = try! Realm()
+    let realmManager = RealmManager.shared
     let duringWorkoutRoutine = DuringWorkoutRoutine.shared
     
     struct Input {
@@ -21,25 +22,57 @@ class DuringSetViewModel {
         let addWeightTrainingInfoIndexTrigger : Driver<Int>
         let deleteSetTrigger : Driver<Void>
         let deleteSetIndex : Driver<Int>
+        let deleteWeightTrainingArrayIndex : Driver<Int>
     }
     
     struct Output {
         let weightTrainingInfoCount : Driver<Int>
         let weightTrainingInfo : Driver<[WeightTrainingInfo]>
-        let addData : Driver<Bool>
+        let addData : Driver<Bool> 
         let weightTraining : Driver<WeightTraining?>
         let deleteSetData : Driver<Bool>
     }
+    
+    func readTemporaryRoutineData() -> TemporaryRoutine? {
+        let temporaryRoutineData = realmManager.readData(id: 0, type: TemporaryRoutine.self)
+        return temporaryRoutineData
+    }
+    
+    func deleteTemporaryRoutineData(infoArrayIndex : Int, arrayIndex : Int) {
+        let temporaryRoutineData = readTemporaryRoutineData()
+        if let weightTrainingInfo = temporaryRoutineData?.weightTraining[arrayIndex].weightTrainingInfo[infoArrayIndex] {
+            realmManager.deleteData(weightTrainingInfo)
+        }
+    }
+    
+    func updateTemporaryRoutineSet(infoArrayIndex : Int, arrayIndex : Int) {
+        let temporaryRoutineData = readTemporaryRoutineData()
+        let weightTrainingInfoCount = temporaryRoutineData?.weightTraining[arrayIndex].weightTrainingInfo.count
+        if let weightTrainingInfoArray = temporaryRoutineData?.weightTraining[arrayIndex].weightTrainingInfo {
+            for (index, weightTrainingInfo) in weightTrainingInfoArray.enumerated() {
+                do {
+                    try realm.write {
+                        weightTrainingInfo.setCount = index + 1
+                    }
+                }
+                catch {
+                    print(error)
+                }
+            }
+        }
+        
+    }
+    
     func transform(input : Input) -> Output {
         
 
         let weightTrainingInfoCount = Driver<Int>.combineLatest(input.loadView, input.weightTrainingArrayIndex, resultSelector: { (load, index) in
-            let routine = self.duringWorkoutRoutine.routine
+            let routine = self.readTemporaryRoutineData()
             let count = routine?.weightTraining[index].weightTrainingInfo.count ?? 0
             return count
         })
         let weightTrainingInfo = Driver<[WeightTrainingInfo]>.combineLatest(input.loadView, input.weightTrainingArrayIndex, resultSelector: { (_, index) in
-            let routine = self.duringWorkoutRoutine.routine
+            let routine = self.readTemporaryRoutineData()
 
             guard let info = routine?.weightTraining[index].weightTrainingInfo else {
                 return []
@@ -50,31 +83,30 @@ class DuringSetViewModel {
 
         
         let addData = Driver<Bool>.zip( input.addWeightTrainingInfoTrigger, input.addWeightTrainingInfoIndexTrigger,  resultSelector: { (_, index) in
-            let routine = self.duringWorkoutRoutine.routine
+            let routine = self.readTemporaryRoutineData()
             let count = routine?.weightTraining[index].weightTrainingInfo.count
-            
-            routine?.weightTraining[index].weightTrainingInfo.append(objectsIn: [WeightTrainingInfo(setCount: (count ?? 0) + 1, weight: 0, trainingCount: 0)])
-//            routine?.weightTraining[index].
-            print(routine?.weightTraining)
+            do {
+                try self.realm.write {
+                    let weightTrainingInfo = WeightTrainingInfo()
+                    weightTrainingInfo.setCount = (count ?? 0)  + 1
+                    weightTrainingInfo.trainingCount = nil
+                    weightTrainingInfo.weight = nil
+                    routine?.weightTraining[index].weightTrainingInfo.append(weightTrainingInfo)
+                }
+            } catch {
+                print("Error saving new items, \(error)")
+            }
             return true
         })
         let weightTraining = Driver<WeightTraining?>.combineLatest(input.loadView, input.weightTrainingArrayIndex, resultSelector: { (_, index) in
-            let routine = self.duringWorkoutRoutine.routine
-//            guard let wegihtTrainingValue = routine?.weightTraining[index] else { WeightTraining(bodyPart: "", weightTraining: "") }
+            let routine = self.readTemporaryRoutineData()
             let weightTrainingValue = routine?.weightTraining[index]
             return weightTrainingValue
         })
         
-        let deleteSetData = Driver<Bool>.combineLatest(input.deleteSetTrigger, input.deleteSetIndex, input.weightTrainingArrayIndex, resultSelector: { (_, setIndex, arrayIndex) in
-            let routine = self.duringWorkoutRoutine.routine
-            
-            let weightTrainingInfoValue = routine?.weightTraining[arrayIndex].weightTrainingInfo[setIndex]
-            
-//            routine?.weightTraining[arrayIndex].weightTrainingInfo.remove(at: setIndex)
-    
-//            self.realm.delete(weightTrainingInfoValue!)
-            routine?.weightTraining[arrayIndex].weightTrainingInfo.realm?.delete((routine?.weightTraining[arrayIndex].weightTrainingInfo[setIndex])!)
-            print(routine?.weightTraining, "확인용!")
+        let deleteSetData = Driver<Bool>.zip(input.deleteSetTrigger, input.deleteSetIndex, input.deleteWeightTrainingArrayIndex, resultSelector: { (_, setIndex, arrayIndex) in
+            self.deleteTemporaryRoutineData(infoArrayIndex: setIndex, arrayIndex: arrayIndex)
+            self.updateTemporaryRoutineSet(infoArrayIndex: setIndex, arrayIndex: arrayIndex)
             return true
         })
         

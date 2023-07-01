@@ -638,7 +638,7 @@ final class DuringWorkoutViewController : BaseViewController {
         progressView.snp.makeConstraints {
             $0.bottom.equalToSuperview()
             $0.leading.equalToSuperview()
-//            $0.width.equalTo(UIScreen.main.bounds.width / totalWorkoutCount * 1)
+            $0.width.equalTo(UIScreen.main.bounds.width / totalWorkoutCount * 1)
             $0.height.equalTo(1.5)
         }
     }
