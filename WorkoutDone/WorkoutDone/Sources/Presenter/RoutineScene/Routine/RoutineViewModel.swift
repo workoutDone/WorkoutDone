@@ -67,7 +67,7 @@ struct RoutineViewModel {
         }
     }
     
-    func setRoutine(routineIndex: Int?, weightTraining: [WeightTraining]) {
+    func setRoutine(routineIndex: Int?, weightTraining: [WeightTraining], id: Int) {
         let temporaryRoutine = TemporaryRoutine()
         
         if let index = routineIndex {
@@ -80,7 +80,7 @@ struct RoutineViewModel {
             temporaryRoutine.name = ""
             temporaryRoutine.stamp = ""
         }
-        
+        temporaryRoutine.intDate = id
         temporaryRoutine.weightTraining.append(objectsIn: setWeightTraining(weightTraining))
         let realmManager = RealmManager.shared
         realmManager.createData(data: temporaryRoutine)

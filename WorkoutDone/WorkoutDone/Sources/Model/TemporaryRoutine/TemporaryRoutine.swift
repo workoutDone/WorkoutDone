@@ -11,12 +11,16 @@ class TemporaryRoutine : Object {
     @Persisted dynamic var id : Int = 0
     @Persisted dynamic var name : String
     @Persisted dynamic var stamp : String
+    @Persisted dynamic var workOutTime : Int?
+    @Persisted dynamic var intDate : Int
     @Persisted dynamic var weightTraining : List<WeightTraining>
 
-    convenience init(name: String, stamp: String, weightTraining: List<WeightTraining>) {
+    convenience init(name: String, stamp: String, workoutTime: Int?, intDate: Int ,weightTraining: List<WeightTraining>) {
         self.init()
         self.name = name
         self.stamp = stamp
+        self.workOutTime = workoutTime
+        self.intDate = intDate
         self.weightTraining = weightTraining
     }
     override class func primaryKey() -> String? {
