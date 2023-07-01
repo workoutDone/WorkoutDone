@@ -124,19 +124,20 @@ class RoutineViewController : BaseViewController {
             createRoutineVC.hidesBottomBarWhenPushed = true
             navigationController?.pushViewController(createRoutineVC, animated: false)
         } else {
-            let deleteRoutineAlertVC = DeleteRoutineAlertViewController()
-            deleteRoutineAlertVC.delegate = self
-            
             var myRoutineId = [String]()
             for (index, isSelect) in selectedDeleteRoutines.enumerated() {
                 if isSelect {
                     myRoutineId.append(myRoutines[index].id)
                 }
             }
-
-            deleteRoutineAlertVC.myRoutineId = myRoutineId
-            deleteRoutineAlertVC.modalPresentationStyle = .overFullScreen
-            self.present(deleteRoutineAlertVC, animated: false)
+            
+            if !myRoutineId.isEmpty {
+                let deleteRoutineAlertVC = DeleteRoutineAlertViewController()
+                deleteRoutineAlertVC.delegate = self
+                deleteRoutineAlertVC.myRoutineId = myRoutineId
+                deleteRoutineAlertVC.modalPresentationStyle = .overFullScreen
+                self.present(deleteRoutineAlertVC, animated: false)
+            }
         }
     }
 }
