@@ -41,10 +41,11 @@ class RoutineViewController : BaseViewController {
         view.backgroundColor = .colorFFFFFF
         title = "나의 운동 루틴"
         
-        setDeleteRoutineButton()
         myRoutines = routineViewModel.loadMyRoutine()
         selectedRoutines = Array(repeating: false, count: myRoutines.count)
         selectedDeleteRoutines = Array(repeating: false, count: myRoutines.count)
+        
+        setDeleteRoutineButton()
     }
     
     override func setupLayout() {
@@ -85,10 +86,14 @@ class RoutineViewController : BaseViewController {
     }
     
     func setDeleteRoutineButton() {
-        deleteRoutineButton = DeleteRoutineButton(frame: CGRect(x: 0, y: 0, width: 80, height: 30))
-        deleteRoutineButton.addTarget(self, action: #selector(deleteRoutineButtonTapped), for: .touchUpInside)
-        let rightBarButton = UIBarButtonItem(customView: deleteRoutineButton)
-        navigationItem.rightBarButtonItem = rightBarButton
+        if !myRoutines.isEmpty {
+            deleteRoutineButton = DeleteRoutineButton(frame: CGRect(x: 0, y: 0, width: 80, height: 30))
+            deleteRoutineButton.addTarget(self, action: #selector(deleteRoutineButtonTapped), for: .touchUpInside)
+            let rightBarButton = UIBarButtonItem(customView: deleteRoutineButton)
+            navigationItem.rightBarButtonItem = rightBarButton
+        } else {
+            navigationItem.rightBarButtonItem = nil
+        }
     }
     
     @objc func deleteRoutineButtonTapped() {
@@ -335,6 +340,8 @@ extension RoutineViewController : EditDelegate, AlertDismissDelegate {
         if myRoutines.isEmpty {
             deleteRoutineButtonTapped()
         }
+        
+        setDeleteRoutineButton()
         
         routineTableView.reloadData()
     }

@@ -165,6 +165,7 @@ class RoutineEditorViewController : BaseViewController {
             
             if let routineVC = self.navigationController?.viewControllers.first as? RoutineViewController {
                 routineVC.loadMyRoutine()
+                routineVC.setDeleteRoutineButton()
             }
             
             self.navigationController?.popToRootViewController(animated: true)
