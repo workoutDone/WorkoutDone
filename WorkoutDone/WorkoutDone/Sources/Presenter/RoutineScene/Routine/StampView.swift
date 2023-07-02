@@ -115,7 +115,7 @@ extension StampView : UICollectionViewDelegate, UICollectionViewDataSource, UICo
         }
         
         collectionView.reloadData()
-        
+   
         delegate?.stampTapped(image: stampIamges[indexPath.row])
     }
 }

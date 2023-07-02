@@ -160,8 +160,8 @@ class RoutineEditorViewController : BaseViewController {
     }
     
     @objc func saveButtonTapped() {
-        if let name = nameTextField.text, name != "", let stamp = stamp {
-            routineViewModel.saveMyRoutine(id: routineId, name: nameTextField.text ?? "", stamp: stamp, weightTraining: myWeightTraining)
+        if let name = nameTextField.text, let stamp = stamp {
+            routineViewModel.saveMyRoutine(id: routineId, name: name, stamp: stamp, weightTraining: myWeightTraining)
             
             if let routineVC = self.navigationController?.viewControllers.first as? RoutineViewController {
                 routineVC.loadMyRoutine()
@@ -169,18 +169,6 @@ class RoutineEditorViewController : BaseViewController {
             }
             
             self.navigationController?.popToRootViewController(animated: true)
-        }
-    }
-}
-
-extension RoutineEditorViewController : StampDelegate {
-    func stampTapped(image: String) {
-        if nameTextField.text != "" && stampView.isSelectStampIndex >= 0 {
-            saveButton.gradient.colors = [UIColor.color8E36FF.cgColor, UIColor.color7442FF.cgColor]
-            stamp = image
-        } else {
-            saveButton.gradient.colors = [UIColor.colorCCCCCC.cgColor, UIColor.colorCCCCCC.cgColor]
-            stamp = nil
         }
     }
 }
@@ -245,5 +233,17 @@ extension RoutineEditorViewController : UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool{
         textField.resignFirstResponder()
         return true
+    }
+}
+
+extension RoutineEditorViewController : StampDelegate {
+    func stampTapped(image: String) {
+        if let _ = nameTextField.text, stampView.isSelectStampIndex >= 0 {
+            saveButton.gradient.colors = [UIColor.color8E36FF.cgColor, UIColor.color7442FF.cgColor]
+            stamp = image
+        } else {
+            saveButton.gradient.colors = [UIColor.colorCCCCCC.cgColor, UIColor.colorCCCCCC.cgColor]
+            stamp = nil
+        }
     }
 }
