@@ -59,10 +59,6 @@ class WorkoutViewController : BaseViewController {
         $0.font = .pretendard(.bold, size: 20)
     }
     
-    private var adImage = UIImageView().then {
-        $0.backgroundColor = .color3ED1FF.withAlphaComponent(0.2)
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -78,7 +74,7 @@ class WorkoutViewController : BaseViewController {
     override func setupLayout() {
         super.setupLayout()
         
-        [bodyPartCollectionView, routineTableView, selectCompleteButton, adImage].forEach {
+        [bodyPartCollectionView, routineTableView, selectCompleteButton].forEach {
             view.addSubview($0)
         }
         
@@ -105,7 +101,7 @@ class WorkoutViewController : BaseViewController {
         selectCompleteButton.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(24)
             $0.trailing.equalToSuperview().offset(-24)
-            $0.bottom.equalTo(adImage.snp.top).offset(-29)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide).offset(-21)
             $0.height.equalTo(58)
         }
         
@@ -116,11 +112,6 @@ class WorkoutViewController : BaseViewController {
         selectCompleteButtonCountLabel.snp.makeConstraints {
             $0.centerY.equalTo(selectCompleteButton)
             $0.trailing.equalTo(selectCompleteButtonLabel.snp.leading).offset(-5)
-        }
-        
-        adImage.snp.makeConstraints {
-            $0.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
-            $0.height.equalTo(50)
         }
     }
     
@@ -166,21 +157,19 @@ class WorkoutViewController : BaseViewController {
             navigationController?.pushViewController(workoutSequenceVC, animated: false)
         }
     }
-}
-
-extension WorkoutViewController : MyRoutineDelegate, CreateRoutineDelegate {
-    func myRoutineButtonTapped() {
-        isSelectBodyPartIndex = -1
-        bodyPartCollectionView.reloadData()
-        routineTableView.reloadData()
-    }
     
-    func createRoutineButtonTapped() {
-        let createRoutineVC = CreateRoutineViewController()
-        navigationController?.pushViewController(createRoutineVC, animated: false)
+    func moveToCreateRoutine() {
+        if let tabBarController = tabBarController {
+            tabBarController.selectedIndex = 1
+            
+            if let navigationController = tabBarController.selectedViewController as? UINavigationController {
+                let createRoutineVC = CreateRoutineViewController()
+                createRoutineVC.hidesBottomBarWhenPushed = true
+                navigationController.pushViewController(createRoutineVC, animated: false)
+            }
+        }
     }
 }
-
 
 extension WorkoutViewController : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
@@ -269,7 +258,7 @@ extension WorkoutViewController : UITableViewDelegate, UITableViewDataSource {
             if myRoutines.count == 0 {
                 guard let cell = tableView.dequeueReusableCell(withIdentifier: "createRoutineCell", for: indexPath) as? CreateRoutineCell else { return UITableViewCell() }
                 cell.selectionStyle = .none
-                cell.delegate = self
+    
                 return cell
             }
             if indexPath.row == 0 {
@@ -389,47 +378,53 @@ extension WorkoutViewController : UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if isSelectBodyPartIndex == -1 {
-            if myRoutines.count > 0 && indexPath.row == 0 {
-                if !selectedRoutines[indexPath.section] {
-                    if preSelectedIndex >= 0 {
-                        selectedRoutines[preSelectedIndex] = false
+        if myRoutines.count == 0 && isSelectBodyPartIndex == -1 {
+            moveToCreateRoutine()
+        } else {
+            if isSelectBodyPartIndex == -1 {
+                if indexPath.row == 0 {
+                    if !selectedRoutines[indexPath.section] {
+                        if preSelectedIndex >= 0 {
+                            selectedRoutines[preSelectedIndex] = false
+                            
+                            weightTraining = weightTraining.filter{$0.weightTraining != ""}
+                            
+                            tableView.reloadSections([preSelectedIndex], with: .none)
+                        }
+                        
+                        preSelectedIndex = indexPath.section
+                        selectedRoutines[indexPath.section] = true
+                        selectedMyRoutineIndex = indexPath.section
+                        
+                        let selectedMyRoutineCount = myRoutines[indexPath.section].myWeightTraining.count
+                        for _ in 0..<selectedMyRoutineCount {
+                            weightTraining.append(WeightTraining(bodyPart: "", weightTraining: ""))
+                        }
+                        
+                    } else {
+                        selectedRoutines[indexPath.section] = false
+                        selectedMyRoutineIndex = nil
                         
                         weightTraining = weightTraining.filter{$0.weightTraining != ""}
-                        
-                        tableView.reloadSections([preSelectedIndex], with: .none)
                     }
                     
-                    preSelectedIndex = indexPath.section
-                    selectedRoutines[indexPath.section] = true
-                    selectedMyRoutineIndex = indexPath.section
-                    
-                    let selectedMyRoutineCount = myRoutines[indexPath.section].myWeightTraining.count
-                    for _ in 0..<selectedMyRoutineCount {
-                        weightTraining.append(WeightTraining(bodyPart: "", weightTraining: ""))
-                    }
+                    tableView.reloadSections([indexPath.section], with: .none)
+                }
+        
+            } else {
+                if let index = weightTraining.firstIndex(where: {$0.weightTraining == workOutData[isSelectBodyPartIndex].weightTraining[indexPath.row]}) {
+                    weightTraining.remove(at: index)
                     
                 } else {
-                    selectedRoutines[indexPath.section] = false
-                    selectedMyRoutineIndex = nil
-                    
-                    weightTraining = weightTraining.filter{$0.weightTraining != ""}
+                    weightTraining.append(WeightTraining(bodyPart: workOutData[isSelectBodyPartIndex].bodyPart, weightTraining: workOutData[isSelectBodyPartIndex].weightTraining[indexPath.row]))
                 }
-                
-                tableView.reloadSections([indexPath.section], with: .none)
             }
-    
-        } else {
-            if let index = weightTraining.firstIndex(where: {$0.weightTraining == workOutData[isSelectBodyPartIndex].weightTraining[indexPath.row]}) {
-                weightTraining.remove(at: index)
-                
-            } else {
-                weightTraining.append(WeightTraining(bodyPart: workOutData[isSelectBodyPartIndex].bodyPart, weightTraining: workOutData[isSelectBodyPartIndex].weightTraining[indexPath.row]))
-            }
+            
+            routineTableView.reloadData()
+            updateSelectCompleteButton()
         }
         
-        routineTableView.reloadData()
-        updateSelectCompleteButton()
+       
     }
 
     @objc func routineCellTapped(_ gestureRecognizer: UITapGestureRecognizer) {
@@ -466,5 +461,13 @@ extension WorkoutViewController : UITableViewDelegate, UITableViewDataSource {
         }
 
         updateSelectCompleteButton()
+    }
+}
+
+extension WorkoutViewController : MyRoutineDelegate {
+    func myRoutineButtonTapped() {
+        isSelectBodyPartIndex = -1
+        bodyPartCollectionView.reloadData()
+        routineTableView.reloadData()
     }
 }

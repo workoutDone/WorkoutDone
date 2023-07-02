@@ -36,11 +36,7 @@ class WorkoutSequenceViewController: BaseViewController {
     }
     
     private let createWeightTrainingButton = CreateWeightTrainingButton()
-    
-    private var adImage = UIImageView().then {
-        $0.backgroundColor = .color3ED1FF.withAlphaComponent(0.2)
-    }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -54,7 +50,7 @@ class WorkoutSequenceViewController: BaseViewController {
     override func setupLayout() {
         super.setupLayout()
         
-        [weightTrainingTableView, startWorkoutButton, createWeightTrainingButton, adImage].forEach {
+        [weightTrainingTableView, startWorkoutButton, createWeightTrainingButton].forEach {
             view.addSubview($0)
         }
     }
@@ -72,7 +68,7 @@ class WorkoutSequenceViewController: BaseViewController {
         startWorkoutButton.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(24)
             $0.trailing.equalToSuperview().offset(-24)
-            $0.bottom.equalTo(adImage.snp.top).offset(-29)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide).offset(-21)
             $0.height.equalTo(58)
         }
         
@@ -81,11 +77,6 @@ class WorkoutSequenceViewController: BaseViewController {
             $0.leading.equalToSuperview().offset(20)
             $0.trailing.equalToSuperview().offset(-20)
             $0.height.equalTo(62)
-        }
-        
-        adImage.snp.makeConstraints {
-            $0.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
-            $0.height.equalTo(50)
         }
     }
     
@@ -174,8 +165,7 @@ class WorkoutSequenceViewController: BaseViewController {
     }
     
     @objc func createWeightTrainingButtonTapped() {
-        let workoutVC = WorkoutViewController()
-        navigationController?.pushViewController(workoutVC, animated: false)
+        navigationController?.popViewController(animated: false)
     }
 }
 
