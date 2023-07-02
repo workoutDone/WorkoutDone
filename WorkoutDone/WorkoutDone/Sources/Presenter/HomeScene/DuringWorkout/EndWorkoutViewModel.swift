@@ -16,13 +16,12 @@ class EndWorkoutViewModel {
     
     struct Input {
         let saveTrigger : Driver<Void>
-        let selectedDate : Driver<Int>
         let didLoad : Driver<Void>
+        let totalWorkoutTime : Driver<Int>
     }
     
     struct Output {
         let saveData : Driver<Bool>
-        let test : Driver<Bool>
     }
     
     func validWorkoutDoneData(id : Int) -> Bool {
@@ -46,7 +45,7 @@ class EndWorkoutViewModel {
         return temporaryRoutineData
     }
     
-    func createRoutineData(id : Int, date : String) {
+    func createRoutineData(id : Int, date : String, totalWorkoutTime : Int) {
         let workoutDoneData = WorkOutDoneData(id: id, date: date)
         let temporaryRoutineData = readTemporaryRoutineData()
         let routine = Routine()
@@ -55,6 +54,7 @@ class EndWorkoutViewModel {
             routine.name = temporaryRoutineData.name
             routine.stamp = temporaryRoutineData.stamp
             workoutDoneData.routine = routine
+            workoutDoneData.workOutTime = totalWorkoutTime
             realmManager.createData(data: workoutDoneData)
         }
     }
@@ -75,9 +75,11 @@ class EndWorkoutViewModel {
         let saveData = Driver<Bool>.combineLatest(
             input.saveTrigger,
             input.didLoad,
-            resultSelector: { (_, id) in
-                let id = 20230702
-//                let convertData = self.convertIDToDateString(dateInt: id)
+            input.totalWorkoutTime,
+            resultSelector: { (_, _, time) in
+                let temporaryRoutineData = self.readTemporaryRoutineData()
+                guard let id = temporaryRoutineData?.intDate else { return false }
+                
                 let convertData = self.convertIDToDateString(dateInt: id)
                 guard let dateValue =  convertData else { return false }
                 print("????????웅???????")
@@ -92,6 +94,7 @@ class EndWorkoutViewModel {
                                 workoutDoneData?.routine?.stamp = temporaryRoutineData.stamp
                                 workoutDoneData?.routine?.name = temporaryRoutineData.name
                                 workoutDoneData?.routine?.weightTraining = temporaryRoutineData.weightTraining
+                                workoutDoneData?.workOutTime = time
                             }
                         }
                     }
@@ -99,13 +102,13 @@ class EndWorkoutViewModel {
                         print("나머지 케이스")
                         let workoutDoneData = self.readWorkoutDoneData(id: id)
                         let routine = Routine()
-//                        routine.weightTraining =
                         if let temporaryRoutineData = self.readTemporaryRoutineData() {
                             routine.weightTraining = temporaryRoutineData.weightTraining
                             routine.name = temporaryRoutineData.name
                             routine.stamp = temporaryRoutineData.stamp
                             try! self.realm.write {
                                 workoutDoneData?.routine = routine
+                                workoutDoneData?.workOutTime = time
                                 self.realm.add(workoutDoneData!)
                             }
                         }
@@ -113,58 +116,12 @@ class EndWorkoutViewModel {
                 }
                 /// 데이터가 존재하지 않는 경우 - create
                 else {
-                    self.createRoutineData(id: id, date: dateValue)
+                    self.createRoutineData(id: id, date: dateValue, totalWorkoutTime: time)
                     print("데이터가 존재하지 않는 경우 - create")
                 }
                 
                 return true
             })
-//        let saveData = Driver<Bool>.combineLatest(
-//            input.saveTrigger, input.selectedDate,
-//            resultSelector: { (_, id) in
-//                let convertData = self.convertIDToDateString(dateInt: id)
-//                guard let dateValue = convertData else { return }
-//
-//                ///workoutDoneData 존재하는 경우
-//                if self.validWorkoutDoneData(id: id) {
-//                    ///Routine 데이터 존재하는 경우 - update
-//                    if self.validRoutineData(id: id) {
-//                        let workoutDoneData = self.readWorkoutDoneData(id: id)
-//                        if let temporaryRoutineData = self.readTemporaryRoutineData() {
-//                            try! self.realm.write {
-//                                workoutDoneData?.routine?.stamp = temporaryRoutineData.stamp
-//                                workoutDoneData?.routine?.name = temporaryRoutineData.name
-//                                workoutDoneData?.routine?.weightTraining = temporaryRoutineData.weightTraining
-//                            }
-//                        }
-//                        return true
-//                    }
-//                    else {
-//                        guard let workoutDoneData = self.readWorkoutDoneData(id: id) else { return }
-//                        if let temporaryRoutineData = self.readTemporaryRoutineData() {
-//                            let routine = Routine()
-//                            routine.stamp = temporaryRoutineData.stamp
-//                            routine.name = temporaryRoutineData.name
-//                            routine.weightTraining = temporaryRoutineData.weightTraining
-//                            try! self.realm.write {
-//                                workoutDoneData.routine = routine
-//                                self.realm.add(workoutDoneData)
-//                            }
-//                        }
-//                        return true
-//                    }
-//                    return true
-//                }
-////                ///workoutDoneData 존재하지 않는 경우
-//                else {
-//                    self.createRoutineData(id: id, date: dateValue)
-//                    return true
-//                }
-//                return true
-//            })
-        let test = Driver<Bool>.combineLatest(input.saveTrigger, input.didLoad, resultSelector: { (trigger, load) in
-            return true
-        })
-        return Output(saveData: saveData, test: test)
+        return Output(saveData: saveData)
     }
 }
