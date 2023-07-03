@@ -55,7 +55,7 @@ class RoutineViewController : BaseViewController {
     
     override func setupConstraints() {
         routineTableView.snp.makeConstraints {
-            $0.top.equalToSuperview()
+            $0.top.equalTo(view.safeAreaLayoutGuide)
             $0.leading.trailing.equalToSuperview()
             $0.bottom.equalTo(createdButton.snp.top)
         }
@@ -124,19 +124,13 @@ class RoutineViewController : BaseViewController {
             createRoutineVC.hidesBottomBarWhenPushed = true
             navigationController?.pushViewController(createRoutineVC, animated: false)
         } else {
-            let deleteRoutineAlertVC = DeleteRoutineAlertViewController()
-            deleteRoutineAlertVC.delegate = self
-            
-            var myRoutineId = [String]()
-            for (index, isSelect) in selectedDeleteRoutines.enumerated() {
-                if isSelect {
-                    myRoutineId.append(myRoutines[index].id)
-                }
+            if !myRoutineId.isEmpty {
+                let deleteRoutineAlertVC = DeleteRoutineAlertViewController()
+                deleteRoutineAlertVC.delegate = self
+                deleteRoutineAlertVC.myRoutineId = myRoutineId
+                deleteRoutineAlertVC.modalPresentationStyle = .overFullScreen
+                self.present(deleteRoutineAlertVC, animated: false)
             }
-
-            deleteRoutineAlertVC.myRoutineId = myRoutineId
-            deleteRoutineAlertVC.modalPresentationStyle = .overFullScreen
-            self.present(deleteRoutineAlertVC, animated: false)
         }
     }
 }
@@ -330,6 +324,10 @@ extension RoutineViewController : EditDelegate, AlertDismissDelegate {
         myRoutines = routineViewModel.loadMyRoutine()
         selectedRoutines = Array(repeating: false, count: myRoutines.count)
         selectedDeleteRoutines = Array(repeating: false, count: myRoutines.count)
+        
+        if myRoutines.isEmpty {
+            deleteRoutineButtonTapped()
+        }
         
         routineTableView.reloadData()
     }
