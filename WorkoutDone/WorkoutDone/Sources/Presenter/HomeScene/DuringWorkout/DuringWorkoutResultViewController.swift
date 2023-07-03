@@ -10,5 +10,16 @@ import SnapKit
 import Then
 
 final class DuringWorkoutResultViewController : BaseViewController {
+    // MARK: - PROPERTIES
     
+    
+    // MARK: - LIFECYCLE
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .red
+    }
+    
+    // MARK: - ACTIONS
 }
+
+// MARK: - EXTENSIONS
