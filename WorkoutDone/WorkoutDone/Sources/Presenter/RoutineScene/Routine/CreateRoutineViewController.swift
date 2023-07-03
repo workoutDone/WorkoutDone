@@ -7,13 +7,8 @@
 
 import UIKit
 
-struct BodyPartData {
-    let bodyPart : String
-    let weigthTraing : [String]
-}
-
 class CreateRoutineViewController : BaseViewController {
-    let sampleData = [BodyPartData(bodyPart: "가슴", weigthTraing: ["벤치 프레스", "디클라인 푸시업", "버터플라이", "인클라인 덤벨 체스트플라이", "벤치 프레스2", "디클라인 푸시업2", "버터플라이2", "인클라인 덤벨 체스트플라이2", "벤치 프레스3", "디클라인 푸시업3", "버터플라이3", "인클라인 덤벨 체스트플라이3"]), BodyPartData(bodyPart: "등", weigthTraing: ["등0", "등1"]), BodyPartData(bodyPart: "하체", weigthTraing: ["하체0", "하체1", "하체2"]), BodyPartData(bodyPart: "어깨", weigthTraing: []), BodyPartData(bodyPart: "삼두", weigthTraing: []), BodyPartData(bodyPart: "이두", weigthTraing: []), BodyPartData(bodyPart: "졸려", weigthTraing: []), BodyPartData(bodyPart: "하암", weigthTraing: [])]
+    var workOutData : [WorkOut] = WorkOutData.workOutData
     
     var myWeightTraining = [MyWeightTraining]()
     var routineId: String?
@@ -164,12 +159,12 @@ extension CreateRoutineViewController : RoutineAlertDelegate {
 
 extension CreateRoutineViewController : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return sampleData.count
+        return WorkOutData.workOutData.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "bodyPartCell", for: indexPath) as? BodyPartCell else { return UICollectionViewCell() }
-        cell.bodyPartLabel.text = sampleData[indexPath.row].bodyPart
+        cell.bodyPartLabel.text = workOutData[indexPath.row].bodyPart
         
         cell.layer.cornerRadius = 31 / 2
         cell.backgroundColor = .clear
@@ -210,7 +205,7 @@ extension CreateRoutineViewController : UICollectionViewDelegate, UICollectionVi
 
 extension CreateRoutineViewController : UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return sampleData[isSelectBodyPartIndex].weigthTraing.count
+        return workOutData[isSelectBodyPartIndex].weightTraining.count
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -220,7 +215,7 @@ extension CreateRoutineViewController : UITableViewDelegate, UITableViewDataSour
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "weightTrainingCell", for: indexPath) as? WeightTrainingCell else { return UITableViewCell() }
         cell.selectionStyle = .none
-        cell.weightTrainingLabel.text = sampleData[isSelectBodyPartIndex].weigthTraing[indexPath.row]
+        cell.weightTrainingLabel.text = workOutData[isSelectBodyPartIndex].weightTraining[indexPath.row]
         
         cell.weightTraingView.backgroundColor = .colorF6F6F6
         cell.weightTrainingLabel.font = .pretendard(.regular, size: 16)
@@ -228,7 +223,7 @@ extension CreateRoutineViewController : UITableViewDelegate, UITableViewDataSour
         cell.selectedIndexView.isHidden = true
   
         for (index, weightTraining) in myWeightTraining.enumerated() {
-            if weightTraining.myBodyPart == sampleData[isSelectBodyPartIndex].bodyPart && weightTraining.myWeightTraining == sampleData[isSelectBodyPartIndex].weigthTraing[indexPath.row] {
+            if weightTraining.myBodyPart == workOutData[isSelectBodyPartIndex].bodyPart && weightTraining.myWeightTraining == workOutData[isSelectBodyPartIndex].weightTraining[indexPath.row] {
                 cell.selectedIndexLabel.text = "\(index + 1)"
                 cell.selectedIndexView.isHidden = false
     
@@ -249,11 +244,11 @@ extension CreateRoutineViewController : UITableViewDelegate, UITableViewDataSour
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if let index = myWeightTraining.firstIndex(where: {$0.myWeightTraining == sampleData[isSelectBodyPartIndex].weigthTraing[indexPath.row]}) {
+        if let index = myWeightTraining.firstIndex(where: {$0.myWeightTraining == workOutData[isSelectBodyPartIndex].weightTraining[indexPath.row]}) {
             myWeightTraining.remove(at: index)
             selectedCount -= 1
         } else {
-            myWeightTraining.append(MyWeightTraining(myBodyPart: sampleData[isSelectBodyPartIndex].bodyPart, myWeightTraining: sampleData[isSelectBodyPartIndex].weigthTraing[indexPath.row]))
+            myWeightTraining.append(MyWeightTraining(myBodyPart: workOutData[isSelectBodyPartIndex].bodyPart, myWeightTraining: workOutData[isSelectBodyPartIndex].weightTraining[indexPath.row]))
             selectedCount += 1
         }
         
