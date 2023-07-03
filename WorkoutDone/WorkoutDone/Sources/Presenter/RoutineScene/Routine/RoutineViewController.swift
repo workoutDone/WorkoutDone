@@ -124,13 +124,6 @@ class RoutineViewController : BaseViewController {
             createRoutineVC.hidesBottomBarWhenPushed = true
             navigationController?.pushViewController(createRoutineVC, animated: false)
         } else {
-            var myRoutineId = [String]()
-            for (index, isSelect) in selectedDeleteRoutines.enumerated() {
-                if isSelect {
-                    myRoutineId.append(myRoutines[index].id)
-                }
-            }
-            
             if !myRoutineId.isEmpty {
                 let deleteRoutineAlertVC = DeleteRoutineAlertViewController()
                 deleteRoutineAlertVC.delegate = self

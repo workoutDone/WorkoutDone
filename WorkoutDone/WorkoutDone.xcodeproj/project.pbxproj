@@ -102,6 +102,8 @@
 		A5091F272A31A896002FE6DA /* EndWorkoutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5091F262A31A896002FE6DA /* EndWorkoutViewController.swift */; };
 		A5091F292A31A994002FE6DA /* EndWorkoutAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5091F282A31A994002FE6DA /* EndWorkoutAlertView.swift */; };
 		A5091F2B2A31BCDD002FE6DA /* InputWorkoutDataViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5091F2A2A31BCDD002FE6DA /* InputWorkoutDataViewController.swift */; };
+		A520AB752A4D884100EFEF42 /* DuringWorkoutResultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A520AB742A4D884100EFEF42 /* DuringWorkoutResultViewModel.swift */; };
+		A520AB772A4D894400EFEF42 /* EndWorkoutViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A520AB762A4D894400EFEF42 /* EndWorkoutViewModel.swift */; };
 		A52573EA29EDB8A9004FBAC0 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52573E929EDB8A9004FBAC0 /* UIView.swift */; };
 		A52573EC29EDB928004FBAC0 /* UIStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52573EB29EDB928004FBAC0 /* UIStackView.swift */; };
 		A52573EE29EDB9B9004FBAC0 /* ViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52573ED29EDB9B9004FBAC0 /* ViewModelType.swift */; };
@@ -283,6 +285,8 @@
 		A5091F262A31A896002FE6DA /* EndWorkoutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndWorkoutViewController.swift; sourceTree = "<group>"; };
 		A5091F282A31A994002FE6DA /* EndWorkoutAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndWorkoutAlertView.swift; sourceTree = "<group>"; };
 		A5091F2A2A31BCDD002FE6DA /* InputWorkoutDataViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputWorkoutDataViewController.swift; sourceTree = "<group>"; };
+		A520AB742A4D884100EFEF42 /* DuringWorkoutResultViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuringWorkoutResultViewModel.swift; sourceTree = "<group>"; };
+		A520AB762A4D894400EFEF42 /* EndWorkoutViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndWorkoutViewModel.swift; sourceTree = "<group>"; };
 		A52573E929EDB8A9004FBAC0 /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
 		A52573EB29EDB928004FBAC0 /* UIStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIStackView.swift; sourceTree = "<group>"; };
 		A52573ED29EDB9B9004FBAC0 /* ViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelType.swift; sourceTree = "<group>"; };
@@ -913,10 +917,12 @@
 				A58327792A20C135002F8F6E /* DuringEditRoutineViewController.swift */,
 				A583277B2A20D30A002F8F6E /* DuringWorkoutTimerViewController.swift */,
 				A5091F262A31A896002FE6DA /* EndWorkoutViewController.swift */,
+				A520AB762A4D894400EFEF42 /* EndWorkoutViewModel.swift */,
 				A5091F282A31A994002FE6DA /* EndWorkoutAlertView.swift */,
 				A5091F2A2A31BCDD002FE6DA /* InputWorkoutDataViewController.swift */,
 				A56F614F2A3ECA42000879F5 /* InputWorkoutDataViewModel.swift */,
 				A5DA464E2A37A6410022710C /* DuringWorkoutResultViewController.swift */,
+				A520AB742A4D884100EFEF42 /* DuringWorkoutResultViewModel.swift */,
 				A583278C2A23C6EB002F8F6E /* DuringSetCells */,
 				A58327872A234FF0002F8F6E /* DuringEditRoutineCells */,
 			);
@@ -1194,11 +1200,13 @@
 				A5021EEA2A194E78007DE096 /* RightBarButtonItem.swift in Sources */,
 				926999502A172F4E003DDAD2 /* RoutineDetailCell.swift in Sources */,
 				926999542A1CEBA8003DDAD2 /* RoutineAlertViewController.swift in Sources */,
+				A520AB772A4D894400EFEF42 /* EndWorkoutViewModel.swift in Sources */,
 				A5489BC72A45942A00D74370 /* DuringSetViewModel.swift in Sources */,
 				A551491A2A0FE64900222A72 /* UILabel.swift in Sources */,
 				A576693B29B6EB4900673DFE /* ImageSelectionViewController.swift in Sources */,
 				A52F65FA2A0A015F00D398DF /* NotificationName.swift in Sources */,
 				A5E2DEEE2A17611B002A60A4 /* DuringWorkoutViewController.swift in Sources */,
+				A520AB752A4D884100EFEF42 /* DuringWorkoutResultViewModel.swift in Sources */,
 				A52573EA29EDB8A9004FBAC0 /* UIView.swift in Sources */,
 				A5DA464B2A379FCE0022710C /* TodayEmptyWorkoutResultView.swift in Sources */,
 				92A7B6492A4C7EB7009C9293 /* DeleteRoutineAlertViewController.swift in Sources */,
