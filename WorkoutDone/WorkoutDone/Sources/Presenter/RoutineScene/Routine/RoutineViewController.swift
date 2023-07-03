@@ -125,19 +125,19 @@ class RoutineViewController : BaseViewController {
             navigationController?.pushViewController(createRoutineVC, animated: false)
         } else {
             let deleteRoutineAlertVC = DeleteRoutineAlertViewController()
+            deleteRoutineAlertVC.delegate = self
+            
+            var myRoutineId = [String]()
+            for (index, isSelect) in selectedDeleteRoutines.enumerated() {
+                if isSelect {
+                    myRoutineId.append(myRoutines[index].id)
+                }
+            }
+
+            deleteRoutineAlertVC.myRoutineId = myRoutineId
             deleteRoutineAlertVC.modalPresentationStyle = .overFullScreen
             self.present(deleteRoutineAlertVC, animated: false)
         }
-    }
-}
-
-extension RoutineViewController : EditDelegate {
-    func editButtonTapped() {
-        let createRoutineVC = CreateRoutineViewController()
-        createRoutineVC.hidesBottomBarWhenPushed = true
-        createRoutineVC.myWeightTraining = Array(myRoutines[preSelectedIndex].myWeightTraining)
-        createRoutineVC.routineId = myRoutines[preSelectedIndex].id
-        navigationController?.pushViewController(createRoutineVC, animated: false)
     }
 }
 
@@ -314,5 +314,23 @@ extension RoutineViewController : UITableViewDelegate, UITableViewDataSource {
             
             routineTableView.reloadData()
         }
+    }
+}
+
+extension RoutineViewController : EditDelegate, AlertDismissDelegate {
+    func editButtonTapped() {
+        let createRoutineVC = CreateRoutineViewController()
+        createRoutineVC.hidesBottomBarWhenPushed = true
+        createRoutineVC.myWeightTraining = Array(myRoutines[preSelectedIndex].myWeightTraining)
+        createRoutineVC.routineId = myRoutines[preSelectedIndex].id
+        navigationController?.pushViewController(createRoutineVC, animated: false)
+    }
+    
+    func didDismissDeleteRoutineAlertViewController() {
+        myRoutines = routineViewModel.loadMyRoutine()
+        selectedRoutines = Array(repeating: false, count: myRoutines.count)
+        selectedDeleteRoutines = Array(repeating: false, count: myRoutines.count)
+        
+        routineTableView.reloadData()
     }
 }

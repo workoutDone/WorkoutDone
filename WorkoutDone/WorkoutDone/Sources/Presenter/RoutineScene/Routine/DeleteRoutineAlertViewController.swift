@@ -8,6 +8,10 @@
 import UIKit
 
 class DeleteRoutineAlertViewController : BaseViewController {
+    var myRoutineId = [String]()
+    var routineViewModel = RoutineViewModel()
+    
+    weak var delegate: AlertDismissDelegate?
     
     // MARK: - PROPERTIES
     private var deleteAlertView = DeleteAlertView(deleteButtonTitle: "네, 지울게요", title: "정말로 이 루틴을\n삭제할까요?", hasSubTitle: false, subTitle: "")
@@ -35,6 +39,14 @@ class DeleteRoutineAlertViewController : BaseViewController {
     }
     
     @objc func deleteButtonTapped() {
-        dismiss(animated: false)
+        routineViewModel.deleteRoutine(id: myRoutineId)
+        
+        dismiss(animated: false) {
+            self.delegate?.didDismissDeleteRoutineAlertViewController()
+        }
     }
+}
+
+protocol AlertDismissDelegate : AnyObject {
+    func didDismissDeleteRoutineAlertViewController()
 }
