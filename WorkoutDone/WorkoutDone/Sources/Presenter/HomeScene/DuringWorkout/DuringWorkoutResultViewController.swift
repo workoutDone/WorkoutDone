@@ -82,6 +82,12 @@ final class DuringWorkoutResultViewController : BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
     }
+//    override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(animated)
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
+//            self.workoutTableView.reloadData()
+//        })
+//    }
     
     override func setupBinding() {
         super.setupBinding()
@@ -127,6 +133,8 @@ final class DuringWorkoutResultViewController : BaseViewController {
         workoutTableView.delegate = self
         workoutTableView.dataSource = self
         workoutTableView.register(DuringWorkoutResultSectionCell.self, forCellReuseIdentifier: DuringWorkoutResultSectionCell.identifier)
+        workoutTableView.rowHeight = UITableView.automaticDimension
+        workoutTableView.estimatedRowHeight = 50
     }
     override func setupLayout() {
         super.setupLayout()
@@ -187,9 +195,25 @@ extension DuringWorkoutResultViewController : UITableViewDelegate, UITableViewDa
         guard let cell = tableView.dequeueReusableCell(withIdentifier: DuringWorkoutResultSectionCell.identifier, for: indexPath) as? DuringWorkoutResultSectionCell else { return UITableViewCell() }
         cell.selectionStyle = .none
         cell.configureCell(routineData?.weightTraining[indexPath.row] ?? WeightTraining(bodyPart: "", weightTraining: ""))
+        cell.weightTrainingValue = routineData?.weightTraining[indexPath.row] ?? WeightTraining(bodyPart: "", weightTraining: "")
+        cell.index = indexPath
+        cell.completionHandler = { [weak self] value in
+            if value {
+                self?.workoutTableView.reloadData()
+                print("얍얍")
+            }
+        }
         return cell
     }
-    
+    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        print("?///////////")
+    }
+//    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+//        return UITableView.automaticDimension
+//    }
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
+    }
 
     
 }
