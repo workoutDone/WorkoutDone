@@ -37,6 +37,12 @@ final class DuringWorkoutResultSetCell : UITableViewCell {
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        setLabel.text = nil
+        weightLabel.text = nil
+        countLabel.text = nil
+    }
     private func setComponents() {
 
     }
@@ -65,9 +71,16 @@ final class DuringWorkoutResultSetCell : UITableViewCell {
         }
     }
     func configureCell(_ weightTrainingInfo : WeightTrainingInfo) {
-//        weightLabel.text = String(weightTrainingInfo.weight)
+        weightLabel.text = weightTrainingInfo.weight == nil ? "" : "\(weightTrainingInfo.weight ?? 0)kg"
         setLabel.text = String(weightTrainingInfo.setCount) + "세트"
         countLabel.text = String(weightTrainingInfo.trainingCount ?? 0) + "개"
     }
-    
+    func checkCalisthenics(_ weightTraining : WeightTraining) {
+        if Calisthenics.calisthenicsArray.contains(weightTraining.weightTraining) {
+            weightLabel.isHidden = true
+        }
+        else {
+            weightLabel.isHidden = false
+        }
+    }
 }

@@ -39,6 +39,11 @@ final class DuringWorkoutResultSectionCell : UITableViewCell {
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        workoutTitle.text = nil
+//        DuringWorkoutResultSetCell().prepareForReuse()
+    }
     private func setComponents() {
         workoutSectionTableView.delegate = self
         workoutSectionTableView.dataSource = self
@@ -79,8 +84,10 @@ extension DuringWorkoutResultSectionCell : UITableViewDelegate, UITableViewDataS
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: DuringWorkoutResultSetCell.identifier, for: indexPath) as? DuringWorkoutResultSetCell else { return UITableViewCell() }
-        cell.configureCell(weightTrainingValue?.weightTrainingInfo[indexPath.row] ?? WeightTrainingInfo(setCount: 0, trainingCount: 0))
-        completionHandler?(true)
+        if let weightTrainingValue = weightTrainingValue {
+            cell.configureCell(weightTrainingValue.weightTrainingInfo[indexPath.row])
+        }
+//        completionHandler?(true)
         cell.selectionStyle = .none
         return cell
     }

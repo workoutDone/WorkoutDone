@@ -199,6 +199,7 @@ extension DuringWorkoutResultViewController : UITableViewDelegate, UITableViewDa
         cell.completionHandler = { [weak self] value in
             if value {
                 self?.workoutTableView.reloadData()
+                print("자꾸 호출?")
             }
         }
         return cell
