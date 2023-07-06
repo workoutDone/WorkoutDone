@@ -16,11 +16,20 @@ final class DuringWorkoutResultSetCell : UITableViewCell {
         $0.layer.borderColor = UIColor.colorE6E0FF.cgColor
         $0.backgroundColor = .colorFFFFFF
     }
-    private let setLabel = UILabel()
+    private let setLabel = UILabel().then {
+        $0.font = .pretendard(.regular, size: 16)
+        $0.textColor = .color363636
+    }
     
-    private let weightLabel = UILabel()
+    private let weightLabel = UILabel().then {
+        $0.font = .pretendard(.regular, size: 16)
+        $0.textColor = .color363636
+    }
     
-    private let countLabel = UILabel()
+    private let countLabel = UILabel().then {
+        $0.font = .pretendard(.regular, size: 16)
+        $0.textColor = .color363636
+    }
     
     override func layoutSubviews() {
         super.layoutSubviews()

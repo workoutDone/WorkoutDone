@@ -188,25 +188,12 @@ extension DuringWorkoutResultViewController : UITableViewDelegate, UITableViewDa
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: DuringWorkoutResultSectionCell.identifier, for: indexPath) as? DuringWorkoutResultSectionCell else { return UITableViewCell() }
         cell.selectionStyle = .none
-        cell.workoutSectionTableView.snp.updateConstraints {
-            $0.height.equalTo(49 * (cell.weightTrainingValue?.weightTrainingInfo.count ?? 1))
-            $0.top.equalTo(cell.workoutTitle.snp.bottom).offset(10)
-            $0.bottom.equalToSuperview().inset(20)
-            $0.leading.trailing.equalToSuperview().inset(11)
-        }
-        cell.configureCell(routineData?.weightTraining[indexPath.row] ?? WeightTraining(bodyPart: "", weightTraining: ""))
         cell.weightTrainingValue = routineData?.weightTraining[indexPath.row] ?? WeightTraining(bodyPart: "", weightTraining: "")
-        cell.completionHandler = { [weak self] value in
-            if value {
-                self?.workoutTableView.reloadData()
-                print("자꾸 호출?")
-            }
-        }
+        cell.configureCell(routineData?.weightTraining[indexPath.row] ?? WeightTraining(bodyPart: "", weightTraining: ""))
         return cell
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
-
     
 }
