@@ -11,9 +11,20 @@ import Then
 import RxSwift
 import RxCocoa
 
-class DeleteRecordAlertViewController : BaseViewController {
-    
+final class DeleteRecordAlertViewController : BaseViewController {
+    var selectedDate : Int?
+    ///dismiss 시 사용될 CompletionHandler
+    var completionHandler : ((Int) -> Void)?
     // MARK: - ViewModel
+    private let viewModel = DeleteRecordAlertViewModel()
+    private let deleteTrigger = PublishSubject<Void>()
+    
+    private lazy var input = DeleteRecordAlertViewModel.Input(
+        deleteTrigger: deleteTrigger.asDriver(onErrorJustReturn: ()),
+        selectedDate: Driver.just(selectedDate!).asDriver(onErrorJustReturn: 0))
+    private lazy var output = viewModel.transform(input: input)
+    
+    
     
     // MARK: - PROPERTIES
     private let visualEffectView: UIVisualEffectView = {
@@ -54,6 +65,26 @@ class DeleteRecordAlertViewController : BaseViewController {
     // MARK: - LIFECYCLE
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+    
+    override func setupBinding() {
+        super.setupBinding()
+        
+        output.deleteRoutineData.drive(onNext: { value in
+            if value {
+                if let selectedDate = self.selectedDate {
+                    self.completionHandler?(selectedDate)
+                    self.dismiss(animated: true)
+                }
+            }
+        })
+        .disposed(by: disposeBag)
+        
+        deleteButton.rx.tap
+            .bind {
+                self.deleteTrigger.onNext(())
+            }
+            .disposed(by: disposeBag)
     }
 
     

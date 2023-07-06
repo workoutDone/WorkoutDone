@@ -29,6 +29,12 @@ class DeleteRecordAlertViewModel {
             realmManager.deleteData(routine)
         }
     }
+    func deleteWorkoutTimeData(id : Int) {
+        guard let workoutDoneData = self.readWorkoutDoneData(id: id) else { return }
+        try! realm.write {
+            workoutDoneData.workOutTime = nil
+        }
+    }
     
     struct Input {
         let deleteTrigger : Driver<Void>
@@ -42,6 +48,7 @@ class DeleteRecordAlertViewModel {
     func transform(input: Input) -> Output {
         let deleteRoutineData = Driver<Bool>.combineLatest(input.selectedDate, input.deleteTrigger, resultSelector: { (id, _) in
             self.deleteRoutineData(id: id)
+            self.deleteWorkoutTimeData(id: id)
             return true
         })
         return Output(deleteRoutineData: deleteRoutineData)
