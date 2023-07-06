@@ -540,6 +540,7 @@ final class DuringWorkoutViewController : BaseViewController {
         let endWorkoutViewController = EndWorkoutViewController()
         endWorkoutViewController.modalTransitionStyle = .crossDissolve
         endWorkoutViewController.modalPresentationStyle = .overFullScreen
+        endWorkoutViewController.totalWorkoutTime = count
         present(endWorkoutViewController, animated: true)
     }
     @objc func playButtonTapped() {

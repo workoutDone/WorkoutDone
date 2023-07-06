@@ -10,21 +10,20 @@ import RxSwift
 import RxCocoa
 
 class EndWorkoutViewController : BaseViewController {
-    // MARK: - PROPERTIES
-//    private var endWorkoutAlertView = EndWorkoutAlertView()
+    var totalWorkoutTime : Int?
     
     
     
     // MARK: - ViewModel
-    private var selectedData = PublishSubject<Int>()
     private let saveTrigger = PublishSubject<Void>()
     private let didLoad = PublishSubject<Void>()
+    private let totalTime = PublishSubject<Int>()
     private var viewModel = EndWorkoutViewModel()
     
     private lazy var input = EndWorkoutViewModel.Input(
         saveTrigger: saveTrigger.asDriver(onErrorJustReturn: ()),
-        selectedDate: selectedData.asDriver(onErrorJustReturn: 0),
-        didLoad: didLoad.asDriver(onErrorJustReturn: ()))
+        didLoad: didLoad.asDriver(onErrorJustReturn: ()),
+        totalWorkoutTime: totalTime.asDriver(onErrorJustReturn: 0))
     
     private lazy var output = viewModel.transform(input: input)
     
@@ -87,22 +86,12 @@ class EndWorkoutViewController : BaseViewController {
         
         saveButton.rx.tap
             .bind {
-//                self.didLoad.onNext(())
                 self.saveTrigger.onNext(())
+                guard let totalWorkoutTime = self.totalWorkoutTime else { return }
+                self.totalTime.onNext(totalWorkoutTime)
                 print("tap")
-                guard let homeVC = self.navigationController?.viewControllers.first as? HomeViewController else { return }
-                let homeVCDate = homeVC.calendarView.selectDate ?? Date()
-//                self.selectedData.onNext(homeVCDate.dateToInt())
-//                self.selectedData.onNext(20230702)
             }
             .disposed(by: disposeBag)
-        cancelButton.rx.tap
-            .bind {
-                print("취소")
-            }
-            .disposed(by: disposeBag)
-        
-        
 
         didLoad.onNext(())
     }

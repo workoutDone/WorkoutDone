@@ -146,8 +146,10 @@ class WorkoutSequenceViewController: BaseViewController {
     }
     
     @objc func startWorkoutButtonTapped() {
-       routineViewModel.setRoutine(routineIndex: selectedMyRoutineIndex, weightTraining: weightTraining)
-        
+        guard let homeVC = self.navigationController?.viewControllers.first as? HomeViewController else { return }
+        let homeVCDate = homeVC.calendarView.selectDate ?? Date()
+        let intDateValue = homeVCDate.dateToInt()
+        routineViewModel.setRoutine(routineIndex: selectedMyRoutineIndex, weightTraining: weightTraining, id: intDateValue)
         completionHandler?()
         navigationController?.popViewController(animated: false)
     }
