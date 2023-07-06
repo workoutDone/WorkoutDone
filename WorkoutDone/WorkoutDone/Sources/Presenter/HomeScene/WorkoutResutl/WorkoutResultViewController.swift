@@ -13,15 +13,17 @@ import RxCocoa
 
 
 class WorkoutResultViewController : BaseViewController {
+    var selectedDate : Int?
     
     
+    var completionHandler : ((Int) -> Void)?
+    // MARK: - ViewModel
     private var viewModel = WorkoutResultViewModel()
-    private var selectedDate = PublishSubject<Int>()
     private var loadView = PublishSubject<Void>()
     
     private lazy var input = WorkoutResultViewModel.Input(
         loadView: loadView.asDriver(onErrorJustReturn: ()),
-        selectedData: selectedDate.asDriver(onErrorJustReturn: 0))
+        selectedData: Driver.just(selectedDate!).asDriver(onErrorJustReturn: 0))
     private lazy var output = viewModel.transform(input: input)
     
     // MARK: - PROPERTIES
@@ -75,9 +77,18 @@ class WorkoutResultViewController : BaseViewController {
         })
         .disposed(by: disposeBag)
         
-        guard let homeVC = self.navigationController?.viewControllers.first as? HomeViewController else { return }
-        let homeVCDate = homeVC.calendarView.selectDate ?? Date()
-        selectedDate.onNext(homeVCDate.dateToInt())
+        output.routineData.drive(onNext: { value in
+            self.todayWorkoutResultView.routineData = value
+            self.todayWorkoutResultView.workoutTableView.reloadData()
+        })
+        .disposed(by: disposeBag)
+        
+        output.routineTitleData.drive(todayWorkoutResultView.myRoutineLabel.rx.text)
+            .disposed(by: disposeBag)
+        
+        output.workoutTimeData.drive(todayWorkoutResultView.myTotalWorkoutTimeLabel.rx.text)
+            .disposed(by: disposeBag)
+        
         loadView.onNext(())
     }
     override func setComponents() {
@@ -115,6 +126,13 @@ class WorkoutResultViewController : BaseViewController {
         let deleteRecordAlertViewController = DeleteRecordAlertViewController()
         deleteRecordAlertViewController.modalTransitionStyle = .crossDissolve
         deleteRecordAlertViewController.modalPresentationStyle = .overFullScreen
+        deleteRecordAlertViewController.selectedDate = selectedDate
+        deleteRecordAlertViewController.completionHandler = {
+            [weak self] dateValue in
+            guard let self else { return }
+            self.completionHandler?(dateValue)
+            self.navigationController?.popViewController(animated: false)
+        }
         present(deleteRecordAlertViewController, animated: true)
     }
     

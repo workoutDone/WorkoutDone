@@ -10,6 +10,9 @@ import Then
 import SnapKit
 
 final class TodayWorkoutResultView : BaseUIView {
+    
+    var routineData : Routine?
+    
     private let routineLabel = UILabel().then {
         $0.text = "루틴"
         $0.textColor = .color7442FF
@@ -20,8 +23,7 @@ final class TodayWorkoutResultView : BaseUIView {
         $0.textAlignment = .center
     }
     
-    private let myRoutineLabel = UILabel().then {
-        $0.text = "등을 조져보자"
+    let myRoutineLabel = UILabel().then {
         $0.textColor = .color121212
         $0.font = .pretendard(.semiBold, size: 22)
     }
@@ -47,17 +49,29 @@ final class TodayWorkoutResultView : BaseUIView {
         $0.font = .pretendard(.semiBold, size: 16)
     }
     
-    private let myTotalWorkoutTimeLabel = UILabel().then {
-        $0.text = "30:33"
+    let myTotalWorkoutTimeLabel = UILabel().then {
+        $0.text = "00:00"
         $0.textColor = .color7442FF
         $0.font = .pretendard(.semiBold, size: 16)
     }
     
-    let workoutTableView = UITableView()
+    let workoutTableView = UITableView().then {
+        $0.backgroundColor = .colorE6E0FF
+        $0.layer.cornerRadius = 16
+        $0.separatorStyle = .none
+    }
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setDelegateDataSource()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func setupLayout() {
         super.setupLayout()
-        self.addSubviews(routineStackView, totalWorkoutTimeBackView)
+        self.addSubviews(routineStackView, totalWorkoutTimeBackView, workoutTableView)
         totalWorkoutTimeBackView.addSubviews(totalWorkoutTimeLabel, myTotalWorkoutTimeLabel)
     }
     
@@ -85,6 +99,39 @@ final class TodayWorkoutResultView : BaseUIView {
             $0.centerX.equalToSuperview()
             $0.bottom.equalToSuperview().inset(8)
         }
+        workoutTableView.snp.makeConstraints {
+            $0.top.equalTo(totalWorkoutTimeBackView.snp.bottom).offset(15)
+            $0.leading.trailing.equalToSuperview().inset(15)
+            $0.bottom.equalToSuperview().inset(122)
+        }
+    }
+    private func setDelegateDataSource() {
+        workoutTableView.delegate = self
+        workoutTableView.dataSource = self
+        workoutTableView.register(DuringWorkoutResultSectionCell.self, forCellReuseIdentifier: DuringWorkoutResultSectionCell.identifier)
+        workoutTableView.rowHeight = UITableView.automaticDimension
+        workoutTableView.estimatedRowHeight = 50
+    }
+    
+}
+
+extension TodayWorkoutResultView : UITableViewDelegate, UITableViewDataSource {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return routineData?.weightTraining.count ?? 0
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: DuringWorkoutResultSectionCell.identifier, for: indexPath) as? DuringWorkoutResultSectionCell else { return UITableViewCell() }
+        cell.selectionStyle = .none
+        cell.weightTrainingValue = routineData?.weightTraining[indexPath.row] ?? WeightTraining(bodyPart: "", weightTraining: "")
+        cell.configureCell(routineData?.weightTraining[indexPath.row] ?? WeightTraining(bodyPart: "", weightTraining: ""))
+        return cell
+    }
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
     }
     
 }

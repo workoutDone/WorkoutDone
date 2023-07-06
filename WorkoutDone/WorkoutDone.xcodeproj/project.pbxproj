@@ -148,6 +148,7 @@
 		A57FCCDD2A0828C600576812 /* PhotoFrameTypeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57FCCDC2A0828C600576812 /* PhotoFrameTypeViewModel.swift */; };
 		A582F0832A52EA43005BF1DB /* DuringWorkoutResultSectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A582F0822A52EA43005BF1DB /* DuringWorkoutResultSectionCell.swift */; };
 		A582F0852A52EA53005BF1DB /* DuringWorkoutResultSetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A582F0842A52EA53005BF1DB /* DuringWorkoutResultSetCell.swift */; };
+		A582F0892A569F02005BF1DB /* DeleteRecordAlertViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A582F0882A569F02005BF1DB /* DeleteRecordAlertViewModel.swift */; };
 		A583276F2A1DEC82002F8F6E /* HomeButtonLessPressShutterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A583276E2A1DEC82002F8F6E /* HomeButtonLessPressShutterViewModel.swift */; };
 		A58327782A20C110002F8F6E /* DuringSetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58327772A20C110002F8F6E /* DuringSetViewController.swift */; };
 		A583277A2A20C135002F8F6E /* DuringEditRoutineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58327792A20C135002F8F6E /* DuringEditRoutineViewController.swift */; };
@@ -333,6 +334,7 @@
 		A57FCCDC2A0828C600576812 /* PhotoFrameTypeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoFrameTypeViewModel.swift; sourceTree = "<group>"; };
 		A582F0822A52EA43005BF1DB /* DuringWorkoutResultSectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuringWorkoutResultSectionCell.swift; sourceTree = "<group>"; };
 		A582F0842A52EA53005BF1DB /* DuringWorkoutResultSetCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuringWorkoutResultSetCell.swift; sourceTree = "<group>"; };
+		A582F0882A569F02005BF1DB /* DeleteRecordAlertViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteRecordAlertViewModel.swift; sourceTree = "<group>"; };
 		A583276E2A1DEC82002F8F6E /* HomeButtonLessPressShutterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeButtonLessPressShutterViewModel.swift; sourceTree = "<group>"; };
 		A58327772A20C110002F8F6E /* DuringSetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuringSetViewController.swift; sourceTree = "<group>"; };
 		A58327792A20C135002F8F6E /* DuringEditRoutineViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuringEditRoutineViewController.swift; sourceTree = "<group>"; };
@@ -751,6 +753,7 @@
 				A55149132A0FBE9D00222A72 /* WorkoutResultViewController.swift */,
 				A55149152A0FBEA800222A72 /* WorkoutResultViewModel.swift */,
 				A55149172A0FCAD200222A72 /* DeleteRecordAlertViewController.swift */,
+				A582F0882A569F02005BF1DB /* DeleteRecordAlertViewModel.swift */,
 				A526C1282A1B4ACC00DAC0EF /* DeleteRecordAlertView.swift */,
 				A5DA464A2A379FCE0022710C /* TodayEmptyWorkoutResultView.swift */,
 				A5DA464C2A379FDC0022710C /* TodayWorkoutResultView.swift */,
@@ -1105,6 +1108,7 @@
 				926998602A118906003DDAD2 /* RoutineCell.swift in Sources */,
 				A5550A9629F310D500CBD1BF /* PhotoCollectionViewCell.swift in Sources */,
 				9264A5EE29C550220010856F /* FrameCell.swift in Sources */,
+				A582F0892A569F02005BF1DB /* DeleteRecordAlertViewModel.swift in Sources */,
 				9264A58429BA22FE0010856F /* DayOfTheWeekCell.swift in Sources */,
 				9200604729B1ACF400586063 /* WorkoutResultView.swift in Sources */,
 				9200604329B1ACBF00586063 /* RecordView.swift in Sources */,

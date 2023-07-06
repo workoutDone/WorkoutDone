@@ -164,9 +164,9 @@ class HomeViewController : BaseViewController {
         imageSelectionViewController.modalTransitionStyle = .crossDissolve
         imageSelectionViewController.modalPresentationStyle = .overFullScreen
         imageSelectionViewController.selectedDate = calendarView.selectDate?.dateToInt()
-        imageSelectionViewController.completionHandler = { [weak self] dateValeu in
+        imageSelectionViewController.completionHandler = { [weak self] dateValue in
             guard let self else { return }
-            self.selectedDate.onNext(dateValeu)
+            self.selectedDate.onNext(dateValue)
         }
         present(imageSelectionViewController, animated: true)
     }
@@ -196,6 +196,12 @@ class HomeViewController : BaseViewController {
     }
     @objc func workoutResultButtonTapped() {
         let workoutResultViewController = WorkoutResultViewController()
+        let dateValue = calendarView.selectDate ?? Date()
+        let dateId = dateValue.dateToInt()
+        workoutResultViewController.selectedDate = dateId
+        workoutResultViewController.completionHandler = { [weak self] dateValue in
+            self?.selectedDate.onNext(dateValue)
+        }
         navigationController?.pushViewController(workoutResultViewController, animated: true)
     }
     
