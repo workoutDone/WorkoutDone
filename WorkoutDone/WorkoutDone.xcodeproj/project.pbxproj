@@ -753,8 +753,8 @@
 				A55149132A0FBE9D00222A72 /* WorkoutResultViewController.swift */,
 				A55149152A0FBEA800222A72 /* WorkoutResultViewModel.swift */,
 				A55149172A0FCAD200222A72 /* DeleteRecordAlertViewController.swift */,
-				A526C1282A1B4ACC00DAC0EF /* DeleteRecordAlertView.swift */,
 				A582F0882A569F02005BF1DB /* DeleteRecordAlertViewModel.swift */,
+				A526C1282A1B4ACC00DAC0EF /* DeleteRecordAlertView.swift */,
 				A5DA464A2A379FCE0022710C /* TodayEmptyWorkoutResultView.swift */,
 				A5DA464C2A379FDC0022710C /* TodayWorkoutResultView.swift */,
 			);
