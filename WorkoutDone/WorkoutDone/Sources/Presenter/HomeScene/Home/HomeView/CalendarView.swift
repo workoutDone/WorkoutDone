@@ -5,6 +5,13 @@
 //  Created by hyemi on 2023/03/05.
 //
 
+//
+//  CalendarView.swift
+//  WorkoutDone
+//
+//  Created by hyemi on 2023/03/05.
+//
+
 import UIKit
 import SnapKit
 import Then
@@ -26,35 +33,28 @@ class CalendarView : BaseUIView {
     var previousDays : Int = 0
     var days: [String] = []
     var dayoftheweek = ["일", "월", "화", "수", "목", "금", "토"]
+    var workOutDoneDays = ["1", "8", "9", "13"]
 
     var delegate: CalendarViewDelegate?
     
-    private let previousMonthButton = UIButton()
-    
-    private let previousMonthView = UIView()
-    
-    private let previousMonthImage = UIImageView().then {
-        $0.image = UIImage(named: "previousMonth")
+    private let previousMonthButton = UIButton().then {
+        $0.setImage(UIImage(named: "previousMonth"), for: .normal)
     }
     
     private let currentDateLabelView = UIView()
     
     private lazy var currentDateLabel = UILabel().then {
-        $0.textColor = .colorECE5FF
+        $0.textColor = .colorC8B4FF
         $0.font = .pretendard(.bold, size: 16)
         $0.textAlignment = .center
     }
     
-    private let nextMonthButton = UIButton()
-    
-    private let nextMonthView = UIView()
-    
-    private let nextMonthImage = UIImageView().then {
-        $0.image = UIImage(named: "nextMonth")
+    private let nextMonthButton = UIButton().then {
+        $0.setImage(UIImage(named: "nextMonth"), for: .normal)
     }
     
     private lazy var stackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [previousMonthView, currentDateLabelView, nextMonthView])
+        let stackView = UIStackView(arrangedSubviews: [previousMonthButton, currentDateLabelView, nextMonthButton])
         stackView.axis = .horizontal
         stackView.distribution = .fill
         stackView.alignment = .center
@@ -72,7 +72,7 @@ class CalendarView : BaseUIView {
         collectionView.register(DayOfTheWeekCell.self, forCellWithReuseIdentifier: "DayOfTheWeekCell")
         collectionView.isPagingEnabled = true
         collectionView.showsHorizontalScrollIndicator = false
-        collectionView.backgroundColor = .color7442FF
+        collectionView.backgroundColor = .clear
         collectionView.isScrollEnabled = false
         
         return collectionView
@@ -81,7 +81,7 @@ class CalendarView : BaseUIView {
     private let showHideCalendarButton = UIButton()
     
     private let showHideCalendarImage = UIImageView().then {
-        $0.image = UIImage(named: UserDefaultsManager.shared.isMonthlyCalendar ? "show" : "hide")
+        $0.image = UIImage(named: UserDefaultsManager.shared.isMonthlyCalendar ? "calendar_show" : "calendar_hide")
     }
     
     override init(frame: CGRect) {
@@ -100,21 +100,13 @@ class CalendarView : BaseUIView {
     override func setupLayout() {
         super.setupLayout()
         
-        [previousMonthView, currentDateLabelView, nextMonthView, collectionView, showHideCalendarButton].forEach {
+        [previousMonthButton, currentDateLabelView, nextMonthButton, collectionView, showHideCalendarButton].forEach {
             self.addSubview($0)
         }
 
         self.addSubview(stackView)
-
-        [previousMonthImage, previousMonthButton].forEach {
-            previousMonthView.addSubview($0)
-        }
         
         currentDateLabelView.addSubview(currentDateLabel)
-        
-        [nextMonthImage, nextMonthButton].forEach {
-            nextMonthView.addSubview($0)
-        }
         
         showHideCalendarButton.addSubview(showHideCalendarImage)
     }
@@ -123,21 +115,10 @@ class CalendarView : BaseUIView {
     override func setupConstraints() {
         super.setupConstraints()
         
-        previousMonthView.snp.makeConstraints {
+        previousMonthButton.snp.makeConstraints {
             $0.width.height.equalTo(26)
         }
-        
-        previousMonthButton.snp.makeConstraints {
-            $0.leading.trailing.top.bottom.equalTo(previousMonthView)
-        }
-        
-        previousMonthImage.snp.makeConstraints {
-            $0.centerX.equalTo(previousMonthView)
-            $0.centerY.equalTo(previousMonthView)
-            $0.width.equalTo(7.28)
-            $0.height.equalTo(13)
-        }
-        
+
         currentDateLabelView.snp.makeConstraints {
             $0.width.equalTo(83)
         }
@@ -147,21 +128,10 @@ class CalendarView : BaseUIView {
             $0.centerY.equalTo(currentDateLabelView)
         }
         
-        nextMonthView.snp.makeConstraints {
+        nextMonthButton.snp.makeConstraints {
             $0.width.height.equalTo(26)
         }
-        
-        nextMonthButton.snp.makeConstraints {
-            $0.leading.trailing.top.bottom.equalTo(nextMonthView)
-        }
-        
-        nextMonthImage.snp.makeConstraints {
-            $0.centerX.equalTo(nextMonthView)
-            $0.centerY.equalTo(nextMonthView)
-            $0.width.equalTo(7.28)
-            $0.height.equalTo(13)
-        }
-        
+   
         stackView.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.top.equalToSuperview().offset(6)
@@ -170,8 +140,8 @@ class CalendarView : BaseUIView {
         collectionView.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(21)
             $0.trailing.equalToSuperview().offset(-21)
-            $0.top.equalTo(stackView.snp.bottom).offset(5)
-            $0.bottom.equalTo(showHideCalendarButton.snp.top).offset(-6.5)
+            $0.top.equalTo(stackView.snp.bottom).offset(6)
+            $0.bottom.equalTo(showHideCalendarButton.snp.top).offset(-4)
         }
         
         showHideCalendarImage.snp.makeConstraints {
@@ -183,19 +153,19 @@ class CalendarView : BaseUIView {
         
         showHideCalendarButton.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.bottom.equalToSuperview()
+            $0.bottom.equalToSuperview().offset(-5)
             $0.width.equalTo(35)
-            $0.height.equalTo(22)
+            $0.height.equalTo(19)
         }
     }
     
     func setCalendarView() {
-        self.backgroundColor = .color7442FF
+        self.backgroundColor = .colorF6F4FF
         self.layer.cornerRadius = 15
         self.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
         
         self.snp.makeConstraints {
-            $0.height.equalTo(UserDefaultsManager.shared.isMonthlyCalendar ? 289 : 115).priority(1)
+            $0.height.equalTo(UserDefaultsManager.shared.isMonthlyCalendar ? 322 : 126).priority(1)
         }
     }
     
@@ -255,11 +225,11 @@ class CalendarView : BaseUIView {
     
     @objc func showHideCalendarButtonTapped(sender: UIButton!) {
         if UserDefaultsManager.shared.isMonthlyCalendar {
-            showHideCalendarImage.image = UIImage(named: "hide")
+            showHideCalendarImage.image = UIImage(named: "calendar_hide")
             
             UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseIn, animations:  {
                 self.snp.makeConstraints {
-                    $0.height.equalTo(115).priority(2)
+                    $0.height.equalTo(126).priority(2)
                 }
                 self.superview?.layoutIfNeeded()
             })
@@ -270,11 +240,11 @@ class CalendarView : BaseUIView {
                 calculateMonth()
             }
         } else {
-            showHideCalendarImage.image = UIImage(named: "show")
+            showHideCalendarImage.image = UIImage(named: "calendar_show")
                 
             UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseIn, animations:  {
                 self.snp.makeConstraints {
-                    $0.height.equalTo(289).priority(2)
+                    $0.height.equalTo(322).priority(2)
                 }
                 self.superview?.layoutIfNeeded()
             })
@@ -375,23 +345,30 @@ extension CalendarView: UICollectionViewDelegate, UICollectionViewDataSource, UI
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "DayCell", for: indexPath) as? DayCell else { return UICollectionViewCell() }
             cell.dayLabel.text = days[indexPath.row]
             cell.dayLabel.font = .pretendard(.light, size: 16)
-            cell.selectDateImage.isHidden = true
+            cell.selectedDateImage.isHidden = true
+            cell.stampImage.isHidden = true
             
             if components.month ?? 1 == calendar.component(.month, from: Date()) {
-                cell.dayLabel.textColor = .colorF3F3F3
+                cell.dayLabel.textColor = .color121212
                 
                 if days[indexPath.row] == String(calendar.component(.day, from: Date())) {
                     cell.dayLabel.font = .pretendard(.extraBold, size: 16)
                 }
                 
                 if selectComponents.year == components.year && selectComponents.month == components.month && selectComponents.day == Int(days[indexPath.row]) {
-                    cell.selectDateImage.isHidden = false
+                    cell.selectedDateImage.isHidden = false
                 }
+                
+                if workOutDoneDays.contains(days[indexPath.row]) {
+                    cell.stampImage.isHidden = false
+                    cell.dayLabel.textColor = .colorC8B4FF
+                }
+                
             } else {
                 if indexPath.row >= firstWeekday - 1 {
-                    cell.dayLabel.textColor = .colorF3F3F3
+                    cell.dayLabel.textColor = .color121212
                 } else {
-                    cell.dayLabel.textColor = .colorF3F3F3.withAlphaComponent(0.3)
+                    cell.dayLabel.textColor = .color121212.withAlphaComponent(0.3)
                 }
             }
             
@@ -400,21 +377,27 @@ extension CalendarView: UICollectionViewDelegate, UICollectionViewDataSource, UI
         
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "DayCell", for: indexPath) as? DayCell else { return UICollectionViewCell() }
         cell.dayLabel.text = days[indexPath.row]
-        cell.dayLabel.font = .pretendard(.light, size: 14)
-        cell.selectDateImage.isHidden = true
+        cell.dayLabel.font = .pretendard(.light, size: 16)
+        cell.selectedDateImage.isHidden = true
+        cell.stampImage.isHidden = true
         
         if indexPath.row >= firstWeekday - 1 && indexPath.row <= daysCount + firstWeekday - 2 {
             if components.month ?? 1 == calendar.component(.month, from: Date()) && days[indexPath.row] == String(calendar.component(.day, from: Date())) {
-                cell.dayLabel.font = .pretendard(.extraBold, size: 14)
+                cell.dayLabel.font = .pretendard(.extraBold, size: 16)
             }
-            cell.dayLabel.textColor = .colorF3F3F3
+            cell.dayLabel.textColor = .color121212
             
             if selectComponents.year == components.year && selectComponents.month == components.month && selectComponents.day == Int(days[indexPath.row]) {
-                cell.selectDateImage.isHidden = false
+                cell.selectedDateImage.isHidden = false
+            }
+            
+            if workOutDoneDays.contains(days[indexPath.row]) {
+                cell.stampImage.isHidden = false
+                cell.dayLabel.textColor = .colorC8B4FF
             }
             
         } else {
-            cell.dayLabel.textColor = .colorF3F3F3.withAlphaComponent(0.3)
+            cell.dayLabel.textColor = .color121212.withAlphaComponent(0.3)
         }
         
         return cell
@@ -432,9 +415,9 @@ extension CalendarView: UICollectionViewDelegate, UICollectionViewDataSource, UI
         }
         
         if !UserDefaultsManager.shared.isMonthlyCalendar {
-            return CGSize(width: collectionView.bounds.width / 7.0, height: 29)
+            return CGSize(width: collectionView.bounds.width / 7.0, height: 41)
         }
-        return CGSize(width: collectionView.bounds.width / 7.0, height: 208 / CGFloat(days.count / 7))
+        return CGSize(width: collectionView.bounds.width / 7.0, height: (collectionView.bounds.height - 23) / CGFloat(days.count / 7))
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -461,4 +444,3 @@ extension CalendarView: UICollectionViewDelegate, UICollectionViewDataSource, UI
         delegate?.didSelectedCalendarDate()
     }
 }
-

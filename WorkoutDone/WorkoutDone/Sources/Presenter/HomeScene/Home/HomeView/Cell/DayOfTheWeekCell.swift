@@ -10,8 +10,9 @@ import UIKit
 class DayOfTheWeekCell: UICollectionViewCell {
     // MARK: - PROPERTIES
     var dayOfTheWeekLabel = UILabel().then {
-        $0.textColor = .colorFFFFFF
-        $0.font = .pretendard(.regular, size: 16)
+        $0.textColor = .color121212
+        $0.font = .pretendard(.regular, size: 12)
+        $0.textAlignment = .center
     }
     
     // MARK: - LIFECYCLE

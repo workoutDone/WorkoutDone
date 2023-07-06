@@ -11,21 +11,28 @@ import Then
 
 class DayCell: UICollectionViewCell {
     let dayLabel = UILabel().then {
-        $0.textColor = .colorF3F3F3
-        $0.font = .pretendard(.light, size: 14)
+        $0.textColor = .color121212
+        $0.font = .pretendard(.light, size: 16)
+        $0.textAlignment = .center
     }
     
-    var selectDateImage = UIImageView().then {
+    var selectedDateImage = UIImageView().then {
         $0.image = UIImage(named: "selectDate")
+    }
+    
+    var stampImage = UIImageView().then {
+        $0.image = UIImage(named: "stampVImage")
     }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
         contentView.addSubview(dayLabel)
-        contentView.addSubview(selectDateImage)
+        contentView.addSubview(selectedDateImage)
+        contentView.addSubview(stampImage)
         
-        selectDateImage.isHidden = true
+        selectedDateImage.isHidden = true
+        stampImage.isHidden = true
         
         setLayout()
     }
@@ -36,12 +43,17 @@ class DayCell: UICollectionViewCell {
     
     func setLayout() {
         dayLabel.snp.makeConstraints {
-            $0.centerX.centerY.equalToSuperview()
+            $0.centerX.centerY.equalTo(stampImage)
         }
         
-        selectDateImage.snp.makeConstraints {
-            $0.centerX.centerY.equalToSuperview()
+        selectedDateImage.snp.makeConstraints {
+            $0.centerX.centerY.equalTo(stampImage)
             $0.width.height.equalTo(29)
+        }
+        
+        stampImage.snp.makeConstraints {
+            $0.centerX.centerY.equalTo(contentView)
+            $0.width.height.equalTo(41)
         }
     }
 }
