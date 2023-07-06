@@ -46,6 +46,8 @@ class OnboardingViewController : BaseViewController {
         
         $0.pageIndicatorTintColor = .colorD6C8FF
         $0.currentPageIndicatorTintColor = .color7442FF
+        
+        $0.isUserInteractionEnabled = false
     }
     
     private let nextButton = GradientButton(colors: [UIColor.color8E36FF.cgColor, UIColor.color7442FF.cgColor]).then {
