@@ -13,18 +13,22 @@ class OnboardingCell : UICollectionViewCell {
     
     // MARK: - PROPERTIES
     let onboardingImage = UIImageView().then {
-        $0.contentMode = .scaleToFill
+        $0.contentMode = .scaleAspectFill
     }
     
     let onboardingText = UILabel().then {
         $0.font = .pretendard(.regular, size: 16)
+        $0.numberOfLines = 2
+        $0.textAlignment = .center
     }
     
     // MARK: - LIFECYCLE
     override init(frame: CGRect) {
         super.init(frame: frame)
-        addSubview(onboardingImage)
-        addSubview(onboardingText)
+        
+        [onboardingImage, onboardingText].forEach {
+            contentView.addSubview($0)
+        }
         
         setLayout()
     }
@@ -39,12 +43,12 @@ class OnboardingCell : UICollectionViewCell {
             $0.centerX.equalToSuperview()
             $0.top.equalToSuperview()
             $0.width.equalTo(contentView.frame.width)
-            $0.height.equalTo(486)
+            $0.height.equalTo(418)
         }
         
         onboardingText.snp.makeConstraints() {
             $0.centerX.equalToSuperview()
-            $0.top.equalTo(onboardingImage.snp.bottom).offset(46)
+            $0.bottom.equalToSuperview()
         }
     }
 }

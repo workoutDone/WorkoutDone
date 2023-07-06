@@ -6,52 +6,90 @@
 //
 
 import UIKit
+import RealmSwift
+
+
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
-
-
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
-        // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
-        // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
+
+        setRootViewController(scene)
+        let realm = try! Realm()
+        print(Realm.Configuration.defaultConfiguration.fileURL)
+        print("willConnectTo")
+    }
+
+    func sceneWillEnterForeground(_ scene: UIScene) {
+        guard let start = UserDefaults.standard.object(forKey: "sceneDidEnterBackground") as? Date else { return }
+        let interval = Int(Date().timeIntervalSince(start))
+        NotificationCenter.default.post(name: NSNotification.Name("sceneWillEnterForeground"), object: nil, userInfo: ["time" : interval])
+        print(interval, "인터벌")
+//        print("sceneWillEnterForeground")
+    }
+    
+
+    func sceneDidEnterBackground(_ scene: UIScene) {
+        NotificationCenter.default.post(name: NSNotification.Name("sceneDidEnterBackground"), object: nil)
+        UserDefaults.standard.setValue(Date(), forKey: "sceneDidEnterBackground")
+//        print("sceneDidEnterBackground")
+        if let navigationController = window?.rootViewController as? UINavigationController {
+            if let duringWorkoutViewController = navigationController.viewControllers.first as? DuringWorkoutViewController {
+                // 데이터에 접근하여 사용할 수 있습니다.
+                let count = duringWorkoutViewController.count
+                print(count, "제발")
+                UserDefaults.standard.setValue(count, forKey: "existingCountData")
+                // 데이터 사용
+            }
+        }
+    }
+    func sceneDidDisconnect(_ scene: UIScene) {
+        print("sceneDidDisconnect")
+        let defaults = UserDefaults.standard
+//        if let value = defaults.object(forKey: "sceneDidEnterBackground") {
+//            print("값이 있다", value)
+//        } else {
+//            NotificationCenter.default.post(name: NSNotification.Name("sceneDidEnterBackground"), object: nil)
+//            UserDefaults.standard.setValue(Date(), forKey: "sceneDidEnterBackground")
+//        }
+        let value = defaults.object(forKey: "sceneDidEnterBackground")
+        NotificationCenter.default.post(name: NSNotification.Name("sceneDidEnterBackground"), object: nil)
+        UserDefaults.standard.removeObject(forKey: "sceneDidEnterBackground")
+        UserDefaults.standard.setValue(value, forKey: "sceneDidEnterBackground")
+
+    }
+    
+}
+
+extension SceneDelegate {
+    private func setRootViewController(_ scene: UIScene) {
+        let manager = UserDefaultsManager.shared
+        ///온보딩 마쳤을 때
+        if manager.hasOnboarded {
+            ///운동 중일때
+            if manager.isWorkout {
+                let duringWorkoutViewController = DuringWorkoutViewController()
+                setRootViewController(scene, viewController: UINavigationController(rootViewController: duringWorkoutViewController))
+            }
+            else {
+                ///홈 화면
+                setRootViewController(scene, viewController: TabBarController())
+            }
+        }
+        else {
+            ///온보딩을 마치지 못했을 때
+            setRootViewController(scene, viewController: OnboardingViewController())
+        }
+    }
+    
+    private func setRootViewController(_ scene: UIScene, viewController: UIViewController) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(frame: UIScreen.main.bounds)
-        let viewController = OnboardingViewController() //처음 보일 vc
         window?.rootViewController = viewController
         window?.makeKeyAndVisible()
         window?.windowScene = windowScene
     }
-
-    func sceneDidDisconnect(_ scene: UIScene) {
-        // Called as the scene is being released by the system.
-        // This occurs shortly after the scene enters the background, or when its session is discarded.
-        // Release any resources associated with this scene that can be re-created the next time the scene connects.
-        // The scene may re-connect later, as its session was not necessarily discarded (see `application:didDiscardSceneSessions` instead).
-    }
-
-    func sceneDidBecomeActive(_ scene: UIScene) {
-        // Called when the scene has moved from an inactive state to an active state.
-        // Use this method to restart any tasks that were paused (or not yet started) when the scene was inactive.
-    }
-
-    func sceneWillResignActive(_ scene: UIScene) {
-        // Called when the scene will move from an active state to an inactive state.
-        // This may occur due to temporary interruptions (ex. an incoming phone call).
-    }
-
-    func sceneWillEnterForeground(_ scene: UIScene) {
-        // Called as the scene transitions from the background to the foreground.
-        // Use this method to undo the changes made on entering the background.
-    }
-
-    func sceneDidEnterBackground(_ scene: UIScene) {
-        // Called as the scene transitions from the foreground to the background.
-        // Use this method to save data, release shared resources, and store enough scene-specific state information
-        // to restore the scene back to its current state.
-    }
-
-
 }
+
 

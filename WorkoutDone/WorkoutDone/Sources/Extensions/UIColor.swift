@@ -8,6 +8,8 @@
 import UIKit
 
 extension UIColor {
+    static let colorDBDBDB = UIColor(hex: 0xDBDBDB)
+    static let color000000 = UIColor(hex: 0x000000)
     static let colorD6C8FF = UIColor(hex: 0xD6C8FF)
     static let color7346F2 = UIColor(hex: 0x7346F2)
     static let color612CF8 = UIColor(hex: 0x612CF8)
@@ -29,6 +31,16 @@ extension UIColor {
     static let colorF3F3F3 = UIColor(hex: 0xF3F3F3)
     static let colorFFFFFF = UIColor(hex: 0xFFFFFF)
     static let colorF8F6FF = UIColor(hex: 0xF8F6FF)
+    static let colorE6E0FF = UIColor(hex: 0xE6E0FF)
+    static let colorC884FF = UIColor(hex: 0xC884FF)
+    static let colorECE5FF = UIColor(hex: 0xECE5FF)
+    static let colorFFEDF0 = UIColor(hex: 0xFFEDF0)
+    static let colorC8B4FF = UIColor(hex: 0xC8B4FF)
+    static let color3C3C43 = UIColor(hex: 0x3C3C43)
+    static let color3ED1FF = UIColor(hex: 0x3ED1FF)
+    static let colorF6F6F6 = UIColor(hex: 0xF6F6F6)
+    static let colorFE8399 = UIColor(hex: 0xFE8399)
+    static let colorF6F4FF = UIColor(hex: 0xF6F4FF)
 }
 
 extension UIColor {

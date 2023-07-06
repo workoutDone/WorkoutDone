@@ -42,6 +42,141 @@
 		9200604729B1ACF400586063 /* WorkoutResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9200604629B1ACF400586063 /* WorkoutResultView.swift */; };
 		9200604929B1AD7200586063 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9200604829B1AD7200586063 /* HomeViewController.swift */; };
 		9200604B29B1ADA500586063 /* BaseUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9200604A29B1ADA500586063 /* BaseUIView.swift */; };
+		920060CF29B37C9F00586063 /* GradientButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 920060CE29B37C9F00586063 /* GradientButton.swift */; };
+		920060E229B63C1500586063 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 920060E129B63C1500586063 /* CalendarView.swift */; };
+		920060E429B71D7400586063 /* DayCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 920060E329B71D7400586063 /* DayCell.swift */; };
+		9204827F29FF0D230015A02F /* FrameImageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9204827E29FF0D230015A02F /* FrameImageViewModel.swift */; };
+		924E56B229CCB9EA00AA73A2 /* GridToggleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924E56B129CCB9EA00AA73A2 /* GridToggleButton.swift */; };
+		925963492A09A20000F5B67C /* GalleryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925963482A09A20000F5B67C /* GalleryViewModel.swift */; };
+		9264A58229B8735C0010856F /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9264A58129B8735C0010856F /* UserDefaultsManager.swift */; };
+		9264A58429BA22FE0010856F /* DayOfTheWeekCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9264A58329BA22FE0010856F /* DayOfTheWeekCell.swift */; };
+		9264A5EC29C4B0610010856F /* HomeButtonCameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9264A5EB29C4B0610010856F /* HomeButtonCameraViewController.swift */; };
+		9264A5EE29C550220010856F /* FrameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9264A5ED29C550220010856F /* FrameCell.swift */; };
+		926998102A0C6375003DDAD2 /* EmptyImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9269980F2A0C6375003DDAD2 /* EmptyImageCell.swift */; };
+		926998142A0DAB5C003DDAD2 /* WeightTrainingInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 926998132A0DAB5C003DDAD2 /* WeightTrainingInfo.swift */; };
+		926998162A0E093E003DDAD2 /* WeightTraining.swift in Sources */ = {isa = PBXBuildFile; fileRef = 926998152A0E093E003DDAD2 /* WeightTraining.swift */; };
+		9269981A2A0EB052003DDAD2 /* Routine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 926998192A0EB052003DDAD2 /* Routine.swift */; };
+		9269981C2A0EBD22003DDAD2 /* MyRoutine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9269981B2A0EBD22003DDAD2 /* MyRoutine.swift */; };
+		926998222A0EC4A8003DDAD2 /* MyWeightTraining.swift in Sources */ = {isa = PBXBuildFile; fileRef = 926998212A0EC4A8003DDAD2 /* MyWeightTraining.swift */; };
+		926998602A118906003DDAD2 /* RoutineCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9269985F2A118906003DDAD2 /* RoutineCell.swift */; };
+		926998E02A145250003DDAD2 /* EmptyRoutineCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 926998DF2A145250003DDAD2 /* EmptyRoutineCell.swift */; };
+		926998E22A1473FA003DDAD2 /* CreateRoutineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 926998E12A1473FA003DDAD2 /* CreateRoutineViewController.swift */; };
+		926998E72A147918003DDAD2 /* BodyPartCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 926998E62A147918003DDAD2 /* BodyPartCell.swift */; };
+		926998E92A1494EE003DDAD2 /* WeightTrainingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 926998E82A1494EE003DDAD2 /* WeightTrainingCell.swift */; };
+		926999502A172F4E003DDAD2 /* RoutineDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9269994F2A172F4E003DDAD2 /* RoutineDetailCell.swift */; };
+		926999542A1CEBA8003DDAD2 /* RoutineAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 926999532A1CEBA8003DDAD2 /* RoutineAlertViewController.swift */; };
+		926999562A1D25F5003DDAD2 /* RoutineBackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 926999552A1D25F5003DDAD2 /* RoutineBackButton.swift */; };
+		926999582A1D9DEA003DDAD2 /* RoutineEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 926999572A1D9DEA003DDAD2 /* RoutineEditorViewController.swift */; };
+		9269995A2A1DECCB003DDAD2 /* StampView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 926999592A1DECCA003DDAD2 /* StampView.swift */; };
+		9269995C2A1DF135003DDAD2 /* StampCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9269995B2A1DF135003DDAD2 /* StampCell.swift */; };
+		9269995E2A1DF8C3003DDAD2 /* RoutineEditorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9269995D2A1DF8C3003DDAD2 /* RoutineEditorCell.swift */; };
+		926DBC9229DDC905007BE22A /* PressShutterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 926DBC9129DDC905007BE22A /* PressShutterViewController.swift */; };
+		926DBC9429DEA31C007BE22A /* SaveImageToastMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 926DBC9329DEA31C007BE22A /* SaveImageToastMessageView.swift */; };
+		9291580E2A223DC20022BEF9 /* MyRoutineHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9291580D2A223DC20022BEF9 /* MyRoutineHeaderView.swift */; };
+		929158102A23B16D0022BEF9 /* CreateRoutineCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9291580F2A23B16D0022BEF9 /* CreateRoutineCell.swift */; };
+		929158122A24DC3E0022BEF9 /* MyRoutineCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929158112A24DC3E0022BEF9 /* MyRoutineCell.swift */; };
+		929158152A2512E20022BEF9 /* MyRoutineDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929158142A2512E20022BEF9 /* MyRoutineDetailCell.swift */; };
+		9291583D2A272B440022BEF9 /* WorkoutSequenceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9291583C2A272B440022BEF9 /* WorkoutSequenceViewController.swift */; };
+		9291583F2A2886150022BEF9 /* EditButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9291583E2A2886150022BEF9 /* EditButton.swift */; };
+		929158412A28DFEE0022BEF9 /* IndexPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929158402A28DFEE0022BEF9 /* IndexPath.swift */; };
+		929158432A28FDDD0022BEF9 /* RoutineViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929158422A28FDDD0022BEF9 /* RoutineViewModel.swift */; };
+		929158472A3D92E40022BEF9 /* WorkoutSequenceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929158462A3D92E40022BEF9 /* WorkoutSequenceCell.swift */; };
+		929158492A3F74D10022BEF9 /* CreateWeightTrainingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929158482A3F74D10022BEF9 /* CreateWeightTrainingButton.swift */; };
+		92A7B6492A4C7EB7009C9293 /* DeleteRoutineAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A7B6482A4C7EB7009C9293 /* DeleteRoutineAlertViewController.swift */; };
+		92A7B66A2A4EEFDC009C9293 /* WorkOutData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A7B6692A4EEFDC009C9293 /* WorkOutData.swift */; };
+		92DCF3EC29CDB38300F90002 /* BackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DCF3EB29CDB38300F90002 /* BackButton.swift */; };
+		92DCF47A29D0818A00F90002 /* WorkOutDoneData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DCF47929D0818A00F90002 /* WorkOutDoneData.swift */; };
+		92DCF47E29D0830B00F90002 /* FrameImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DCF47D29D0830B00F90002 /* FrameImage.swift */; };
+		92DCF48029D0846B00F90002 /* BodyInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DCF47F29D0846B00F90002 /* BodyInfo.swift */; };
+		92DCF4D229D1B64100F90002 /* FrameCategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DCF4D129D1B64100F90002 /* FrameCategoryCell.swift */; };
+		92DCF4D429D1B66F00F90002 /* ImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DCF4D329D1B66F00F90002 /* ImageCell.swift */; };
+		92DCF54229D5B41700F90002 /* MonthHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DCF54129D5B41700F90002 /* MonthHeaderView.swift */; };
+		92DCF54A29D6BD8200F90002 /* SortButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DCF54929D6BD8200F90002 /* SortButtonCell.swift */; };
+		92DCF54C29D6D15600F90002 /* FrameHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DCF54B29D6D15600F90002 /* FrameHeaderView.swift */; };
+		92DCF55A29D878FB00F90002 /* GalleryDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DCF55929D878FB00F90002 /* GalleryDetailViewController.swift */; };
+		92FE26062A49BF4600BCDB82 /* DeleteAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92FE26052A49BF4600BCDB82 /* DeleteAlertViewController.swift */; };
+		92FE26192A4C30EE00BCDB82 /* DeleteRoutineButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92FE26182A4C30EE00BCDB82 /* DeleteRoutineButton.swift */; };
+		A5021EE82A1906EB007DE096 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5021EE72A1906EB007DE096 /* Constants.swift */; };
+		A5021EEA2A194E78007DE096 /* RightBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5021EE92A194E78007DE096 /* RightBarButtonItem.swift */; };
+		A5021EEC2A1A8AF4007DE096 /* PermissionDeniedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5021EEB2A1A8AF4007DE096 /* PermissionDeniedView.swift */; };
+		A5091F272A31A896002FE6DA /* EndWorkoutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5091F262A31A896002FE6DA /* EndWorkoutViewController.swift */; };
+		A5091F292A31A994002FE6DA /* EndWorkoutAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5091F282A31A994002FE6DA /* EndWorkoutAlertView.swift */; };
+		A5091F2B2A31BCDD002FE6DA /* InputWorkoutDataViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5091F2A2A31BCDD002FE6DA /* InputWorkoutDataViewController.swift */; };
+		A520AB752A4D884100EFEF42 /* DuringWorkoutResultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A520AB742A4D884100EFEF42 /* DuringWorkoutResultViewModel.swift */; };
+		A520AB772A4D894400EFEF42 /* EndWorkoutViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A520AB762A4D894400EFEF42 /* EndWorkoutViewModel.swift */; };
+		A52573EA29EDB8A9004FBAC0 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52573E929EDB8A9004FBAC0 /* UIView.swift */; };
+		A52573EC29EDB928004FBAC0 /* UIStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52573EB29EDB928004FBAC0 /* UIStackView.swift */; };
+		A52573EE29EDB9B9004FBAC0 /* ViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52573ED29EDB9B9004FBAC0 /* ViewModelType.swift */; };
+		A52573F529F2F478004FBAC0 /* PhotoGalleryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52573F429F2F478004FBAC0 /* PhotoGalleryViewController.swift */; };
+		A526C1272A1B433600DAC0EF /* DeleteAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A526C1262A1B433600DAC0EF /* DeleteAlertView.swift */; };
+		A526C1292A1B4ACC00DAC0EF /* DeleteRecordAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A526C1282A1B4ACC00DAC0EF /* DeleteRecordAlertView.swift */; };
+		A526C12E2A1BC5A600DAC0EF /* AuthorizedCameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A526C12D2A1BC5A600DAC0EF /* AuthorizedCameraView.swift */; };
+		A526C1302A1C783A00DAC0EF /* HomeButtonLessPressShutterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A526C12F2A1C783A00DAC0EF /* HomeButtonLessPressShutterViewController.swift */; };
+		A52F65F82A09FE9D00D398DF /* NotificationCenterManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52F65F72A09FE9D00D398DF /* NotificationCenterManager.swift */; };
+		A52F65FA2A0A015F00D398DF /* NotificationName.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52F65F92A0A015F00D398DF /* NotificationName.swift */; };
+		A53FF90C2A3E354C0086693D /* DuringWorkoutRoutine.swift in Sources */ = {isa = PBXBuildFile; fileRef = A53FF90B2A3E354C0086693D /* DuringWorkoutRoutine.swift */; };
+		A5489BC72A45942A00D74370 /* DuringSetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5489BC62A45942A00D74370 /* DuringSetViewModel.swift */; };
+		A54C485E29FF9FB1004CEE3D /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54C485D29FF9FB1004CEE3D /* RealmManager.swift */; };
+		A54C486129FFA176004CEE3D /* HomeButtonLessPhotoFrameTypeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54C486029FFA176004CEE3D /* HomeButtonLessPhotoFrameTypeViewController.swift */; };
+		A54C486329FFA1A0004CEE3D /* HomeButtonPhotoFrameTypeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54C486229FFA1A0004CEE3D /* HomeButtonPhotoFrameTypeViewController.swift */; };
+		A55149142A0FBE9D00222A72 /* WorkoutResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A55149132A0FBE9D00222A72 /* WorkoutResultViewController.swift */; };
+		A55149162A0FBEA800222A72 /* WorkoutResultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A55149152A0FBEA800222A72 /* WorkoutResultViewModel.swift */; };
+		A55149182A0FCAD200222A72 /* DeleteRecordAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A55149172A0FCAD200222A72 /* DeleteRecordAlertViewController.swift */; };
+		A551491A2A0FE64900222A72 /* UILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A55149192A0FE64900222A72 /* UILabel.swift */; };
+		A551F5C22A25AFF600F96860 /* ImportPhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A551F5C12A25AFF600F96860 /* ImportPhotoCollectionViewCell.swift */; };
+		A551F5C42A2923E300F96860 /* UNNotificationCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A551F5C32A2923E300F96860 /* UNNotificationCenter.swift */; };
+		A553A5E62A4BFAB30027F502 /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A553A5E52A4BFAB30027F502 /* UIViewController.swift */; };
+		A553A5E92A4C88530027F502 /* TemporaryRoutine.swift in Sources */ = {isa = PBXBuildFile; fileRef = A553A5E82A4C88530027F502 /* TemporaryRoutine.swift */; };
+		A5550A9229F302DC00CBD1BF /* AuthorizedPhotoGalleryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5550A9129F302DC00CBD1BF /* AuthorizedPhotoGalleryView.swift */; };
+		A5550A9429F3092600CBD1BF /* PhotoGalleryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5550A9329F3092600CBD1BF /* PhotoGalleryViewModel.swift */; };
+		A5550A9629F310D500CBD1BF /* PhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5550A9529F310D500CBD1BF /* PhotoCollectionViewCell.swift */; };
+		A5552D312A121D4600835B40 /* Double.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5552D302A121D4600835B40 /* Double.swift */; };
+		A5552D362A12834D00835B40 /* LimitedPhotoGalleryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5552D352A12834D00835B40 /* LimitedPhotoGalleryView.swift */; };
+		A5632CD82A0E2C08007EC335 /* ImageSelectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5632CD72A0E2C08007EC335 /* ImageSelectionViewModel.swift */; };
+		A5632CDA2A0E30F5007EC335 /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5632CD92A0E30F5007EC335 /* UIImage.swift */; };
+		A56D904229E08604009FD0B2 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A56D904129E08604009FD0B2 /* HomeViewModel.swift */; };
+		A56F61502A3ECA42000879F5 /* InputWorkoutDataViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A56F614F2A3ECA42000879F5 /* InputWorkoutDataViewModel.swift */; };
+		A57061CF29CD6A5E0083ECDD /* GalleryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57061CE29CD6A5E0083ECDD /* GalleryViewController.swift */; };
+		A57061D129CD6A840083ECDD /* AnalyzeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57061D029CD6A840083ECDD /* AnalyzeViewController.swift */; };
+		A57061D429D045690083ECDD /* WeightGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57061D329D045690083ECDD /* WeightGraphView.swift */; };
+		A57061D629D09AC40083ECDD /* SkeletalMuscleMassGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57061D529D09AC40083ECDD /* SkeletalMuscleMassGraphView.swift */; };
+		A57061D829D09AD40083ECDD /* FatPercentageGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57061D729D09AD40083ECDD /* FatPercentageGraphView.swift */; };
+		A57061DA29D09D5C0083ECDD /* WeightGraphViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57061D929D09D5C0083ECDD /* WeightGraphViewModel.swift */; };
+		A576693B29B6EB4900673DFE /* ImageSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A576693A29B6EB4900673DFE /* ImageSelectionViewController.swift */; };
+		A576693E29BB06CB00673DFE /* RegisterMyBodyInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A576693D29BB06CB00673DFE /* RegisterMyBodyInfoViewController.swift */; };
+		A576694029BF1A9900673DFE /* UITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = A576693F29BF1A9900673DFE /* UITextField.swift */; };
+		A57FCCDD2A0828C600576812 /* PhotoFrameTypeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57FCCDC2A0828C600576812 /* PhotoFrameTypeViewModel.swift */; };
+		A582F0832A52EA43005BF1DB /* DuringWorkoutResultSectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A582F0822A52EA43005BF1DB /* DuringWorkoutResultSectionCell.swift */; };
+		A582F0852A52EA53005BF1DB /* DuringWorkoutResultSetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A582F0842A52EA53005BF1DB /* DuringWorkoutResultSetCell.swift */; };
+		A582F0892A569F02005BF1DB /* DeleteRecordAlertViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A582F0882A569F02005BF1DB /* DeleteRecordAlertViewModel.swift */; };
+		A583276F2A1DEC82002F8F6E /* HomeButtonLessPressShutterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A583276E2A1DEC82002F8F6E /* HomeButtonLessPressShutterViewModel.swift */; };
+		A58327782A20C110002F8F6E /* DuringSetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58327772A20C110002F8F6E /* DuringSetViewController.swift */; };
+		A583277A2A20C135002F8F6E /* DuringEditRoutineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58327792A20C135002F8F6E /* DuringEditRoutineViewController.swift */; };
+		A583277C2A20D30A002F8F6E /* DuringWorkoutTimerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A583277B2A20D30A002F8F6E /* DuringWorkoutTimerViewController.swift */; };
+		A58327862A234BB7002F8F6E /* DuringEditRoutineTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58327852A234BB7002F8F6E /* DuringEditRoutineTableViewCell.swift */; };
+		A58327892A235022002F8F6E /* DuringEditRoutineHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58327882A235022002F8F6E /* DuringEditRoutineHeaderCell.swift */; };
+		A583278B2A23AA54002F8F6E /* DuringEditRoutineFooterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A583278A2A23AA54002F8F6E /* DuringEditRoutineFooterCell.swift */; };
+		A583278E2A23C70B002F8F6E /* DuringSetTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A583278D2A23C70B002F8F6E /* DuringSetTableViewCell.swift */; };
+		A58327902A23C73E002F8F6E /* DuringSetFooterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A583278F2A23C73E002F8F6E /* DuringSetFooterCell.swift */; };
+		A59A3DDC29C977BC00126ECE /* HomeButtonLessCameraViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59A3DDB29C977BC00126ECE /* HomeButtonLessCameraViewModel.swift */; };
+		A59A3DDE29C9F76200126ECE /* RegisterMyBodyInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59A3DDD29C9F76200126ECE /* RegisterMyBodyInfoViewModel.swift */; };
+		A59ACB7829B46DEB0084C73E /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59ACB7729B46DEB0084C73E /* TabBarController.swift */; };
+		A59ACB7A29B4BC740084C73E /* RoutineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59ACB7929B4BC740084C73E /* RoutineViewController.swift */; };
+		A59ACB7E29B4BCF70084C73E /* MyRecordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59ACB7D29B4BCF70084C73E /* MyRecordViewController.swift */; };
+		A59ACBC029B6E2310084C73E /* DeviceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59ACBBF29B6E2310084C73E /* DeviceManager.swift */; };
+		A59EF6E229C0B69C005DE9B5 /* WorkoutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59EF6E129C0B69C005DE9B5 /* WorkoutViewController.swift */; };
+		A59EF6E529C0CE22005DE9B5 /* HomeButtonLessCameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59EF6E429C0CE22005DE9B5 /* HomeButtonLessCameraViewController.swift */; };
+		A59EF6F129C4C909005DE9B5 /* PreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59EF6F029C4C909005DE9B5 /* PreviewView.swift */; };
+		A5A10CA929D59ED600E45FC8 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5A10CA829D59ED600E45FC8 /* String.swift */; };
+		A5A10CAB29D59EF300E45FC8 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5A10CAA29D59EF300E45FC8 /* Date.swift */; };
+		A5DA464B2A379FCE0022710C /* TodayEmptyWorkoutResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5DA464A2A379FCE0022710C /* TodayEmptyWorkoutResultView.swift */; };
+		A5DA464D2A379FDC0022710C /* TodayWorkoutResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5DA464C2A379FDC0022710C /* TodayWorkoutResultView.swift */; };
+		A5DA464F2A37A6410022710C /* DuringWorkoutResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5DA464E2A37A6410022710C /* DuringWorkoutResultViewController.swift */; };
+		A5E2DEEE2A17611B002A60A4 /* DuringWorkoutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E2DEED2A17611B002A60A4 /* DuringWorkoutViewController.swift */; };
+		A5FD2BDD2A44228900295EF9 /* HomeButtonAuthorizedCameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5FD2BDC2A44228900295EF9 /* HomeButtonAuthorizedCameraView.swift */; };
+		A5FD2BDF2A45777300295EF9 /* DuringWorkoutViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5FD2BDE2A45777300295EF9 /* DuringWorkoutViewModel.swift */; };
+		A5FD469829DDDB4C003AC96E /* SkeletalMuslemassViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5FD469729DDDB4C003AC96E /* SkeletalMuslemassViewModel.swift */; };
+		A5FD469A29DDF18E003AC96E /* FatPercentageGraphViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5FD469929DDF18E003AC96E /* FatPercentageGraphViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -93,6 +228,141 @@
 		9200604629B1ACF400586063 /* WorkoutResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutResultView.swift; sourceTree = "<group>"; };
 		9200604829B1AD7200586063 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		9200604A29B1ADA500586063 /* BaseUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseUIView.swift; sourceTree = "<group>"; };
+		920060CE29B37C9F00586063 /* GradientButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientButton.swift; sourceTree = "<group>"; };
+		920060E129B63C1500586063 /* CalendarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
+		920060E329B71D7400586063 /* DayCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DayCell.swift; path = WorkoutDone/Sources/Presenter/HomeScene/Home/HomeView/Cell/DayCell.swift; sourceTree = SOURCE_ROOT; };
+		9204827E29FF0D230015A02F /* FrameImageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameImageViewModel.swift; sourceTree = "<group>"; };
+		924E56B129CCB9EA00AA73A2 /* GridToggleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridToggleButton.swift; sourceTree = "<group>"; };
+		925963482A09A20000F5B67C /* GalleryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryViewModel.swift; sourceTree = "<group>"; };
+		9264A58129B8735C0010856F /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
+		9264A58329BA22FE0010856F /* DayOfTheWeekCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayOfTheWeekCell.swift; sourceTree = "<group>"; };
+		9264A5EB29C4B0610010856F /* HomeButtonCameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeButtonCameraViewController.swift; sourceTree = "<group>"; };
+		9264A5ED29C550220010856F /* FrameCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameCell.swift; sourceTree = "<group>"; };
+		9269980F2A0C6375003DDAD2 /* EmptyImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyImageCell.swift; sourceTree = "<group>"; };
+		926998132A0DAB5C003DDAD2 /* WeightTrainingInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeightTrainingInfo.swift; sourceTree = "<group>"; };
+		926998152A0E093E003DDAD2 /* WeightTraining.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeightTraining.swift; sourceTree = "<group>"; };
+		926998192A0EB052003DDAD2 /* Routine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Routine.swift; sourceTree = "<group>"; };
+		9269981B2A0EBD22003DDAD2 /* MyRoutine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyRoutine.swift; sourceTree = "<group>"; };
+		926998212A0EC4A8003DDAD2 /* MyWeightTraining.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyWeightTraining.swift; sourceTree = "<group>"; };
+		9269985F2A118906003DDAD2 /* RoutineCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineCell.swift; sourceTree = "<group>"; };
+		926998DF2A145250003DDAD2 /* EmptyRoutineCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyRoutineCell.swift; sourceTree = "<group>"; };
+		926998E12A1473FA003DDAD2 /* CreateRoutineViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRoutineViewController.swift; sourceTree = "<group>"; };
+		926998E62A147918003DDAD2 /* BodyPartCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyPartCell.swift; sourceTree = "<group>"; };
+		926998E82A1494EE003DDAD2 /* WeightTrainingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeightTrainingCell.swift; sourceTree = "<group>"; };
+		9269994F2A172F4E003DDAD2 /* RoutineDetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineDetailCell.swift; sourceTree = "<group>"; };
+		926999532A1CEBA8003DDAD2 /* RoutineAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineAlertViewController.swift; sourceTree = "<group>"; };
+		926999552A1D25F5003DDAD2 /* RoutineBackButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineBackButton.swift; sourceTree = "<group>"; };
+		926999572A1D9DEA003DDAD2 /* RoutineEditorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineEditorViewController.swift; sourceTree = "<group>"; };
+		926999592A1DECCA003DDAD2 /* StampView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StampView.swift; sourceTree = "<group>"; };
+		9269995B2A1DF135003DDAD2 /* StampCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StampCell.swift; sourceTree = "<group>"; };
+		9269995D2A1DF8C3003DDAD2 /* RoutineEditorCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineEditorCell.swift; sourceTree = "<group>"; };
+		926DBC9129DDC905007BE22A /* PressShutterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PressShutterViewController.swift; sourceTree = "<group>"; };
+		926DBC9329DEA31C007BE22A /* SaveImageToastMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveImageToastMessageView.swift; sourceTree = "<group>"; };
+		9291580D2A223DC20022BEF9 /* MyRoutineHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyRoutineHeaderView.swift; sourceTree = "<group>"; };
+		9291580F2A23B16D0022BEF9 /* CreateRoutineCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRoutineCell.swift; sourceTree = "<group>"; };
+		929158112A24DC3E0022BEF9 /* MyRoutineCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyRoutineCell.swift; sourceTree = "<group>"; };
+		929158142A2512E20022BEF9 /* MyRoutineDetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyRoutineDetailCell.swift; sourceTree = "<group>"; };
+		9291583C2A272B440022BEF9 /* WorkoutSequenceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutSequenceViewController.swift; sourceTree = "<group>"; };
+		9291583E2A2886150022BEF9 /* EditButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditButton.swift; sourceTree = "<group>"; };
+		929158402A28DFEE0022BEF9 /* IndexPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndexPath.swift; sourceTree = "<group>"; };
+		929158422A28FDDD0022BEF9 /* RoutineViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineViewModel.swift; sourceTree = "<group>"; };
+		929158462A3D92E40022BEF9 /* WorkoutSequenceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutSequenceCell.swift; sourceTree = "<group>"; };
+		929158482A3F74D10022BEF9 /* CreateWeightTrainingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateWeightTrainingButton.swift; sourceTree = "<group>"; };
+		92A7B6482A4C7EB7009C9293 /* DeleteRoutineAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteRoutineAlertViewController.swift; sourceTree = "<group>"; };
+		92A7B6692A4EEFDC009C9293 /* WorkOutData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkOutData.swift; sourceTree = "<group>"; };
+		92DCF3EB29CDB38300F90002 /* BackButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackButton.swift; sourceTree = "<group>"; };
+		92DCF47929D0818A00F90002 /* WorkOutDoneData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkOutDoneData.swift; sourceTree = "<group>"; };
+		92DCF47D29D0830B00F90002 /* FrameImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameImage.swift; sourceTree = "<group>"; };
+		92DCF47F29D0846B00F90002 /* BodyInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyInfo.swift; sourceTree = "<group>"; };
+		92DCF4D129D1B64100F90002 /* FrameCategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameCategoryCell.swift; sourceTree = "<group>"; };
+		92DCF4D329D1B66F00F90002 /* ImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCell.swift; sourceTree = "<group>"; };
+		92DCF54129D5B41700F90002 /* MonthHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthHeaderView.swift; sourceTree = "<group>"; };
+		92DCF54929D6BD8200F90002 /* SortButtonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortButtonCell.swift; sourceTree = "<group>"; };
+		92DCF54B29D6D15600F90002 /* FrameHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameHeaderView.swift; sourceTree = "<group>"; };
+		92DCF55929D878FB00F90002 /* GalleryDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryDetailViewController.swift; sourceTree = "<group>"; };
+		92FE26052A49BF4600BCDB82 /* DeleteAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAlertViewController.swift; sourceTree = "<group>"; };
+		92FE26182A4C30EE00BCDB82 /* DeleteRoutineButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteRoutineButton.swift; sourceTree = "<group>"; };
+		A5021EE72A1906EB007DE096 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		A5021EE92A194E78007DE096 /* RightBarButtonItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RightBarButtonItem.swift; sourceTree = "<group>"; };
+		A5021EEB2A1A8AF4007DE096 /* PermissionDeniedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionDeniedView.swift; sourceTree = "<group>"; };
+		A5091F262A31A896002FE6DA /* EndWorkoutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndWorkoutViewController.swift; sourceTree = "<group>"; };
+		A5091F282A31A994002FE6DA /* EndWorkoutAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndWorkoutAlertView.swift; sourceTree = "<group>"; };
+		A5091F2A2A31BCDD002FE6DA /* InputWorkoutDataViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputWorkoutDataViewController.swift; sourceTree = "<group>"; };
+		A520AB742A4D884100EFEF42 /* DuringWorkoutResultViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuringWorkoutResultViewModel.swift; sourceTree = "<group>"; };
+		A520AB762A4D894400EFEF42 /* EndWorkoutViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndWorkoutViewModel.swift; sourceTree = "<group>"; };
+		A52573E929EDB8A9004FBAC0 /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
+		A52573EB29EDB928004FBAC0 /* UIStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIStackView.swift; sourceTree = "<group>"; };
+		A52573ED29EDB9B9004FBAC0 /* ViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelType.swift; sourceTree = "<group>"; };
+		A52573F429F2F478004FBAC0 /* PhotoGalleryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoGalleryViewController.swift; sourceTree = "<group>"; };
+		A526C1262A1B433600DAC0EF /* DeleteAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAlertView.swift; sourceTree = "<group>"; };
+		A526C1282A1B4ACC00DAC0EF /* DeleteRecordAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteRecordAlertView.swift; sourceTree = "<group>"; };
+		A526C12D2A1BC5A600DAC0EF /* AuthorizedCameraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizedCameraView.swift; sourceTree = "<group>"; };
+		A526C12F2A1C783A00DAC0EF /* HomeButtonLessPressShutterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeButtonLessPressShutterViewController.swift; sourceTree = "<group>"; };
+		A52F65F72A09FE9D00D398DF /* NotificationCenterManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCenterManager.swift; sourceTree = "<group>"; };
+		A52F65F92A0A015F00D398DF /* NotificationName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationName.swift; sourceTree = "<group>"; };
+		A53FF90B2A3E354C0086693D /* DuringWorkoutRoutine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuringWorkoutRoutine.swift; sourceTree = "<group>"; };
+		A5489BC62A45942A00D74370 /* DuringSetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuringSetViewModel.swift; sourceTree = "<group>"; };
+		A54C485D29FF9FB1004CEE3D /* RealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
+		A54C486029FFA176004CEE3D /* HomeButtonLessPhotoFrameTypeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeButtonLessPhotoFrameTypeViewController.swift; sourceTree = "<group>"; };
+		A54C486229FFA1A0004CEE3D /* HomeButtonPhotoFrameTypeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeButtonPhotoFrameTypeViewController.swift; sourceTree = "<group>"; };
+		A55149132A0FBE9D00222A72 /* WorkoutResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutResultViewController.swift; sourceTree = "<group>"; };
+		A55149152A0FBEA800222A72 /* WorkoutResultViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutResultViewModel.swift; sourceTree = "<group>"; };
+		A55149172A0FCAD200222A72 /* DeleteRecordAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteRecordAlertViewController.swift; sourceTree = "<group>"; };
+		A55149192A0FE64900222A72 /* UILabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILabel.swift; sourceTree = "<group>"; };
+		A551F5C12A25AFF600F96860 /* ImportPhotoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportPhotoCollectionViewCell.swift; sourceTree = "<group>"; };
+		A551F5C32A2923E300F96860 /* UNNotificationCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UNNotificationCenter.swift; sourceTree = "<group>"; };
+		A553A5E52A4BFAB30027F502 /* UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
+		A553A5E82A4C88530027F502 /* TemporaryRoutine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemporaryRoutine.swift; sourceTree = "<group>"; };
+		A5550A9129F302DC00CBD1BF /* AuthorizedPhotoGalleryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizedPhotoGalleryView.swift; sourceTree = "<group>"; };
+		A5550A9329F3092600CBD1BF /* PhotoGalleryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoGalleryViewModel.swift; sourceTree = "<group>"; };
+		A5550A9529F310D500CBD1BF /* PhotoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCollectionViewCell.swift; sourceTree = "<group>"; };
+		A5552D302A121D4600835B40 /* Double.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Double.swift; sourceTree = "<group>"; };
+		A5552D352A12834D00835B40 /* LimitedPhotoGalleryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LimitedPhotoGalleryView.swift; sourceTree = "<group>"; };
+		A5632CD72A0E2C08007EC335 /* ImageSelectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSelectionViewModel.swift; sourceTree = "<group>"; };
+		A5632CD92A0E30F5007EC335 /* UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
+		A56D904129E08604009FD0B2 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		A56F614F2A3ECA42000879F5 /* InputWorkoutDataViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputWorkoutDataViewModel.swift; sourceTree = "<group>"; };
+		A57061CE29CD6A5E0083ECDD /* GalleryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryViewController.swift; sourceTree = "<group>"; };
+		A57061D029CD6A840083ECDD /* AnalyzeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyzeViewController.swift; sourceTree = "<group>"; };
+		A57061D329D045690083ECDD /* WeightGraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeightGraphView.swift; sourceTree = "<group>"; };
+		A57061D529D09AC40083ECDD /* SkeletalMuscleMassGraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkeletalMuscleMassGraphView.swift; sourceTree = "<group>"; };
+		A57061D729D09AD40083ECDD /* FatPercentageGraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FatPercentageGraphView.swift; sourceTree = "<group>"; };
+		A57061D929D09D5C0083ECDD /* WeightGraphViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeightGraphViewModel.swift; sourceTree = "<group>"; };
+		A576693A29B6EB4900673DFE /* ImageSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSelectionViewController.swift; sourceTree = "<group>"; };
+		A576693D29BB06CB00673DFE /* RegisterMyBodyInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterMyBodyInfoViewController.swift; sourceTree = "<group>"; };
+		A576693F29BF1A9900673DFE /* UITextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextField.swift; sourceTree = "<group>"; };
+		A57FCCDC2A0828C600576812 /* PhotoFrameTypeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoFrameTypeViewModel.swift; sourceTree = "<group>"; };
+		A582F0822A52EA43005BF1DB /* DuringWorkoutResultSectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuringWorkoutResultSectionCell.swift; sourceTree = "<group>"; };
+		A582F0842A52EA53005BF1DB /* DuringWorkoutResultSetCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuringWorkoutResultSetCell.swift; sourceTree = "<group>"; };
+		A582F0882A569F02005BF1DB /* DeleteRecordAlertViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteRecordAlertViewModel.swift; sourceTree = "<group>"; };
+		A583276E2A1DEC82002F8F6E /* HomeButtonLessPressShutterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeButtonLessPressShutterViewModel.swift; sourceTree = "<group>"; };
+		A58327772A20C110002F8F6E /* DuringSetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuringSetViewController.swift; sourceTree = "<group>"; };
+		A58327792A20C135002F8F6E /* DuringEditRoutineViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuringEditRoutineViewController.swift; sourceTree = "<group>"; };
+		A583277B2A20D30A002F8F6E /* DuringWorkoutTimerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuringWorkoutTimerViewController.swift; sourceTree = "<group>"; };
+		A58327852A234BB7002F8F6E /* DuringEditRoutineTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuringEditRoutineTableViewCell.swift; sourceTree = "<group>"; };
+		A58327882A235022002F8F6E /* DuringEditRoutineHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuringEditRoutineHeaderCell.swift; sourceTree = "<group>"; };
+		A583278A2A23AA54002F8F6E /* DuringEditRoutineFooterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuringEditRoutineFooterCell.swift; sourceTree = "<group>"; };
+		A583278D2A23C70B002F8F6E /* DuringSetTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuringSetTableViewCell.swift; sourceTree = "<group>"; };
+		A583278F2A23C73E002F8F6E /* DuringSetFooterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuringSetFooterCell.swift; sourceTree = "<group>"; };
+		A59A3DDB29C977BC00126ECE /* HomeButtonLessCameraViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeButtonLessCameraViewModel.swift; sourceTree = "<group>"; };
+		A59A3DDD29C9F76200126ECE /* RegisterMyBodyInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterMyBodyInfoViewModel.swift; sourceTree = "<group>"; };
+		A59ACB7729B46DEB0084C73E /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		A59ACB7929B4BC740084C73E /* RoutineViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineViewController.swift; sourceTree = "<group>"; };
+		A59ACB7D29B4BCF70084C73E /* MyRecordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyRecordViewController.swift; sourceTree = "<group>"; };
+		A59ACBBF29B6E2310084C73E /* DeviceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceManager.swift; sourceTree = "<group>"; };
+		A59EF6E129C0B69C005DE9B5 /* WorkoutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutViewController.swift; sourceTree = "<group>"; };
+		A59EF6E429C0CE22005DE9B5 /* HomeButtonLessCameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeButtonLessCameraViewController.swift; sourceTree = "<group>"; };
+		A59EF6F029C4C909005DE9B5 /* PreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewView.swift; sourceTree = "<group>"; };
+		A5A10CA829D59ED600E45FC8 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
+		A5A10CAA29D59EF300E45FC8 /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
+		A5DA464A2A379FCE0022710C /* TodayEmptyWorkoutResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayEmptyWorkoutResultView.swift; sourceTree = "<group>"; };
+		A5DA464C2A379FDC0022710C /* TodayWorkoutResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayWorkoutResultView.swift; sourceTree = "<group>"; };
+		A5DA464E2A37A6410022710C /* DuringWorkoutResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuringWorkoutResultViewController.swift; sourceTree = "<group>"; };
+		A5E2DEED2A17611B002A60A4 /* DuringWorkoutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuringWorkoutViewController.swift; sourceTree = "<group>"; };
+		A5FD2BDC2A44228900295EF9 /* HomeButtonAuthorizedCameraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeButtonAuthorizedCameraView.swift; sourceTree = "<group>"; };
+		A5FD2BDE2A45777300295EF9 /* DuringWorkoutViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuringWorkoutViewModel.swift; sourceTree = "<group>"; };
+		A5FD469729DDDB4C003AC96E /* SkeletalMuslemassViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkeletalMuslemassViewModel.swift; sourceTree = "<group>"; };
+		A5FD469929DDF18E003AC96E /* FatPercentageGraphViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FatPercentageGraphViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -153,6 +423,7 @@
 			children = (
 				9200601729B1A6A300586063 /* Resources */,
 				9200601829B1A6AD00586063 /* Sources */,
+				9200602B29B1A81B00586063 /* Utils */,
 				92005FC929B1A49400586063 /* ViewController.swift */,
 				92005FD329B1A49500586063 /* Info.plist */,
 			);
@@ -195,7 +466,6 @@
 				9200602129B1A7A300586063 /* Model */,
 				9200602229B1A7AE00586063 /* Classes */,
 				9200602529B1A7D400586063 /* Extensions */,
-				9200602B29B1A81B00586063 /* Utils */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -240,6 +510,13 @@
 			isa = PBXGroup;
 			children = (
 				9200604029B1AA4900586063 /* Home */,
+				A5E2DEE82A16A649002A60A4 /* DuringWorkout */,
+				A576693929B6E98100673DFE /* ImageSelection */,
+				A59EF6E329C0CD9D005DE9B5 /* Camera */,
+				A52573F329F2F3F9004FBAC0 /* PhotoGallery */,
+				A576693C29BB056900673DFE /* RegisterMyBodyInfoScene */,
+				A59EF6E029C0B673005DE9B5 /* Workout */,
+				A55149122A0FBE7600222A72 /* WorkoutResutl */,
 			);
 			path = HomeScene;
 			sourceTree = "<group>";
@@ -247,6 +524,7 @@
 		9200601F29B1A75B00586063 /* RoutineScene */ = {
 			isa = PBXGroup;
 			children = (
+				A59ACB7B29B4BC8A0084C73E /* Routine */,
 			);
 			path = RoutineScene;
 			sourceTree = "<group>";
@@ -254,6 +532,7 @@
 		9200602029B1A76B00586063 /* MyRecordScene */ = {
 			isa = PBXGroup;
 			children = (
+				A59ACB7C29B4BCDE0084C73E /* MyRecord */,
 			);
 			path = MyRecordScene;
 			sourceTree = "<group>";
@@ -261,6 +540,9 @@
 		9200602129B1A7A300586063 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				A553A5E72A4C88390027F502 /* TemporaryRoutine */,
+				9269981D2A0EBD30003DDAD2 /* WorkOutDone */,
+				9269981E2A0EBD3F003DDAD2 /* MyRoutine */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -268,8 +550,10 @@
 		9200602229B1A7AE00586063 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				9200602329B1A7CC00586063 /* BaseViewController.swift */,
-				9200604A29B1ADA500586063 /* BaseUIView.swift */,
+				A59ACBBE29B6E2220084C73E /* Manager */,
+				A59ACB7629B46DB90084C73E /* TabBar */,
+				920060CC29B37C4C00586063 /* Base */,
+				920060CD29B37C5C00586063 /* UIComponent */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -279,6 +563,17 @@
 			children = (
 				9200602629B1A7F400586063 /* UIColor.swift */,
 				9200602929B1A81100586063 /* UIFont.swift */,
+				A576693F29BF1A9900673DFE /* UITextField.swift */,
+				A5A10CA829D59ED600E45FC8 /* String.swift */,
+				A5A10CAA29D59EF300E45FC8 /* Date.swift */,
+				A52573E929EDB8A9004FBAC0 /* UIView.swift */,
+				A52573EB29EDB928004FBAC0 /* UIStackView.swift */,
+				A52F65F92A0A015F00D398DF /* NotificationName.swift */,
+				A55149192A0FE64900222A72 /* UILabel.swift */,
+				A5632CD92A0E30F5007EC335 /* UIImage.swift */,
+				A5552D302A121D4600835B40 /* Double.swift */,
+				929158402A28DFEE0022BEF9 /* IndexPath.swift */,
+				A553A5E52A4BFAB30027F502 /* UIViewController.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -286,6 +581,9 @@
 		9200602B29B1A81B00586063 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				A52573ED29EDB9B9004FBAC0 /* ViewModelType.swift */,
+				A5021EE72A1906EB007DE096 /* Constants.swift */,
+				A551F5C32A2923E300F96860 /* UNNotificationCenter.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -293,8 +591,9 @@
 		9200604029B1AA4900586063 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				9200604129B1AC8900586063 /* HomeView */,
 				9200604829B1AD7200586063 /* HomeViewController.swift */,
+				A56D904129E08604009FD0B2 /* HomeViewModel.swift */,
+				9200604129B1AC8900586063 /* HomeView */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -302,11 +601,349 @@
 		9200604129B1AC8900586063 /* HomeView */ = {
 			isa = PBXGroup;
 			children = (
+				920060E129B63C1500586063 /* CalendarView.swift */,
 				9200604229B1ACBF00586063 /* RecordView.swift */,
 				9200604429B1ACD900586063 /* WorkoutView.swift */,
 				9200604629B1ACF400586063 /* WorkoutResultView.swift */,
+				9264A58529C19B750010856F /* Cell */,
 			);
 			path = HomeView;
+			sourceTree = "<group>";
+		};
+		920060CC29B37C4C00586063 /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				9200602329B1A7CC00586063 /* BaseViewController.swift */,
+				9200604A29B1ADA500586063 /* BaseUIView.swift */,
+			);
+			path = Base;
+			sourceTree = "<group>";
+		};
+		920060CD29B37C5C00586063 /* UIComponent */ = {
+			isa = PBXGroup;
+			children = (
+				920060CE29B37C9F00586063 /* GradientButton.swift */,
+				A5021EEB2A1A8AF4007DE096 /* PermissionDeniedView.swift */,
+				A526C1262A1B433600DAC0EF /* DeleteAlertView.swift */,
+				A5021EE92A194E78007DE096 /* RightBarButtonItem.swift */,
+			);
+			path = UIComponent;
+			sourceTree = "<group>";
+		};
+		9264A58529C19B750010856F /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				920060E329B71D7400586063 /* DayCell.swift */,
+				9264A58329BA22FE0010856F /* DayOfTheWeekCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		9264A5EF29C5B1690010856F /* HomeButton */ = {
+			isa = PBXGroup;
+			children = (
+				9264A5EB29C4B0610010856F /* HomeButtonCameraViewController.swift */,
+				A5FD2BDC2A44228900295EF9 /* HomeButtonAuthorizedCameraView.swift */,
+				92DCF3EB29CDB38300F90002 /* BackButton.swift */,
+				9264A5ED29C550220010856F /* FrameCell.swift */,
+				926DBC9129DDC905007BE22A /* PressShutterViewController.swift */,
+				926DBC9329DEA31C007BE22A /* SaveImageToastMessageView.swift */,
+				9204827E29FF0D230015A02F /* FrameImageViewModel.swift */,
+			);
+			path = HomeButton;
+			sourceTree = "<group>";
+		};
+		9269981D2A0EBD30003DDAD2 /* WorkOutDone */ = {
+			isa = PBXGroup;
+			children = (
+				92A7B6692A4EEFDC009C9293 /* WorkOutData.swift */,
+				92DCF47929D0818A00F90002 /* WorkOutDoneData.swift */,
+				92DCF47D29D0830B00F90002 /* FrameImage.swift */,
+				92DCF47F29D0846B00F90002 /* BodyInfo.swift */,
+				926998192A0EB052003DDAD2 /* Routine.swift */,
+				926998152A0E093E003DDAD2 /* WeightTraining.swift */,
+				926998132A0DAB5C003DDAD2 /* WeightTrainingInfo.swift */,
+			);
+			path = WorkOutDone;
+			sourceTree = "<group>";
+		};
+		9269981E2A0EBD3F003DDAD2 /* MyRoutine */ = {
+			isa = PBXGroup;
+			children = (
+				9269981B2A0EBD22003DDAD2 /* MyRoutine.swift */,
+				926998212A0EC4A8003DDAD2 /* MyWeightTraining.swift */,
+			);
+			path = MyRoutine;
+			sourceTree = "<group>";
+		};
+		926998E32A1473FD003DDAD2 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				9269985F2A118906003DDAD2 /* RoutineCell.swift */,
+				9269994F2A172F4E003DDAD2 /* RoutineDetailCell.swift */,
+				926998DF2A145250003DDAD2 /* EmptyRoutineCell.swift */,
+				926998E62A147918003DDAD2 /* BodyPartCell.swift */,
+				926998E82A1494EE003DDAD2 /* WeightTrainingCell.swift */,
+				9269995D2A1DF8C3003DDAD2 /* RoutineEditorCell.swift */,
+				9269995B2A1DF135003DDAD2 /* StampCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		929158132A24DC420022BEF9 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				9291580F2A23B16D0022BEF9 /* CreateRoutineCell.swift */,
+				929158112A24DC3E0022BEF9 /* MyRoutineCell.swift */,
+				929158142A2512E20022BEF9 /* MyRoutineDetailCell.swift */,
+				929158462A3D92E40022BEF9 /* WorkoutSequenceCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		92DCF4EF29D2CD2E00F90002 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				92DCF54929D6BD8200F90002 /* SortButtonCell.swift */,
+				92DCF4D129D1B64100F90002 /* FrameCategoryCell.swift */,
+				92DCF4D329D1B66F00F90002 /* ImageCell.swift */,
+				9269980F2A0C6375003DDAD2 /* EmptyImageCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		A52573F329F2F3F9004FBAC0 /* PhotoGallery */ = {
+			isa = PBXGroup;
+			children = (
+				A52573F429F2F478004FBAC0 /* PhotoGalleryViewController.swift */,
+				A5550A9329F3092600CBD1BF /* PhotoGalleryViewModel.swift */,
+				A5550A9129F302DC00CBD1BF /* AuthorizedPhotoGalleryView.swift */,
+				A5552D352A12834D00835B40 /* LimitedPhotoGalleryView.swift */,
+				A5550A9529F310D500CBD1BF /* PhotoCollectionViewCell.swift */,
+				A551F5C12A25AFF600F96860 /* ImportPhotoCollectionViewCell.swift */,
+				A54C485F29FFA113004CEE3D /* PhotoFrameType */,
+			);
+			path = PhotoGallery;
+			sourceTree = "<group>";
+		};
+		A526C12A2A1BBB0800DAC0EF /* HomeButtonLess */ = {
+			isa = PBXGroup;
+			children = (
+				A59EF6E429C0CE22005DE9B5 /* HomeButtonLessCameraViewController.swift */,
+				A526C12D2A1BC5A600DAC0EF /* AuthorizedCameraView.swift */,
+				A526C12F2A1C783A00DAC0EF /* HomeButtonLessPressShutterViewController.swift */,
+				A583276E2A1DEC82002F8F6E /* HomeButtonLessPressShutterViewModel.swift */,
+			);
+			path = HomeButtonLess;
+			sourceTree = "<group>";
+		};
+		A54C485F29FFA113004CEE3D /* PhotoFrameType */ = {
+			isa = PBXGroup;
+			children = (
+				A54C486029FFA176004CEE3D /* HomeButtonLessPhotoFrameTypeViewController.swift */,
+				A54C486229FFA1A0004CEE3D /* HomeButtonPhotoFrameTypeViewController.swift */,
+				A57FCCDC2A0828C600576812 /* PhotoFrameTypeViewModel.swift */,
+			);
+			path = PhotoFrameType;
+			sourceTree = "<group>";
+		};
+		A55149122A0FBE7600222A72 /* WorkoutResutl */ = {
+			isa = PBXGroup;
+			children = (
+				A55149132A0FBE9D00222A72 /* WorkoutResultViewController.swift */,
+				A55149152A0FBEA800222A72 /* WorkoutResultViewModel.swift */,
+				A55149172A0FCAD200222A72 /* DeleteRecordAlertViewController.swift */,
+				A582F0882A569F02005BF1DB /* DeleteRecordAlertViewModel.swift */,
+				A526C1282A1B4ACC00DAC0EF /* DeleteRecordAlertView.swift */,
+				A5DA464A2A379FCE0022710C /* TodayEmptyWorkoutResultView.swift */,
+				A5DA464C2A379FDC0022710C /* TodayWorkoutResultView.swift */,
+			);
+			path = WorkoutResutl;
+			sourceTree = "<group>";
+		};
+		A553A5E72A4C88390027F502 /* TemporaryRoutine */ = {
+			isa = PBXGroup;
+			children = (
+				A553A5E82A4C88530027F502 /* TemporaryRoutine.swift */,
+			);
+			path = TemporaryRoutine;
+			sourceTree = "<group>";
+		};
+		A57061CC29CD6A290083ECDD /* Gallery */ = {
+			isa = PBXGroup;
+			children = (
+				A57061CE29CD6A5E0083ECDD /* GalleryViewController.swift */,
+				92DCF54129D5B41700F90002 /* MonthHeaderView.swift */,
+				92DCF54B29D6D15600F90002 /* FrameHeaderView.swift */,
+				92DCF55929D878FB00F90002 /* GalleryDetailViewController.swift */,
+				92FE26052A49BF4600BCDB82 /* DeleteAlertViewController.swift */,
+				925963482A09A20000F5B67C /* GalleryViewModel.swift */,
+				92DCF4EF29D2CD2E00F90002 /* Cell */,
+			);
+			path = Gallery;
+			sourceTree = "<group>";
+		};
+		A57061CD29CD6A340083ECDD /* Analyze */ = {
+			isa = PBXGroup;
+			children = (
+				A57061D029CD6A840083ECDD /* AnalyzeViewController.swift */,
+				A57061D229D0450C0083ECDD /* Graph */,
+			);
+			path = Analyze;
+			sourceTree = "<group>";
+		};
+		A57061D229D0450C0083ECDD /* Graph */ = {
+			isa = PBXGroup;
+			children = (
+				A57061D329D045690083ECDD /* WeightGraphView.swift */,
+				A57061D929D09D5C0083ECDD /* WeightGraphViewModel.swift */,
+				A57061D529D09AC40083ECDD /* SkeletalMuscleMassGraphView.swift */,
+				A5FD469729DDDB4C003AC96E /* SkeletalMuslemassViewModel.swift */,
+				A57061D729D09AD40083ECDD /* FatPercentageGraphView.swift */,
+				A5FD469929DDF18E003AC96E /* FatPercentageGraphViewModel.swift */,
+			);
+			path = Graph;
+			sourceTree = "<group>";
+		};
+		A576693929B6E98100673DFE /* ImageSelection */ = {
+			isa = PBXGroup;
+			children = (
+				A576693A29B6EB4900673DFE /* ImageSelectionViewController.swift */,
+				A5632CD72A0E2C08007EC335 /* ImageSelectionViewModel.swift */,
+			);
+			path = ImageSelection;
+			sourceTree = "<group>";
+		};
+		A576693C29BB056900673DFE /* RegisterMyBodyInfoScene */ = {
+			isa = PBXGroup;
+			children = (
+				A576693D29BB06CB00673DFE /* RegisterMyBodyInfoViewController.swift */,
+				A59A3DDD29C9F76200126ECE /* RegisterMyBodyInfoViewModel.swift */,
+			);
+			path = RegisterMyBodyInfoScene;
+			sourceTree = "<group>";
+		};
+		A582F0812A52E4BD005BF1DB /* DuringWorkoutResultCells */ = {
+			isa = PBXGroup;
+			children = (
+				A582F0822A52EA43005BF1DB /* DuringWorkoutResultSectionCell.swift */,
+				A582F0842A52EA53005BF1DB /* DuringWorkoutResultSetCell.swift */,
+			);
+			path = DuringWorkoutResultCells;
+			sourceTree = "<group>";
+		};
+		A58327872A234FF0002F8F6E /* DuringEditRoutineCells */ = {
+			isa = PBXGroup;
+			children = (
+				A58327852A234BB7002F8F6E /* DuringEditRoutineTableViewCell.swift */,
+				A58327882A235022002F8F6E /* DuringEditRoutineHeaderCell.swift */,
+				A583278A2A23AA54002F8F6E /* DuringEditRoutineFooterCell.swift */,
+			);
+			path = DuringEditRoutineCells;
+			sourceTree = "<group>";
+		};
+		A583278C2A23C6EB002F8F6E /* DuringSetCells */ = {
+			isa = PBXGroup;
+			children = (
+				A583278D2A23C70B002F8F6E /* DuringSetTableViewCell.swift */,
+				A583278F2A23C73E002F8F6E /* DuringSetFooterCell.swift */,
+			);
+			path = DuringSetCells;
+			sourceTree = "<group>";
+		};
+		A59ACB7629B46DB90084C73E /* TabBar */ = {
+			isa = PBXGroup;
+			children = (
+				A59ACB7729B46DEB0084C73E /* TabBarController.swift */,
+			);
+			path = TabBar;
+			sourceTree = "<group>";
+		};
+		A59ACB7B29B4BC8A0084C73E /* Routine */ = {
+			isa = PBXGroup;
+			children = (
+				A59ACB7929B4BC740084C73E /* RoutineViewController.swift */,
+				92FE26182A4C30EE00BCDB82 /* DeleteRoutineButton.swift */,
+				92A7B6482A4C7EB7009C9293 /* DeleteRoutineAlertViewController.swift */,
+				926998E12A1473FA003DDAD2 /* CreateRoutineViewController.swift */,
+				926999552A1D25F5003DDAD2 /* RoutineBackButton.swift */,
+				926999532A1CEBA8003DDAD2 /* RoutineAlertViewController.swift */,
+				926999572A1D9DEA003DDAD2 /* RoutineEditorViewController.swift */,
+				926999592A1DECCA003DDAD2 /* StampView.swift */,
+				929158422A28FDDD0022BEF9 /* RoutineViewModel.swift */,
+				926998E32A1473FD003DDAD2 /* Cell */,
+			);
+			path = Routine;
+			sourceTree = "<group>";
+		};
+		A59ACB7C29B4BCDE0084C73E /* MyRecord */ = {
+			isa = PBXGroup;
+			children = (
+				A59ACB7D29B4BCF70084C73E /* MyRecordViewController.swift */,
+				A57061CD29CD6A340083ECDD /* Analyze */,
+				A57061CC29CD6A290083ECDD /* Gallery */,
+			);
+			path = MyRecord;
+			sourceTree = "<group>";
+		};
+		A59ACBBE29B6E2220084C73E /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				A59ACBBF29B6E2310084C73E /* DeviceManager.swift */,
+				9264A58129B8735C0010856F /* UserDefaultsManager.swift */,
+				A54C485D29FF9FB1004CEE3D /* RealmManager.swift */,
+				A52F65F72A09FE9D00D398DF /* NotificationCenterManager.swift */,
+			);
+			path = Manager;
+			sourceTree = "<group>";
+		};
+		A59EF6E029C0B673005DE9B5 /* Workout */ = {
+			isa = PBXGroup;
+			children = (
+				A59EF6E129C0B69C005DE9B5 /* WorkoutViewController.swift */,
+				9291580D2A223DC20022BEF9 /* MyRoutineHeaderView.swift */,
+				9291583C2A272B440022BEF9 /* WorkoutSequenceViewController.swift */,
+				9291583E2A2886150022BEF9 /* EditButton.swift */,
+				929158482A3F74D10022BEF9 /* CreateWeightTrainingButton.swift */,
+				929158132A24DC420022BEF9 /* Cell */,
+			);
+			path = Workout;
+			sourceTree = "<group>";
+		};
+		A59EF6E329C0CD9D005DE9B5 /* Camera */ = {
+			isa = PBXGroup;
+			children = (
+				9264A5EF29C5B1690010856F /* HomeButton */,
+				A526C12A2A1BBB0800DAC0EF /* HomeButtonLess */,
+				924E56B129CCB9EA00AA73A2 /* GridToggleButton.swift */,
+				A59EF6F029C4C909005DE9B5 /* PreviewView.swift */,
+				A59A3DDB29C977BC00126ECE /* HomeButtonLessCameraViewModel.swift */,
+			);
+			path = Camera;
+			sourceTree = "<group>";
+		};
+		A5E2DEE82A16A649002A60A4 /* DuringWorkout */ = {
+			isa = PBXGroup;
+			children = (
+				A53FF90B2A3E354C0086693D /* DuringWorkoutRoutine.swift */,
+				A5E2DEED2A17611B002A60A4 /* DuringWorkoutViewController.swift */,
+				A5FD2BDE2A45777300295EF9 /* DuringWorkoutViewModel.swift */,
+				A58327772A20C110002F8F6E /* DuringSetViewController.swift */,
+				A5489BC62A45942A00D74370 /* DuringSetViewModel.swift */,
+				A58327792A20C135002F8F6E /* DuringEditRoutineViewController.swift */,
+				A583277B2A20D30A002F8F6E /* DuringWorkoutTimerViewController.swift */,
+				A5091F262A31A896002FE6DA /* EndWorkoutViewController.swift */,
+				A520AB762A4D894400EFEF42 /* EndWorkoutViewModel.swift */,
+				A5091F282A31A994002FE6DA /* EndWorkoutAlertView.swift */,
+				A5091F2A2A31BCDD002FE6DA /* InputWorkoutDataViewController.swift */,
+				A56F614F2A3ECA42000879F5 /* InputWorkoutDataViewModel.swift */,
+				A5DA464E2A37A6410022710C /* DuringWorkoutResultViewController.swift */,
+				A520AB742A4D884100EFEF42 /* DuringWorkoutResultViewModel.swift */,
+				A582F0812A52E4BD005BF1DB /* DuringWorkoutResultCells */,
+				A583278C2A23C6EB002F8F6E /* DuringSetCells */,
+				A58327872A234FF0002F8F6E /* DuringEditRoutineCells */,
+			);
+			path = DuringWorkout;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -466,18 +1103,153 @@
 			buildActionMask = 2147483647;
 			files = (
 				9200602429B1A7CC00586063 /* BaseViewController.swift in Sources */,
+				A583277C2A20D30A002F8F6E /* DuringWorkoutTimerViewController.swift in Sources */,
+				926998142A0DAB5C003DDAD2 /* WeightTrainingInfo.swift in Sources */,
+				926998602A118906003DDAD2 /* RoutineCell.swift in Sources */,
+				A5550A9629F310D500CBD1BF /* PhotoCollectionViewCell.swift in Sources */,
+				9264A5EE29C550220010856F /* FrameCell.swift in Sources */,
+				A582F0892A569F02005BF1DB /* DeleteRecordAlertViewModel.swift in Sources */,
+				9264A58429BA22FE0010856F /* DayOfTheWeekCell.swift in Sources */,
 				9200604729B1ACF400586063 /* WorkoutResultView.swift in Sources */,
 				9200604329B1ACBF00586063 /* RecordView.swift in Sources */,
+				A526C1302A1C783A00DAC0EF /* HomeButtonLessPressShutterViewController.swift in Sources */,
+				A582F0852A52EA53005BF1DB /* DuringWorkoutResultSetCell.swift in Sources */,
+				926998102A0C6375003DDAD2 /* EmptyImageCell.swift in Sources */,
+				9291580E2A223DC20022BEF9 /* MyRoutineHeaderView.swift in Sources */,
+				92DCF48029D0846B00F90002 /* BodyInfo.swift in Sources */,
+				A57061D129CD6A840083ECDD /* AnalyzeViewController.swift in Sources */,
+				A52573EC29EDB928004FBAC0 /* UIStackView.swift in Sources */,
+				925963492A09A20000F5B67C /* GalleryViewModel.swift in Sources */,
+				A56F61502A3ECA42000879F5 /* InputWorkoutDataViewModel.swift in Sources */,
+				A582F0832A52EA43005BF1DB /* DuringWorkoutResultSectionCell.swift in Sources */,
+				92DCF55A29D878FB00F90002 /* GalleryDetailViewController.swift in Sources */,
+				A52573EE29EDB9B9004FBAC0 /* ViewModelType.swift in Sources */,
+				92DCF54A29D6BD8200F90002 /* SortButtonCell.swift in Sources */,
+				A553A5E62A4BFAB30027F502 /* UIViewController.swift in Sources */,
+				A59ACB7829B46DEB0084C73E /* TabBarController.swift in Sources */,
+				A576694029BF1A9900673DFE /* UITextField.swift in Sources */,
 				9200602729B1A7F400586063 /* UIColor.swift in Sources */,
+				A526C12E2A1BC5A600DAC0EF /* AuthorizedCameraView.swift in Sources */,
+				929158122A24DC3E0022BEF9 /* MyRoutineCell.swift in Sources */,
+				929158432A28FDDD0022BEF9 /* RoutineViewModel.swift in Sources */,
 				9200602D29B1A91600586063 /* OnboardingCell.swift in Sources */,
+				926DBC9229DDC905007BE22A /* PressShutterViewController.swift in Sources */,
+				A54C486129FFA176004CEE3D /* HomeButtonLessPhotoFrameTypeViewController.swift in Sources */,
+				A5A10CA929D59ED600E45FC8 /* String.swift in Sources */,
+				926998E22A1473FA003DDAD2 /* CreateRoutineViewController.swift in Sources */,
 				9200604B29B1ADA500586063 /* BaseUIView.swift in Sources */,
+				A55149182A0FCAD200222A72 /* DeleteRecordAlertViewController.swift in Sources */,
+				A5021EEC2A1A8AF4007DE096 /* PermissionDeniedView.swift in Sources */,
+				A551F5C42A2923E300F96860 /* UNNotificationCenter.swift in Sources */,
+				9291583F2A2886150022BEF9 /* EditButton.swift in Sources */,
+				92FE26192A4C30EE00BCDB82 /* DeleteRoutineButton.swift in Sources */,
+				92FE26062A49BF4600BCDB82 /* DeleteAlertViewController.swift in Sources */,
+				92DCF4D229D1B64100F90002 /* FrameCategoryCell.swift in Sources */,
+				A5FD469829DDDB4C003AC96E /* SkeletalMuslemassViewModel.swift in Sources */,
+				A583278B2A23AA54002F8F6E /* DuringEditRoutineFooterCell.swift in Sources */,
+				A55149142A0FBE9D00222A72 /* WorkoutResultViewController.swift in Sources */,
+				926998E92A1494EE003DDAD2 /* WeightTrainingCell.swift in Sources */,
+				9269995E2A1DF8C3003DDAD2 /* RoutineEditorCell.swift in Sources */,
+				A57061D429D045690083ECDD /* WeightGraphView.swift in Sources */,
+				A526C1272A1B433600DAC0EF /* DeleteAlertView.swift in Sources */,
+				A5DA464F2A37A6410022710C /* DuringWorkoutResultViewController.swift in Sources */,
+				A583277A2A20C135002F8F6E /* DuringEditRoutineViewController.swift in Sources */,
+				A58327892A235022002F8F6E /* DuringEditRoutineHeaderCell.swift in Sources */,
+				924E56B229CCB9EA00AA73A2 /* GridToggleButton.swift in Sources */,
+				A52573F529F2F478004FBAC0 /* PhotoGalleryViewController.swift in Sources */,
+				9264A58229B8735C0010856F /* UserDefaultsManager.swift in Sources */,
+				A5A10CAB29D59EF300E45FC8 /* Date.swift in Sources */,
+				9269981A2A0EB052003DDAD2 /* Routine.swift in Sources */,
+				A59ACBC029B6E2310084C73E /* DeviceManager.swift in Sources */,
+				9204827F29FF0D230015A02F /* FrameImageViewModel.swift in Sources */,
+				926998E72A147918003DDAD2 /* BodyPartCell.swift in Sources */,
+				A5FD2BDF2A45777300295EF9 /* DuringWorkoutViewModel.swift in Sources */,
+				A5FD2BDD2A44228900295EF9 /* HomeButtonAuthorizedCameraView.swift in Sources */,
+				A59EF6F129C4C909005DE9B5 /* PreviewView.swift in Sources */,
+				A53FF90C2A3E354C0086693D /* DuringWorkoutRoutine.swift in Sources */,
+				A5550A9229F302DC00CBD1BF /* AuthorizedPhotoGalleryView.swift in Sources */,
+				A5550A9429F3092600CBD1BF /* PhotoGalleryViewModel.swift in Sources */,
+				A5632CD82A0E2C08007EC335 /* ImageSelectionViewModel.swift in Sources */,
+				A59EF6E529C0CE22005DE9B5 /* HomeButtonLessCameraViewController.swift in Sources */,
+				A57FCCDD2A0828C600576812 /* PhotoFrameTypeViewModel.swift in Sources */,
+				A5DA464D2A379FDC0022710C /* TodayWorkoutResultView.swift in Sources */,
+				A551F5C22A25AFF600F96860 /* ImportPhotoCollectionViewCell.swift in Sources */,
+				92A7B66A2A4EEFDC009C9293 /* WorkOutData.swift in Sources */,
 				9200604529B1ACD900586063 /* WorkoutView.swift in Sources */,
+				929158152A2512E20022BEF9 /* MyRoutineDetailCell.swift in Sources */,
+				A5552D312A121D4600835B40 /* Double.swift in Sources */,
+				A59EF6E229C0B69C005DE9B5 /* WorkoutViewController.swift in Sources */,
+				A58327862A234BB7002F8F6E /* DuringEditRoutineTableViewCell.swift in Sources */,
+				A59A3DDE29C9F76200126ECE /* RegisterMyBodyInfoViewModel.swift in Sources */,
+				926998162A0E093E003DDAD2 /* WeightTraining.swift in Sources */,
+				A59A3DDC29C977BC00126ECE /* HomeButtonLessCameraViewModel.swift in Sources */,
+				A54C485E29FF9FB1004CEE3D /* RealmManager.swift in Sources */,
+				920060CF29B37C9F00586063 /* GradientButton.swift in Sources */,
+				9269995A2A1DECCB003DDAD2 /* StampView.swift in Sources */,
+				A54C486329FFA1A0004CEE3D /* HomeButtonPhotoFrameTypeViewController.swift in Sources */,
+				A58327782A20C110002F8F6E /* DuringSetViewController.swift in Sources */,
+				A526C1292A1B4ACC00DAC0EF /* DeleteRecordAlertView.swift in Sources */,
 				92005FCA29B1A49400586063 /* ViewController.swift in Sources */,
+				9269981C2A0EBD22003DDAD2 /* MyRoutine.swift in Sources */,
+				929158492A3F74D10022BEF9 /* CreateWeightTrainingButton.swift in Sources */,
+				A553A5E92A4C88530027F502 /* TemporaryRoutine.swift in Sources */,
+				92DCF54C29D6D15600F90002 /* FrameHeaderView.swift in Sources */,
+				92DCF47E29D0830B00F90002 /* FrameImage.swift in Sources */,
 				9200602A29B1A81100586063 /* UIFont.swift in Sources */,
+				A5FD469A29DDF18E003AC96E /* FatPercentageGraphViewModel.swift in Sources */,
+				A52F65F82A09FE9D00D398DF /* NotificationCenterManager.swift in Sources */,
+				926DBC9429DEA31C007BE22A /* SaveImageToastMessageView.swift in Sources */,
+				A58327902A23C73E002F8F6E /* DuringSetFooterCell.swift in Sources */,
+				A59ACB7A29B4BC740084C73E /* RoutineViewController.swift in Sources */,
+				929158412A28DFEE0022BEF9 /* IndexPath.swift in Sources */,
+				A5632CDA2A0E30F5007EC335 /* UIImage.swift in Sources */,
+				A5091F272A31A896002FE6DA /* EndWorkoutViewController.swift in Sources */,
+				A57061CF29CD6A5E0083ECDD /* GalleryViewController.swift in Sources */,
+				9269995C2A1DF135003DDAD2 /* StampCell.swift in Sources */,
+				920060E229B63C1500586063 /* CalendarView.swift in Sources */,
+				A5552D362A12834D00835B40 /* LimitedPhotoGalleryView.swift in Sources */,
+				A583276F2A1DEC82002F8F6E /* HomeButtonLessPressShutterViewModel.swift in Sources */,
+				A57061D829D09AD40083ECDD /* FatPercentageGraphView.swift in Sources */,
+				926999582A1D9DEA003DDAD2 /* RoutineEditorViewController.swift in Sources */,
+				A59ACB7E29B4BCF70084C73E /* MyRecordViewController.swift in Sources */,
+				A583278E2A23C70B002F8F6E /* DuringSetTableViewCell.swift in Sources */,
+				A56D904229E08604009FD0B2 /* HomeViewModel.swift in Sources */,
+				926998222A0EC4A8003DDAD2 /* MyWeightTraining.swift in Sources */,
+				A5091F292A31A994002FE6DA /* EndWorkoutAlertView.swift in Sources */,
+				A57061D629D09AC40083ECDD /* SkeletalMuscleMassGraphView.swift in Sources */,
+				A5021EEA2A194E78007DE096 /* RightBarButtonItem.swift in Sources */,
+				926999502A172F4E003DDAD2 /* RoutineDetailCell.swift in Sources */,
+				926999542A1CEBA8003DDAD2 /* RoutineAlertViewController.swift in Sources */,
+				A520AB772A4D894400EFEF42 /* EndWorkoutViewModel.swift in Sources */,
+				A5489BC72A45942A00D74370 /* DuringSetViewModel.swift in Sources */,
+				A551491A2A0FE64900222A72 /* UILabel.swift in Sources */,
+				A576693B29B6EB4900673DFE /* ImageSelectionViewController.swift in Sources */,
+				A52F65FA2A0A015F00D398DF /* NotificationName.swift in Sources */,
+				A5E2DEEE2A17611B002A60A4 /* DuringWorkoutViewController.swift in Sources */,
+				A520AB752A4D884100EFEF42 /* DuringWorkoutResultViewModel.swift in Sources */,
+				A52573EA29EDB8A9004FBAC0 /* UIView.swift in Sources */,
+				A5DA464B2A379FCE0022710C /* TodayEmptyWorkoutResultView.swift in Sources */,
+				92A7B6492A4C7EB7009C9293 /* DeleteRoutineAlertViewController.swift in Sources */,
+				926999562A1D25F5003DDAD2 /* RoutineBackButton.swift in Sources */,
+				A55149162A0FBEA800222A72 /* WorkoutResultViewModel.swift in Sources */,
+				A57061DA29D09D5C0083ECDD /* WeightGraphViewModel.swift in Sources */,
 				92005FC629B1A49400586063 /* AppDelegate.swift in Sources */,
+				926998E02A145250003DDAD2 /* EmptyRoutineCell.swift in Sources */,
 				92005FC829B1A49400586063 /* SceneDelegate.swift in Sources */,
 				9200601D29B1A74300586063 /* OnboardingViewController.swift in Sources */,
+				A5091F2B2A31BCDD002FE6DA /* InputWorkoutDataViewController.swift in Sources */,
+				A5021EE82A1906EB007DE096 /* Constants.swift in Sources */,
+				9264A5EC29C4B0610010856F /* HomeButtonCameraViewController.swift in Sources */,
+				92DCF54229D5B41700F90002 /* MonthHeaderView.swift in Sources */,
+				929158472A3D92E40022BEF9 /* WorkoutSequenceCell.swift in Sources */,
+				92DCF4D429D1B66F00F90002 /* ImageCell.swift in Sources */,
 				9200604929B1AD7200586063 /* HomeViewController.swift in Sources */,
+				92DCF47A29D0818A00F90002 /* WorkOutDoneData.swift in Sources */,
+				929158102A23B16D0022BEF9 /* CreateRoutineCell.swift in Sources */,
+				92DCF3EC29CDB38300F90002 /* BackButton.swift in Sources */,
+				9291583D2A272B440022BEF9 /* WorkoutSequenceViewController.swift in Sources */,
+				A576693E29BB06CB00673DFE /* RegisterMyBodyInfoViewController.swift in Sources */,
+				920060E429B71D7400586063 /* DayCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -575,7 +1347,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -629,7 +1401,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -646,13 +1418,19 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = U4YRB4XYPR;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = WorkoutDone/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "오운완";
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
+				INFOPLIST_KEY_NSCameraUsageDescription = "카메라좀 쓰자!";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "사진 저장";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -673,13 +1451,19 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = U4YRB4XYPR;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = WorkoutDone/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "오운완";
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
+				INFOPLIST_KEY_NSCameraUsageDescription = "카메라좀 쓰자!";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "사진 저장";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
