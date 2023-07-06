@@ -75,6 +75,18 @@ class WorkoutResultViewController : BaseViewController {
         })
         .disposed(by: disposeBag)
         
+        output.routineData.drive(onNext: { value in
+            self.todayWorkoutResultView.routineData = value
+            self.todayWorkoutResultView.workoutTableView.reloadData()
+        })
+        .disposed(by: disposeBag)
+        
+        output.routineTitleData.drive(todayWorkoutResultView.myRoutineLabel.rx.text)
+            .disposed(by: disposeBag)
+        
+        output.workoutTimeData.drive(todayWorkoutResultView.myTotalWorkoutTimeLabel.rx.text)
+            .disposed(by: disposeBag)
+        
         guard let homeVC = self.navigationController?.viewControllers.first as? HomeViewController else { return }
         let homeVCDate = homeVC.calendarView.selectDate ?? Date()
         selectedDate.onNext(homeVCDate.dateToInt())
