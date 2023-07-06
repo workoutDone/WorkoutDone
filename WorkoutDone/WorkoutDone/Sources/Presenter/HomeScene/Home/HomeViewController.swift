@@ -214,13 +214,13 @@ extension HomeViewController : UIScrollViewDelegate {
             if scrollView.contentOffset.y > CGFloat(monthlyCalendarHeight) {
                 view.backgroundColor = .colorFFFFFF
             } else {
-                view.backgroundColor = .color7442FF
+                view.backgroundColor = .colorF6F4FF
             }
         } else {
             if scrollView.contentOffset.y > CGFloat(weeklyCalendarHeight) {
                 view.backgroundColor = .colorFFFFFF
             } else {
-                view.backgroundColor = .color7442FF
+                view.backgroundColor = .colorF6F4FF
             }
         }
     }
