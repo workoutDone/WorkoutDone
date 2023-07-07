@@ -12,7 +12,7 @@ protocol StampDelegate : AnyObject {
 }
 
 class StampView: BaseUIView {
-    var stampIamges = ["stampAbsImage", "stampArmImage", "stampBackImage", "stampLegImage", "stampRunningImage", "stampVImage"]
+    var stampIamges = ["stampVImage", "stampAbsImage", "stampArmImage", "stampBackImage", "stampLegImage", "stampRunningImage"]
     var isSelectStampIndex = -1
     
     weak var delegate: StampDelegate?
