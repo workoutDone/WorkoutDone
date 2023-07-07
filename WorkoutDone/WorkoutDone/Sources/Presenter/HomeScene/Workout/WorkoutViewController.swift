@@ -66,9 +66,15 @@ class WorkoutViewController : BaseViewController {
         
         title = "운동하기"
         view.backgroundColor = .colorFFFFFF
-        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+    
         myRoutines = routineViewModel.loadMyRoutine()
         selectedRoutines = Array(repeating: false, count: myRoutines.count)
+        
+        routineTableView.reloadData()
     }
     
     override func setupLayout() {
@@ -471,3 +477,5 @@ extension WorkoutViewController : MyRoutineDelegate {
         routineTableView.reloadData()
     }
 }
+
+
