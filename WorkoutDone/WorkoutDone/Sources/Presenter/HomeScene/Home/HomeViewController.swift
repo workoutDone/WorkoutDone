@@ -141,6 +141,12 @@ class HomeViewController : BaseViewController {
         output.imageData.drive(recordBaseView.bodyImageView.rx.image)
             .disposed(by: disposeBag)
         
+        output.workoutTimeData.drive(workoutResultBaseView.workoutTimeLabel.rx.text)
+            .disposed(by: disposeBag)
+        
+        output.workoutRoutineTitleData.drive(workoutResultBaseView.workoutTypeLabel.rx.text)
+            .disposed(by: disposeBag)
+        
         calendarView.collectionView.rx.itemSelected
             .bind { _ in
                 guard let dateInt = self.calendarView.selectDate?.dateToInt() else { return }
