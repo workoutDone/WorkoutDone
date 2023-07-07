@@ -14,6 +14,10 @@ class RoutineEditorViewController : BaseViewController {
     var routineId : String?
     var stamp : String?
     
+    var isDeleteMode : Bool = false
+    
+    private var deleteButton = EditButton()
+    
     private let nameTextField = UITextField().then {
         $0.attributedPlaceholder = NSAttributedString(string: "이 루틴의 이름은 무엇인가요?", attributes: [NSAttributedString.Key.foregroundColor : UIColor.colorCCCCCC])
         $0.layer.borderWidth = 1.5
@@ -45,12 +49,13 @@ class RoutineEditorViewController : BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .colorFFFFFF
         title = "루틴 만들기"
+        view.backgroundColor = .colorFFFFFF
         
         setRoutineName()
         setRoutineStamp()
         setSaveButton()
+        setDeleteButton()
         
         hideKeyboardWhenTappedAround()
     }
@@ -119,6 +124,14 @@ class RoutineEditorViewController : BaseViewController {
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
     }
     
+    func setDeleteButton() {
+        deleteButton = EditButton(frame: CGRect(x: 0, y: 0, width: 80, height: 30))
+        deleteButton.setText("운동 삭제")
+        deleteButton.addTarget(self, action: #selector(deleteButtonTapped), for: .touchUpInside)
+        let rightBarButton = UIBarButtonItem(customView: deleteButton)
+        navigationItem.rightBarButtonItem = rightBarButton
+    }
+    
     func setRoutineName() {
         guard let id = routineId else { return }
         nameTextField.text = routineViewModel.loadMyRoutineName(id: id)
@@ -138,6 +151,24 @@ class RoutineEditorViewController : BaseViewController {
         navigationController?.popViewController(animated: false)
     }
     
+    @objc func deleteButtonTapped() {
+        isDeleteMode = !isDeleteMode
+        routineTableView.reloadData()
+        
+        if isDeleteMode {
+            switchToDeleteMode()
+        } else {
+            switchToModifyMode()
+        }
+    }
+    
+    func switchToDeleteMode() {
+        deleteButton.setText("수정 완료")
+    }
+    
+    func switchToModifyMode() {
+        deleteButton.setText("운동 삭제")
+    }
     
     @objc func didChangeTextField(_ sender: Any?) {
         if nameTextField.text != "" {
@@ -181,9 +212,17 @@ extension RoutineEditorViewController : UITableViewDelegate, UITableViewDataSour
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "routineEditorCell", for: indexPath) as? RoutineEditorCell else { return UITableViewCell() }
         cell.selectionStyle = .none
+        cell.delegate = self
         
         cell.bodyPartLabel.text = myWeightTraining[indexPath.row].myBodyPart
         cell.weightTrainingLabel.text = myWeightTraining[indexPath.row].myWeightTraining
+        cell.editImage.isHidden = false
+        cell.removeButton.isHidden = true
+        
+        if isDeleteMode {
+            cell.editImage.isHidden = true
+            cell.removeButton.isHidden = false
+        }
         
         return cell
     }
@@ -194,13 +233,6 @@ extension RoutineEditorViewController : UITableViewDelegate, UITableViewDataSour
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
-    }
-    
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if (editingStyle == .delete) {
-            myWeightTraining.remove(at: indexPath.row)
-        }
-        tableView.reloadData()
     }
     
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
@@ -245,5 +277,14 @@ extension RoutineEditorViewController : StampDelegate {
             saveButton.gradient.colors = [UIColor.colorCCCCCC.cgColor, UIColor.colorCCCCCC.cgColor]
             stamp = nil
         }
+    }
+}
+
+extension RoutineEditorViewController : RemoveWeightTrainingDelegate {
+    func removeButtonTapped(forCell cell: RoutineEditorCell) {
+        guard let indexPath = routineTableView.indexPath(for: cell) else { return }
+        
+        myWeightTraining.remove(at: indexPath.row)
+        routineTableView.deleteRows(at: [indexPath], with: .fade)
     }
 }

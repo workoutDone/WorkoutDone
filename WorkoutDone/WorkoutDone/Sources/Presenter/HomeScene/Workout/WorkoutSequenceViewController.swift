@@ -12,7 +12,7 @@ class WorkoutSequenceViewController: BaseViewController {
     var routineViewModel = RoutineViewModel()
     var selectedMyRoutineIndex : Int?
     
-    var isAddDeleteMode = false
+    var isAddDeleteMode : Bool = false
     
     var completionHandler : (() -> (Void))?
     
@@ -110,6 +110,7 @@ class WorkoutSequenceViewController: BaseViewController {
         title = "운동하기"
         
         editButton = EditButton(frame: CGRect(x: 0, y: 0, width: 80, height: 30))
+        editButton.setText("추가/삭제")
         editButton.addTarget(self, action: #selector(editButtonTapped), for: .touchUpInside)
         let rightBarButton = UIBarButtonItem(customView: editButton)
         navigationItem.rightBarButtonItem = rightBarButton
@@ -180,7 +181,6 @@ extension WorkoutSequenceViewController : RemoveWorkoutDelegate {
         
         adjustTableViewHeight()
     }
-    
 }
 
 extension WorkoutSequenceViewController : UITableViewDelegate, UITableViewDataSource, UITableViewDragDelegate, UITableViewDropDelegate {
