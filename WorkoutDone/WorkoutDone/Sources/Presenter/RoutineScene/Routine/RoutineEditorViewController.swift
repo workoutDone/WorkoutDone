@@ -91,7 +91,7 @@ class RoutineEditorViewController : BaseViewController {
         }
         
         saveButton.snp.makeConstraints {
-            $0.bottom.equalToSuperview().offset(-55)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide).offset(-21)
             $0.leading.equalToSuperview().offset(24)
             $0.trailing.equalToSuperview().offset(-24)
             $0.height.equalTo(58)
