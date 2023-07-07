@@ -22,10 +22,8 @@ class EditButton: UIButton {
     
     func setAddOrRemoveButton() {
         self.backgroundColor = .colorF3F3F3
-        self.setTitle("추가/삭제", for: .normal)
         self.setTitleColor(.color363636, for: .normal)
         self.titleLabel?.font = .pretendard(.semiBold, size: 16)
-        
         self.layer.cornerRadius = 5
     }
     
