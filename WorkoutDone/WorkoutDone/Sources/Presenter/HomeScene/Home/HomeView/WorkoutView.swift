@@ -30,11 +30,28 @@ class WorkoutView : BaseUIView {
         $0.titleLabel?.font = .pretendard(.semiBold, size: 16)
     }
     
+    let workoutCompleteBaseView = UIView().then {
+        $0.backgroundColor = .colorF8F6FF
+        $0.layer.cornerRadius = 12
+    }
+    private let workoutCompleteLabel = UILabel().then {
+        $0.text = "오늘의 운동 완료! \n건강에 한 발짝 더 다가갔어요!"
+        $0.font = .pretendard(.semiBold, size: 16)
+        $0.textColor = .color7442FF
+        $0.numberOfLines = 2
+    }
+    
+    override func setUI() {
+        super.setUI()
+        workoutCompleteLabel.setLineSpacing(lineHeightMultiple: 1.15)
+        workoutCompleteLabel.textAlignment = .center
+        workoutCompleteBaseView.isHidden = true
+    }
+    
     override func setupLayout() {
         super.setupLayout()
-        [workoutLabel, workoutRoutineBaseView, workoutRoutineChoiceButton, workoutRoutineInfoLabel].forEach {
-            addSubview($0)
-        }
+        self.addSubviews(workoutLabel, workoutRoutineBaseView, workoutRoutineChoiceButton, workoutRoutineInfoLabel, workoutCompleteBaseView)
+        workoutCompleteBaseView.addSubviews(workoutCompleteLabel)
     }
 
     override func setupConstraints() {
@@ -61,6 +78,16 @@ class WorkoutView : BaseUIView {
         workoutRoutineInfoLabel.snp.makeConstraints { make in
             make.centerY.equalTo(workoutRoutineBaseView)
             make.leading.equalTo(workoutRoutineBaseView.snp.leading).offset(19)
+        }
+        
+        workoutCompleteBaseView.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.top.equalTo(workoutLabel.snp.bottom).offset(8)
+            $0.leading.equalToSuperview().offset(18)
+            $0.height.equalTo(82)
+        }
+        workoutCompleteLabel.snp.makeConstraints {
+            $0.centerX.centerY.equalToSuperview()
         }
     }
 }
