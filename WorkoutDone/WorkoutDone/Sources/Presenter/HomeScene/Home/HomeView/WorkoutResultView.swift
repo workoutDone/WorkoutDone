@@ -27,7 +27,7 @@ final class WorkoutResultView : BaseUIView {
         $0.text = "운동 시간"
         $0.font = .pretendard(.semiBold, size: 12)
     }
-    private let workoutTimeLabel = UILabel().then {
+    let workoutTimeLabel = UILabel().then {
         $0.text = "00:00:00"
         $0.font = .pretendard(.light, size: 22)
         $0.textColor = .color000000
@@ -40,7 +40,7 @@ final class WorkoutResultView : BaseUIView {
         $0.text = "운동 종목"
         $0.font = .pretendard(.semiBold, size: 12)
     }
-    private let workoutTypeLabel = UILabel().then {
+    let workoutTypeLabel = UILabel().then {
         $0.text = "-"
         $0.textColor = .color000000
         $0.font = .pretendard(.light, size: 22)
@@ -50,7 +50,6 @@ final class WorkoutResultView : BaseUIView {
     override func setupLayout() {
         super.setupLayout()
         self.addSubviews(workoutResultLabel, workoutResultBaseView, workoutResultButton)
-//        workoutResultBaseView.addSubview(workoutResultButton)
         workoutResultBaseView.addSubviews(workoutTimeBaseView, workoutTypeBaseView)
         workoutTimeBaseView.addSubviews(workoutTimeTitleLabel, workoutTimeLabel)
         workoutTypeBaseView.addSubviews(workoutTypeTitleLabel, workoutTypeLabel)
