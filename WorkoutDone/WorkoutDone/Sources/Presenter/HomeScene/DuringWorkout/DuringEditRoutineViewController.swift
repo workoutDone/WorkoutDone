@@ -86,9 +86,6 @@ extension DuringEditRoutineViewController : UITableViewDelegate, UITableViewData
 //            tableView.deleteRows(at: [indexPath], with: .fade)
 //        }
 //    }
-//    func numberOfSections(in tableView: UITableView) -> Int {
-//        return dummy.count
-//    }
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
