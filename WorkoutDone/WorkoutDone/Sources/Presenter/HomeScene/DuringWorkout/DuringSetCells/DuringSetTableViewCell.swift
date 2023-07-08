@@ -37,7 +37,6 @@ class DuringSetTableViewCell : UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
 
-        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 7, left: 0, bottom: 7, right: 0))
     }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -50,14 +49,15 @@ class DuringSetTableViewCell : UITableViewCell {
         super.init(coder: coder)
     }
     func setStyle() {
-        
+        contentView.backgroundColor = .colorF8F6FF
     }
     func setLayout() {
         contentView.addSubview(backView)
         backView.addSubviews(setLabel, kgLabel, countLabel)
         backView.snp.makeConstraints {
             $0.height.equalTo(50)
-            $0.leading.trailing.equalToSuperview().inset(28)
+            $0.top.bottom.equalToSuperview().inset(7)
+            $0.leading.trailing.equalToSuperview().inset(14)
         }
         setLabel.snp.makeConstraints {
             $0.centerY.equalToSuperview()
@@ -74,8 +74,8 @@ class DuringSetTableViewCell : UITableViewCell {
     }
     func configureCell(_ wegihtTrainingInfo : WeightTrainingInfo) {
         setLabel.text = "\(wegihtTrainingInfo.setCount)세트"
-        kgLabel.text = wegihtTrainingInfo.weight == 0 ? "-kg" : "\(wegihtTrainingInfo.weight ?? 0)kg"
-        countLabel.text = wegihtTrainingInfo.trainingCount == 0 ? "-회" : "\(wegihtTrainingInfo.trainingCount ?? 0)회"
+        kgLabel.text = wegihtTrainingInfo.weight == nil ? "-kg" : "\(wegihtTrainingInfo.weight ?? 0)kg"
+        countLabel.text = wegihtTrainingInfo.trainingCount == nil ? "-회" : "\(wegihtTrainingInfo.trainingCount ?? 0)회"
     }
     func checkCalisthenics(_ weightTraining : WeightTraining) {
         if Calisthenics.calisthenicsArray.contains(weightTraining.weightTraining) {

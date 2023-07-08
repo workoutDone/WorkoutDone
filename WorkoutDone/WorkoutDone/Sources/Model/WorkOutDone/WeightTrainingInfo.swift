@@ -13,7 +13,7 @@ class WeightTrainingInfo : Object {
     @Persisted dynamic var weight : Double?
     @Persisted dynamic var trainingCount : Int?
     
-    convenience init(setCount: Int, weight: Double, trainingCount: Int) {
+    convenience init(setCount: Int, weight: Double?, trainingCount: Int?) {
         self.init()
         self.setCount = setCount
         self.weight = weight
