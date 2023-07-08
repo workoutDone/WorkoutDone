@@ -74,8 +74,8 @@ class DuringSetTableViewCell : UITableViewCell {
     }
     func configureCell(_ wegihtTrainingInfo : WeightTrainingInfo) {
         setLabel.text = "\(wegihtTrainingInfo.setCount)세트"
-        kgLabel.text = wegihtTrainingInfo.weight == 0 ? "-kg" : "\(wegihtTrainingInfo.weight ?? 0)kg"
-        countLabel.text = wegihtTrainingInfo.trainingCount == 0 ? "-회" : "\(wegihtTrainingInfo.trainingCount ?? 0)회"
+        kgLabel.text = wegihtTrainingInfo.weight == nil ? "-kg" : "\(wegihtTrainingInfo.weight ?? 0)kg"
+        countLabel.text = wegihtTrainingInfo.trainingCount == nil ? "-회" : "\(wegihtTrainingInfo.trainingCount ?? 0)회"
     }
     func checkCalisthenics(_ weightTraining : WeightTraining) {
         if Calisthenics.calisthenicsArray.contains(weightTraining.weightTraining) {
