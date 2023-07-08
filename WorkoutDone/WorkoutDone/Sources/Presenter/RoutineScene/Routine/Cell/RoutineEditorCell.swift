@@ -9,7 +9,13 @@ import UIKit
 import SnapKit
 import Then
 
+protocol RemoveWeightTrainingDelegate : AnyObject {
+    func removeButtonTapped(forCell cell: RoutineEditorCell)
+}
+
 class RoutineEditorCell: UITableViewCell {
+    weak var delegate : RemoveWeightTrainingDelegate?
+    
     private let bodyPartView = UIView().then {
         $0.layer.borderWidth = 1
         $0.layer.borderColor = UIColor.color7442FF.cgColor
@@ -30,6 +36,15 @@ class RoutineEditorCell: UITableViewCell {
     let editImage = UIImageView().then {
         $0.image = UIImage(named: "edit")
     }
+    
+    let removeButton = UIButton().then {
+        $0.layer.cornerRadius = 12
+        $0.backgroundColor = .colorFFEDF0
+    }
+    
+    let removeImage = UIImageView().then {
+        $0.image = UIImage(named: "remove")
+    }
 
     // MARK: - LIFECYCLE
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -44,6 +59,10 @@ class RoutineEditorCell: UITableViewCell {
         contentView.layer.borderColor = UIColor.colorC8B4FF.cgColor
         contentView.layer.cornerRadius = 8
         contentView.backgroundColor = .colorFFFFFF
+        
+        removeButton.isHidden = true
+        
+        removeButton.addTarget(self, action: #selector(removeButtonTapped), for: .touchUpInside)
         
     }
     
@@ -61,11 +80,12 @@ class RoutineEditorCell: UITableViewCell {
     
     // MARK: - ACTIONS
     func setupLayout() {
-        [bodyPartView, weightTrainingLabel, editImage].forEach {
+        [bodyPartView, weightTrainingLabel, editImage, removeButton].forEach {
             contentView.addSubview($0)
         }
 
         bodyPartView.addSubview(bodyPartLabel)
+        removeButton.addSubview(removeImage)
     }
     
     func setupConstraints() {
@@ -90,5 +110,20 @@ class RoutineEditorCell: UITableViewCell {
             $0.width.equalTo(15.5)
             $0.height.equalTo(9.3)
         }
+        
+        removeButton.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.trailing.equalToSuperview().offset(-10)
+            $0.width.height.equalTo(24)
+        }
+        
+        removeImage.snp.makeConstraints {
+            $0.centerX.centerY.equalToSuperview()
+            $0.width.height.equalTo(8)
+        }
+    }
+    
+    @objc func removeButtonTapped() {
+        delegate?.removeButtonTapped(forCell: self)
     }
 }

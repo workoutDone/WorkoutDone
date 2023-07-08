@@ -64,7 +64,7 @@ class RoutineViewController : BaseViewController {
         createdButton.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(24)
             $0.trailing.equalToSuperview().offset(-24)
-            $0.bottom.equalToSuperview().offset(-28)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide).offset(-21)
             $0.height.equalTo(58)
         }
     }

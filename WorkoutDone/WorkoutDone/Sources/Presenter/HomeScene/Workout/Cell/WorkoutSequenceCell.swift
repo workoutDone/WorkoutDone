@@ -122,6 +122,5 @@ class WorkoutSequenceCell : UITableViewCell {
 
     @objc func removeButtonTapped() {
         delegate?.removeButtonTapped(forCell: self)
-        
     }
 }
