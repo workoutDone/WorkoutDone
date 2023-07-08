@@ -853,7 +853,3 @@ extension ExRoutine {
         ])
     }
 }
-
-struct Calisthenics {
-    static var calisthenicsArray : [String] = ["벤치 프레스", "디클라인 푸시업"]
-}
