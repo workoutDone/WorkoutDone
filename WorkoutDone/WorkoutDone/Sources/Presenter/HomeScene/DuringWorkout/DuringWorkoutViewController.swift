@@ -370,7 +370,7 @@ final class DuringWorkoutViewController : BaseViewController {
         workoutCategoryTitleLabel.snp.makeConstraints {
             $0.centerY.centerX.equalToSuperview()
             $0.leading.trailing.equalToSuperview().inset(6)
-            $0.width.equalTo(30)
+            $0.width.greaterThanOrEqualTo(30)
         }
         endWorkoutButton.snp.makeConstraints {
             $0.height.equalTo(30)
