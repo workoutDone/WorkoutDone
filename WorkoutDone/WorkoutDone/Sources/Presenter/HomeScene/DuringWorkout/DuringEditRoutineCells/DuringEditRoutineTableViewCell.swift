@@ -58,6 +58,8 @@ class DuringEditRoutineTableViewCell : UITableViewCell {
     func setStyle() {
         contentView.backgroundColor = .colorFFFFFF
         workoutCategoryBorderView.layer.cornerRadius = 23 / 2
+        
+        sandwichImageView.isHidden = true
     }
     func setLayout() {
         contentView.addSubview(backView)
