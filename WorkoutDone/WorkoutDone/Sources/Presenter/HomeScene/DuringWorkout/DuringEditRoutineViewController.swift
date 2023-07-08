@@ -6,9 +6,23 @@
 //
 
 import UIKit
+import RxCocoa
+import RxSwift
+import SnapKit
+import Then
 
 class DuringEditRoutineViewController : BaseViewController {
-    private var dummy = ExBodyPart.dummy()
+    
+    
+    
+    // MARK: - ViewModel
+    private let viewModel = DuringEditRoutineViewModel()
+    private var weightTrainingArray : [WeightTraining] = []
+    private let didLoad = PublishSubject<Void>()
+    
+    private lazy var input = DuringEditRoutineViewModel.Input(
+        loadView: didLoad.asDriver(onErrorJustReturn: ()))
+    private lazy var output = viewModel.transform(input: input)
     // MARK: - PROPERTIES
     private let tableView = UITableView(frame: .zero, style: .grouped).then {
         $0.backgroundColor = .colorFFFFFF
@@ -20,6 +34,18 @@ class DuringEditRoutineViewController : BaseViewController {
         super.viewDidLoad()
 
     }
+    
+    override func setupBinding() {
+        super.setupBinding()
+        
+        output.weightTraining.drive(onNext: { value in
+            self.weightTrainingArray = value
+        })
+        .disposed(by: disposeBag)
+        
+        didLoad.onNext(())
+    }
+    
     override func setComponents() {
         super.setComponents()
         tableView.delegate = self
@@ -60,18 +86,21 @@ extension DuringEditRoutineViewController : UITableViewDelegate, UITableViewData
 //            tableView.deleteRows(at: [indexPath], with: .fade)
 //        }
 //    }
+//    func numberOfSections(in tableView: UITableView) -> Int {
+//        return dummy.count
+//    }
     func numberOfSections(in tableView: UITableView) -> Int {
-        return dummy.count
+        return 1
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return dummy[section].weightTraining.count
+        return weightTrainingArray.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: DuringEditRoutineTableViewCell.identifier, for: indexPath) as? DuringEditRoutineTableViewCell else { return UITableViewCell() }
         cell.selectionStyle = .none
-        cell.workoutCategoryLabel.text = dummy[indexPath.section].name
-        cell.workoutTitleLabel.text = dummy[indexPath.section].weightTraining[indexPath.row].name
+        cell.workoutCategoryLabel.text = weightTrainingArray[indexPath.row].bodyPart
+        cell.workoutTitleLabel.text = weightTrainingArray[indexPath.row].weightTraining
         return cell
     }
     

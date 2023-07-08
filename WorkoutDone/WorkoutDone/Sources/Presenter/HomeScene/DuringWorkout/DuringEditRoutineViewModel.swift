@@ -17,11 +17,10 @@ class DuringEditRoutineViewModel {
     
     struct Input {
         let loadView : Driver<Void>
-        let weightTrainingArrayIndex : Driver<Int>
     }
     
     struct Output {
-        let weightTraining : Driver<WeightTraining?>
+        let weightTraining : Driver<[WeightTraining]>
     }
     
     func readTemporaryRoutineData() -> TemporaryRoutine? {
@@ -31,11 +30,17 @@ class DuringEditRoutineViewModel {
     
     func transform(input : Input) -> Output {
         
-        let weightTraining = Driver<WeightTraining?>.combineLatest(input.loadView, input.weightTrainingArrayIndex, resultSelector: { (_, index) in
+        let weightTraining = input.loadView.map { _ -> [WeightTraining] in
             let routine = self.readTemporaryRoutineData()
-            let weightTrainingValue = routine?.weightTraining[index]
-            return weightTrainingValue
-        })
+            let weightTrainingValue = routine?.weightTraining
+            
+            if let weightTrainingValue = weightTrainingValue {
+                return Array(weightTrainingValue)
+            }
+            else {
+                return []
+            }
+        }
         
         return Output(weightTraining: weightTraining)
     }
