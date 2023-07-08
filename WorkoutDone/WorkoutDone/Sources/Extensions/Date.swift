@@ -8,6 +8,12 @@
 import UIKit
 
 extension Date {
+    func dToString() -> String? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "d"
+        return dateFormatter.string(from: self)
+    }
+    
     func yyMMddToString() -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yy.MM.dd"

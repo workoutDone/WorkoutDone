@@ -46,6 +46,7 @@
 		920060E229B63C1500586063 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 920060E129B63C1500586063 /* CalendarView.swift */; };
 		920060E429B71D7400586063 /* DayCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 920060E329B71D7400586063 /* DayCell.swift */; };
 		9204827F29FF0D230015A02F /* FrameImageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9204827E29FF0D230015A02F /* FrameImageViewModel.swift */; };
+		9230BE4B2A5939130053E535 /* CalendarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9230BE4A2A5939130053E535 /* CalendarViewModel.swift */; };
 		924E56B229CCB9EA00AA73A2 /* GridToggleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924E56B129CCB9EA00AA73A2 /* GridToggleButton.swift */; };
 		925963492A09A20000F5B67C /* GalleryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925963482A09A20000F5B67C /* GalleryViewModel.swift */; };
 		9264A58229B8735C0010856F /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9264A58129B8735C0010856F /* UserDefaultsManager.swift */; };
@@ -232,6 +233,7 @@
 		920060E129B63C1500586063 /* CalendarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		920060E329B71D7400586063 /* DayCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DayCell.swift; path = WorkoutDone/Sources/Presenter/HomeScene/Home/HomeView/Cell/DayCell.swift; sourceTree = SOURCE_ROOT; };
 		9204827E29FF0D230015A02F /* FrameImageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameImageViewModel.swift; sourceTree = "<group>"; };
+		9230BE4A2A5939130053E535 /* CalendarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewModel.swift; sourceTree = "<group>"; };
 		924E56B129CCB9EA00AA73A2 /* GridToggleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridToggleButton.swift; sourceTree = "<group>"; };
 		925963482A09A20000F5B67C /* GalleryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryViewModel.swift; sourceTree = "<group>"; };
 		9264A58129B8735C0010856F /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
@@ -593,6 +595,7 @@
 			children = (
 				9200604829B1AD7200586063 /* HomeViewController.swift */,
 				A56D904129E08604009FD0B2 /* HomeViewModel.swift */,
+				9230BE4A2A5939130053E535 /* CalendarViewModel.swift */,
 				9200604129B1AC8900586063 /* HomeView */,
 			);
 			path = Home;
@@ -1217,6 +1220,7 @@
 				926998222A0EC4A8003DDAD2 /* MyWeightTraining.swift in Sources */,
 				A5091F292A31A994002FE6DA /* EndWorkoutAlertView.swift in Sources */,
 				A57061D629D09AC40083ECDD /* SkeletalMuscleMassGraphView.swift in Sources */,
+				9230BE4B2A5939130053E535 /* CalendarViewModel.swift in Sources */,
 				A5021EEA2A194E78007DE096 /* RightBarButtonItem.swift in Sources */,
 				926999502A172F4E003DDAD2 /* RoutineDetailCell.swift in Sources */,
 				926999542A1CEBA8003DDAD2 /* RoutineAlertViewController.swift in Sources */,
