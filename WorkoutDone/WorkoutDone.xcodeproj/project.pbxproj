@@ -1435,8 +1435,8 @@
 				INFOPLIST_FILE = WorkoutDone/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "오운완";
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
-				INFOPLIST_KEY_NSCameraUsageDescription = "카메라좀 쓰자!";
-				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "사진 저장";
+				INFOPLIST_KEY_NSCameraUsageDescription = "오운완의 다양한 콘텐츠를 사용하여, 사진을 촬영해 보세요.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "사진에 대한 접근을 허용해, 오운완의 모든 기능과 콘텐츠를 사용해 보세요.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
@@ -1468,8 +1468,8 @@
 				INFOPLIST_FILE = WorkoutDone/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "오운완";
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
-				INFOPLIST_KEY_NSCameraUsageDescription = "카메라좀 쓰자!";
-				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "사진 저장";
+				INFOPLIST_KEY_NSCameraUsageDescription = "오운완의 다양한 콘텐츠를 사용하여, 사진을 촬영해 보세요.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "사진에 대한 접근을 허용해, 오운완의 모든 기능과 콘텐츠를 사용해 보세요.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
