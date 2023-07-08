@@ -88,7 +88,7 @@ struct RoutineViewModel {
     
     func setWeightTraining(_ weightTraining: [WeightTraining]) -> [WeightTraining] {
         for training in weightTraining {
-            training.weightTrainingInfo.append(objectsIn: [WeightTrainingInfo(setCount: 1, weight: 0, trainingCount: 0)])
+            training.weightTrainingInfo.append(objectsIn: [WeightTrainingInfo(setCount: 1, weight: nil, trainingCount: nil)])
         }
         return weightTraining
     }
