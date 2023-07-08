@@ -48,7 +48,16 @@ final class DuringWorkoutViewController : BaseViewController {
     var weightTrainingInfoArrayIndex = 0
     var weightTrainingArrayCount = 0
     var weightTrainingInfoArrayCount = 0
-    var totalWorkoutCount : Double = 0
+    var totalWorkoutCount : Double = 0 {
+        didSet {
+            if totalWorkoutCount == 1 {
+                previousWorkoutButtonTitleLabel.textColor = .colorC8B4FF
+                previousWorkoutButton.isEnabled = false
+                nextWorkoutButtonTitleLabel.textColor = .colorC8B4FF
+                nextWorkoutButton.isEnabled = false
+            }
+        }
+    }
     var currentWorkoutCount : Double = 1
     
     

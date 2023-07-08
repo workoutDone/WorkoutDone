@@ -12,7 +12,6 @@ protocol DuringSetFooterDelegate : AnyObject {
 }
 
 class DuringSetFooterCell : UITableViewHeaderFooterView {
-//    var handler: (() -> (Void))?
     var delegate : DuringSetFooterDelegate?
     static let footerViewID = "DuringSetFooterCell"
     
@@ -47,9 +46,7 @@ class DuringSetFooterCell : UITableViewHeaderFooterView {
         print("여기는?")
     }
     @objc func addWorkoutButtonTapped() {
-//        handler?()
         delegate?.addWorkoutButtonTapped()
-        print("?????????????")
     }
     
     private func setupLayout() {
@@ -59,11 +56,12 @@ class DuringSetFooterCell : UITableViewHeaderFooterView {
     }
     private func setupConstraints() {
         backView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
+            $0.bottom.leading.trailing.equalToSuperview()
+            $0.top.equalToSuperview().inset(7)
         }
         dotLineImageView.snp.makeConstraints {
             $0.bottom.equalToSuperview()
-            $0.leading.trailing.equalToSuperview().inset(28)
+            $0.leading.trailing.equalToSuperview().inset(14)
             $0.height.equalTo(50)
         }
         addWorkoutButton.snp.makeConstraints {
