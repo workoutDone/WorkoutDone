@@ -28,6 +28,7 @@ class HomeViewModel {
         let imageData : Driver<UIImage>
         let workoutTimeData : Driver<String>
         let workoutRoutineTitleData : Driver<String>
+        let isWorkout : Driver<Bool>
     }
     
     func readWorkoutDoneData(id : Int) -> WorkOutDoneData?  {
@@ -105,6 +106,17 @@ class HomeViewModel {
                 return "-"
             }
         })
+        
+        let isWorkout = Driver<Bool>.combineLatest(input.loadView, input.selectedDate, resultSelector: { (_, date) in
+            let weightTrainingData = self.readWorkoutDoneData(id: date)?.routine?.weightTraining
+            if let _ = weightTrainingData {
+                return true
+                
+            }
+            else {
+                return false
+            }
+        })
 
         return Output(
             weightData: weightData,
@@ -112,6 +124,7 @@ class HomeViewModel {
             fatPercentageData: fatPercentageData,
             imageData: imageData,
             workoutTimeData: workoutTimeData,
-            workoutRoutineTitleData: workoutRoutineTitleData)
+            workoutRoutineTitleData: workoutRoutineTitleData,
+            isWorkout: isWorkout)
     }
 }

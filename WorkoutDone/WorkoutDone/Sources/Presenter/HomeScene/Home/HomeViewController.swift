@@ -147,6 +147,11 @@ class HomeViewController : BaseViewController {
         output.workoutRoutineTitleData.drive(workoutResultBaseView.workoutTypeLabel.rx.text)
             .disposed(by: disposeBag)
         
+        output.isWorkout.drive(onNext: { value in
+            self.workoutBaseView.workoutCompleteBaseView.isHidden = !value
+        })
+        .disposed(by: disposeBag)
+        
         calendarView.collectionView.rx.itemSelected
             .bind { _ in
                 guard let dateInt = self.calendarView.selectDate?.dateToInt() else { return }
