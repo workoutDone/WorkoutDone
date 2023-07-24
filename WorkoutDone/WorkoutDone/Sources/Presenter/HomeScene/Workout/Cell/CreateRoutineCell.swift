@@ -24,14 +24,8 @@ class CreateRoutineCell: UITableViewCell {
         $0.font = .pretendard(.medium, size: 15)
     }
     
-    private let createRoutineButton = UIButton().then {
-        $0.layer.cornerRadius = 16
-        $0.backgroundColor = .colorF8F6FF
-    }
-    
-    private let plusImage = UIImageView().then {
-        $0.image = UIImage(named: "create")
-        $0.tintColor = .colorC8B4FF
+    private let createRoutineImage = UIImageView().then {
+        $0.image = UIImage(named: "createRoutine")
     }
     
     // MARK: - LIFECYCLE
@@ -57,10 +51,9 @@ class CreateRoutineCell: UITableViewCell {
     
     // MARK: - ACTIONS
     func setupLayout() {
-        [borderImage, emptyRoutineLabel, createRoutineLabel, createRoutineButton].forEach {
+        [borderImage, emptyRoutineLabel, createRoutineLabel, createRoutineImage].forEach {
             contentView.addSubview($0)
         }
-        createRoutineButton.addSubview(plusImage)
     }
     
     func setupConstraints() {
@@ -79,15 +72,10 @@ class CreateRoutineCell: UITableViewCell {
             $0.centerX.equalToSuperview()
         }
         
-        createRoutineButton.snp.makeConstraints {
+        createRoutineImage.snp.makeConstraints {
             $0.top.equalTo(createRoutineLabel.snp.bottom).offset(12)
             $0.centerX.equalToSuperview()
             $0.width.height.equalTo(32)
-        }
-        
-        plusImage.snp.makeConstraints {
-            $0.centerX.centerY.equalTo(createRoutineButton)
-            $0.width.height.equalTo(16)
         }
     }
 }

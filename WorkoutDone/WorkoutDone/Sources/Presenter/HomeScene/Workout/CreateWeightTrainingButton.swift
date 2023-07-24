@@ -13,13 +13,8 @@ class CreateWeightTrainingButton: UIButton {
         $0.image = UIImage(named: "border")
     }
     
-    private let createView = UIView().then {
-        $0.layer.cornerRadius = 42 / 2
-        $0.backgroundColor = .colorF8F6FF
-    }
-    
     private let createImage = UIImageView().then {
-        $0.image = UIImage(named: "create")
+        $0.image = UIImage(named: "createRoutine")
         $0.tintColor = .colorC8B4FF
     }
     
@@ -28,7 +23,6 @@ class CreateWeightTrainingButton: UIButton {
         
         setupLayout()
         setupConstraints()
-
     }
     
     required init?(coder: NSCoder) {
@@ -36,10 +30,8 @@ class CreateWeightTrainingButton: UIButton {
     }
     
     func setupLayout() {
-        [borderImage, createView].forEach {
-            self.addSubview($0)
-        }
-        createView.addSubview(createImage)
+        self.addSubview(borderImage)
+        self.addSubview(createImage)
     }
     
     func setupConstraints() {
@@ -47,14 +39,9 @@ class CreateWeightTrainingButton: UIButton {
             $0.top.leading.trailing.bottom.equalToSuperview()
         }
         
-        createView.snp.makeConstraints {
-            $0.centerX.centerY.equalToSuperview()
-            $0.width.height.equalTo(42)
-        }
-        
         createImage.snp.makeConstraints {
             $0.centerX.centerY.equalToSuperview()
-            $0.width.height.equalTo(14)
+            $0.width.height.equalTo(42)
         }
     }
     

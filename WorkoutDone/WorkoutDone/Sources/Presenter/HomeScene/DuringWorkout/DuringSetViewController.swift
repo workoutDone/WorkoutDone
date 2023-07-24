@@ -151,6 +151,9 @@ extension DuringSetViewController : UITableViewDelegate, UITableViewDataSource, 
             footerView.delegate = self
             return footerView
         }
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        return UIView()
+    }
     func addWorkoutButtonTapped() {
         addWeightTrainingInfoTrigger.onNext(())
         addWeightTrainingInfoIndexTrigger.onNext(weightTrainingArrayIndex)
@@ -173,6 +176,12 @@ extension DuringSetViewController : UITableViewDelegate, UITableViewDataSource, 
         return 64
     }
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 64
+        return 57
+    }
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 7
+    }
+    func tableView(_ tableView: UITableView, titleForDeleteConfirmationButtonForRowAt indexPath: IndexPath) -> String? {
+        return "삭제하기"
     }
 }

@@ -46,6 +46,7 @@
 		920060E229B63C1500586063 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 920060E129B63C1500586063 /* CalendarView.swift */; };
 		920060E429B71D7400586063 /* DayCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 920060E329B71D7400586063 /* DayCell.swift */; };
 		9204827F29FF0D230015A02F /* FrameImageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9204827E29FF0D230015A02F /* FrameImageViewModel.swift */; };
+		9230BE4B2A5939130053E535 /* CalendarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9230BE4A2A5939130053E535 /* CalendarViewModel.swift */; };
 		924E56B229CCB9EA00AA73A2 /* GridToggleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924E56B129CCB9EA00AA73A2 /* GridToggleButton.swift */; };
 		925963492A09A20000F5B67C /* GalleryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925963482A09A20000F5B67C /* GalleryViewModel.swift */; };
 		9264A58229B8735C0010856F /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9264A58129B8735C0010856F /* UserDefaultsManager.swift */; };
@@ -149,6 +150,8 @@
 		A582F0832A52EA43005BF1DB /* DuringWorkoutResultSectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A582F0822A52EA43005BF1DB /* DuringWorkoutResultSectionCell.swift */; };
 		A582F0852A52EA53005BF1DB /* DuringWorkoutResultSetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A582F0842A52EA53005BF1DB /* DuringWorkoutResultSetCell.swift */; };
 		A582F0892A569F02005BF1DB /* DeleteRecordAlertViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A582F0882A569F02005BF1DB /* DeleteRecordAlertViewModel.swift */; };
+		A582F08C2A57CBA2005BF1DB /* Calisthenics.swift in Sources */ = {isa = PBXBuildFile; fileRef = A582F08B2A57CBA2005BF1DB /* Calisthenics.swift */; };
+		A582F0902A59D333005BF1DB /* DuringEditRoutineViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A582F08F2A59D333005BF1DB /* DuringEditRoutineViewModel.swift */; };
 		A583276F2A1DEC82002F8F6E /* HomeButtonLessPressShutterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A583276E2A1DEC82002F8F6E /* HomeButtonLessPressShutterViewModel.swift */; };
 		A58327782A20C110002F8F6E /* DuringSetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58327772A20C110002F8F6E /* DuringSetViewController.swift */; };
 		A583277A2A20C135002F8F6E /* DuringEditRoutineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58327792A20C135002F8F6E /* DuringEditRoutineViewController.swift */; };
@@ -232,6 +235,7 @@
 		920060E129B63C1500586063 /* CalendarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		920060E329B71D7400586063 /* DayCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DayCell.swift; path = WorkoutDone/Sources/Presenter/HomeScene/Home/HomeView/Cell/DayCell.swift; sourceTree = SOURCE_ROOT; };
 		9204827E29FF0D230015A02F /* FrameImageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameImageViewModel.swift; sourceTree = "<group>"; };
+		9230BE4A2A5939130053E535 /* CalendarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewModel.swift; sourceTree = "<group>"; };
 		924E56B129CCB9EA00AA73A2 /* GridToggleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridToggleButton.swift; sourceTree = "<group>"; };
 		925963482A09A20000F5B67C /* GalleryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryViewModel.swift; sourceTree = "<group>"; };
 		9264A58129B8735C0010856F /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
@@ -335,6 +339,8 @@
 		A582F0822A52EA43005BF1DB /* DuringWorkoutResultSectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuringWorkoutResultSectionCell.swift; sourceTree = "<group>"; };
 		A582F0842A52EA53005BF1DB /* DuringWorkoutResultSetCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuringWorkoutResultSetCell.swift; sourceTree = "<group>"; };
 		A582F0882A569F02005BF1DB /* DeleteRecordAlertViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteRecordAlertViewModel.swift; sourceTree = "<group>"; };
+		A582F08B2A57CBA2005BF1DB /* Calisthenics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calisthenics.swift; sourceTree = "<group>"; };
+		A582F08F2A59D333005BF1DB /* DuringEditRoutineViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuringEditRoutineViewModel.swift; sourceTree = "<group>"; };
 		A583276E2A1DEC82002F8F6E /* HomeButtonLessPressShutterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeButtonLessPressShutterViewModel.swift; sourceTree = "<group>"; };
 		A58327772A20C110002F8F6E /* DuringSetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuringSetViewController.swift; sourceTree = "<group>"; };
 		A58327792A20C135002F8F6E /* DuringEditRoutineViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuringEditRoutineViewController.swift; sourceTree = "<group>"; };
@@ -540,6 +546,7 @@
 		9200602129B1A7A300586063 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				A582F08A2A57CB6A005BF1DB /* Calisthenics */,
 				A553A5E72A4C88390027F502 /* TemporaryRoutine */,
 				9269981D2A0EBD30003DDAD2 /* WorkOutDone */,
 				9269981E2A0EBD3F003DDAD2 /* MyRoutine */,
@@ -593,6 +600,7 @@
 			children = (
 				9200604829B1AD7200586063 /* HomeViewController.swift */,
 				A56D904129E08604009FD0B2 /* HomeViewModel.swift */,
+				9230BE4A2A5939130053E535 /* CalendarViewModel.swift */,
 				9200604129B1AC8900586063 /* HomeView */,
 			);
 			path = Home;
@@ -832,6 +840,14 @@
 			path = DuringWorkoutResultCells;
 			sourceTree = "<group>";
 		};
+		A582F08A2A57CB6A005BF1DB /* Calisthenics */ = {
+			isa = PBXGroup;
+			children = (
+				A582F08B2A57CBA2005BF1DB /* Calisthenics.swift */,
+			);
+			path = Calisthenics;
+			sourceTree = "<group>";
+		};
 		A58327872A234FF0002F8F6E /* DuringEditRoutineCells */ = {
 			isa = PBXGroup;
 			children = (
@@ -931,6 +947,7 @@
 				A58327772A20C110002F8F6E /* DuringSetViewController.swift */,
 				A5489BC62A45942A00D74370 /* DuringSetViewModel.swift */,
 				A58327792A20C135002F8F6E /* DuringEditRoutineViewController.swift */,
+				A582F08F2A59D333005BF1DB /* DuringEditRoutineViewModel.swift */,
 				A583277B2A20D30A002F8F6E /* DuringWorkoutTimerViewController.swift */,
 				A5091F262A31A896002FE6DA /* EndWorkoutViewController.swift */,
 				A520AB762A4D894400EFEF42 /* EndWorkoutViewModel.swift */,
@@ -1206,6 +1223,7 @@
 				A5091F272A31A896002FE6DA /* EndWorkoutViewController.swift in Sources */,
 				A57061CF29CD6A5E0083ECDD /* GalleryViewController.swift in Sources */,
 				9269995C2A1DF135003DDAD2 /* StampCell.swift in Sources */,
+				A582F08C2A57CBA2005BF1DB /* Calisthenics.swift in Sources */,
 				920060E229B63C1500586063 /* CalendarView.swift in Sources */,
 				A5552D362A12834D00835B40 /* LimitedPhotoGalleryView.swift in Sources */,
 				A583276F2A1DEC82002F8F6E /* HomeButtonLessPressShutterViewModel.swift in Sources */,
@@ -1217,11 +1235,13 @@
 				926998222A0EC4A8003DDAD2 /* MyWeightTraining.swift in Sources */,
 				A5091F292A31A994002FE6DA /* EndWorkoutAlertView.swift in Sources */,
 				A57061D629D09AC40083ECDD /* SkeletalMuscleMassGraphView.swift in Sources */,
+				9230BE4B2A5939130053E535 /* CalendarViewModel.swift in Sources */,
 				A5021EEA2A194E78007DE096 /* RightBarButtonItem.swift in Sources */,
 				926999502A172F4E003DDAD2 /* RoutineDetailCell.swift in Sources */,
 				926999542A1CEBA8003DDAD2 /* RoutineAlertViewController.swift in Sources */,
 				A520AB772A4D894400EFEF42 /* EndWorkoutViewModel.swift in Sources */,
 				A5489BC72A45942A00D74370 /* DuringSetViewModel.swift in Sources */,
+				A582F0902A59D333005BF1DB /* DuringEditRoutineViewModel.swift in Sources */,
 				A551491A2A0FE64900222A72 /* UILabel.swift in Sources */,
 				A576693B29B6EB4900673DFE /* ImageSelectionViewController.swift in Sources */,
 				A52F65FA2A0A015F00D398DF /* NotificationName.swift in Sources */,
@@ -1418,13 +1438,13 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = U4YRB4XYPR;
+				DEVELOPMENT_TEAM = JB8T59WMFR;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = WorkoutDone/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "오운완";
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
-				INFOPLIST_KEY_NSCameraUsageDescription = "카메라좀 쓰자!";
-				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "사진 저장";
+				INFOPLIST_KEY_NSCameraUsageDescription = "오운완의 다양한 콘텐츠를 사용하여, 사진을 촬영해 보세요.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "사진에 대한 접근을 허용해, 오운완의 모든 기능과 콘텐츠를 사용해 보세요.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
@@ -1451,13 +1471,13 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = U4YRB4XYPR;
+				DEVELOPMENT_TEAM = JB8T59WMFR;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = WorkoutDone/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "오운완";
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
-				INFOPLIST_KEY_NSCameraUsageDescription = "카메라좀 쓰자!";
-				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "사진 저장";
+				INFOPLIST_KEY_NSCameraUsageDescription = "오운완의 다양한 콘텐츠를 사용하여, 사진을 촬영해 보세요.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "사진에 대한 접근을 허용해, 오운완의 모든 기능과 콘텐츠를 사용해 보세요.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = "";

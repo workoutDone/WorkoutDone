@@ -17,7 +17,7 @@ class DayCell: UICollectionViewCell {
     }
     
     var selectedDateImage = UIImageView().then {
-        $0.image = UIImage(named: "selectDate")
+        $0.image = UIImage(named: "selectedDate")
     }
     
     var stampImage = UIImageView().then {
@@ -48,12 +48,12 @@ class DayCell: UICollectionViewCell {
         
         selectedDateImage.snp.makeConstraints {
             $0.centerX.centerY.equalTo(stampImage)
-            $0.width.height.equalTo(29)
+            $0.width.height.equalTo(51)
         }
         
         stampImage.snp.makeConstraints {
             $0.centerX.centerY.equalTo(contentView)
-            $0.width.height.equalTo(41)
+            $0.width.height.equalTo(39)
         }
     }
 }

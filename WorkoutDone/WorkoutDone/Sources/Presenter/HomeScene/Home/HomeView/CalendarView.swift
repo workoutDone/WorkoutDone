@@ -33,9 +33,11 @@ class CalendarView : BaseUIView {
     var previousDays : Int = 0
     var days: [String] = []
     var dayoftheweek = ["일", "월", "화", "수", "목", "금", "토"]
-    var workOutDoneDays = ["1", "8", "9", "13"]
 
     var delegate: CalendarViewDelegate?
+    
+    var calendarViewModel = CalendarViewModel()
+    var currentMonthStamp = [String: String]()
     
     private let previousMonthButton = UIButton().then {
         $0.setImage(UIImage(named: "previousMonth"), for: .normal)
@@ -141,7 +143,7 @@ class CalendarView : BaseUIView {
             $0.leading.equalToSuperview().offset(21)
             $0.trailing.equalToSuperview().offset(-21)
             $0.top.equalTo(stackView.snp.bottom).offset(6)
-            $0.bottom.equalTo(showHideCalendarButton.snp.top).offset(-4)
+            $0.bottom.equalTo(showHideCalendarButton.snp.top).offset(-2)
         }
         
         showHideCalendarImage.snp.makeConstraints {
@@ -153,7 +155,7 @@ class CalendarView : BaseUIView {
         
         showHideCalendarButton.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.bottom.equalToSuperview().offset(-5)
+            $0.bottom.equalToSuperview().offset(-3)
             $0.width.equalTo(35)
             $0.height.equalTo(19)
         }
@@ -165,7 +167,7 @@ class CalendarView : BaseUIView {
         self.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
         
         self.snp.makeConstraints {
-            $0.height.equalTo(UserDefaultsManager.shared.isMonthlyCalendar ? 322 : 126).priority(1)
+            $0.height.equalTo(UserDefaultsManager.shared.isMonthlyCalendar ? 330 : 126).priority(1)
         }
     }
     
@@ -185,6 +187,9 @@ class CalendarView : BaseUIView {
         } else {
             calculateWeek()
         }
+        
+        let currentYearMonth = setDateFormatter(dateComponents: components)
+        currentMonthStamp = calendarViewModel.loadStampImage(date: currentYearMonth)
         
         selectComponents.year = calendar.component(.year, from: Date())
         selectComponents.month = calendar.component(.month, from: Date())
@@ -208,6 +213,9 @@ class CalendarView : BaseUIView {
             calculateMonth()
         }
         
+        let currentYearMonth = setDateFormatter(dateComponents: components)
+        currentMonthStamp = calendarViewModel.loadStampImage(date: currentYearMonth)
+        
         collectionView.reloadData()
     }
     
@@ -219,6 +227,9 @@ class CalendarView : BaseUIView {
         } else {
             calculateMonth()
         }
+        
+        let currentYearMonth = setDateFormatter(dateComponents: components)
+        currentMonthStamp = calendarViewModel.loadStampImage(date: currentYearMonth)
         
         collectionView.reloadData()
     }
@@ -244,7 +255,7 @@ class CalendarView : BaseUIView {
                 
             UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseIn, animations:  {
                 self.snp.makeConstraints {
-                    $0.height.equalTo(322).priority(2)
+                    $0.height.equalTo(330).priority(2)
                 }
                 self.superview?.layoutIfNeeded()
             })
@@ -320,6 +331,14 @@ class CalendarView : BaseUIView {
         
         return calendar.date(from: dateComponents)!
     }
+    
+    func setDateFormatter(dateComponents : DateComponents) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yy.MM."
+        let date = calendar.date(from: dateComponents)!
+        
+        return dateFormatter.string(from: date)
+    }
 }
 
 extension CalendarView: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
@@ -359,10 +378,13 @@ extension CalendarView: UICollectionViewDelegate, UICollectionViewDataSource, UI
                     cell.selectedDateImage.isHidden = false
                 }
                 
-                if workOutDoneDays.contains(days[indexPath.row]) {
+                let day = days[indexPath.row]
+                if let stamp = currentMonthStamp[day] {
                     cell.stampImage.isHidden = false
                     cell.dayLabel.textColor = .colorC8B4FF
+                    cell.stampImage.image = UIImage(named: stamp)
                 }
+                
                 
             } else {
                 if indexPath.row >= firstWeekday - 1 {
@@ -391,9 +413,11 @@ extension CalendarView: UICollectionViewDelegate, UICollectionViewDataSource, UI
                 cell.selectedDateImage.isHidden = false
             }
             
-            if workOutDoneDays.contains(days[indexPath.row]) {
+            let day = days[indexPath.row]
+            if let stamp = currentMonthStamp[day] {
                 cell.stampImage.isHidden = false
                 cell.dayLabel.textColor = .colorC8B4FF
+                cell.stampImage.image = UIImage(named: stamp)
             }
             
         } else {
@@ -415,7 +439,7 @@ extension CalendarView: UICollectionViewDelegate, UICollectionViewDataSource, UI
         }
         
         if !UserDefaultsManager.shared.isMonthlyCalendar {
-            return CGSize(width: collectionView.bounds.width / 7.0, height: 41)
+            return CGSize(width: collectionView.bounds.width / 7.0, height: 45)
         }
         return CGSize(width: collectionView.bounds.width / 7.0, height: (collectionView.bounds.height - 23) / CGFloat(days.count / 7))
     }
@@ -438,7 +462,7 @@ extension CalendarView: UICollectionViewDelegate, UICollectionViewDataSource, UI
                 selectDate = setSelectDateFormatter(dateComponents: selectComponents)
             }
         }
-    
+        
         collectionView.reloadData()
        
         delegate?.didSelectedCalendarDate()

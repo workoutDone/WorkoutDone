@@ -94,8 +94,8 @@ class OnboardingViewController : BaseViewController {
         nextButton.snp.makeConstraints {
             $0.top.greaterThanOrEqualTo(pageControl.snp.bottom).offset(40)
             $0.top.lessThanOrEqualTo(pageControl.snp.bottom).offset(52)
-            $0.bottom.greaterThanOrEqualTo(view.safeAreaLayoutGuide).offset(-29)
-            $0.bottom.lessThanOrEqualTo(view.safeAreaLayoutGuide).offset(-20)
+            $0.bottom.greaterThanOrEqualTo(view.safeAreaLayoutGuide).offset(-21)
+            $0.bottom.lessThanOrEqualTo(view.safeAreaLayoutGuide).offset(-21)
             $0.leading.equalToSuperview().offset(24)
             $0.trailing.equalToSuperview().offset(-24)
             $0.height.equalTo(65)

@@ -66,9 +66,12 @@ class WorkoutViewController : BaseViewController {
         
         title = "운동하기"
         view.backgroundColor = .colorFFFFFF
-        
-        myRoutines = routineViewModel.loadMyRoutine()
-        selectedRoutines = Array(repeating: false, count: myRoutines.count)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+    
+        loadAndSetupRoutineData()
     }
     
     override func setupLayout() {
@@ -125,6 +128,13 @@ class WorkoutViewController : BaseViewController {
     
     override func actions() {
         selectCompleteButton.addTarget(self, action: #selector(selectCompleteButtonTapped), for: .touchUpInside)
+    }
+    
+    func loadAndSetupRoutineData() {
+        myRoutines = routineViewModel.loadMyRoutine()
+        selectedRoutines = Array(repeating: false, count: myRoutines.count)
+        
+        routineTableView.reloadData()
     }
     
     func updateSelectCompleteButton() {
@@ -471,3 +481,5 @@ extension WorkoutViewController : MyRoutineDelegate {
         routineTableView.reloadData()
     }
 }
+
+

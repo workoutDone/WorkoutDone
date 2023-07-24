@@ -26,6 +26,7 @@ class DuringEditRoutineTableViewCell : UITableViewCell {
         $0.text = "어깨"
         $0.font = .pretendard(.regular, size: 14)
         $0.textColor = .color7442FF
+        $0.textAlignment = .center
     }
     
     let workoutTitleLabel = UILabel().then {
@@ -58,6 +59,8 @@ class DuringEditRoutineTableViewCell : UITableViewCell {
     func setStyle() {
         contentView.backgroundColor = .colorFFFFFF
         workoutCategoryBorderView.layer.cornerRadius = 23 / 2
+        
+        sandwichImageView.isHidden = true
     }
     func setLayout() {
         contentView.addSubview(backView)
@@ -76,6 +79,7 @@ class DuringEditRoutineTableViewCell : UITableViewCell {
         workoutCategoryLabel.snp.makeConstraints {
             $0.centerY.centerX.equalToSuperview()
             $0.leading.trailing.equalToSuperview().inset(6)
+            $0.width.greaterThanOrEqualTo(25)
         }
         workoutTitleLabel.snp.makeConstraints {
             $0.centerY.centerX.equalToSuperview()

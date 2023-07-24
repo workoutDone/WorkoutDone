@@ -42,7 +42,7 @@ class DuringWorkoutTimerViewController : BaseViewController {
         stackView.axis = .horizontal
         stackView.distribution = .equalSpacing
         stackView.alignment = .center
-        stackView.spacing = 32
+        stackView.spacing = 18
         return stackView
     }()
     private let minutesLabel = UILabel().then {
@@ -123,11 +123,11 @@ class DuringWorkoutTimerViewController : BaseViewController {
         }
         minutesLabel.snp.makeConstraints {
             $0.top.equalToSuperview().inset(27)
-            $0.centerX.equalTo(cancelButton.snp.centerX)
+            $0.centerX.equalTo(minutesPickerView)
         }
         secondsLabel.snp.makeConstraints {
             $0.top.equalToSuperview().inset(27)
-            $0.centerX.equalTo(okayButton.snp.centerX)
+            $0.centerX.equalTo(secondsPickerView)
         }
         pickerBackView.snp.makeConstraints {
             $0.top.equalToSuperview().inset(40)
