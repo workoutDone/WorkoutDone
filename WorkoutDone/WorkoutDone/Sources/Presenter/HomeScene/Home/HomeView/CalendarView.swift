@@ -143,7 +143,7 @@ class CalendarView : BaseUIView {
             $0.leading.equalToSuperview().offset(21)
             $0.trailing.equalToSuperview().offset(-21)
             $0.top.equalTo(stackView.snp.bottom).offset(6)
-            $0.bottom.equalTo(showHideCalendarButton.snp.top).offset(-4)
+            $0.bottom.equalTo(showHideCalendarButton.snp.top).offset(-2)
         }
         
         showHideCalendarImage.snp.makeConstraints {
@@ -155,7 +155,7 @@ class CalendarView : BaseUIView {
         
         showHideCalendarButton.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.bottom.equalToSuperview().offset(-5)
+            $0.bottom.equalToSuperview().offset(-3)
             $0.width.equalTo(35)
             $0.height.equalTo(19)
         }
@@ -167,7 +167,7 @@ class CalendarView : BaseUIView {
         self.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
         
         self.snp.makeConstraints {
-            $0.height.equalTo(UserDefaultsManager.shared.isMonthlyCalendar ? 322 : 126).priority(1)
+            $0.height.equalTo(UserDefaultsManager.shared.isMonthlyCalendar ? 330 : 126).priority(1)
         }
     }
     
@@ -255,7 +255,7 @@ class CalendarView : BaseUIView {
                 
             UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseIn, animations:  {
                 self.snp.makeConstraints {
-                    $0.height.equalTo(322).priority(2)
+                    $0.height.equalTo(330).priority(2)
                 }
                 self.superview?.layoutIfNeeded()
             })
@@ -439,7 +439,7 @@ extension CalendarView: UICollectionViewDelegate, UICollectionViewDataSource, UI
         }
         
         if !UserDefaultsManager.shared.isMonthlyCalendar {
-            return CGSize(width: collectionView.bounds.width / 7.0, height: 41)
+            return CGSize(width: collectionView.bounds.width / 7.0, height: 45)
         }
         return CGSize(width: collectionView.bounds.width / 7.0, height: (collectionView.bounds.height - 23) / CGFloat(days.count / 7))
     }
