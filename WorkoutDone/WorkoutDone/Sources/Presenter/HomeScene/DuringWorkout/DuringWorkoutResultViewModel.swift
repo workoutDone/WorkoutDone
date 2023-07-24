@@ -105,7 +105,7 @@ class DuringWorkoutResultViewModel {
             let workoutDoneData = self.readWorkoutDoneData(id: dateId)
             if let routineTitle = workoutDoneData?.routine?.name {
                 if routineTitle == "" {
-                    return "고민"
+                    return ""
                 }
                 else {
                     return routineTitle

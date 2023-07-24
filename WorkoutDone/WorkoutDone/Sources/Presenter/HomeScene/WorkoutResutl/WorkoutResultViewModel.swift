@@ -76,7 +76,7 @@ class WorkoutResultViewModel {
                 return routineTitle
             }
             else {
-                return "고민중!"
+                return ""
             }
         })
         
