@@ -86,6 +86,21 @@ class WorkoutResultViewController : BaseViewController {
         output.routineTitleData.drive(todayWorkoutResultView.myRoutineLabel.rx.text)
             .disposed(by: disposeBag)
         
+
+        output.hasRoutineTitle.drive(onNext: { [weak self] value in
+            guard let self = self else { return }
+            print(value, "타이틀??")
+            if value {
+                self.todayWorkoutResultView.myRoutineLabel.isHidden = false
+                self.todayWorkoutResultView.routineLabel.isHidden = false
+            }
+            else {
+            self.todayWorkoutResultView.myRoutineLabel.isHidden = true
+            self.todayWorkoutResultView.routineLabel.isHidden = true
+            }
+        })
+        .disposed(by: disposeBag)
+        
         output.workoutTimeData.drive(todayWorkoutResultView.myTotalWorkoutTimeLabel.rx.text)
             .disposed(by: disposeBag)
         

@@ -121,8 +121,8 @@ class DuringWorkoutResultViewModel {
 
         let hasRoutineTitle = input.loadView.map({ value -> Bool in
             let temporaryRoutineData = self.readTemporaryRoutineData()
-            let dateId = temporaryRoutineData?.intDate
-            if self.hasRoutineTitle(id: dateId!) {
+            guard let dateId = temporaryRoutineData?.intDate else { return false}
+            if self.hasRoutineTitle(id: dateId) {
                 return true
             }
             else {
@@ -130,13 +130,13 @@ class DuringWorkoutResultViewModel {
             }
         })
         
-        let routineBodyPartArray = input.loadView.map({ value -> [String] in
-            let temporaryRoutineData = self.readTemporaryRoutineData()
-            let dateId = temporaryRoutineData?.intDate
-            let array = self.sortBodyPart(id: dateId!)
-            
-            return array
-        })
+//        let routineBodyPartArray = input.loadView.map({ value -> [String] in
+//            let temporaryRoutineData = self.readTemporaryRoutineData()
+//            let dateId = temporaryRoutineData?.intDate
+//            let array = self.sortBodyPart(id: dateId!)
+//
+//            return array
+//        })
         
         
         return Output(
