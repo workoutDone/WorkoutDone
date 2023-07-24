@@ -181,4 +181,7 @@ extension DuringSetViewController : UITableViewDelegate, UITableViewDataSource, 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 7
     }
+    func tableView(_ tableView: UITableView, titleForDeleteConfirmationButtonForRowAt indexPath: IndexPath) -> String? {
+        return "삭제하기"
+    }
 }

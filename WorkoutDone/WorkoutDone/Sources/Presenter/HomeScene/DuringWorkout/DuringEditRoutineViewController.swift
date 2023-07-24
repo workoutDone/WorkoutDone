@@ -6,9 +6,23 @@
 //
 
 import UIKit
+import RxCocoa
+import RxSwift
+import SnapKit
+import Then
 
 class DuringEditRoutineViewController : BaseViewController {
-    private var dummy = ExBodyPart.dummy()
+    
+    
+    
+    // MARK: - ViewModel
+    private let viewModel = DuringEditRoutineViewModel()
+    private var weightTrainingArray : [WeightTraining] = []
+    private let didLoad = PublishSubject<Void>()
+    
+    private lazy var input = DuringEditRoutineViewModel.Input(
+        loadView: didLoad.asDriver(onErrorJustReturn: ()))
+    private lazy var output = viewModel.transform(input: input)
     // MARK: - PROPERTIES
     private let tableView = UITableView(frame: .zero, style: .grouped).then {
         $0.backgroundColor = .colorFFFFFF
@@ -20,13 +34,25 @@ class DuringEditRoutineViewController : BaseViewController {
         super.viewDidLoad()
 
     }
+    
+    override func setupBinding() {
+        super.setupBinding()
+        
+        output.weightTraining.drive(onNext: { value in
+            self.weightTrainingArray = value
+        })
+        .disposed(by: disposeBag)
+        
+        didLoad.onNext(())
+    }
+    
     override func setComponents() {
         super.setComponents()
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(DuringEditRoutineTableViewCell.self, forCellReuseIdentifier: DuringEditRoutineTableViewCell.identifier)
-        tableView.register(DuringEditRoutineHeaderCell.self, forHeaderFooterViewReuseIdentifier: DuringEditRoutineHeaderCell.headerViewID)
-        tableView.register(DuringEditRoutineFooterCell.self, forHeaderFooterViewReuseIdentifier: DuringEditRoutineFooterCell.footerViewID)
+//        tableView.register(DuringEditRoutineHeaderCell.self, forHeaderFooterViewReuseIdentifier: DuringEditRoutineHeaderCell.headerViewID)
+//        tableView.register(DuringEditRoutineFooterCell.self, forHeaderFooterViewReuseIdentifier: DuringEditRoutineFooterCell.footerViewID)
     }
     override func setupLayout() {
         super.setupLayout()
@@ -35,7 +61,9 @@ class DuringEditRoutineViewController : BaseViewController {
     
     override func setupConstraints() {
         tableView.snp.makeConstraints {
-            $0.edges.equalTo(view.safeAreaLayoutGuide)
+            $0.top.equalToSuperview()
+            $0.bottom.equalToSuperview().inset(14)
+            $0.leading.trailing.equalToSuperview()
         }
     }
     
@@ -52,56 +80,63 @@ extension DuringEditRoutineViewController : UITableViewDelegate, UITableViewData
     func tableView(_ tableView: UITableView, titleForDeleteConfirmationButtonForRowAt indexPath: IndexPath) -> String? {
         return "삭제하기"
     }
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            dummy[indexPath.section].weightTraining.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        }
-    }
+//    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+//        if editingStyle == .delete {
+//            dummy[indexPath.section].weightTraining.remove(at: indexPath.row)
+//            tableView.deleteRows(at: [indexPath], with: .fade)
+//        }
+//    }
     func numberOfSections(in tableView: UITableView) -> Int {
-        return dummy.count
+        return 1
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return dummy[section].weightTraining.count
+        return weightTrainingArray.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: DuringEditRoutineTableViewCell.identifier, for: indexPath) as? DuringEditRoutineTableViewCell else { return UITableViewCell() }
         cell.selectionStyle = .none
-        cell.workoutCategoryLabel.text = dummy[indexPath.section].name
-        cell.workoutTitleLabel.text = dummy[indexPath.section].weightTraining[indexPath.row].name
+        cell.workoutCategoryLabel.text = weightTrainingArray[indexPath.row].bodyPart
+        cell.workoutTitleLabel.text = weightTrainingArray[indexPath.row].weightTraining
         return cell
     }
     
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if section == 0 {
-            return 46
-        }
-        else {
-            return 0
-        }
-    }
-    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        if section == dummy.count - 1 {
-            return 66
-        }
-        else {
-            return 0
-        }
-    }
+//    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+//        if section == 0 {
+//            return 46
+//        }
+//        else {
+//            return 0
+//        }
+//    }
+//    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+//        if section == dummy.count - 1 {
+//            return 66
+//        }
+//        else {
+//            return 0
+//        }
+//    }
     
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        guard let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: DuringEditRoutineHeaderCell.headerViewID) as? DuringEditRoutineHeaderCell else { return  nil }
-        return headerView
-                
-    }
-    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        guard let footerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: DuringEditRoutineFooterCell.footerViewID) as? DuringEditRoutineFooterCell else { return  nil }
-        footerView.delegate = self
-        return footerView
-    }
+//    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+//        guard let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: DuringEditRoutineHeaderCell.headerViewID) as? DuringEditRoutineHeaderCell else { return  nil }
+//        return headerView
+//
+//    }
+//    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+//        guard let footerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: DuringEditRoutineFooterCell.footerViewID) as? DuringEditRoutineFooterCell else { return  nil }
+//        footerView.delegate = self
+//        return footerView
+//    }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 58
+    }
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        return UIView()
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 7
     }
     
 //    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {

@@ -370,7 +370,7 @@ final class DuringWorkoutViewController : BaseViewController {
         workoutCategoryTitleLabel.snp.makeConstraints {
             $0.centerY.centerX.equalToSuperview()
             $0.leading.trailing.equalToSuperview().inset(6)
-            $0.width.equalTo(30)
+            $0.width.greaterThanOrEqualTo(30)
         }
         endWorkoutButton.snp.makeConstraints {
             $0.height.equalTo(30)
@@ -740,125 +740,5 @@ extension DuringWorkoutViewController : UNUserNotificationCenterDelegate {
     }
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         completionHandler()
-    }
-}
-
-
-
-
-
-
-
-
-struct ExBodyPart {
-    let name : String
-    var weightTraining : [ExWegihtTraining]
-}
-
-struct ExWegihtTraining {
-    let name : String
-    var weightTraining: [ExWegihtTrainingInfo]
-}
-struct ExWegihtTrainingInfo {
-    let setCount : Int
-    let weight : Int?
-    let traingingCount : Int
-}
-
-extension ExBodyPart {
-    static func dummy() -> [ExBodyPart] {
-        return [
-            ExBodyPart(name: "가슴", weightTraining: [
-            ExWegihtTraining(name: "팔굽", weightTraining: [
-
-        ]),
-            ExWegihtTraining(name: "벤치 프레스", weightTraining: [
-
-        ]),
-            ExWegihtTraining(name: "덤벨 프레스2", weightTraining: [
-      
-
-        ]),
-            ExWegihtTraining(name: "벤치 프레스4", weightTraining: [
-
-        ])
-        ]),
-            ExBodyPart(name: "어깨", weightTraining: [
-            ExWegihtTraining(name: "벤치 프레스", weightTraining: [
-         
-        ]),
-            ExWegihtTraining(name: "벤치 프레스2", weightTraining: [
-
-        ]),
-            ExWegihtTraining(name: "벤치 프레스3", weightTraining: [
- 
-        ]),
-            ExWegihtTraining(name: "벤치 프레스4", weightTraining: [
- 
-        ])
-        ])
-        ]
-    }
-}
-
-
-
-extension ExWegihtTraining {
-    static func dummy() -> [ExWegihtTraining] {
-        return [
-            ExWegihtTraining(name: "벤치 프레스", weightTraining: [
-            ExWegihtTrainingInfo(setCount: 1, weight: 59, traingingCount: 10),
-            ExWegihtTrainingInfo(setCount: 1, weight: 59, traingingCount: 10),
-            ExWegihtTrainingInfo(setCount: 1, weight: 59, traingingCount: 10),
-            ExWegihtTrainingInfo(setCount: 1, weight: 59, traingingCount: 10),
-            ExWegihtTrainingInfo(setCount: 1, weight: 59, traingingCount: 10),
-            ExWegihtTrainingInfo(setCount: 1, weight: 59, traingingCount: 10)
-        ]),
-            ExWegihtTraining(name: "벤치 프레스2", weightTraining: [
-
-        ]),
-            ExWegihtTraining(name: "벤치 프레스3", weightTraining: [
-
-        ]),
-            ExWegihtTraining(name: "벤치 프레스4", weightTraining: [
-        ])
-        ]
-    }
-}
-
-
-struct ExRoutine {
-    let name : String
-    let stamp : String
-    var weightTraining : [ExWegihtTraining2]
-}
-
-struct ExWegihtTraining2 {
-    let bodyPart : String
-    let weightTrainging : String
-    var weightTrainingInfo : [ExWegihtTrainingInfo2]
-}
-struct ExWegihtTrainingInfo2 {
-    let setCount : Int
-    var weight : Double?
-    var traingingCount : Int?
-}
-
-extension ExRoutine {
-    static func dummy() -> ExRoutine {
-        return ExRoutine(name: "등운동 조지자!", stamp: "1", weightTraining: [
-            ExWegihtTraining2(bodyPart: "등", weightTrainging: "가나다라마바사아자차랫 풀 다운", weightTrainingInfo: [
-                ExWegihtTrainingInfo2(setCount: 1, weight: nil, traingingCount: nil)
-            ]),
-            ExWegihtTraining2(bodyPart: "가슴", weightTrainging: "시티드 케이블 로우", weightTrainingInfo: [
-                ExWegihtTrainingInfo2(setCount: 1, weight: nil, traingingCount: nil)
-            ]),
-            ExWegihtTraining2(bodyPart: "하체", weightTrainging: "덤벨 풀오버", weightTrainingInfo: [
-                ExWegihtTrainingInfo2(setCount: 1, weight: nil, traingingCount: nil)
-            ]),
-            ExWegihtTraining2(bodyPart: "이두", weightTrainging: "가나다라마바사아자차랫 풀 다운", weightTrainingInfo: [
-                ExWegihtTrainingInfo2(setCount: 1, weight: nil, traingingCount: nil)
-            ]),
-        ])
     }
 }

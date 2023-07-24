@@ -151,6 +151,7 @@
 		A582F0852A52EA53005BF1DB /* DuringWorkoutResultSetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A582F0842A52EA53005BF1DB /* DuringWorkoutResultSetCell.swift */; };
 		A582F0892A569F02005BF1DB /* DeleteRecordAlertViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A582F0882A569F02005BF1DB /* DeleteRecordAlertViewModel.swift */; };
 		A582F08C2A57CBA2005BF1DB /* Calisthenics.swift in Sources */ = {isa = PBXBuildFile; fileRef = A582F08B2A57CBA2005BF1DB /* Calisthenics.swift */; };
+		A582F0902A59D333005BF1DB /* DuringEditRoutineViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A582F08F2A59D333005BF1DB /* DuringEditRoutineViewModel.swift */; };
 		A583276F2A1DEC82002F8F6E /* HomeButtonLessPressShutterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A583276E2A1DEC82002F8F6E /* HomeButtonLessPressShutterViewModel.swift */; };
 		A58327782A20C110002F8F6E /* DuringSetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58327772A20C110002F8F6E /* DuringSetViewController.swift */; };
 		A583277A2A20C135002F8F6E /* DuringEditRoutineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58327792A20C135002F8F6E /* DuringEditRoutineViewController.swift */; };
@@ -339,6 +340,7 @@
 		A582F0842A52EA53005BF1DB /* DuringWorkoutResultSetCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuringWorkoutResultSetCell.swift; sourceTree = "<group>"; };
 		A582F0882A569F02005BF1DB /* DeleteRecordAlertViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteRecordAlertViewModel.swift; sourceTree = "<group>"; };
 		A582F08B2A57CBA2005BF1DB /* Calisthenics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calisthenics.swift; sourceTree = "<group>"; };
+		A582F08F2A59D333005BF1DB /* DuringEditRoutineViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuringEditRoutineViewModel.swift; sourceTree = "<group>"; };
 		A583276E2A1DEC82002F8F6E /* HomeButtonLessPressShutterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeButtonLessPressShutterViewModel.swift; sourceTree = "<group>"; };
 		A58327772A20C110002F8F6E /* DuringSetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuringSetViewController.swift; sourceTree = "<group>"; };
 		A58327792A20C135002F8F6E /* DuringEditRoutineViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuringEditRoutineViewController.swift; sourceTree = "<group>"; };
@@ -945,6 +947,7 @@
 				A58327772A20C110002F8F6E /* DuringSetViewController.swift */,
 				A5489BC62A45942A00D74370 /* DuringSetViewModel.swift */,
 				A58327792A20C135002F8F6E /* DuringEditRoutineViewController.swift */,
+				A582F08F2A59D333005BF1DB /* DuringEditRoutineViewModel.swift */,
 				A583277B2A20D30A002F8F6E /* DuringWorkoutTimerViewController.swift */,
 				A5091F262A31A896002FE6DA /* EndWorkoutViewController.swift */,
 				A520AB762A4D894400EFEF42 /* EndWorkoutViewModel.swift */,
@@ -1238,6 +1241,7 @@
 				926999542A1CEBA8003DDAD2 /* RoutineAlertViewController.swift in Sources */,
 				A520AB772A4D894400EFEF42 /* EndWorkoutViewModel.swift in Sources */,
 				A5489BC72A45942A00D74370 /* DuringSetViewModel.swift in Sources */,
+				A582F0902A59D333005BF1DB /* DuringEditRoutineViewModel.swift in Sources */,
 				A551491A2A0FE64900222A72 /* UILabel.swift in Sources */,
 				A576693B29B6EB4900673DFE /* ImageSelectionViewController.swift in Sources */,
 				A52F65FA2A0A015F00D398DF /* NotificationName.swift in Sources */,
