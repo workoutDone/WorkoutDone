@@ -30,6 +30,7 @@ class HomeViewModel {
         let workoutRoutineTitleData : Driver<String>
         let isWorkout : Driver<Bool>
         let routineBodyPartArray : Driver<[String]>
+        let hasRoutineTitle: Driver<Bool>
     }
     
     func readWorkoutDoneData(id : Int) -> WorkOutDoneData?  {
@@ -46,18 +47,7 @@ class HomeViewModel {
         return timeString
     }
     
-//    func sortBodyPart(id: Int) -> [String] {
-//        let workoutData = self.readWorkoutDoneData(id: id)
-//        guard let weightTraining = workoutData?.routine?.weightTraining else { return [] }
-//        let arrayWeightTraining = Array(weightTraining)
-//
-//        let letterCounts = arrayWeightTraining.reduce(into: [:]) { counts, word in
-//            counts[word, default: 0] += 1
-//        }
-//        let sortedByCount = letterCounts.sorted { $0.value > $1.value }
-//        let result = Array(sortedByCount.prefix(3).map { $0.key .bodyPart})
-//        return result
-//    }
+
     func sortBodyPart(id: Int) -> [String] {
         let workoutData = self.readWorkoutDoneData(id: id)
         guard let weightTraining = workoutData?.routine?.weightTraining else { return [] }
@@ -146,16 +136,30 @@ class HomeViewModel {
             }
         })
         
-//        let routineBodyPartArray = input.loadView.map({ value -> [String] in
-//            let temporaryRoutineData = self.readTemporaryRoutineData()
-//            let dateId = temporaryRoutineData?.intDate
-//            let array = self.sortBodyPart(id: dateId!)
-//
-//            return array
-//        })
-        
         let routineBodyPartArray = Driver<[String]>.combineLatest(input.loadView, input.selectedDate, resultSelector: { (_, date) in
-            return self.sortBodyPart(id: date)
+            
+            let workoutDoneData = self.readWorkoutDoneData(id: date)
+            let workoutTimeData = self.readWorkoutDoneData(id: date)?.workOutTime
+            let routineTitleData = self.readWorkoutDoneData(id: date)?.routine?.name
+            
+            if workoutDoneData != nil && routineTitleData == "" {
+                return self.sortBodyPart(id: date)
+            }
+            else {
+                return []
+            }
+        })
+        
+        let hasRoutineTitle = Driver<Bool>.combineLatest(input.loadView, input.selectedDate, resultSelector: { (_, date) in
+            let workoutDoneData = self.readWorkoutDoneData(id: date)
+            let workoutTimeData = self.readWorkoutDoneData(id: date)?.workOutTime
+            let routineTitleData = self.readWorkoutDoneData(id: date)?.routine?.name
+            if workoutDoneData != nil && routineTitleData == "" {
+                return false
+            }
+            else {
+                return true
+            }
         })
 
         return Output(
@@ -166,6 +170,7 @@ class HomeViewModel {
             workoutTimeData: workoutTimeData,
             workoutRoutineTitleData: workoutRoutineTitleData,
             isWorkout: isWorkout,
-            routineBodyPartArray: routineBodyPartArray)
+            routineBodyPartArray: routineBodyPartArray,
+            hasRoutineTitle: hasRoutineTitle)
     }
 }

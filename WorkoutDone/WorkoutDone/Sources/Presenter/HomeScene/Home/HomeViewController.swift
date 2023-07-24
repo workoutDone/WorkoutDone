@@ -146,6 +146,7 @@ class HomeViewController : BaseViewController {
         })
         .disposed(by: disposeBag)
         
+        
         output.routineBodyPartArray.drive(onNext: { [weak self] value in
             guard let self = self else { return }
             bodyPartCount(count: value.count)
@@ -157,12 +158,11 @@ class HomeViewController : BaseViewController {
             case 3...:
                 bindBodyPart(value[0], value[1], value[2])
             default:
-                print("dPdhl")
+                print("")
             }
         })
         .disposed(by: disposeBag)
-        
-        
+
         
         calendarView.collectionView.rx.itemSelected
             .bind { _ in

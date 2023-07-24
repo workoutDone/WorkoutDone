@@ -13,7 +13,7 @@ final class TodayWorkoutResultView : BaseUIView {
     
     var routineData : Routine?
     
-    private let routineLabel = UILabel().then {
+    let routineLabel = UILabel().then {
         $0.text = "루틴"
         $0.textColor = .color7442FF
         $0.font = .pretendard(.semiBold, size: 18)
@@ -102,7 +102,7 @@ final class TodayWorkoutResultView : BaseUIView {
         workoutTableView.snp.makeConstraints {
             $0.top.equalTo(totalWorkoutTimeBackView.snp.bottom).offset(15)
             $0.leading.trailing.equalToSuperview().inset(15)
-            $0.bottom.equalToSuperview().inset(122)
+            $0.bottom.equalToSuperview().inset(30)
         }
     }
     private func setDelegateDataSource() {

@@ -27,6 +27,7 @@ class WorkoutResultViewModel {
         let workoutTimeData : Driver<String>
         let routineTitleData : Driver<String>
         let routineData : Driver<Routine?>
+        let hasRoutineTitle : Driver<Bool>
     }
     
     func readWorkoutDoneData(id : Int) -> WorkOutDoneData? {
@@ -41,6 +42,16 @@ class WorkoutResultViewModel {
         
         let timeString = String(format: "%02d:%02d:%02d", hours, minutes, remainingSeconds)
         return timeString
+    }
+    func hasRoutineTitle(id: Int) -> Bool {
+        let workoutData = self.readWorkoutDoneData(id: id)
+        
+        if workoutData?.routine?.name == "" {
+            return false
+        }
+        else {
+            return true
+        }
     }
     
     func transform(input: Input) -> Output {
@@ -76,7 +87,7 @@ class WorkoutResultViewModel {
                 return routineTitle
             }
             else {
-                return "고민중!"
+                return ""
             }
         })
         
@@ -87,10 +98,22 @@ class WorkoutResultViewModel {
             return workoutDoneData?.routine
         })
         
+        let hasRoutineTitle = Driver<Bool>.combineLatest(input.loadView, input.selectedData, resultSelector: { (_, date) in
+            let workoutDoneData = self.readWorkoutDoneData(id: date)
+            
+            if self.hasRoutineTitle(id: date) {
+                return true
+            }
+            else {
+                return false
+            }
+        })
+        
         return Output(
             hasData: hadData,
             workoutTimeData: workoutTimeData,
             routineTitleData: routineTitleData,
-            routineData: routineData)
+            routineData: routineData,
+            hasRoutineTitle: hasRoutineTitle)
     }
 }
