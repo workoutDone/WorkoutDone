@@ -109,6 +109,27 @@ final class DuringWorkoutResultViewController : BaseViewController {
         })
         .disposed(by: disposeBag)
         
+        output.hasRoutineTitle.drive(onNext: { value in
+            if value {
+                ///루틴 제목 존재
+                print("제목 존재")
+            }
+            else {
+                ///루틴 제목 없음
+                print("제목 존재 x")
+                self.routineLabel.isHidden = true
+                self.myRoutineLabel.isHidden = true
+                self.totalWorkoutTimeBackView.snp.remakeConstraints {
+                    $0.top.equalTo(self.view.safeAreaLayoutGuide).inset(21)
+                    $0.height.equalTo(52)
+                    $0.width.equalTo(200)
+                    $0.centerX.equalToSuperview()
+                }
+            }
+        })
+        .disposed(by: disposeBag)
+        
+        
         homeButton.rx.tap
             .bind { [weak self] in
                 guard let self = self else { return }

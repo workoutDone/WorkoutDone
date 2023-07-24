@@ -47,15 +47,92 @@ final class WorkoutResultView : BaseUIView {
     }
     let workoutResultButton = UIButton()
     
+    let workoutTypeFirstLabel = UILabel().then {
+        $0.textColor = .color363636
+        $0.font = .pretendard(.regular, size: 14)
+        $0.textAlignment = .center
+    }
+    
+    let workoutTypeFirstView = UIView().then {
+        $0.layer.cornerRadius = 11.5
+        $0.layer.borderColor = UIColor.color363636.cgColor
+        $0.layer.borderWidth = 1
+        $0.isHidden = false
+    
+    }
+    
+    let workoutTypeSecondLabel = UILabel().then {
+        $0.textColor = .color363636
+        $0.font = .pretendard(.regular, size: 14)
+        $0.textAlignment = .center
+    }
+    
+    let workoutTypeSecondView = UIView().then {
+        $0.layer.cornerRadius = 11.5
+        $0.layer.borderColor = UIColor.color363636.cgColor
+        $0.layer.borderWidth = 1
+        $0.isHidden = false
+    }
+    
+    let workoutTypeThirdLabel = UILabel().then {
+        $0.textColor = .color363636
+        $0.font = .pretendard(.regular, size: 14)
+        $0.textAlignment = .center
+    }
+    
+    let workoutTypeThirdView = UIView().then {
+        $0.layer.cornerRadius = 11.5
+        $0.layer.borderColor = UIColor.color363636.cgColor
+        $0.layer.borderWidth = 1
+        $0.isHidden = false
+    }
+    
     override func setupLayout() {
         super.setupLayout()
         self.addSubviews(workoutResultLabel, workoutResultBaseView, workoutResultButton)
         workoutResultBaseView.addSubviews(workoutTimeBaseView, workoutTypeBaseView)
         workoutTimeBaseView.addSubviews(workoutTimeTitleLabel, workoutTimeLabel)
-        workoutTypeBaseView.addSubviews(workoutTypeTitleLabel, workoutTypeLabel)
+        workoutTypeBaseView.addSubviews(workoutTypeTitleLabel, workoutTypeLabel, workoutTypeFirstView, workoutTypeSecondView, workoutTypeThirdView)
+        workoutTypeFirstView.addSubview(workoutTypeFirstLabel)
+        workoutTypeSecondView.addSubview(workoutTypeSecondLabel)
+        workoutTypeThirdView.addSubview(workoutTypeThirdLabel)
     }
     override func setupConstraints() {
         super.setupConstraints()
+        
+        workoutTypeFirstLabel.snp.makeConstraints {
+            $0.centerX.centerY.equalToSuperview()
+            $0.leading.trailing.equalToSuperview().inset(6)
+        }
+        workoutTypeSecondLabel.snp.makeConstraints {
+            $0.centerX.centerY.equalToSuperview()
+            $0.leading.trailing.equalToSuperview().inset(6)
+        }
+        workoutTypeThirdLabel.snp.makeConstraints {
+            $0.centerX.centerY.equalToSuperview()
+            $0.leading.trailing.equalToSuperview().inset(6)
+        }
+        workoutTypeFirstView.snp.makeConstraints {
+            $0.height.equalTo(23)
+            $0.width.greaterThanOrEqualTo(37)
+            $0.top.equalTo(workoutTypeTitleLabel.snp.bottom).offset(1)
+            $0.leading.equalToSuperview().inset(20)
+            
+        }
+        
+        workoutTypeSecondView.snp.makeConstraints {
+            $0.height.equalTo(23)
+            $0.width.greaterThanOrEqualTo(37)
+            $0.top.equalTo(workoutTypeTitleLabel.snp.bottom).offset(1)
+            $0.leading.equalTo(workoutTypeFirstView.snp.trailing).offset(6)
+        }
+        workoutTypeThirdView.snp.makeConstraints {
+            $0.height.equalTo(23)
+            $0.width.greaterThanOrEqualTo(37)
+            $0.top.equalTo(workoutTypeTitleLabel.snp.bottom).offset(1)
+            $0.leading.equalTo(workoutTypeSecondView.snp.trailing).offset(6)
+        }
+        
         workoutResultLabel.snp.makeConstraints {
             $0.top.equalToSuperview()
             $0.leading.equalToSuperview().offset(30)

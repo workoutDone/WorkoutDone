@@ -29,7 +29,6 @@ class HomeViewController : BaseViewController {
     let monthlyCalendarHeight: Int = 289
     let weeklyCalendarHeight: Int = 115
     
-//    private let duringWorkoutView = DuringWorkoutView()
     
     private let contentScrollView = UIScrollView().then {
         $0.translatesAutoresizingMaskIntoConstraints = false
@@ -92,11 +91,6 @@ class HomeViewController : BaseViewController {
     override func setupConstraints() {
         super.setupConstraints()
         
-//        duringWorkoutView.snp.makeConstraints {
-//            $0.leading.trailing.equalToSuperview()
-//            $0.bottom.equalTo(view.safeAreaLayoutGuide)
-//            $0.height.equalTo(70)
-//        }
         
         contentScrollView.snp.makeConstraints {
             $0.edges.equalTo(view.safeAreaLayoutGuide)
@@ -151,6 +145,24 @@ class HomeViewController : BaseViewController {
             self.workoutBaseView.workoutCompleteBaseView.isHidden = !value
         })
         .disposed(by: disposeBag)
+        
+        output.routineBodyPartArray.drive(onNext: { [weak self] value in
+            guard let self = self else { return }
+            bodyPartCount(count: value.count)
+            switch value.count {
+            case 1:
+                bindBodyPart(value[0])
+            case 2:
+                bindBodyPart(value[0], value[1])
+            case 3...:
+                bindBodyPart(value[0], value[1], value[2])
+            default:
+                print("dPdhl")
+            }
+        })
+        .disposed(by: disposeBag)
+        
+        
         
         calendarView.collectionView.rx.itemSelected
             .bind { _ in
@@ -216,13 +228,37 @@ class HomeViewController : BaseViewController {
         navigationController?.pushViewController(workoutResultViewController, animated: true)
     }
     
-//    func setWorkOutDoneImage() {
-//        recordBaseView.bodyImageView.image = frameImageViewModel.loadImageFromRealm(date: calendarView.selectDate ?? Date())
-//    }
-//    @objc func showDuringWorkoutViewController(_ notification: Notification) {
-//        print("showDuringWorkoutViewController")
-//        self.tabBarController?.tabBar.isHidden.toggle()
-//    }
+    private func bindBodyPart(_ firstBodyPart: String, _ secondBodyPart: String? = nil, _ thirdBodyPart: String? = nil) {
+        workoutResultBaseView.workoutTypeFirstLabel.text = firstBodyPart
+        workoutResultBaseView.workoutTypeSecondLabel.text = secondBodyPart
+        workoutResultBaseView.workoutTypeThirdLabel.text = thirdBodyPart
+    }
+    private func bodyPartCount(count: Int) {
+        switch count {
+        case 0:
+            workoutResultBaseView.workoutTypeFirstView.isHidden = true
+            workoutResultBaseView.workoutTypeSecondView.isHidden = true
+            workoutResultBaseView.workoutTypeThirdView.isHidden = true
+            workoutResultBaseView.workoutTypeLabel.isHidden = false
+        case 1:
+            workoutResultBaseView.workoutTypeFirstView.isHidden = false
+            workoutResultBaseView.workoutTypeSecondView.isHidden = true
+            workoutResultBaseView.workoutTypeThirdView.isHidden = true
+            workoutResultBaseView.workoutTypeLabel.isHidden = true
+        case 2:
+            workoutResultBaseView.workoutTypeFirstView.isHidden = false
+            workoutResultBaseView.workoutTypeSecondView.isHidden = false
+            workoutResultBaseView.workoutTypeThirdView.isHidden = true
+            workoutResultBaseView.workoutTypeLabel.isHidden = true
+        case 3...:
+            workoutResultBaseView.workoutTypeFirstView.isHidden = false
+            workoutResultBaseView.workoutTypeSecondView.isHidden = false
+            workoutResultBaseView.workoutTypeThirdView.isHidden = false
+            workoutResultBaseView.workoutTypeLabel.isHidden = true
+        default:
+            print("예외")
+        }
+    }
 }
 
 extension HomeViewController : UIScrollViewDelegate {

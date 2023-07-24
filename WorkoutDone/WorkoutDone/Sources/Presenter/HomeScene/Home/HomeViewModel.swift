@@ -29,6 +29,7 @@ class HomeViewModel {
         let workoutTimeData : Driver<String>
         let workoutRoutineTitleData : Driver<String>
         let isWorkout : Driver<Bool>
+        let routineBodyPartArray : Driver<[String]>
     }
     
     func readWorkoutDoneData(id : Int) -> WorkOutDoneData?  {
@@ -43,6 +44,33 @@ class HomeViewModel {
         
         let timeString = String(format: "%02d:%02d:%02d", hours, minutes, remainingSeconds)
         return timeString
+    }
+    
+//    func sortBodyPart(id: Int) -> [String] {
+//        let workoutData = self.readWorkoutDoneData(id: id)
+//        guard let weightTraining = workoutData?.routine?.weightTraining else { return [] }
+//        let arrayWeightTraining = Array(weightTraining)
+//
+//        let letterCounts = arrayWeightTraining.reduce(into: [:]) { counts, word in
+//            counts[word, default: 0] += 1
+//        }
+//        let sortedByCount = letterCounts.sorted { $0.value > $1.value }
+//        let result = Array(sortedByCount.prefix(3).map { $0.key .bodyPart})
+//        return result
+//    }
+    func sortBodyPart(id: Int) -> [String] {
+        let workoutData = self.readWorkoutDoneData(id: id)
+        guard let weightTraining = workoutData?.routine?.weightTraining else { return [] }
+        let arrayWeightTraining = Array(weightTraining)
+        
+        let letterCounts = arrayWeightTraining.reduce(into: [:]) { counts, word in
+            counts[word.bodyPart, default: 0] += 1
+        }
+        
+        let sortedByCount = letterCounts.sorted { $0.value > $1.value }
+        let result = sortedByCount.compactMap { $0.value > 0 ? $0.key : nil }
+        
+        return result
     }
     
     func transform(input : Input) -> Output {
@@ -117,6 +145,18 @@ class HomeViewModel {
                 return false
             }
         })
+        
+//        let routineBodyPartArray = input.loadView.map({ value -> [String] in
+//            let temporaryRoutineData = self.readTemporaryRoutineData()
+//            let dateId = temporaryRoutineData?.intDate
+//            let array = self.sortBodyPart(id: dateId!)
+//
+//            return array
+//        })
+        
+        let routineBodyPartArray = Driver<[String]>.combineLatest(input.loadView, input.selectedDate, resultSelector: { (_, date) in
+            return self.sortBodyPart(id: date)
+        })
 
         return Output(
             weightData: weightData,
@@ -125,6 +165,7 @@ class HomeViewModel {
             imageData: imageData,
             workoutTimeData: workoutTimeData,
             workoutRoutineTitleData: workoutRoutineTitleData,
-            isWorkout: isWorkout)
+            isWorkout: isWorkout,
+            routineBodyPartArray: routineBodyPartArray)
     }
 }
