@@ -374,10 +374,6 @@ extension CalendarView: UICollectionViewDelegate, UICollectionViewDataSource, UI
                     cell.dayLabel.font = .pretendard(.extraBold, size: 16)
                 }
                 
-                if selectComponents.year == components.year && selectComponents.month == components.month && selectComponents.day == Int(days[indexPath.row]) {
-                    cell.selectedDateImage.isHidden = false
-                }
-                
                 let day = days[indexPath.row]
                 if let stamp = currentMonthStamp[day] {
                     cell.stampImage.isHidden = false
@@ -385,6 +381,16 @@ extension CalendarView: UICollectionViewDelegate, UICollectionViewDataSource, UI
                     cell.stampImage.image = UIImage(named: stamp)
                 }
                 
+                if selectComponents.year == components.year && selectComponents.month == components.month && selectComponents.day == Int(days[indexPath.row]) {
+                    cell.selectedDateImage.isHidden = false
+                    
+                    if cell.stampImage.isHidden {
+                        cell.selectedDateImage.snp.remakeConstraints {
+                            $0.centerX.centerY.equalTo(cell.contentView)
+                            $0.width.height.equalTo(40)
+                        }
+                    }
+                }
                 
             } else {
                 if indexPath.row >= firstWeekday - 1 {
@@ -409,15 +415,22 @@ extension CalendarView: UICollectionViewDelegate, UICollectionViewDataSource, UI
             }
             cell.dayLabel.textColor = .color121212
             
-            if selectComponents.year == components.year && selectComponents.month == components.month && selectComponents.day == Int(days[indexPath.row]) {
-                cell.selectedDateImage.isHidden = false
-            }
-            
             let day = days[indexPath.row]
             if let stamp = currentMonthStamp[day] {
                 cell.stampImage.isHidden = false
                 cell.dayLabel.textColor = .colorC8B4FF
                 cell.stampImage.image = UIImage(named: stamp)
+            }
+            
+            if selectComponents.year == components.year && selectComponents.month == components.month && selectComponents.day == Int(days[indexPath.row]) {
+                cell.selectedDateImage.isHidden = false
+                
+                if cell.stampImage.isHidden {
+                    cell.selectedDateImage.snp.remakeConstraints {
+                        $0.centerX.centerY.equalTo(cell.contentView)
+                        $0.width.height.equalTo(40)
+                    }
+                }
             }
             
         } else {

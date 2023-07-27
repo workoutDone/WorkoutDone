@@ -1438,11 +1438,10 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = JB8T59WMFR;
+				DEVELOPMENT_TEAM = U4YRB4XYPR;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = WorkoutDone/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "오운완";
-				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_NSCameraUsageDescription = "오운완의 다양한 콘텐츠를 사용하여, 사진을 촬영해 보세요.";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "사진에 대한 접근을 허용해, 오운완의 모든 기능과 콘텐츠를 사용해 보세요.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -1471,11 +1470,10 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = JB8T59WMFR;
+				DEVELOPMENT_TEAM = U4YRB4XYPR;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = WorkoutDone/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "오운완";
-				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_NSCameraUsageDescription = "오운완의 다양한 콘텐츠를 사용하여, 사진을 촬영해 보세요.";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "사진에 대한 접근을 허용해, 오운완의 모든 기능과 콘텐츠를 사용해 보세요.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
