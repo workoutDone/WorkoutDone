@@ -24,6 +24,15 @@ class DayCell: UICollectionViewCell {
         $0.image = UIImage(named: "stampVImage")
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+  
+        selectedDateImage.snp.remakeConstraints {
+            $0.centerX.centerY.equalTo(contentView)
+            $0.width.height.equalTo(51)
+        }
+    }
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -43,11 +52,11 @@ class DayCell: UICollectionViewCell {
     
     func setLayout() {
         dayLabel.snp.makeConstraints {
-            $0.centerX.centerY.equalTo(stampImage)
+            $0.centerX.centerY.equalTo(contentView)
         }
         
         selectedDateImage.snp.makeConstraints {
-            $0.centerX.centerY.equalTo(stampImage)
+            $0.centerX.centerY.equalTo(contentView)
             $0.width.height.equalTo(51)
         }
         
