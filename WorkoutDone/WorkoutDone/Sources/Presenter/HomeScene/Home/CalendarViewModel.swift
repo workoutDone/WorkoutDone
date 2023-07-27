@@ -24,7 +24,6 @@ struct CalendarViewModel {
                 }
             }
         }
-        
         return dayStamp
     }
 }
