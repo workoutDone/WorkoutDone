@@ -147,6 +147,7 @@ final class HomeButtonLessCameraViewController : BaseViewController {
         for button in frameButtons {
             if button == sender {
                 print(button.tag)
+                isSelectFrameImagesIndex = button.tag
                 if button.tag == 0 {
                     authorizedCameraView.frameImageView.image = .none
                 }
