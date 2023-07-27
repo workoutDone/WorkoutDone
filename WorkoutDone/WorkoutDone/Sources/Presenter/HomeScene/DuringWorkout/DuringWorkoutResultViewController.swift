@@ -101,10 +101,8 @@ final class DuringWorkoutResultViewController : BaseViewController {
         output.deleteTemporaryRoutine.drive(onNext: { value in
             if value {
                 let tabBarController = TabBarController()
-                tabBarController.modalTransitionStyle = .crossDissolve
-                tabBarController.modalPresentationStyle = .fullScreen
                 UserDefaultsManager.shared.remove(.isWorkout)
-                self.present(tabBarController, animated: true)
+                self.changeRootViewController(tabBarController)
             }
         })
         .disposed(by: disposeBag)
