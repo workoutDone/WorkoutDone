@@ -172,6 +172,7 @@
 		A59EF6F129C4C909005DE9B5 /* PreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59EF6F029C4C909005DE9B5 /* PreviewView.swift */; };
 		A5A10CA929D59ED600E45FC8 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5A10CA829D59ED600E45FC8 /* String.swift */; };
 		A5A10CAB29D59EF300E45FC8 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5A10CAA29D59EF300E45FC8 /* Date.swift */; };
+		A5AB4CCE2A73A27D003F8997 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5AB4CCD2A73A27D003F8997 /* Config.swift */; };
 		A5DA464B2A379FCE0022710C /* TodayEmptyWorkoutResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5DA464A2A379FCE0022710C /* TodayEmptyWorkoutResultView.swift */; };
 		A5DA464D2A379FDC0022710C /* TodayWorkoutResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5DA464C2A379FDC0022710C /* TodayWorkoutResultView.swift */; };
 		A5DA464F2A37A6410022710C /* DuringWorkoutResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5DA464E2A37A6410022710C /* DuringWorkoutResultViewController.swift */; };
@@ -361,6 +362,8 @@
 		A59EF6F029C4C909005DE9B5 /* PreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewView.swift; sourceTree = "<group>"; };
 		A5A10CA829D59ED600E45FC8 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		A5A10CAA29D59EF300E45FC8 /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
+		A5AB4CCC2A739F27003F8997 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
+		A5AB4CCD2A73A27D003F8997 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		A5DA464A2A379FCE0022710C /* TodayEmptyWorkoutResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayEmptyWorkoutResultView.swift; sourceTree = "<group>"; };
 		A5DA464C2A379FDC0022710C /* TodayWorkoutResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayWorkoutResultView.swift; sourceTree = "<group>"; };
 		A5DA464E2A37A6410022710C /* DuringWorkoutResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuringWorkoutResultViewController.swift; sourceTree = "<group>"; };
@@ -461,6 +464,7 @@
 				92005FD029B1A49500586063 /* LaunchScreen.storyboard */,
 				92005FC529B1A49400586063 /* AppDelegate.swift */,
 				92005FC729B1A49400586063 /* SceneDelegate.swift */,
+				A5AB4CCC2A739F27003F8997 /* Config.xcconfig */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -591,6 +595,7 @@
 				A52573ED29EDB9B9004FBAC0 /* ViewModelType.swift */,
 				A5021EE72A1906EB007DE096 /* Constants.swift */,
 				A551F5C32A2923E300F96860 /* UNNotificationCenter.swift */,
+				A5AB4CCD2A73A27D003F8997 /* Config.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1180,6 +1185,7 @@
 				A59ACBC029B6E2310084C73E /* DeviceManager.swift in Sources */,
 				9204827F29FF0D230015A02F /* FrameImageViewModel.swift in Sources */,
 				926998E72A147918003DDAD2 /* BodyPartCell.swift in Sources */,
+				A5AB4CCE2A73A27D003F8997 /* Config.swift in Sources */,
 				A5FD2BDF2A45777300295EF9 /* DuringWorkoutViewModel.swift in Sources */,
 				A5FD2BDD2A44228900295EF9 /* HomeButtonAuthorizedCameraView.swift in Sources */,
 				A59EF6F129C4C909005DE9B5 /* PreviewView.swift in Sources */,
@@ -1319,6 +1325,7 @@
 /* Begin XCBuildConfiguration section */
 		92005FEA29B1A49600586063 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A5AB4CCC2A739F27003F8997 /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -1379,6 +1386,7 @@
 		};
 		92005FEB29B1A49600586063 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A5AB4CCC2A739F27003F8997 /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
