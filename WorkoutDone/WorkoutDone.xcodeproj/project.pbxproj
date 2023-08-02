@@ -177,6 +177,7 @@
 		A5DA464D2A379FDC0022710C /* TodayWorkoutResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5DA464C2A379FDC0022710C /* TodayWorkoutResultView.swift */; };
 		A5DA464F2A37A6410022710C /* DuringWorkoutResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5DA464E2A37A6410022710C /* DuringWorkoutResultViewController.swift */; };
 		A5E2DEEE2A17611B002A60A4 /* DuringWorkoutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E2DEED2A17611B002A60A4 /* DuringWorkoutViewController.swift */; };
+		A5EDC1E92A7A781700778E7D /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = A5EDC1E82A7A781700778E7D /* .swiftlint.yml */; };
 		A5FD2BDD2A44228900295EF9 /* HomeButtonAuthorizedCameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5FD2BDC2A44228900295EF9 /* HomeButtonAuthorizedCameraView.swift */; };
 		A5FD2BDF2A45777300295EF9 /* DuringWorkoutViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5FD2BDE2A45777300295EF9 /* DuringWorkoutViewModel.swift */; };
 		A5FD469829DDDB4C003AC96E /* SkeletalMuslemassViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5FD469729DDDB4C003AC96E /* SkeletalMuslemassViewModel.swift */; };
@@ -368,6 +369,7 @@
 		A5DA464C2A379FDC0022710C /* TodayWorkoutResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayWorkoutResultView.swift; sourceTree = "<group>"; };
 		A5DA464E2A37A6410022710C /* DuringWorkoutResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuringWorkoutResultViewController.swift; sourceTree = "<group>"; };
 		A5E2DEED2A17611B002A60A4 /* DuringWorkoutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuringWorkoutViewController.swift; sourceTree = "<group>"; };
+		A5EDC1E82A7A781700778E7D /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		A5FD2BDC2A44228900295EF9 /* HomeButtonAuthorizedCameraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeButtonAuthorizedCameraView.swift; sourceTree = "<group>"; };
 		A5FD2BDE2A45777300295EF9 /* DuringWorkoutViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuringWorkoutViewModel.swift; sourceTree = "<group>"; };
 		A5FD469729DDDB4C003AC96E /* SkeletalMuslemassViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkeletalMuslemassViewModel.swift; sourceTree = "<group>"; };
@@ -410,6 +412,7 @@
 		92005FB929B1A49400586063 = {
 			isa = PBXGroup;
 			children = (
+				A5EDC1E82A7A781700778E7D /* .swiftlint.yml */,
 				92005FC429B1A49400586063 /* WorkoutDone */,
 				92005FDB29B1A49600586063 /* WorkoutDoneTests */,
 				92005FE529B1A49600586063 /* WorkoutDoneUITests */,
@@ -975,6 +978,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 92005FEC29B1A49600586063 /* Build configuration list for PBXNativeTarget "WorkoutDone" */;
 			buildPhases = (
+				A5EDC1E52A7A4A0D00778E7D /* SwiftLint Script */,
 				92005FBE29B1A49400586063 /* Sources */,
 				92005FBF29B1A49400586063 /* Frameworks */,
 				92005FC029B1A49400586063 /* Resources */,
@@ -1089,6 +1093,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A5EDC1E92A7A781700778E7D /* .swiftlint.yml in Resources */,
 				9200603B29B1A9A600586063 /* Pretendard-Black.ttf in Resources */,
 				9200603F29B1A9A600586063 /* Pretendard-Regular.ttf in Resources */,
 				9200603729B1A9A600586063 /* Pretendard-SemiBold.ttf in Resources */,
@@ -1118,6 +1123,27 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		A5EDC1E52A7A4A0D00778E7D /* SwiftLint Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "SwiftLint Script";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if test -d \"/opt/homebrew/bin/\"; then\n  PATH=\"/opt/homebrew/bin/:${PATH}\"\nfi\n\nif test -d \"$HOME/.mint/bin\"; then\n  PATH=\"$HOME/.mint/bin:${PATH}\"\nfi\n\nexport PATH\n\nif which swiftlint >/dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, run setup.sh (or download from https://github.com/realm/SwiftLint)\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		92005FBE29B1A49400586063 /* Sources */ = {
