@@ -34,22 +34,27 @@
 ## 📱 주요 화면 및 기능
 
 > 🔖 온보딩 플로우 - 앱에 대한 전반적인 설명 후, 온보딩을 넘어가면 다시 나타나지 않아요.
-<div align=center>
+<div align=leading>
 <img src="https://github.com/workoutDone/WorkoutDone/assets/78063938/6499da78-a979-4c00-a97f-dffa8d99d3eb" width=200>
 </div>
 
 > 📈 몸무게, 체지방량, 골격근량 입력 및 분석 플로우 - 날마다 입력한 신체 정보를 차트로 한 눈에 비교할 수 있어요.
-<div align=center>
+<div align=leading>
 <img src="https://github.com/workoutDone/WorkoutDone/assets/78063938/882f39dd-fbd4-4c44-b0ca-62dac80456ff" width=200>
 </div>
 
-
 > 📸 오운완 사진 촬영 및 저장 플로우 - 날마다 사진을 찍고 저장해 몸의 변화를 한 눈에 비교할 수 있어요.
+> 
 > 🎞️ 갤러리에서 사진 가져오기 및 저장 플로우 - 갤러리(전체 권한, 선택 권한)에서 가져와 몸의 변화를 한 눈에 비교할 수 있어요.
+> 
 > 💪 운동 루틴 만들기 플로우 - 나만의 루틴을 만들고 확인할 수 있어요.
-> 
+<div align=leading>
+<img src="https://github.com/workoutDone/WorkoutDone/assets/78063938/6e0a8c14-0ec4-4544-b953-fa303d03af64" width=200>
+</div>
+
+
 > 🏋️ 운동하기 플로우 - 날마다 루틴을 가져와 운동을 하거나 즉석에서 루틴을 만들어 운동을 하고 확인할 수 있어요.
-> 
+
 
 ## 🗺 Architecture
 ### MVVM(작성중)
