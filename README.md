@@ -44,7 +44,11 @@
 </div>
 
 > 📸 오운완 사진 촬영 및 저장 플로우 - 날마다 사진을 찍고 저장해 몸의 변화를 한 눈에 비교할 수 있어요.
-> 
+
+<div align=leading>
+<img src="https://github.com/workoutDone/WorkoutDone/assets/78063938/8fbdb630-9457-4321-9372-8df07ba5a66b" width=200>
+</div>
+
 > 🎞️ 갤러리에서 사진 가져오기 및 저장 플로우 - 갤러리(전체 권한, 선택 권한)에서 가져와 몸의 변화를 한 눈에 비교할 수 있어요.
 <div align=leading>
   <img src="https://github.com/workoutDone/WorkoutDone/assets/78063938/7df2e2a9-d367-4b13-b8f4-3533c2b3bdd0" width=200>
