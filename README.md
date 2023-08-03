@@ -52,10 +52,11 @@
 <img src="https://github.com/workoutDone/WorkoutDone/assets/78063938/6e0a8c14-0ec4-4544-b953-fa303d03af64" width=200>
 </div>
 
-
 > 🏋️ 운동하기 플로우 - 날마다 루틴을 가져와 운동을 하거나 즉석에서 루틴을 만들어 운동을 하고 확인할 수 있어요.
-
-
+<div align=leading>
+<img src="https://github.com/workoutDone/WorkoutDone/assets/78063938/1b2d3003-a99a-4bac-987d-7439bad022b3" width=200>
+  <img src="https://github.com/workoutDone/WorkoutDone/assets/78063938/bd8b9821-47ff-4769-bc94-e4afb84fb782" width=200>
+</div>
 ## 🗺 Architecture
 ### MVVM(작성중)
 
