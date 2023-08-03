@@ -16,6 +16,10 @@
 - [🗺 Architecture](#-architecture)
 - [🗂 파일 디렉토리 구조](#-파일-디렉토리-구조)
 - [📱 주요 화면 및 기능](#-주요-화면-및-기능)
+- [📚 가용 라이브러리](#-가용-라이브러리)
+
+
+
 ## 🏋🏻 프로젝트 소개
 
 ## 🗺 Architecture
@@ -25,3 +29,22 @@
 ## 🗂 파일 디렉토리 구조
 
 ## 📱 주요 화면 및 기능
+
+## 📚 가용 라이브러리
+
+```
+RxSwift
+- https://github.com/ReactiveX/RxSwift
+
+Realm
+- https://github.com/realm/realm-swift
+
+SnapKit
+- https://github.com/SnapKit/SnapKit
+
+Then
+- https://github.com/devxoul/Then
+
+DeviceKit
+- https://github.com/devicekit/DeviceKit
+```
