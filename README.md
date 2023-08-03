@@ -14,10 +14,10 @@
 
 - [🏋🏻 프로젝트 소개](#-프로젝트-소개)
 - [🗺 Architecture](#-architecture)
-- [🗂 파일 디렉토리 구조](#-파일-디렉토리-구조)
 - [📱 주요 화면 및 기능](#-주요-화면-및-기능)
+- [🗂 파일 디렉토리 구조](#-파일-디렉토리-구조)
 - [📚 가용 라이브러리](#-가용-라이브러리)
-
+- [🧑🏻‍💻 참여자](#-참여자)
 
 
 ## 🏋🏻 프로젝트 소개
@@ -29,6 +29,9 @@
 
 ## 🗺 Architecture
 ### MVVM
+
+## 📱 주요 화면 및 기능
+
 
 
 ## 🗂 파일 디렉토리 구조
@@ -59,7 +62,6 @@
 ```
 
 
-## 📱 주요 화면 및 기능
 
 ## 📚 가용 라이브러리
 
@@ -79,3 +81,8 @@ Then
 DeviceKit
 - https://github.com/devicekit/DeviceKit
 ```
+## 🧑🏻‍💻참여자
+
+| 류창휘<br/>([@ryuchanghwi](https://github.com/ryuchanghwi)) | 봉혜미<br/>([@hyemi](https://github.com/hyemib)) | 
+| :---: | :---: |
+| <img width="200"  src="https://avatars.githubusercontent.com/u/78063938?v=4"/> | <img width="200"  src="https://avatars.githubusercontent.com/u/98953443?v=4"/> | 
