@@ -81,7 +81,7 @@ Then
 DeviceKit
 - https://github.com/devicekit/DeviceKit
 ```
-## 🧑🏻‍💻참여자
+## 🧑🏻‍💻 참여자
 
 | 류창휘<br/>([@ryuchanghwi](https://github.com/ryuchanghwi)) | 봉혜미<br/>([@hyemi](https://github.com/hyemib)) | 
 | :---: | :---: |
