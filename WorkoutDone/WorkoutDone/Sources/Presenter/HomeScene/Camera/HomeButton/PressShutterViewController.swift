@@ -179,7 +179,7 @@ final class PressShutterViewController: BaseViewController {
     }
     
     @objc func instaButtonTapped(sender: UIButton!) {
-        if let storyShareURL = URL(string: "instagram-stories://share?source_application=279031477992220") {
+        if let storyShareURL = URL(string: "instagram-stories://share?source_application=\(Config.facebookKey)") {
             if UIApplication.shared.canOpenURL(storyShareURL) {
                 let targetSize = CGSize(width: captureImageView.frame.width, height: captureImageView.frame.height)
                 let renderer = UIGraphicsImageRenderer(size: targetSize)

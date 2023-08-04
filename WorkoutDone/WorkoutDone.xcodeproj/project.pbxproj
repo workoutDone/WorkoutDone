@@ -172,10 +172,12 @@
 		A59EF6F129C4C909005DE9B5 /* PreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59EF6F029C4C909005DE9B5 /* PreviewView.swift */; };
 		A5A10CA929D59ED600E45FC8 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5A10CA829D59ED600E45FC8 /* String.swift */; };
 		A5A10CAB29D59EF300E45FC8 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5A10CAA29D59EF300E45FC8 /* Date.swift */; };
+		A5AB4CCE2A73A27D003F8997 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5AB4CCD2A73A27D003F8997 /* Config.swift */; };
 		A5DA464B2A379FCE0022710C /* TodayEmptyWorkoutResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5DA464A2A379FCE0022710C /* TodayEmptyWorkoutResultView.swift */; };
 		A5DA464D2A379FDC0022710C /* TodayWorkoutResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5DA464C2A379FDC0022710C /* TodayWorkoutResultView.swift */; };
 		A5DA464F2A37A6410022710C /* DuringWorkoutResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5DA464E2A37A6410022710C /* DuringWorkoutResultViewController.swift */; };
 		A5E2DEEE2A17611B002A60A4 /* DuringWorkoutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E2DEED2A17611B002A60A4 /* DuringWorkoutViewController.swift */; };
+		A5EDC1E92A7A781700778E7D /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = A5EDC1E82A7A781700778E7D /* .swiftlint.yml */; };
 		A5FD2BDD2A44228900295EF9 /* HomeButtonAuthorizedCameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5FD2BDC2A44228900295EF9 /* HomeButtonAuthorizedCameraView.swift */; };
 		A5FD2BDF2A45777300295EF9 /* DuringWorkoutViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5FD2BDE2A45777300295EF9 /* DuringWorkoutViewModel.swift */; };
 		A5FD469829DDDB4C003AC96E /* SkeletalMuslemassViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5FD469729DDDB4C003AC96E /* SkeletalMuslemassViewModel.swift */; };
@@ -361,10 +363,13 @@
 		A59EF6F029C4C909005DE9B5 /* PreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewView.swift; sourceTree = "<group>"; };
 		A5A10CA829D59ED600E45FC8 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		A5A10CAA29D59EF300E45FC8 /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
+		A5AB4CCC2A739F27003F8997 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
+		A5AB4CCD2A73A27D003F8997 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		A5DA464A2A379FCE0022710C /* TodayEmptyWorkoutResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayEmptyWorkoutResultView.swift; sourceTree = "<group>"; };
 		A5DA464C2A379FDC0022710C /* TodayWorkoutResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayWorkoutResultView.swift; sourceTree = "<group>"; };
 		A5DA464E2A37A6410022710C /* DuringWorkoutResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuringWorkoutResultViewController.swift; sourceTree = "<group>"; };
 		A5E2DEED2A17611B002A60A4 /* DuringWorkoutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuringWorkoutViewController.swift; sourceTree = "<group>"; };
+		A5EDC1E82A7A781700778E7D /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		A5FD2BDC2A44228900295EF9 /* HomeButtonAuthorizedCameraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeButtonAuthorizedCameraView.swift; sourceTree = "<group>"; };
 		A5FD2BDE2A45777300295EF9 /* DuringWorkoutViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuringWorkoutViewModel.swift; sourceTree = "<group>"; };
 		A5FD469729DDDB4C003AC96E /* SkeletalMuslemassViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkeletalMuslemassViewModel.swift; sourceTree = "<group>"; };
@@ -407,6 +412,7 @@
 		92005FB929B1A49400586063 = {
 			isa = PBXGroup;
 			children = (
+				A5EDC1E82A7A781700778E7D /* .swiftlint.yml */,
 				92005FC429B1A49400586063 /* WorkoutDone */,
 				92005FDB29B1A49600586063 /* WorkoutDoneTests */,
 				92005FE529B1A49600586063 /* WorkoutDoneUITests */,
@@ -461,6 +467,7 @@
 				92005FD029B1A49500586063 /* LaunchScreen.storyboard */,
 				92005FC529B1A49400586063 /* AppDelegate.swift */,
 				92005FC729B1A49400586063 /* SceneDelegate.swift */,
+				A5AB4CCC2A739F27003F8997 /* Config.xcconfig */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -591,6 +598,7 @@
 				A52573ED29EDB9B9004FBAC0 /* ViewModelType.swift */,
 				A5021EE72A1906EB007DE096 /* Constants.swift */,
 				A551F5C32A2923E300F96860 /* UNNotificationCenter.swift */,
+				A5AB4CCD2A73A27D003F8997 /* Config.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -970,6 +978,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 92005FEC29B1A49600586063 /* Build configuration list for PBXNativeTarget "WorkoutDone" */;
 			buildPhases = (
+				A5EDC1E52A7A4A0D00778E7D /* SwiftLint Script */,
 				92005FBE29B1A49400586063 /* Sources */,
 				92005FBF29B1A49400586063 /* Frameworks */,
 				92005FC029B1A49400586063 /* Resources */,
@@ -1084,6 +1093,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A5EDC1E92A7A781700778E7D /* .swiftlint.yml in Resources */,
 				9200603B29B1A9A600586063 /* Pretendard-Black.ttf in Resources */,
 				9200603F29B1A9A600586063 /* Pretendard-Regular.ttf in Resources */,
 				9200603729B1A9A600586063 /* Pretendard-SemiBold.ttf in Resources */,
@@ -1113,6 +1123,27 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		A5EDC1E52A7A4A0D00778E7D /* SwiftLint Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "SwiftLint Script";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if test -d \"/opt/homebrew/bin/\"; then\n  PATH=\"/opt/homebrew/bin/:${PATH}\"\nfi\n\nif test -d \"$HOME/.mint/bin\"; then\n  PATH=\"$HOME/.mint/bin:${PATH}\"\nfi\n\nexport PATH\n\nif which swiftlint >/dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, run setup.sh (or download from https://github.com/realm/SwiftLint)\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		92005FBE29B1A49400586063 /* Sources */ = {
@@ -1180,6 +1211,7 @@
 				A59ACBC029B6E2310084C73E /* DeviceManager.swift in Sources */,
 				9204827F29FF0D230015A02F /* FrameImageViewModel.swift in Sources */,
 				926998E72A147918003DDAD2 /* BodyPartCell.swift in Sources */,
+				A5AB4CCE2A73A27D003F8997 /* Config.swift in Sources */,
 				A5FD2BDF2A45777300295EF9 /* DuringWorkoutViewModel.swift in Sources */,
 				A5FD2BDD2A44228900295EF9 /* HomeButtonAuthorizedCameraView.swift in Sources */,
 				A59EF6F129C4C909005DE9B5 /* PreviewView.swift in Sources */,
@@ -1319,6 +1351,7 @@
 /* Begin XCBuildConfiguration section */
 		92005FEA29B1A49600586063 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A5AB4CCC2A739F27003F8997 /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -1379,6 +1412,7 @@
 		};
 		92005FEB29B1A49600586063 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A5AB4CCC2A739F27003F8997 /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
