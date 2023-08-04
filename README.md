@@ -479,43 +479,19 @@ import URLNavigator
 ### 💧**MARK 주석**
 
 ```swift
-// MARK: - UI Components
+class ViewController: UIViewController {
+    // MARK: - Property
+    // MARK: - UI Property
+    // MARK: - Life Cycle
+    // MARK: - Setting
+    // MARK: - Action Helper
+    // MARK: - @objc Methods
+    // MARK: - Custom Method
+}
 
-// MARK: - View Life Cycle
-
-// MARK: - Initializer
-
-// MARK: - Properties  -> setUI
-
-// MARK: - Layout Helper  -> setLayout
-
-// MARK: - Methods     -> registerXib, assignDelegate 등
-
-// MARK: - @objc Methods
-
-// MARK: Actions       -> ex) MenuButtonDidTap
-
-// MARK: - Network
-> 네트워크 목적을 가진 함수들
+// MARK: - Extensions
 ```
 
-```
-// MARK: - Properties
-
-// MARK: - @IBOutlet Properties
-
-// MARK: - @IBAction Properties
-
-// MARK: - View Life Cycle
-
-// MARK: - Methods
-> setUI, registerXib, assignDelegate 등
-
-// MARK: - @objc Methods
-
-// MARK: - Network
-> 네트워크 목적을 가진 함수들
-```
 
 ### 💧**퀵헬프 주석**
 
