@@ -104,7 +104,7 @@
 ## 📝 Code Convention
 
 <details>
-<summary> 💦 네이밍 </summary>
+<summary> 🍎 네이밍 </summary>
 <div markdown="1">
 
 ### 💧클래스, 구조체
@@ -282,7 +282,7 @@ setNotification() : NotificationCenter addObserver 모음
 </details>
 
 <details>
-<summary> 💦코드 레이아웃 </summary>
+<summary> 🍎 코드 레이아웃 </summary>
 <div markdown="1">
 
 ### 💧**들여쓰기 및 띄어쓰기**
@@ -393,7 +393,7 @@ import URLNavigator
 
 
 <details>
-<summary> 💦클로저 </summary>
+<summary> 🍎 클로저 </summary>
 <div markdown="1">
 
 - 파라미터와 리턴 타입이 없는 Closure 정의시에는 `() -> Void`를 사용합니다.
@@ -471,7 +471,7 @@ import URLNavigator
 </details>
 
 <details>
-<summary> 💦주석 </summary>
+<summary> 🍎 주석 </summary>
 <div markdown="1">
 
 코드는 가능하면 자체적으로 문서가 되어야 하므로, 코드와 함께 있는 인라인(inline) 주석은 피한다.
@@ -552,7 +552,7 @@ func printProperty(property: Int) {
 </details>
 
 <details>
-<summary> 💦프로그래밍 권장사항 </summary>
+<summary> 🍎 프로그래밍 권장사항 </summary>
 <div markdown="1">
 
 ### 💧**Type Annotation 사용**
@@ -609,7 +609,7 @@ final class MyViewController: UIViewController, UITableViewDataSource, UITableVi
 
 
 <details>
-<summary> 💦기타규칙 </summary>
+<summary> 🍎 기타규칙 </summary>
 <div markdown="1">
 
 - `self` 는 최대한 사용을 지양 → `**알잘딱깔센 self…**`
