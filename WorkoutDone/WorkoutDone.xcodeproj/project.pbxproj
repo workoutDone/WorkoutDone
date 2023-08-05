@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		92005FC629B1A49400586063 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92005FC529B1A49400586063 /* AppDelegate.swift */; };
 		92005FC829B1A49400586063 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92005FC729B1A49400586063 /* SceneDelegate.swift */; };
-		92005FCA29B1A49400586063 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92005FC929B1A49400586063 /* ViewController.swift */; };
 		92005FCF29B1A49500586063 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 92005FCE29B1A49500586063 /* Assets.xcassets */; };
 		92005FD229B1A49500586063 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 92005FD029B1A49500586063 /* LaunchScreen.storyboard */; };
 		92005FDD29B1A49600586063 /* WorkoutDoneTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92005FDC29B1A49600586063 /* WorkoutDoneTests.swift */; };
@@ -205,7 +204,6 @@
 		92005FC229B1A49400586063 /* WorkoutDone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WorkoutDone.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		92005FC529B1A49400586063 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		92005FC729B1A49400586063 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		92005FC929B1A49400586063 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		92005FCE29B1A49500586063 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		92005FD129B1A49500586063 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		92005FD329B1A49500586063 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -436,7 +434,6 @@
 				9200601729B1A6A300586063 /* Resources */,
 				9200601829B1A6AD00586063 /* Sources */,
 				9200602B29B1A81B00586063 /* Utils */,
-				92005FC929B1A49400586063 /* ViewController.swift */,
 				92005FD329B1A49500586063 /* Info.plist */,
 			);
 			path = WorkoutDone;
@@ -1238,7 +1235,6 @@
 				A54C486329FFA1A0004CEE3D /* HomeButtonPhotoFrameTypeViewController.swift in Sources */,
 				A58327782A20C110002F8F6E /* DuringSetViewController.swift in Sources */,
 				A526C1292A1B4ACC00DAC0EF /* DeleteRecordAlertView.swift in Sources */,
-				92005FCA29B1A49400586063 /* ViewController.swift in Sources */,
 				9269981C2A0EBD22003DDAD2 /* MyRoutine.swift in Sources */,
 				929158492A3F74D10022BEF9 /* CreateWeightTrainingButton.swift in Sources */,
 				A553A5E92A4C88530027F502 /* TemporaryRoutine.swift in Sources */,
