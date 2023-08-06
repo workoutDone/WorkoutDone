@@ -5,19 +5,20 @@
 //  Created by 류창휘 on 2023/03/24.
 //
 
-import UIKit
 import SwiftUI
+import UIKit
+
 import SnapKit
 import Then
 
-
-class AnalyzeViewController : BaseViewController {
+final class AnalyzeViewController: BaseViewController {
+    
+    // MARK: - UI Property
     private let contentScrollView = UIScrollView()
     
     private let contentView = UIView().then {
         $0.backgroundColor = .colorFFFFFF
     }
-    
     private let weightLabel = UILabel().then {
         $0.text = "체중 변화"
         $0.textColor = .color121212
@@ -30,7 +31,6 @@ class AnalyzeViewController : BaseViewController {
         $0.textColor = .color121212
         $0.font = .pretendard(.bold, size: 20)
     }
-    
     private var skeletalMuscleMassGraphView = UIView()
     
     private let fatPercentageLabel = UILabel().then {
@@ -38,16 +38,14 @@ class AnalyzeViewController : BaseViewController {
         $0.textColor = .color121212
         $0.font = .pretendard(.bold, size: 20)
     }
-    
-    
     private var fatPercentageGraphView = UIView()
     
-    
+    // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-
     }
     
+    // MARK: - Setting
     override func setupLayout() {
         super.setupLayout()
         view.addSubview(contentScrollView)
@@ -109,8 +107,4 @@ class AnalyzeViewController : BaseViewController {
             $0.bottom.equalToSuperview().offset(-30)
         }
     }
-    override func actions() {
-//        super.actions()
-    }
-    
 }
