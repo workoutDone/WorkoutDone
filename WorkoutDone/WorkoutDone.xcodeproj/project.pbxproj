@@ -119,6 +119,8 @@
 		A54C485E29FF9FB1004CEE3D /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54C485D29FF9FB1004CEE3D /* RealmManager.swift */; };
 		A54C486129FFA176004CEE3D /* HomeButtonLessPhotoFrameTypeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54C486029FFA176004CEE3D /* HomeButtonLessPhotoFrameTypeViewController.swift */; };
 		A54C486329FFA1A0004CEE3D /* HomeButtonPhotoFrameTypeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54C486229FFA1A0004CEE3D /* HomeButtonPhotoFrameTypeViewController.swift */; };
+		A55083322AB5E5C0002106A3 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = A55083312AB5E5C0002106A3 /* RxCocoa */; };
+		A55083342AB5E5C5002106A3 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = A55083332AB5E5C5002106A3 /* RxSwift */; };
 		A55149142A0FBE9D00222A72 /* WorkoutResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A55149132A0FBE9D00222A72 /* WorkoutResultViewController.swift */; };
 		A55149162A0FBEA800222A72 /* WorkoutResultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A55149152A0FBEA800222A72 /* WorkoutResultViewModel.swift */; };
 		A55149182A0FCAD200222A72 /* DeleteRecordAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A55149172A0FCAD200222A72 /* DeleteRecordAlertViewController.swift */; };
@@ -134,8 +136,10 @@
 		A5552D362A12834D00835B40 /* LimitedPhotoGalleryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5552D352A12834D00835B40 /* LimitedPhotoGalleryView.swift */; };
 		A5632CD82A0E2C08007EC335 /* ImageSelectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5632CD72A0E2C08007EC335 /* ImageSelectionViewModel.swift */; };
 		A5632CDA2A0E30F5007EC335 /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5632CD92A0E30F5007EC335 /* UIImage.swift */; };
+		A56757952A9DC44000D35381 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = A56757942A9DC44000D35381 /* RealmSwift */; };
 		A56D904229E08604009FD0B2 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A56D904129E08604009FD0B2 /* HomeViewModel.swift */; };
 		A56F61502A3ECA42000879F5 /* InputWorkoutDataViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A56F614F2A3ECA42000879F5 /* InputWorkoutDataViewModel.swift */; };
+		A56FCBB92A9DB29700A23797 /* RegisterMyBodyInfoViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A56FCBB82A9DB29700A23797 /* RegisterMyBodyInfoViewModelTests.swift */; };
 		A57061CF29CD6A5E0083ECDD /* GalleryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57061CE29CD6A5E0083ECDD /* GalleryViewController.swift */; };
 		A57061D129CD6A840083ECDD /* AnalyzeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57061D029CD6A840083ECDD /* AnalyzeViewController.swift */; };
 		A57061D429D045690083ECDD /* WeightGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57061D329D045690083ECDD /* WeightGraphView.swift */; };
@@ -326,6 +330,7 @@
 		A5632CD92A0E30F5007EC335 /* UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
 		A56D904129E08604009FD0B2 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		A56F614F2A3ECA42000879F5 /* InputWorkoutDataViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputWorkoutDataViewModel.swift; sourceTree = "<group>"; };
+		A56FCBB82A9DB29700A23797 /* RegisterMyBodyInfoViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterMyBodyInfoViewModelTests.swift; sourceTree = "<group>"; };
 		A57061CE29CD6A5E0083ECDD /* GalleryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryViewController.swift; sourceTree = "<group>"; };
 		A57061D029CD6A840083ECDD /* AnalyzeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyzeViewController.swift; sourceTree = "<group>"; };
 		A57061D329D045690083ECDD /* WeightGraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeightGraphView.swift; sourceTree = "<group>"; };
@@ -394,6 +399,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A55083342AB5E5C5002106A3 /* RxSwift in Frameworks */,
+				A55083322AB5E5C0002106A3 /* RxCocoa in Frameworks */,
+				A56757952A9DC44000D35381 /* RealmSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -415,6 +423,7 @@
 				92005FDB29B1A49600586063 /* WorkoutDoneTests */,
 				92005FE529B1A49600586063 /* WorkoutDoneUITests */,
 				92005FC329B1A49400586063 /* Products */,
+				A56757932A9DC44000D35381 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -443,6 +452,7 @@
 			isa = PBXGroup;
 			children = (
 				92005FDC29B1A49600586063 /* WorkoutDoneTests.swift */,
+				A56FCBB82A9DB29700A23797 /* RegisterMyBodyInfoViewModelTests.swift */,
 			);
 			path = WorkoutDoneTests;
 			sourceTree = "<group>";
@@ -782,6 +792,13 @@
 			path = TemporaryRoutine;
 			sourceTree = "<group>";
 		};
+		A56757932A9DC44000D35381 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		A57061CC29CD6A290083ECDD /* Gallery */ = {
 			isa = PBXGroup;
 			children = (
@@ -1013,6 +1030,11 @@
 				92005FDA29B1A49600586063 /* PBXTargetDependency */,
 			);
 			name = WorkoutDoneTests;
+			packageProductDependencies = (
+				A56757942A9DC44000D35381 /* RealmSwift */,
+				A55083312AB5E5C0002106A3 /* RxCocoa */,
+				A55083332AB5E5C5002106A3 /* RxSwift */,
+			);
 			productName = WorkoutDoneTests;
 			productReference = 92005FD829B1A49600586063 /* WorkoutDoneTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -1306,6 +1328,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				92005FDD29B1A49600586063 /* WorkoutDoneTests.swift in Sources */,
+				A56FCBB92A9DB29700A23797 /* RegisterMyBodyInfoViewModelTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1724,6 +1747,21 @@
 			productName = Realm;
 		};
 		9200600829B1A55A00586063 /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9200600529B1A55A00586063 /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = RealmSwift;
+		};
+		A55083312AB5E5C0002106A3 /* RxCocoa */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 92005FFB29B1A51F00586063 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxCocoa;
+		};
+		A55083332AB5E5C5002106A3 /* RxSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 92005FFB29B1A51F00586063 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxSwift;
+		};
+		A56757942A9DC44000D35381 /* RealmSwift */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 9200600529B1A55A00586063 /* XCRemoteSwiftPackageReference "realm-swift" */;
 			productName = RealmSwift;

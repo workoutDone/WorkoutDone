@@ -6,24 +6,23 @@
 //
 
 import UIKit
-import SnapKit
-import Then
+
 import RxCocoa
 import RxSwift
+import SnapKit
+import Then
 
 struct BodyInputData {
-    var weight : String?
-    var skeletalMusleMass : String?
-    var fatPercentage : String?
+    var weight: String?
+    var skeletalMusleMass: String?
+    var fatPercentage: String?
 }
 
-
-class RegisterMyBodyInfoViewController : BaseViewController {
-    // MARK: - ViewModel
+class RegisterMyBodyInfoViewController: BaseViewController {
+    // MARK: - Property
     private var viewModel = RegisterMyBodyInfoViewModel()
-    
     private var bodyInputData = PublishSubject<BodyInputData>()
-    var selectedDate : Int?
+    var selectedDate: Int?
     private var didLoad = PublishSubject<Void>()
     private lazy var input = RegisterMyBodyInfoViewModel.Input(
         loadView: didLoad.asDriver(onErrorJustReturn: ()),
@@ -34,11 +33,10 @@ class RegisterMyBodyInfoViewController : BaseViewController {
         selectedDate: Driver.just(selectedDate!)
     )
     private lazy var output = viewModel.transform(input: input)
+    // dismiss 시 사용될 CompletionHandler
+    var completionHandler: ((Int) -> Void)?
     
-    ///dismiss 시 사용될 CompletionHandler
-    var completionHandler : ((Int) -> Void)?
-    
-    // MARK: - PROPERTIES
+    // MARK: - UI Property
     private let baseView = UIView().then {
         $0.backgroundColor = .colorFFFFFF
         $0.layer.cornerRadius = 15
@@ -66,7 +64,6 @@ class RegisterMyBodyInfoViewController : BaseViewController {
     }
     private let weightTextField = UITextField().then {
         $0.backgroundColor = .colorF3F3F3
-        // MARK: - TODO 기본설정 잡기
         $0.layer.cornerRadius = 8
         $0.textAlignment = .right
         $0.keyboardType = .decimalPad
@@ -85,7 +82,6 @@ class RegisterMyBodyInfoViewController : BaseViewController {
     }
     private let skeletalMuscleMassTextField = UITextField().then {
         $0.backgroundColor = .colorF3F3F3
-        // MARK: - TODO 기본설정 잡기
         $0.layer.cornerRadius = 8
         $0.textAlignment = .right
         $0.keyboardType = .decimalPad
@@ -96,7 +92,6 @@ class RegisterMyBodyInfoViewController : BaseViewController {
         $0.textColor = .color000000
         $0.font = .pretendard(.medium, size: 18)
     }
-    
     private let fatPercentageLabel = UILabel().then {
         $0.text = "체지방률"
         $0.textAlignment = .right
@@ -105,7 +100,6 @@ class RegisterMyBodyInfoViewController : BaseViewController {
     }
     private let fatPercentageTextField = UITextField().then {
         $0.backgroundColor = .colorF3F3F3
-        // MARK: - TODO 기본설정 잡기
         $0.layer.cornerRadius = 8
         $0.textAlignment = .right
         $0.keyboardType = .decimalPad
@@ -152,7 +146,7 @@ class RegisterMyBodyInfoViewController : BaseViewController {
         $0.distribution = .fill
         $0.spacing = 47
     }
-    // MARK: - LIFECYCLE
+    // MARK: - Life Cycle
     deinit {
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
@@ -195,8 +189,7 @@ class RegisterMyBodyInfoViewController : BaseViewController {
             fatPercentageStackView.addArrangedSubview($0)
         }
     }
-
-
+    
     override func setupConstraints() {
         super.setupConstraints()
         [weightTextField, fatPercentageTextField, skeletalMuscleMassTextField].forEach {
@@ -227,7 +220,7 @@ class RegisterMyBodyInfoViewController : BaseViewController {
                 $0.width.equalTo(24)
             }
         }
-        ///체중
+        // 체중
         weightStackView.snp.makeConstraints {
             $0.centerX.equalTo(baseView)
             $0.top.equalTo(myBodyInfoLabel.snp.bottom).offset(36)
@@ -236,7 +229,7 @@ class RegisterMyBodyInfoViewController : BaseViewController {
             $0.height.equalTo(35)
             $0.width.equalTo(101)
         }
-        ///골격근량
+        // 골격근량
         skeletalMuscleMassStackView.snp.makeConstraints {
             $0.centerX.equalTo(baseView)
             $0.top.equalTo(weightStackView.snp.bottom).offset(22)
@@ -251,7 +244,7 @@ class RegisterMyBodyInfoViewController : BaseViewController {
             $0.bottom.equalTo(baseView.snp.bottom).offset(-16)
             $0.height.equalTo(58)
         }
-        ///체지방량
+        // 체지방량
         fatPercentageStackView.snp.makeConstraints {
             $0.centerX.equalTo(baseView)
             $0.top.equalTo(skeletalMuscleMassStackView.snp.bottom).offset(22)
@@ -270,14 +263,13 @@ class RegisterMyBodyInfoViewController : BaseViewController {
         output.fatPercentageOutputText.drive(fatPercentageTextField.rx.text)
             .disposed(by: disposeBag)
         
-        output.saveData.drive(onNext: { value in
+        output.saveData.drive(onNext: { [weak self] value in
+            guard let self = self else { return }
             if value {
-                ///옳바른 형식
-                self.dismiss(animated: true)
+                // 옳바른 형식
+                dismiss(animated: true)
                 self.completionHandler?(self.selectedDate!)
-            }
-            else {
-                print("응 안돼~")
+            } else {
                 self.showToastMessage()
                 
             }
@@ -290,21 +282,17 @@ class RegisterMyBodyInfoViewController : BaseViewController {
             .disposed(by: disposeBag)
         output.readFatPercentageData.drive(fatPercentageTextField.rx.text)
             .disposed(by: disposeBag)
-        
-        
+
         didLoad.onNext(())
         saveButton.rx.tap
-            .bind { value in
-                print(value, "버튼 탭")
+            .bind { [weak self] _ in
+                guard let self = self else { return }
                 self.bodyInputData.onNext(BodyInputData(
                     weight: self.weightTextField.text ?? "",
                     skeletalMusleMass: self.skeletalMuscleMassTextField.text ?? "",
                     fatPercentage: self.fatPercentageTextField.text ?? ""))
             }
             .disposed(by: disposeBag)
-        
-        
-        
     }
     override func actions() {
         super.actions()
@@ -315,14 +303,14 @@ class RegisterMyBodyInfoViewController : BaseViewController {
     }
     @objc func keyboardUp(notification: NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            ///화면 사이즈의 중앙과 뷰의 중앙의 차이
+            // 화면 사이즈의 중앙과 뷰의 중앙의 차이
             let offsetValue = UIScreen.main.bounds.height / 2 - 346 / 2
             let height = -keyboardSize.height + offsetValue
             if height < 0 {
-                self.baseView.snp.updateConstraints { make in
+                baseView.snp.updateConstraints { make in
                     make.centerY.equalToSuperview().offset(height)
                 }
-                self.view.layoutIfNeeded()
+                view.layoutIfNeeded()
             }
         }
     }
@@ -337,13 +325,12 @@ class RegisterMyBodyInfoViewController : BaseViewController {
         
         UIView.animate(withDuration: 0.7, delay: 0.0, options: .curveEaseOut, animations: {
             self.present(saveImageToastMessageVC, animated: false)
-        }) { (completed) in
+        }) { _ in
             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1) {
-                UIView.animate(withDuration: 0.5, delay: 0.0, options: .curveEaseOut) {
-                saveImageToastMessageVC.dismiss(animated: false)
-                }
+                UIView.animate(withDuration: 0.5, delay: 0.0, options: .curveEaseOut, animations: {
+                    saveImageToastMessageVC.dismiss(animated: false)
+                })
             }
         }
     }
-    
 }
