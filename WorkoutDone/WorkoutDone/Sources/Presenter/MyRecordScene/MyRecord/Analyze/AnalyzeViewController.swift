@@ -45,6 +45,10 @@ final class AnalyzeViewController: BaseViewController {
         super.viewDidLoad()
     }
     
+    // MARK: - Action Helper
+    override func actions() {
+    }
+    
     // MARK: - Setting
     override func setupLayout() {
         super.setupLayout()
