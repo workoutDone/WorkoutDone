@@ -29,7 +29,7 @@ class ImageSelectionViewModel {
     
     func deleteFrameImageData(id : Int) {
         guard let workoutDoneData = realm.object(ofType: WorkOutDoneData.self, forPrimaryKey: id) else { return }
-        RealmManager.shared.deleteData(workoutDoneData.frameImage!)
+        RealmManager3.shared.deleteData(workoutDoneData.frameImage!)
     }
     func transform(input : Input) -> Output {
         

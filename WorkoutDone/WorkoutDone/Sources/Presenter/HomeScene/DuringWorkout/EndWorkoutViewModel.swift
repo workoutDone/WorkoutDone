@@ -12,7 +12,7 @@ import RxSwift
 
 class EndWorkoutViewModel {
     let realm = try! Realm()
-    let realmManager = RealmManager.shared
+    let realmManager = RealmManager3.shared
     
     struct Input {
         let saveTrigger : Driver<Void>
@@ -36,7 +36,7 @@ class EndWorkoutViewModel {
     
     ///id값으로 workoutDoneData 가져오기
     func readWorkoutDoneData(id : Int) -> WorkOutDoneData?  {
-        let workoutDoneData = RealmManager.shared.readData(id: id, type: WorkOutDoneData.self)
+        let workoutDoneData = RealmManager3.shared.readData(id: id, type: WorkOutDoneData.self)
         return workoutDoneData
     }
     ///id값으로 temporaryRoutineData 가져오기

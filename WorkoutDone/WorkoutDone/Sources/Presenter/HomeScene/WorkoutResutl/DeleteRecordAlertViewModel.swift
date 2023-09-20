@@ -12,14 +12,14 @@ import RxCocoa
 
 class DeleteRecordAlertViewModel {
     let realm = try! Realm()
-    let realmManager = RealmManager.shared
+    let realmManager = RealmManager3.shared
     var workOutDoneData : Results<WorkOutDoneData>?
     init(workOutDoneData: Results<WorkOutDoneData>? = nil) {
         self.workOutDoneData = realm.objects(WorkOutDoneData.self)
     }
     
     func readWorkoutDoneData(id : Int) -> WorkOutDoneData?  {
-        let workoutDoneData = RealmManager.shared.readData(id: id, type: WorkOutDoneData.self)
+        let workoutDoneData = RealmManager3.shared.readData(id: id, type: WorkOutDoneData.self)
         return workoutDoneData
     }
     

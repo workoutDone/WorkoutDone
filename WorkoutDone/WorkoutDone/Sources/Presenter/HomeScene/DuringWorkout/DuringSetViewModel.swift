@@ -12,7 +12,7 @@ import RealmSwift
 
 class DuringSetViewModel {
     let realm = try! Realm()
-    let realmManager = RealmManager.shared
+    let realmManager = RealmManager3.shared
     let duringWorkoutRoutine = DuringWorkoutRoutine.shared
     
     struct Input {

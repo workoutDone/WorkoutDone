@@ -82,7 +82,7 @@ struct RoutineViewModel {
         }
         temporaryRoutine.intDate = id
         temporaryRoutine.weightTraining.append(objectsIn: setWeightTraining(weightTraining))
-        let realmManager = RealmManager.shared
+        let realmManager = RealmManager3.shared
         realmManager.createData(data: temporaryRoutine)
     }
     
