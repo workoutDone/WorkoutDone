@@ -81,46 +81,44 @@ struct RegisterMyBodyInfoViewModel: ViewModelType {
             return value
         }
         
-        // 몸무게 데이터 확인(read)
-        let readWeightData = Driver<String>.combineLatest(input.loadView, input.selectedDate, resultSelector: { (_, date) in
-            if hasBodyInfoData(id: date) {
-                let weight = workoutdataManager.readWorkoutDoneData(id: date)?.bodyInfo?.weight
-                if let doubleWeight = weight {
-                    return String(doubleWeight)
+        enum BodyInfoType {
+            case weight
+            case skeletalMusleMass
+            case fatPercentage
+            
+            func getBodyInfoType(workoutDataManager: WorkoutDoneDataManager?, id: Int) -> Double? {
+                switch self {
+                case .weight:
+                    return workoutDataManager?.readWorkoutDoneData(id: id)?.bodyInfo?.weight
+                case .skeletalMusleMass:
+                    return workoutDataManager?.readWorkoutDoneData(id: id)?.bodyInfo?.skeletalMuscleMass
+                case .fatPercentage:
+                    return workoutDataManager?.readWorkoutDoneData(id: id)?.bodyInfo?.fatPercentage
+                }
+            }
+        }
+        
+        func readBodyInfoData(bodyInfoType: BodyInfoType, workoutDoneManager: WorkoutDoneDataManager) -> Driver<String> {
+            return Driver<String>.combineLatest(input.loadView, input.selectedDate, resultSelector: { (_, date) in
+                if hasBodyInfoData(id: date) {
+                    let bodyData = bodyInfoType.getBodyInfoType(workoutDataManager: workoutDoneManager, id: date)
+                    if let doubleBodyData = bodyData {
+                        return String(doubleBodyData)
+                    } else {
+                        return ""
+                    }
                 } else {
                     return ""
                 }
-            } else {
-                return ""
-            }
-        })
+            })
+        }
         
         // 골격근량 데이터 확인(read)
-        let readSkeletalMusleMassData = Driver<String>.combineLatest(input.loadView, input.selectedDate, resultSelector: { (_, date) in
-            if hasBodyInfoData(id: date) {
-                let skeletalMusleMass = workoutdataManager.readWorkoutDoneData(id: date)?.bodyInfo?.skeletalMuscleMass
-                if let doubleSkeletalMusleMass = skeletalMusleMass {
-                    return String(doubleSkeletalMusleMass)
-                } else {
-                    return ""
-                }
-            } else {
-                return ""
-            }
-        })
+        let readSkeletalMusleMassData = readBodyInfoData(bodyInfoType: .skeletalMusleMass, workoutDoneManager: workoutdataManager)
+        // 몸무게 데이터 확인(read)
+        let readWeightData = readBodyInfoData(bodyInfoType: .weight, workoutDoneManager: workoutdataManager)
         /// 체지방량 데이터  확인(read)
-        let readFatPercentageData = Driver<String>.combineLatest(input.loadView, input.selectedDate, resultSelector: { (_, date) in
-            if hasBodyInfoData(id: date) {
-                let fatPercentage = workoutdataManager.readWorkoutDoneData(id: date)?.bodyInfo?.fatPercentage
-                if let doubleFatPercentage = fatPercentage {
-                    return String(doubleFatPercentage)
-                } else {
-                    return ""
-                }
-            } else {
-                return ""
-            }
-        })
+        let readFatPercentageData = readBodyInfoData(bodyInfoType: .fatPercentage, workoutDoneManager: workoutdataManager)
 
         /// 데이터 입력(update or create)
         let inputData = Driver<Bool>.combineLatest(input.saveButtonTapped, input.selectedDate, resultSelector: { (inputData, id) in
