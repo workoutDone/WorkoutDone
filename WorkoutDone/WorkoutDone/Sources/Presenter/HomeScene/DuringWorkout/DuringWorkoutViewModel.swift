@@ -12,7 +12,7 @@ import RxSwift
 
 class DuringWorkoutViewModel {
     let realm = try! Realm()
-    let realmManager = RealmManager.shared
+    let realmManager = RealmManager3.shared
     struct Input {
         let loadView : Driver<Void>
         let weightTrainingArrayIndex  : Driver<Int>

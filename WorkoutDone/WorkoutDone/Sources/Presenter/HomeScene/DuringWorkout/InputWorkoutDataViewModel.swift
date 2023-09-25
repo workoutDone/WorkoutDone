@@ -14,7 +14,7 @@ class InputWorkoutDataViewModel {
     let duringWorkoutRoutine = DuringWorkoutRoutine.shared
     
     let realm = try! Realm()
-    let realmManager = RealmManager.shared
+    let realmManager = RealmManager3.shared
     
     struct Input {
         let countInputText : Driver<String>

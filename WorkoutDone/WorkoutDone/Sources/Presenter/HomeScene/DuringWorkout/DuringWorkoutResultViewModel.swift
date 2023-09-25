@@ -16,7 +16,7 @@ import RealmSwift
 
 class DuringWorkoutResultViewModel {
     let realm = try! Realm()
-    let realmManager = RealmManager.shared
+    let realmManager = RealmManager3.shared
 
     struct Input {
         let loadView : Driver<Void>
@@ -41,7 +41,7 @@ class DuringWorkoutResultViewModel {
         realmManager.deleteData(temporaryRoutineData)
     }
     func readWorkoutDoneData(id : Int) -> WorkOutDoneData?  {
-        let workoutDoneData = RealmManager.shared.readData(id: id, type: WorkOutDoneData.self)
+        let workoutDoneData = RealmManager3.shared.readData(id: id, type: WorkOutDoneData.self)
         return workoutDoneData
     }
     

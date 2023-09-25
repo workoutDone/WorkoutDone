@@ -12,7 +12,7 @@ import RealmSwift
 
 class PhotoFrameTypeViewModel {
     let realm = try! Realm()
-    let realmManager = RealmManager.shared
+    let realmManager = RealmManager3.shared
     
     struct Input {
         let frameTypeButtonStatus : Driver<Bool>

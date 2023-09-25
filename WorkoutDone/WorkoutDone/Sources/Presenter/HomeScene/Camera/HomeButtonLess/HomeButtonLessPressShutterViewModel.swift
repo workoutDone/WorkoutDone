@@ -12,7 +12,7 @@ import RealmSwift
 
 class HomeButtonLessPressShutterViewModel {
     let realm = try! Realm()
-    let realmManager = RealmManager.shared
+    let realmManager = RealmManager3.shared
     var workOutDoneData : Results<WorkOutDoneData>?
     init(workOutDoneData: Results<WorkOutDoneData>? = nil) {
         self.workOutDoneData = realm.objects(WorkOutDoneData.self)
