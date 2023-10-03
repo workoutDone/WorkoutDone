@@ -18,5 +18,10 @@ jobs:
     - uses: actions/checkout@v3
     - name: Create temporary Config.xcconfig
       run: echo "FACEBOOK_APP_KEY = 00000000" > WorkoutDone/WorkoutDone/Resources/Config.xcconfig
+    - name: Run unit tests
+      run: |
+        xcodebuild clean test-without-building -project WorkoutDone/WorkoutDone.xcodeproj \
+        -scheme WorkoutDone \
+        -destination 'platform=iOS Simulator,name=iPhone 14,OS=latest'
     - name: Remove temporary Config.xcconfig
       run: rm -f WorkoutDone/WorkoutDone/Resources/Config.xcconfig
