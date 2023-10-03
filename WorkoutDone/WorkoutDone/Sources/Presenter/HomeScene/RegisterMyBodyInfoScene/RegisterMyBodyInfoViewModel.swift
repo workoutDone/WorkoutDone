@@ -1,26 +1,19 @@
 import Foundation
 
-import RealmSwift
 import RxCocoa
 import RxSwift
 
 struct RegisterMyBodyInfoViewModel: ViewModelType {
-    var realm: Realm?
-    let realmManager: RealmManager
+    let realmProvider: RealmProviderProtocol
     let workoutdataManager: WorkoutDoneDataManager
     let bodyInfoDataManager: BodyInfoDataManager
-    
-    init() {
-        do {
-            self.realm = try Realm()
-            self.realmManager = RealmManager(realm: self.realm!)
-            self.workoutdataManager = WorkoutDoneDataManager(realmManager: self.realmManager)
-            self.bodyInfoDataManager = BodyInfoDataManager(realmManager: self.realmManager)
-        } catch {
-            fatalError("Failed to initialize Realm: \(error)")
-        }
+    init(realmProvider: RealmProviderProtocol) {
+        self.realmProvider = realmProvider
+        let realmManager = RealmManager(realm: try! realmProvider.makeRealm())
+        self.workoutdataManager = WorkoutDoneDataManager(realmManager: realmManager)
+        self.bodyInfoDataManager = BodyInfoDataManager(realmManager: realmManager)
     }
-  
+
     struct Input {
         let loadView: Driver<Void>
         let weightInputText: Driver<String>
