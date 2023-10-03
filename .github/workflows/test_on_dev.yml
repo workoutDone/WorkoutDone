@@ -1,23 +1,23 @@
 # This workflow will build a Swift project
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-swift
-
 name: Swift
-
 on:
   push:
     branches: [ "dev" ]
   pull_request:
     branches: [ "dev" ]
-
 jobs:
   build:
-
     runs-on: macos-latest
 
     steps:
     - uses: actions/checkout@v3
+    - name: Create temporary Config.xcconfig
+      run: echo "FACEBOOK_APP_KEY = 00000000" > WorkoutDone/WorkoutDone/Resources/Config.xcconfig
     - name: Run unit tests
       run: |
         xcodebuild clean test -project WorkoutDone/WorkoutDone.xcodeproj \
         -scheme WorkoutDone \
         -destination 'platform=iOS Simulator,name=iPhone 14,OS=latest'
+    - name: Remove temporary Config.xcconfig
+      run: rm -f WorkoutDone/WorkoutDone/Resources/Config.xcconfig
