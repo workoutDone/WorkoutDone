@@ -8,16 +8,9 @@
 import UIKit
 import RxCocoa
 import RxSwift
-import RealmSwift
 
 class HomeButtonLessPressShutterViewModel {
-    let realm = try! Realm()
-    let realmManager = RealmManager.shared
-    var workOutDoneData : Results<WorkOutDoneData>?
-    init(workOutDoneData: Results<WorkOutDoneData>? = nil) {
-        self.workOutDoneData = realm.objects(WorkOutDoneData.self)
-    
-    }
+    private let dataManager = SwiftDataManager.shared
     struct Input {
         let selectedData : Driver<Int>
         let selectedFrameType : Driver<Int>
@@ -28,29 +21,27 @@ class HomeButtonLessPressShutterViewModel {
         let saveData : Driver<Void>
     }
     
-    ///Realm Create
+    ///SwiftData Create
     func createFrameImageData(image : UIImage, id : Int, date : String, frameType : Int) {
         let workoutDoneData = WorkOutDoneData(id: id, date: date)
-        let frameImage = FrameImage()
-        frameImage.image = image.pngData()
-        frameImage.frameType = frameType
+        let frameImage = FrameImage(frameType: frameType, image: image.pngData())
         workoutDoneData.frameImage = frameImage
-        realmManager.createData(data: workoutDoneData)
+        dataManager.createData(data: workoutDoneData)
     }
     
-    ///Realm Read
+    ///SwiftData Read
     func readWorkoutDoneData(id : Int) -> WorkOutDoneData? {
-        let selectedWorkoutDoneData = realmManager.readData(id: id, type: WorkOutDoneData.self)
+        let selectedWorkoutDoneData = dataManager.readData(id: id, type: WorkOutDoneData.self)
         return selectedWorkoutDoneData
     }
     
     ///id값으로 데이터가 있는지 판별
     func validFrameImageData(id : Int) -> Bool {
-        let selectedBodyInfoData = realm.object(ofType: WorkOutDoneData.self, forPrimaryKey: id)
+        let selectedBodyInfoData = readWorkoutDoneData(id: id)
         return selectedBodyInfoData?.frameImage == nil ? false : true
     }
     func validWorkoutDoneData(id : Int) -> Bool {
-        let selectedWorkoutDoneData = realm.object(ofType: WorkOutDoneData.self, forPrimaryKey: id)
+        let selectedWorkoutDoneData = readWorkoutDoneData(id: id)
         return selectedWorkoutDoneData == nil ? false : true
     }
     ///id 값(string) -> Date(string)으로 변경
@@ -76,22 +67,19 @@ class HomeButtonLessPressShutterViewModel {
                 ///FrameImage 데이터 존재하는 경우 - update
                 if self.validFrameImageData(id: id) {
                     print("FrameImage 데이터 존재하는 경우 - update")
-                    let workoutDoneData = self.readWorkoutDoneData(id: id)
-                    try! self.realm.write {
-                        workoutDoneData?.frameImage?.image = image.pngData()
-                        workoutDoneData?.frameImage?.frameType = frame
+                    guard let workoutDoneData = self.readWorkoutDoneData(id: id) else { return }
+                    self.dataManager.updateData(data: workoutDoneData) { updatedData in
+                        updatedData.frameImage?.image = image.pngData()
+                        updatedData.frameImage?.frameType = frame
                     }
                 }
                 ///FrameImage 데이터 존재하는 경우 - create
                 else {
                     print("FrameImage 데이터 존재하지 않는 경우 - create")
                     guard let workOutDoneData = self.readWorkoutDoneData(id: id) else { return }
-                    let frameImage = FrameImage()
-                    frameImage.frameType = frame
-                    frameImage.image = image.pngData()
-                    try! self.realm.write {
-                        workOutDoneData.frameImage = frameImage
-                        self.realm.add(workOutDoneData)
+                    let frameImage = FrameImage(frameType: frame, image: image.pngData())
+                    self.dataManager.updateData(data: workOutDoneData) { updatedData in
+                        updatedData.frameImage = frameImage
                     }
                 }
             }

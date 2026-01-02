@@ -6,6 +6,7 @@
 //
 
 import XCTest
+import RxCocoa
 @testable import WorkoutDone
 
 final class WorkoutDoneTests: XCTestCase {

@@ -6,15 +6,15 @@
 //
 
 import SwiftUI
-import RealmSwift
+import SwiftData
 
 class SkeletalMuslemassGraphViewModel : ObservableObject {
-    let realm = try! Realm()
     @Published var skeletalMusleMassData : [WorkOutDoneData] = []
     
     func readSkeletalMusleMassData() {
-        let objects = realm.objects(WorkOutDoneData.self)
-        skeletalMusleMassData = Array(objects)
+        let descriptor = FetchDescriptor<WorkOutDoneData>()
+        let objects = (try? SwiftDataManager.shared.context.fetch(descriptor)) ?? []
+        skeletalMusleMassData = objects
             .sorted(by: { $0.date.yyMMddToDate() ?? Date() < $1.date.yyMMddToDate() ?? Date() })
             .filter({
                 $0.bodyInfo?.skeletalMuscleMass != nil && $0.bodyInfo?.skeletalMuscleMass ?? 0 >= 0

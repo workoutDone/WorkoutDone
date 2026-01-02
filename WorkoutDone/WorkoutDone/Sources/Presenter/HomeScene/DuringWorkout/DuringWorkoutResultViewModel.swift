@@ -8,15 +8,13 @@
 import UIKit
 import RxCocoa
 import RxSwift
-import RealmSwift
 
 //제목이 있는지 없는지 확인하는 bool 타입 하나 만들기
 //false 인 경우 label hidden
 //3
 
 class DuringWorkoutResultViewModel {
-    let realm = try! Realm()
-    let realmManager = RealmManager.shared
+    private let dataManager = SwiftDataManager.shared
 
     struct Input {
         let loadView : Driver<Void>
@@ -32,16 +30,16 @@ class DuringWorkoutResultViewModel {
     }
 
     func readTemporaryRoutineData() -> TemporaryRoutine? {
-        let temporaryRoutineData = realmManager.readData(id: 0, type: TemporaryRoutine.self)
+        let temporaryRoutineData = dataManager.readData(id: 0, type: TemporaryRoutine.self)
         return temporaryRoutineData
     }
 
     func deleteTemporaryRoutineData() {
         guard let temporaryRoutineData = readTemporaryRoutineData() else { return }
-        realmManager.deleteData(temporaryRoutineData)
+        dataManager.deleteData(data: temporaryRoutineData)
     }
     func readWorkoutDoneData(id : Int) -> WorkOutDoneData?  {
-        let workoutDoneData = RealmManager.shared.readData(id: id, type: WorkOutDoneData.self)
+        let workoutDoneData = dataManager.readData(id: id, type: WorkOutDoneData.self)
         return workoutDoneData
     }
     
@@ -69,11 +67,11 @@ class DuringWorkoutResultViewModel {
         guard let weightTraining = workoutData?.routine?.weightTraining else { return [] }
         let arrayWeightTraining = Array(weightTraining)
         
-        let letterCounts = arrayWeightTraining.reduce(into: [:]) { counts, word in
-            counts[word, default: 0] += 1
+        let letterCounts = arrayWeightTraining.reduce(into: [String: Int]()) { counts, training in
+            counts[training.bodyPart, default: 0] += 1
         }
         let sortedByCount = letterCounts.sorted { $0.value > $1.value }
-        let result = Array(sortedByCount.prefix(3).map { $0.key .bodyPart})
+        let result = Array(sortedByCount.prefix(3).map { $0.key })
         return result
     }
     

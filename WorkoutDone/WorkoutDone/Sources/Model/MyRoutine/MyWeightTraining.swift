@@ -6,14 +6,14 @@
 //
 
 import Foundation
-import RealmSwift
+import SwiftData
 
-class MyWeightTraining : Object {
-    @Persisted dynamic var myBodyPart : String
-    @Persisted dynamic var myWeightTraining : String
-    
-    convenience init(myBodyPart: String, myWeightTraining: String) {
-        self.init()
+@Model
+final class MyWeightTraining {
+    var myBodyPart: String
+    var myWeightTraining: String
+
+    init(myBodyPart: String = "", myWeightTraining: String = "") {
         self.myBodyPart = myBodyPart
         self.myWeightTraining = myWeightTraining
     }

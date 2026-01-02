@@ -5,23 +5,27 @@
 //  Created by 류창휘 on 2023/06/29.
 //
 
-import RealmSwift
+import SwiftData
 
-class TemporaryRoutine : Object {
-    @Persisted dynamic var id : Int = 0
-    @Persisted dynamic var name : String
-    @Persisted dynamic var stamp : String
-    @Persisted dynamic var intDate : Int
-    @Persisted dynamic var weightTraining : List<WeightTraining>
+@Model
+final class TemporaryRoutine: IntIdentifiable {
+    @Attribute(.unique) var id: Int
+    var name: String
+    var stamp: String
+    var intDate: Int
+    var weightTraining: [WeightTraining]
 
-    convenience init(name: String, stamp: String, intDate: Int ,weightTraining: List<WeightTraining>) {
-        self.init()
+    init(
+        id: Int = 0,
+        name: String = "",
+        stamp: String = "",
+        intDate: Int,
+        weightTraining: [WeightTraining] = []
+    ) {
+        self.id = id
         self.name = name
         self.stamp = stamp
         self.intDate = intDate
         self.weightTraining = weightTraining
-    }
-    override class func primaryKey() -> String? {
-        return "id"
     }
 }

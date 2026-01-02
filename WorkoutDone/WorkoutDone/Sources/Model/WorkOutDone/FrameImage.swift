@@ -6,14 +6,14 @@
 //
 
 import Foundation
-import RealmSwift
+import SwiftData
 
-class FrameImage : Object {
-    @Persisted dynamic var frameType : Int = 0
-    @Persisted dynamic var image : Data?
-    
-    convenience init(frameType: Int, image: Data) {
-        self.init()
+@Model
+final class FrameImage {
+    var frameType: Int
+    var image: Data?
+
+    init(frameType: Int = 0, image: Data? = nil) {
         self.frameType = frameType
         self.image = image
     }

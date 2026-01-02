@@ -6,23 +6,17 @@
 //
 
 import Foundation
-import RealmSwift
+import SwiftData
 
-class WeightTraining : Object {
-    @Persisted dynamic var bodyPart : String
-    @Persisted dynamic var weightTraining : String
-    @Persisted dynamic var weightTrainingInfo : List<WeightTrainingInfo>
-    
-    convenience init(bodyPart: String, weightTraining: String, weightTrainingInfo: List<WeightTrainingInfo>) {
-        self.init()
+@Model
+final class WeightTraining {
+    var bodyPart: String
+    var weightTraining: String
+    var weightTrainingInfo: [WeightTrainingInfo]
+
+    init(bodyPart: String = "", weightTraining: String = "", weightTrainingInfo: [WeightTrainingInfo] = []) {
         self.bodyPart = bodyPart
         self.weightTraining = weightTraining
         self.weightTrainingInfo = weightTrainingInfo
-    }
-    
-    convenience init(bodyPart: String, weightTraining: String) {
-        self.init()
-        self.bodyPart = bodyPart
-        self.weightTraining = weightTraining
     }
 }

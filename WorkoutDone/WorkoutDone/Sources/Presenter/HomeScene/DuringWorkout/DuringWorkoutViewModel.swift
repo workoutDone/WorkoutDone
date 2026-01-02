@@ -6,13 +6,11 @@
 //
 
 import UIKit
-import RealmSwift
 import RxCocoa
 import RxSwift
 
 class DuringWorkoutViewModel {
-    let realm = try! Realm()
-    let realmManager = RealmManager.shared
+    private let dataManager = SwiftDataManager.shared
     struct Input {
         let loadView : Driver<Void>
         let weightTrainingArrayIndex  : Driver<Int>
@@ -25,7 +23,7 @@ class DuringWorkoutViewModel {
     }
     
     func readTemporaryRoutineData() -> TemporaryRoutine? {
-        let temporaryRoutineData = realmManager.readData(id: 0, type: TemporaryRoutine.self)
+        let temporaryRoutineData = dataManager.readData(id: 0, type: TemporaryRoutine.self)
         return temporaryRoutineData
     }
     

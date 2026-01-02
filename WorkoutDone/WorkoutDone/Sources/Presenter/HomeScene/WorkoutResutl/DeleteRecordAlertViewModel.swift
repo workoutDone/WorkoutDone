@@ -6,33 +6,27 @@
 //
 
 import UIKit
-import RealmSwift
 import RxSwift
 import RxCocoa
 
 class DeleteRecordAlertViewModel {
-    let realm = try! Realm()
-    let realmManager = RealmManager.shared
-    var workOutDoneData : Results<WorkOutDoneData>?
-    init(workOutDoneData: Results<WorkOutDoneData>? = nil) {
-        self.workOutDoneData = realm.objects(WorkOutDoneData.self)
-    }
+    private let dataManager = SwiftDataManager.shared
     
     func readWorkoutDoneData(id : Int) -> WorkOutDoneData?  {
-        let workoutDoneData = RealmManager.shared.readData(id: id, type: WorkOutDoneData.self)
+        let workoutDoneData = dataManager.readData(id: id, type: WorkOutDoneData.self)
         return workoutDoneData
     }
     
     func deleteRoutineData(id : Int) {
         guard let workoutDoneData = self.readWorkoutDoneData(id: id) else { return }
         if let routine = workoutDoneData.routine {
-            realmManager.deleteData(routine)
+            dataManager.deleteData(data: routine)
         }
     }
     func deleteWorkoutTimeData(id : Int) {
         guard let workoutDoneData = self.readWorkoutDoneData(id: id) else { return }
-        try! realm.write {
-            workoutDoneData.workOutTime = nil
+        dataManager.updateData(data: workoutDoneData) { updatedData in
+            updatedData.workOutTime = nil
         }
     }
     

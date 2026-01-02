@@ -6,10 +6,17 @@
 //
 
 import Foundation
-import RealmSwift
+import SwiftData
 
-class BodyInfo : Object {
-    @Persisted dynamic var weight : Double?
-    @Persisted dynamic var skeletalMuscleMass : Double?
-    @Persisted dynamic var fatPercentage : Double?
+@Model
+final class BodyInfo {
+    var weight: Double?
+    var skeletalMuscleMass: Double?
+    var fatPercentage: Double?
+
+    init(weight: Double? = nil, skeletalMuscleMass: Double? = nil, fatPercentage: Double? = nil) {
+        self.weight = weight
+        self.skeletalMuscleMass = skeletalMuscleMass
+        self.fatPercentage = fatPercentage
+    }
 }
