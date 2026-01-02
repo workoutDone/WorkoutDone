@@ -6,33 +6,31 @@
 //
 
 import UIKit
-import RealmSwift
+import SwiftData
 
 class FrameImageViewModel {
+    private let dataManager = SwiftDataManager.shared
+
     func saveImageToRealm(date: Date, frameType: Int, image: UIImage) {
         guard let imageData = image.pngData() else { return }
-        
-        let realm = try! Realm()
-        if let existingWorkOutDone = realm.object(ofType: WorkOutDoneData.self, forPrimaryKey: date.dateToInt()) {
-            try! realm.write {
-                existingWorkOutDone.frameImage = FrameImage(frameType: frameType, image: imageData)
+        let id = date.dateToInt()
+        if let existingWorkOutDone = dataManager.readData(id: id, type: WorkOutDoneData.self) {
+            dataManager.updateData(data: existingWorkOutDone) { updatedData in
+                updatedData.frameImage = FrameImage(frameType: frameType, image: imageData)
             }
         } else {
-            let workOutDone = WorkOutDoneData(id: date.dateToInt(), date: date.yyyyMMddToString())
-            workOutDone.frameImage = FrameImage(frameType: frameType, image: imageData)
-            
-            try! realm.write {
-                realm.add(workOutDone)
-            }
+            let workOutDone = WorkOutDoneData(id: id, date: date.yyyyMMddToString(), frameImage: FrameImage(frameType: frameType, image: imageData))
+            dataManager.createData(data: workOutDone)
         }
     }
 
     func loadImageFromRealm(date: Date) -> UIImage? {
-        let realm = try! Realm()
-        
-        let workOutDone = realm.objects(WorkOutDoneData.self).filter("date == %@", date.yyyyMMddToString())
-        
-        guard let frameImage = workOutDone.first?.frameImage else { return nil }
+        let dateString = date.yyyyMMddToString()
+        let predicate = #Predicate<WorkOutDoneData> { $0.date == dateString }
+        var descriptor = FetchDescriptor<WorkOutDoneData>(predicate: predicate)
+        descriptor.fetchLimit = 1
+        let workOutDone = try? dataManager.context.fetch(descriptor).first
+        guard let frameImage = workOutDone?.frameImage else { return nil }
         return UIImage(data: frameImage.image!)
     }
 }

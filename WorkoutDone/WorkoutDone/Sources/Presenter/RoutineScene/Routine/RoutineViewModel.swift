@@ -6,20 +6,16 @@
 //
 
 import UIKit
-import RealmSwift
+import SwiftData
 
 struct RoutineViewModel {
     func loadMyRoutine() -> [MyRoutine] {
-        let realm = try! Realm()
-        let myRoutine = realm.objects(MyRoutine.self)
-        
-        return Array(myRoutine)
+        let descriptor = FetchDescriptor<MyRoutine>()
+        return (try? SwiftDataManager.shared.context.fetch(descriptor)) ?? []
     }
     
     func loadMyRoutineName(id: String) -> String {
-        let realm = try! Realm()
-        
-        guard let myRoutine = realm.objects(MyRoutine.self).filter("id == %@", id).first else {
+        guard let myRoutine = SwiftDataManager.shared.readData(id: id, type: MyRoutine.self) else {
             return ""
         }
         
@@ -29,9 +25,7 @@ struct RoutineViewModel {
     }
     
     func loadMyRoutineStamp(id: String) -> String {
-        let realm = try! Realm()
-        
-        guard let myRoutine = realm.objects(MyRoutine.self).filter("id == %@", id).first else {
+        guard let myRoutine = SwiftDataManager.shared.readData(id: id, type: MyRoutine.self) else {
             return ""
         }
         
@@ -41,39 +35,26 @@ struct RoutineViewModel {
     }
     
     func saveMyRoutine(id: String?, name: String, stamp: String, weightTraining: [MyWeightTraining]) {
-        let realm = try! Realm()
-
-        if let id = id, let existingMyRoutine = realm.object(ofType: MyRoutine.self, forPrimaryKey: id) {
-            
-            try! realm.write {
-                existingMyRoutine.name = name
-                existingMyRoutine.stamp = stamp
-                existingMyRoutine.myWeightTraining.removeAll()
-                existingMyRoutine.myWeightTraining.append(objectsIn: weightTraining)
-               
-                realm.add(existingMyRoutine)
+        if let id = id, let existingMyRoutine = SwiftDataManager.shared.readData(id: id, type: MyRoutine.self) {
+            SwiftDataManager.shared.updateData(data: existingMyRoutine) { updatedRoutine in
+                updatedRoutine.name = name
+                updatedRoutine.stamp = stamp
+                updatedRoutine.myWeightTraining.removeAll()
+                updatedRoutine.myWeightTraining.append(contentsOf: weightTraining)
             }
         } else {
-            let myRoutine = MyRoutine()
-    
-            myRoutine.id = UUID().uuidString
-            myRoutine.name = name
-            myRoutine.stamp = stamp
-            myRoutine.myWeightTraining.append(objectsIn: weightTraining)
-            
-            try! realm.write {
-                realm.add(myRoutine)
-            }
+            let myRoutine = MyRoutine(id: UUID().uuidString, name: name, stamp: stamp, myWeightTraining: weightTraining)
+            SwiftDataManager.shared.createData(data: myRoutine)
         }
     }
     
     func setRoutine(routineIndex: Int?, weightTraining: [WeightTraining], id: Int) {
-        let temporaryRoutine = TemporaryRoutine()
+        let temporaryRoutine = TemporaryRoutine(id: 0, intDate: id)
         
         if let index = routineIndex {
-            let realm = try! Realm()
-            
-            let myRoutine = realm.objects(MyRoutine.self)[index]
+            let myRoutines = loadMyRoutine()
+            guard myRoutines.indices.contains(index) else { return }
+            let myRoutine = myRoutines[index]
             temporaryRoutine.name = myRoutine.name
             temporaryRoutine.stamp = myRoutine.stamp
         } else {
@@ -81,28 +62,22 @@ struct RoutineViewModel {
             temporaryRoutine.stamp = ""
         }
         temporaryRoutine.intDate = id
-        temporaryRoutine.weightTraining.append(objectsIn: setWeightTraining(weightTraining))
-        let realmManager = RealmManager3.shared
-        realmManager.createData(data: temporaryRoutine)
+        temporaryRoutine.weightTraining.append(contentsOf: setWeightTraining(weightTraining))
+        SwiftDataManager.shared.createData(data: temporaryRoutine)
     }
     
     func setWeightTraining(_ weightTraining: [WeightTraining]) -> [WeightTraining] {
         for training in weightTraining {
-            training.weightTrainingInfo.append(objectsIn: [WeightTrainingInfo(setCount: 1, weight: nil, trainingCount: nil)])
+            training.weightTrainingInfo.append(WeightTrainingInfo(setCount: 1, weight: nil, trainingCount: nil))
         }
         return weightTraining
     }
     
     func deleteRoutine(id: [String]) {
-        let realm = try! Realm()
-        
         for myRoutineId in id {
-            if let myRoutine = realm.object(ofType: MyRoutine.self, forPrimaryKey: myRoutineId) {
-                try! realm.write {
-                    realm.delete(myRoutine)
-                }
+            if let myRoutine = SwiftDataManager.shared.readData(id: myRoutineId, type: MyRoutine.self) {
+                SwiftDataManager.shared.deleteData(data: myRoutine)
             }
         }
     }
 }
-

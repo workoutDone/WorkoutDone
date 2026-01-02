@@ -8,11 +8,9 @@
 import UIKit
 import RxCocoa
 import RxSwift
-import RealmSwift
 
 class DuringSetViewModel {
-    let realm = try! Realm()
-    let realmManager = RealmManager3.shared
+    private let dataManager = SwiftDataManager.shared
     let duringWorkoutRoutine = DuringWorkoutRoutine.shared
     
     struct Input {
@@ -34,33 +32,27 @@ class DuringSetViewModel {
     }
     
     func readTemporaryRoutineData() -> TemporaryRoutine? {
-        let temporaryRoutineData = realmManager.readData(id: 0, type: TemporaryRoutine.self)
+        let temporaryRoutineData = dataManager.readData(id: 0, type: TemporaryRoutine.self)
         return temporaryRoutineData
     }
     
     func deleteTemporaryRoutineData(infoArrayIndex : Int, arrayIndex : Int) {
-        let temporaryRoutineData = readTemporaryRoutineData()
-        if let weightTrainingInfo = temporaryRoutineData?.weightTraining[arrayIndex].weightTrainingInfo[infoArrayIndex] {
-            realmManager.deleteData(weightTrainingInfo)
+        guard let temporaryRoutineData = readTemporaryRoutineData() else { return }
+        dataManager.updateData(data: temporaryRoutineData) { updatedRoutine in
+            guard updatedRoutine.weightTraining.indices.contains(arrayIndex) else { return }
+            guard updatedRoutine.weightTraining[arrayIndex].weightTrainingInfo.indices.contains(infoArrayIndex) else { return }
+            updatedRoutine.weightTraining[arrayIndex].weightTrainingInfo.remove(at: infoArrayIndex)
         }
     }
     
     func updateTemporaryRoutineSet(infoArrayIndex : Int, arrayIndex : Int) {
-        let temporaryRoutineData = readTemporaryRoutineData()
-        let weightTrainingInfoCount = temporaryRoutineData?.weightTraining[arrayIndex].weightTrainingInfo.count
-        if let weightTrainingInfoArray = temporaryRoutineData?.weightTraining[arrayIndex].weightTrainingInfo {
-            for (index, weightTrainingInfo) in weightTrainingInfoArray.enumerated() {
-                do {
-                    try realm.write {
-                        weightTrainingInfo.setCount = index + 1
-                    }
-                }
-                catch {
-                    print(error)
-                }
+        guard let temporaryRoutineData = readTemporaryRoutineData() else { return }
+        dataManager.updateData(data: temporaryRoutineData) { updatedRoutine in
+            guard updatedRoutine.weightTraining.indices.contains(arrayIndex) else { return }
+            for (index, weightTrainingInfo) in updatedRoutine.weightTraining[arrayIndex].weightTrainingInfo.enumerated() {
+                weightTrainingInfo.setCount = index + 1
             }
         }
-        
     }
     
     func transform(input : Input) -> Output {
@@ -85,16 +77,12 @@ class DuringSetViewModel {
         let addData = Driver<Bool>.zip( input.addWeightTrainingInfoTrigger, input.addWeightTrainingInfoIndexTrigger,  resultSelector: { (_, index) in
             let routine = self.readTemporaryRoutineData()
             let count = routine?.weightTraining[index].weightTrainingInfo.count
-            do {
-                try self.realm.write {
-                    let weightTrainingInfo = WeightTrainingInfo()
-                    weightTrainingInfo.setCount = (count ?? 0)  + 1
-                    weightTrainingInfo.trainingCount = nil
-                    weightTrainingInfo.weight = nil
-                    routine?.weightTraining[index].weightTrainingInfo.append(weightTrainingInfo)
+            if let routine = routine {
+                self.dataManager.updateData(data: routine) { updatedRoutine in
+                    guard updatedRoutine.weightTraining.indices.contains(index) else { return }
+                    let weightTrainingInfo = WeightTrainingInfo(setCount: (count ?? 0) + 1)
+                    updatedRoutine.weightTraining[index].weightTrainingInfo.append(weightTrainingInfo)
                 }
-            } catch {
-                print("Error saving new items, \(error)")
             }
             return true
         })

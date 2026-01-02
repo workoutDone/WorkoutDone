@@ -6,13 +6,13 @@
 //
 
 import UIKit
-import RealmSwift
+import SwiftData
 
 struct GalleryViewModel {
     func loadImagesForMonth() -> [String: [(String, UIImage)]] {
-        let realm = try! Realm()
-        
-        let workOutDoneData : [WorkOutDoneData] = realm.objects(WorkOutDoneData.self).sorted(byKeyPath: "date", ascending: false).compactMap{$0}
+        let sortByDate = [SortDescriptor(\WorkOutDoneData.date, order: .reverse)]
+        let descriptor = FetchDescriptor<WorkOutDoneData>(sortBy: sortByDate)
+        let workOutDoneData: [WorkOutDoneData] = (try? SwiftDataManager.shared.context.fetch(descriptor)) ?? []
         var monthImages = [String: [(String, UIImage)]]()
         
         for workOutDone in workOutDoneData {
@@ -25,9 +25,10 @@ struct GalleryViewModel {
     }
     
     func loadImagesForFrame(frameIndex: Int) -> [(String, UIImage)] {
-        let realm = try! Realm()
-        
-        let workOutDoneData = realm.objects(WorkOutDoneData.self).sorted(byKeyPath: "date", ascending: false).filter("frameImage.frameType == %@", frameIndex)
+        let predicate = #Predicate<WorkOutDoneData> { $0.frameImage?.frameType == frameIndex }
+        let sortByDate = [SortDescriptor(\WorkOutDoneData.date, order: .reverse)]
+        let descriptor = FetchDescriptor<WorkOutDoneData>(predicate: predicate, sortBy: sortByDate)
+        let workOutDoneData = (try? SwiftDataManager.shared.context.fetch(descriptor)) ?? []
         var images = [(String, UIImage)]()
         
         for dateImage in workOutDoneData {
@@ -48,14 +49,11 @@ struct GalleryViewModel {
     }
     
     func deleteImage(date: String) {
-        let realm = try! Realm()
-        
-        let imageData = realm.objects(WorkOutDoneData.self).filter("date == %@", date).first!
-        
-        guard let frameImage = imageData.frameImage else { return }
-        
-        try! realm.write {
-            realm.delete(frameImage)
-        }
+        let predicate = #Predicate<WorkOutDoneData> { $0.date == date }
+        var descriptor = FetchDescriptor<WorkOutDoneData>(predicate: predicate)
+        descriptor.fetchLimit = 1
+        guard let imageData = try? SwiftDataManager.shared.context.fetch(descriptor).first,
+              let frameImage = imageData.frameImage else { return }
+        SwiftDataManager.shared.deleteData(data: frameImage)
     }
 }

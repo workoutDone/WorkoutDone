@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import RealmSwift
 
 
 
@@ -16,8 +15,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         
         setRootViewController(scene)
-        let realm = try! Realm()
-        print(Realm.Configuration.defaultConfiguration.fileURL)
         print("willConnectTo")
     }
     
@@ -96,5 +93,4 @@ extension SceneDelegate {
         window?.windowScene = windowScene
     }
 }
-
 

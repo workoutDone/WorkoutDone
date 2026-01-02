@@ -7,16 +7,9 @@
 
 import RxSwift
 import RxCocoa
-import RealmSwift
 
 class WorkoutResultViewModel {
-    let realm = try! Realm()
-    let realmManager = RealmManager3.shared
-    var workOutDoneData : Results<WorkOutDoneData>?
-    init(workOutDoneData: Results<WorkOutDoneData>? = nil) {
-        self.workOutDoneData = realm.objects(WorkOutDoneData.self)
-    
-    }
+    private let dataManager = SwiftDataManager.shared
     
     struct Input {
         let loadView : Driver<Void>
@@ -31,7 +24,7 @@ class WorkoutResultViewModel {
     }
     
     func readWorkoutDoneData(id : Int) -> WorkOutDoneData? {
-        let workoutDoneData = realmManager.readData(id: id, type: WorkOutDoneData.self)
+        let workoutDoneData = dataManager.readData(id: id, type: WorkOutDoneData.self)
         return workoutDoneData
     }
     

@@ -1,7 +1,5 @@
-import Foundation
+import SwiftData
 
-import RealmSwift
-
-protocol RealmProviderProtocol {
-    func makeRealm() throws -> Realm
+protocol SwiftDataContextProviding {
+    func makeContext() -> ModelContext
 }

@@ -7,23 +7,54 @@
 
 import RxSwift
 import RxCocoa
-import RealmSwift
+import SwiftData
 import UIKit
 
-class HomeViewModel {
-    let realm = try! Realm()
-    var workOutDoneData : Results<WorkOutDoneData>?
-    init(workOutDoneData: Results<WorkOutDoneData>? = nil) {
-        self.workOutDoneData = realm.objects(WorkOutDoneData.self)
-    
+protocol WorkOutDoneDataProviding {
+    func workoutDoneData(for id: Int) -> WorkOutDoneData?
+}
+
+
+final class SwiftDataWorkOutDoneDataProvider: WorkOutDoneDataProviding {
+    private let context: ModelContext
+
+    init(context: ModelContext = SwiftDataStack.shared.context) {
+        self.context = context
+    }
+
+    func workoutDoneData(for id: Int) -> WorkOutDoneData? {
+        let predicate = #Predicate<WorkOutDoneData> { $0.id == id }
+        var descriptor = FetchDescriptor<WorkOutDoneData>(predicate: predicate)
+        descriptor.fetchLimit = 1
+        return try? context.fetch(descriptor).first
+    }
+}
+
+struct HomeWorkoutViewState {
+    let weightText: String
+    let skeletalMuscleMassText: String
+    let fatPercentageText: String
+    let image: UIImage
+    let workoutTimeText: String
+    let workoutRoutineTitleText: String
+    let isWorkout: Bool
+    let routineBodyParts: [String]
+    let hasRoutineTitle: Bool
+}
+
+final class HomeViewModel {
+    private let dataProvider: WorkOutDoneDataProviding
+
+    init(dataProvider: WorkOutDoneDataProviding = SwiftDataWorkOutDoneDataProvider()) {
+        self.dataProvider = dataProvider
     }
     struct Input {
-        let selectedDate : Driver<Int>
-        let loadView : Driver<Void>
+        let selectedDate: Driver<Int>
+        let loadView: Driver<Void>
     }
     struct Output {
-        let weightData : Driver<String>
-        let skeletalMusleMassData : Driver<String>
+        let weightData: Driver<String>
+        let skeletalMusleMassData: Driver<String>
         let fatPercentageData : Driver<String>
         let imageData : Driver<UIImage>
         let workoutTimeData : Driver<String>
@@ -33,9 +64,8 @@ class HomeViewModel {
         let hasRoutineTitle: Driver<Bool>
     }
     
-    func readWorkoutDoneData(id : Int) -> WorkOutDoneData?  {
-        let selectedWorkoutDoneData = realm.object(ofType: WorkOutDoneData.self, forPrimaryKey: id)
-        return selectedWorkoutDoneData
+    func readWorkoutDoneData(id: Int) -> WorkOutDoneData? {
+        return dataProvider.workoutDoneData(for: id)
     }
     
     func convertIntToTimeValue(_ seconds: Int) -> String {
@@ -62,115 +92,67 @@ class HomeViewModel {
         
         return result
     }
+
+    func makeViewState(for id: Int) -> HomeWorkoutViewState {
+        let workoutDoneData = readWorkoutDoneData(id: id)
+        let bodyInfo = workoutDoneData?.bodyInfo
+
+        let weightText = bodyInfo?.weight.map { String($0.truncateDecimalPoint()) } ?? "-"
+        let skeletalMuscleMassText = bodyInfo?.skeletalMuscleMass.map { String($0.truncateDecimalPoint()) } ?? "-"
+        let fatPercentageText = bodyInfo?.fatPercentage.map { String($0.truncateDecimalPoint()) } ?? "-"
+        let image = workoutDoneData?.frameImage?.image
+            .map { UIImage(data: $0)! } ?? UIImage()
+        let workoutTimeText = workoutDoneData?.workOutTime.map { convertIntToTimeValue($0) } ?? "00:00:00"
+        let workoutRoutineTitleText = workoutDoneData?.routine?.name ?? "-"
+        let isWorkout = workoutDoneData?.routine?.weightTraining != nil
+
+        let routineTitle = workoutDoneData?.routine?.name ?? ""
+        let isRoutineTitleEmpty = workoutDoneData != nil && routineTitle == ""
+        let routineBodyParts = isRoutineTitleEmpty ? sortBodyPart(id: id) : []
+        let hasRoutineTitle = !isRoutineTitleEmpty
+
+        return HomeWorkoutViewState(
+            weightText: weightText,
+            skeletalMuscleMassText: skeletalMuscleMassText,
+            fatPercentageText: fatPercentageText,
+            image: image,
+            workoutTimeText: workoutTimeText,
+            workoutRoutineTitleText: workoutRoutineTitleText,
+            isWorkout: isWorkout,
+            routineBodyParts: routineBodyParts,
+            hasRoutineTitle: hasRoutineTitle
+        )
+    }
     
-    func transform(input : Input) -> Output {
-        let weightData = Driver<String>.combineLatest(input.loadView, input.selectedDate, resultSelector: { (load, date) in
-            let weight = self.readWorkoutDoneData(id: date)?.bodyInfo?.weight
-            if let validWeight = weight {
-                return String(validWeight.truncateDecimalPoint())
+    func transform(input: Input) -> Output {
+        let viewState = Driver<HomeWorkoutViewState>.combineLatest(
+            input.loadView,
+            input.selectedDate,
+            resultSelector: { [weak self] _, date in
+                return self?.makeViewState(for: date) ?? HomeWorkoutViewState(
+                    weightText: "-",
+                    skeletalMuscleMassText: "-",
+                    fatPercentageText: "-",
+                    image: UIImage(),
+                    workoutTimeText: "00:00:00",
+                    workoutRoutineTitleText: "-",
+                    isWorkout: false,
+                    routineBodyParts: [],
+                    hasRoutineTitle: true
+                )
             }
-            else {
-                return "-"
-            }
-        })
-        let skeletalMusleMassData = Driver<String>.combineLatest(input.loadView, input.selectedDate, resultSelector: { (load, date) in
-            let skeletalMusleMass = self.readWorkoutDoneData(id: date)?.bodyInfo?.skeletalMuscleMass
-            if let validSkeletalMusleMass = skeletalMusleMass {
-                return String(validSkeletalMusleMass.truncateDecimalPoint())
-            }
-            else {
-                return "-"
-            }
-            
-        })
-        let fatPercentageData = Driver<String>.combineLatest(input.loadView, input.selectedDate, resultSelector: { (load, date) in
-            let fatPercentage = self.readWorkoutDoneData(id: date)?.bodyInfo?.fatPercentage
-            if let validFatPercentage = fatPercentage {
-                return String(validFatPercentage.truncateDecimalPoint())
-            }
-            else {
-                return "-"
-            }
-        })
-        let imageData = Driver<UIImage>.combineLatest(input.loadView, input.selectedDate, resultSelector: { (load, date) in
-            let imageData = self.readWorkoutDoneData(id: date)?.frameImage?.image
-            if let validImageData = imageData {
-                return UIImage(data: validImageData)!
-            }
-            else {
-                return UIImage()
-            }
-        })
-        
-        let workoutTimeData = Driver<String>.combineLatest(input.loadView, input.selectedDate, resultSelector: { (_, date) in
-            let timeValue = self.readWorkoutDoneData(id: date)?.workOutTime
-            if let timeValue = timeValue {
-                let timeString = self.convertIntToTimeValue(timeValue)
-                return timeString
-            }
-            else {
-                return "00:00:00"
-            }
-        })
-        
-        let workoutRoutineTitleData = Driver<String>.combineLatest(input.loadView, input.selectedDate, resultSelector: { (_, date) in
-            let routineTitleValue = self.readWorkoutDoneData(id: date)?.routine?.name
-            
-            if let routineTitleValue = routineTitleValue {
-                ///비어있을때 해야함 todo
-                return routineTitleValue
-            }
-            else {
-                return "-"
-            }
-        })
-        
-        let isWorkout = Driver<Bool>.combineLatest(input.loadView, input.selectedDate, resultSelector: { (_, date) in
-            let weightTrainingData = self.readWorkoutDoneData(id: date)?.routine?.weightTraining
-            if let _ = weightTrainingData {
-                return true
-                
-            }
-            else {
-                return false
-            }
-        })
-        
-        let routineBodyPartArray = Driver<[String]>.combineLatest(input.loadView, input.selectedDate, resultSelector: { (_, date) in
-            
-            let workoutDoneData = self.readWorkoutDoneData(id: date)
-            let workoutTimeData = self.readWorkoutDoneData(id: date)?.workOutTime
-            let routineTitleData = self.readWorkoutDoneData(id: date)?.routine?.name
-            
-            if workoutDoneData != nil && routineTitleData == "" {
-                return self.sortBodyPart(id: date)
-            }
-            else {
-                return []
-            }
-        })
-        
-        let hasRoutineTitle = Driver<Bool>.combineLatest(input.loadView, input.selectedDate, resultSelector: { (_, date) in
-            let workoutDoneData = self.readWorkoutDoneData(id: date)
-            let workoutTimeData = self.readWorkoutDoneData(id: date)?.workOutTime
-            let routineTitleData = self.readWorkoutDoneData(id: date)?.routine?.name
-            if workoutDoneData != nil && routineTitleData == "" {
-                return false
-            }
-            else {
-                return true
-            }
-        })
+        )
 
         return Output(
-            weightData: weightData,
-            skeletalMusleMassData: skeletalMusleMassData,
-            fatPercentageData: fatPercentageData,
-            imageData: imageData,
-            workoutTimeData: workoutTimeData,
-            workoutRoutineTitleData: workoutRoutineTitleData,
-            isWorkout: isWorkout,
-            routineBodyPartArray: routineBodyPartArray,
-            hasRoutineTitle: hasRoutineTitle)
+            weightData: viewState.map { $0.weightText },
+            skeletalMusleMassData: viewState.map { $0.skeletalMuscleMassText },
+            fatPercentageData: viewState.map { $0.fatPercentageText },
+            imageData: viewState.map { $0.image },
+            workoutTimeData: viewState.map { $0.workoutTimeText },
+            workoutRoutineTitleData: viewState.map { $0.workoutRoutineTitleText },
+            isWorkout: viewState.map { $0.isWorkout },
+            routineBodyPartArray: viewState.map { $0.routineBodyParts },
+            hasRoutineTitle: viewState.map { $0.hasRoutineTitle }
+        )
     }
 }

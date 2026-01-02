@@ -6,15 +6,15 @@
 //
 
 import SwiftUI
-import RealmSwift
+import SwiftData
 
 class FatPercentageGraphViewModel : ObservableObject {
-    let realm = try! Realm()
     @Published var fatPercentageData : [WorkOutDoneData] = []
     
     func readFatPercentageData() {
-        let objects = realm.objects(WorkOutDoneData.self)
-        fatPercentageData = Array(objects)
+        let descriptor = FetchDescriptor<WorkOutDoneData>()
+        let objects = (try? SwiftDataManager.shared.context.fetch(descriptor)) ?? []
+        fatPercentageData = objects
             .sorted(by: { $0.date.yyMMddToDate() ?? Date() < $1.date.yyMMddToDate() ?? Date() })
             .filter({
                 $0.bodyInfo?.fatPercentage != nil && $0.bodyInfo?.fatPercentage ?? 0 >= 0

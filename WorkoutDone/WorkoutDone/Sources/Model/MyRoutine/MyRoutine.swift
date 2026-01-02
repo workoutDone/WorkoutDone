@@ -6,22 +6,19 @@
 //
 
 import Foundation
-import RealmSwift
+import SwiftData
 
-class MyRoutine : Object {
-    @Persisted dynamic var id : String
-    @Persisted dynamic var name : String
-    @Persisted dynamic var stamp : String
-    @Persisted dynamic var myWeightTraining: List<MyWeightTraining>
+@Model
+final class MyRoutine: StringIdentifiable {
+    @Attribute(.unique) var id: String
+    var name: String
+    var stamp: String
+    var myWeightTraining: [MyWeightTraining]
 
-    convenience init(name: String, stamp: String, myWeightTraining: List<MyWeightTraining>) {
-        self.init()
+    init(id: String = UUID().uuidString, name: String = "", stamp: String = "", myWeightTraining: [MyWeightTraining] = []) {
+        self.id = id
         self.name = name
         self.stamp = stamp
         self.myWeightTraining = myWeightTraining
-    }
-    
-    override class func primaryKey() -> String? {
-        return "id"
     }
 }
