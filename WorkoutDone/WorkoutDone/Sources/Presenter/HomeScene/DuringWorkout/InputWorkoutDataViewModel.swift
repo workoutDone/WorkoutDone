@@ -8,13 +8,10 @@
 import UIKit
 import RxSwift
 import RxCocoa
-import RealmSwift
 
 class InputWorkoutDataViewModel {
     let duringWorkoutRoutine = DuringWorkoutRoutine.shared
-    
-    let realm = try! Realm()
-    let realmManager = RealmManager3.shared
+    private let dataManager = SwiftDataManager.shared
     
     struct Input {
         let countInputText : Driver<String>
@@ -31,38 +28,29 @@ class InputWorkoutDataViewModel {
     }
     
     func readTemporaryRoutineData() -> TemporaryRoutine? {
-        let temporaryRoutineData = realmManager.readData(id: 0, type: TemporaryRoutine.self)
+        let temporaryRoutineData = dataManager.readData(id: 0, type: TemporaryRoutine.self)
         return temporaryRoutineData
     }
     
     func updateCalisthenicsTemporaryRoutineData(count : Int, infoArrayIndex : Int, arrayIndex : Int) {
-        let temporaryRoutineData = readTemporaryRoutineData()
-        if let weightTrainingInfo = temporaryRoutineData?.weightTraining[arrayIndex].weightTrainingInfo[infoArrayIndex] {
-            do {
-                try realm.write {
-                    weightTrainingInfo.weight = nil
-                    weightTrainingInfo.trainingCount = count
-    
-                }
-            }
-            catch {
-                print(error)
-            }
+        guard let temporaryRoutineData = readTemporaryRoutineData() else { return }
+        dataManager.updateData(data: temporaryRoutineData) { updatedRoutine in
+            guard updatedRoutine.weightTraining.indices.contains(arrayIndex) else { return }
+            guard updatedRoutine.weightTraining[arrayIndex].weightTrainingInfo.indices.contains(infoArrayIndex) else { return }
+            let weightTrainingInfo = updatedRoutine.weightTraining[arrayIndex].weightTrainingInfo[infoArrayIndex]
+            weightTrainingInfo.weight = nil
+            weightTrainingInfo.trainingCount = count
         }
     }
     
     func updateTemporaryRoutineData(count : Int, weight : Double, infoArrayIndex : Int, arrayIndex : Int) {
-        let temporaryRoutineData = readTemporaryRoutineData()
-        if let weightTrainingInfo = temporaryRoutineData?.weightTraining[arrayIndex].weightTrainingInfo[infoArrayIndex] {
-            do {
-                try realm.write {
-                    weightTrainingInfo.weight = weight
-                    weightTrainingInfo.trainingCount = count
-                }
-            }
-            catch {
-                print(error)
-            }
+        guard let temporaryRoutineData = readTemporaryRoutineData() else { return }
+        dataManager.updateData(data: temporaryRoutineData) { updatedRoutine in
+            guard updatedRoutine.weightTraining.indices.contains(arrayIndex) else { return }
+            guard updatedRoutine.weightTraining[arrayIndex].weightTrainingInfo.indices.contains(infoArrayIndex) else { return }
+            let weightTrainingInfo = updatedRoutine.weightTraining[arrayIndex].weightTrainingInfo[infoArrayIndex]
+            weightTrainingInfo.weight = weight
+            weightTrainingInfo.trainingCount = count
         }
     }
     

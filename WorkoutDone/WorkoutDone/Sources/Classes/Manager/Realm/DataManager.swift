@@ -1,8 +1,10 @@
-import RealmSwift
+import SwiftData
 
 protocol DataManager {
-    func createData<T>(data: T)
-    func readData<T: Object>(id: Int, type: T.Type) -> T?
-    func updateData<T: Object>(data: T, updateBlock: (T) -> Void)
-    func deleteData<T>(data: T)
+    func createData<T: PersistentModel>(data: T)
+    func createData<T: PersistentModel>(data: [T])
+    func readData<T: PersistentModel & IntIdentifiable>(id: Int, type: T.Type) -> T?
+    func readData<T: PersistentModel & StringIdentifiable>(id: String, type: T.Type) -> T?
+    func updateData<T: PersistentModel>(data: T, updateBlock: (T) -> Void)
+    func deleteData<T: PersistentModel>(data: T)
 }

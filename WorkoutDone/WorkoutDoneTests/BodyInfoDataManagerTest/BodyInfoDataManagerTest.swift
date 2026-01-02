@@ -1,5 +1,4 @@
 import XCTest
-import RealmSwift
 @testable import WorkoutDone
 
 struct ExpectedBodyInfoData {
@@ -22,13 +21,11 @@ struct ExpectedBodyInfoData {
 final class BodyInputDataValidatorTest: XCTestCase {
 
     var sut: BodyInfoDataManager!
-    var realmProvider: MockRealmProvider!
-    var testRealm: Realm!
+    var contextProvider: MockSwiftDataProvider!
     override func setUp() {
-        realmProvider = MockRealmProvider() // Mock Realm을 통해 테스트
-        testRealm = try! realmProvider.makeRealm()
-        let realmManager = RealmManager(realm: testRealm)
-        sut = BodyInfoDataManager(realmManager: realmManager)
+        contextProvider = MockSwiftDataProvider()
+        let dataManager = SwiftDataManager(context: contextProvider.makeContext())
+        sut = BodyInfoDataManager(dataManager: dataManager)
         sut.createBodyInfoData(weight: ExpectedBodyInfoData.weight,
                                skeletalMusleMass: ExpectedBodyInfoData.skeletalMusleMass,
                                fatPercentage: ExpectedBodyInfoData.fatPercentage,
@@ -37,8 +34,7 @@ final class BodyInputDataValidatorTest: XCTestCase {
     }
     override func tearDown() {
         sut = nil
-        realmProvider = nil
-        testRealm = nil
+        contextProvider = nil
     }
     
     // MARK: - BodyInfoDataManager createBodyInfoData 메서드 테스트

@@ -6,15 +6,15 @@
 //
 
 import Foundation
-import RealmSwift
+import SwiftData
 
-class Routine : Object {
-    @Persisted dynamic var name : String
-    @Persisted dynamic var stamp : String
-    @Persisted dynamic var weightTraining : List<WeightTraining>
+@Model
+final class Routine {
+    var name: String
+    var stamp: String
+    var weightTraining: [WeightTraining]
 
-    convenience init(name: String, stamp: String, weightTraining: List<WeightTraining>) {
-        self.init()
+    init(name: String = "", stamp: String = "", weightTraining: [WeightTraining] = []) {
         self.name = name
         self.stamp = stamp
         self.weightTraining = weightTraining

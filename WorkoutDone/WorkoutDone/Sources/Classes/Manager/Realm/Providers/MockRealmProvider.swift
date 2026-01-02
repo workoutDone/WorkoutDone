@@ -1,9 +1,25 @@
-import Foundation
+import SwiftData
 
-import RealmSwift
+final class MockSwiftDataProvider: SwiftDataContextProviding {
+    private let container: ModelContainer
 
-class MockRealmProvider: RealmProviderProtocol {
-    func makeRealm() throws -> Realm {
-        return try Realm(configuration: Realm.Configuration(inMemoryIdentifier: "testRealm"))
+    init() {
+        let configuration = ModelConfiguration(isStoredInMemoryOnly: true)
+        container = try! ModelContainer(
+            for: WorkOutDoneData.self,
+            FrameImage.self,
+            BodyInfo.self,
+            Routine.self,
+            WeightTraining.self,
+            WeightTrainingInfo.self,
+            MyRoutine.self,
+            MyWeightTraining.self,
+            TemporaryRoutine.self,
+            configurations: configuration
+        )
+    }
+
+    func makeContext() -> ModelContext {
+        return ModelContext(container)
     }
 }

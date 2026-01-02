@@ -8,11 +8,9 @@
 import UIKit
 import RxCocoa
 import RxSwift
-import RealmSwift
 
 class DuringEditRoutineViewModel {
-    let realm = try! Realm()
-    let realmManager = RealmManager3.shared
+    private let dataManager = SwiftDataManager.shared
     let duringWorkoutRoutine = DuringWorkoutRoutine.shared
     
     struct Input {
@@ -24,7 +22,7 @@ class DuringEditRoutineViewModel {
     }
     
     func readTemporaryRoutineData() -> TemporaryRoutine? {
-        let temporaryRoutineData = realmManager.readData(id: 0, type: TemporaryRoutine.self)
+        let temporaryRoutineData = dataManager.readData(id: 0, type: TemporaryRoutine.self)
         return temporaryRoutineData
     }
     
@@ -35,7 +33,7 @@ class DuringEditRoutineViewModel {
             let weightTrainingValue = routine?.weightTraining
             
             if let weightTrainingValue = weightTrainingValue {
-                return Array(weightTrainingValue)
+                return weightTrainingValue
             }
             else {
                 return []

@@ -6,7 +6,6 @@
 //
 
 import XCTest
-import RealmSwift
 import RxCocoa
 @testable import WorkoutDone
 

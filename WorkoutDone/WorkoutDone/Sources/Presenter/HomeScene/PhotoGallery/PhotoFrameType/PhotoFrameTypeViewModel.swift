@@ -8,11 +8,9 @@
 import UIKit
 import RxCocoa
 import RxSwift
-import RealmSwift
 
 class PhotoFrameTypeViewModel {
-    let realm = try! Realm()
-    let realmManager = RealmManager3.shared
+    private let dataManager = SwiftDataManager.shared
     
     struct Input {
         let frameTypeButtonStatus : Driver<Bool>
@@ -27,37 +25,35 @@ class PhotoFrameTypeViewModel {
         let saveData : Driver<Void>
     }
     
-    ///Realm Create
+    ///SwiftData Create
     func createFrameImageData(image : UIImage, id : Int, date : String, frameType : Int) {
         let workoutDoneData = WorkOutDoneData(id: id, date: date)
-        let frameImage = FrameImage()
-        frameImage.image = image.pngData()
-        frameImage.frameType = frameType
+        let frameImage = FrameImage(frameType: frameType, image: image.pngData())
         workoutDoneData.frameImage = frameImage
-        realmManager.createData(data: workoutDoneData)
+        dataManager.createData(data: workoutDoneData)
     }
-    ///Realm Read
+    ///SwiftData Read
     func readWorkoutDoneData(id : Int) -> WorkOutDoneData? {
-        let selectedWorkoutDoneData = realmManager.readData(id: id, type: WorkOutDoneData.self)
+        let selectedWorkoutDoneData = dataManager.readData(id: id, type: WorkOutDoneData.self)
         return selectedWorkoutDoneData
     }
     
-    ///Realm Update
+    ///SwiftData Update
     func updateFrameImageData(image : UIImage, id : Int, date : String, frameType : Int) {
         let workoutDoneData = WorkOutDoneData(id: id, date: date)
-        let frameImage = FrameImage()
-        frameImage.image = image.pngData()
-        frameImage.frameType = frameType
-        realmManager.updateData(data: workoutDoneData)
+        let frameImage = FrameImage(frameType: frameType, image: image.pngData())
+        dataManager.updateData(data: workoutDoneData) { updatedData in
+            updatedData.frameImage = frameImage
+        }
     }
     
     ///id값으로 데이터가 있는지 판별
     func validFrameImageData(id : Int) -> Bool {
-        let selectedBodyInfoData = realm.object(ofType: WorkOutDoneData.self, forPrimaryKey: id)
+        let selectedBodyInfoData = readWorkoutDoneData(id: id)
         return selectedBodyInfoData?.frameImage == nil ? false : true
     }
     func validWorkoutDoneData(id : Int) -> Bool {
-        let selectedWorkoutDoneData = realm.object(ofType: WorkOutDoneData.self, forPrimaryKey: id)
+        let selectedWorkoutDoneData = readWorkoutDoneData(id: id)
         return selectedWorkoutDoneData == nil ? false : true
     }
     
@@ -84,22 +80,19 @@ class PhotoFrameTypeViewModel {
                 ///FrameImage 데이터 존재하는 경우 - update
                 if self.validFrameImageData(id: id) {
                     print("FrameImage 데이터 존재하는 경우 - update")
-                    let workoutDoneData = self.readWorkoutDoneData(id: id)
-                    try! self.realm.write {
-                        workoutDoneData?.frameImage?.image = image.pngData()
-                        workoutDoneData?.frameImage?.frameType = frame
+                    guard let workoutDoneData = self.readWorkoutDoneData(id: id) else { return }
+                    self.dataManager.updateData(data: workoutDoneData) { updatedData in
+                        updatedData.frameImage?.image = image.pngData()
+                        updatedData.frameImage?.frameType = frame
                     }
                 }
                 ///FrameImage 데이터 존재하는 않는 경우 - create
                 else {
                     print("FrameImage 데이터 존재하는 않는 경우 - create")
                     guard let workoutDoneData = self.readWorkoutDoneData(id: id) else { return }
-                    let frameImage = FrameImage()
-                    frameImage.frameType = frame
-                    frameImage.image = image.pngData()
-                    try! self.realm.write {
-                        workoutDoneData.frameImage = frameImage
-                        self.realm.add(workoutDoneData)
+                    let frameImage = FrameImage(frameType: frame, image: image.pngData())
+                    self.dataManager.updateData(data: workoutDoneData) { updatedData in
+                        updatedData.frameImage = frameImage
                     }
                 }
             }

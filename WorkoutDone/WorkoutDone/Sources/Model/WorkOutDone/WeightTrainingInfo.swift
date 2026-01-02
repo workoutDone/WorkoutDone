@@ -6,24 +6,17 @@
 //
 
 import Foundation
-import RealmSwift
+import SwiftData
 
-class WeightTrainingInfo : Object {
-    @Persisted dynamic var setCount : Int
-    @Persisted dynamic var weight : Double?
-    @Persisted dynamic var trainingCount : Int?
-    
-    convenience init(setCount: Int, weight: Double?, trainingCount: Int?) {
-        self.init()
+@Model
+final class WeightTrainingInfo {
+    var setCount: Int
+    var weight: Double?
+    var trainingCount: Int?
+
+    init(setCount: Int, weight: Double? = nil, trainingCount: Int? = nil) {
         self.setCount = setCount
         self.weight = weight
         self.trainingCount = trainingCount
     }
-    
-    convenience init(setCount: Int, trainingCount: Int) {
-        self.init()
-        self.setCount = setCount
-        self.trainingCount = trainingCount
-    }
 }
-

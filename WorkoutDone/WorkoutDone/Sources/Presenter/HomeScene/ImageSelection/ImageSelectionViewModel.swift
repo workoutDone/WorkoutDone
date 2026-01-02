@@ -7,10 +7,9 @@
 
 import RxCocoa
 import RxSwift
-import RealmSwift
 
 class ImageSelectionViewModel {
-    let realm = try! Realm()
+    private let dataManager = SwiftDataManager.shared
     
     struct Input {
         let loadView : Driver<Void>
@@ -23,13 +22,14 @@ class ImageSelectionViewModel {
     }
     
     func validFrameImageData(id : Int) -> Bool {
-        let selectedBodyInfoData = realm.object(ofType: WorkOutDoneData.self, forPrimaryKey: id)
+        let selectedBodyInfoData = dataManager.readData(id: id, type: WorkOutDoneData.self)
         return selectedBodyInfoData?.frameImage == nil ? false : true
     }
     
     func deleteFrameImageData(id : Int) {
-        guard let workoutDoneData = realm.object(ofType: WorkOutDoneData.self, forPrimaryKey: id) else { return }
-        RealmManager3.shared.deleteData(workoutDoneData.frameImage!)
+        guard let workoutDoneData = dataManager.readData(id: id, type: WorkOutDoneData.self),
+              let frameImage = workoutDoneData.frameImage else { return }
+        dataManager.deleteData(data: frameImage)
     }
     func transform(input : Input) -> Output {
         

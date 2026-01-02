@@ -20,7 +20,7 @@ struct BodyInputData {
 
 class RegisterMyBodyInfoViewController: BaseViewController {
     // MARK: - Property
-    private var viewModel = RegisterMyBodyInfoViewModel(realmProvider: ProductionRealmProvider())
+    private var viewModel = RegisterMyBodyInfoViewModel(contextProvider: ProductionSwiftDataProvider())
     private var bodyInputData = PublishSubject<BodyInputData>()
     var selectedDate: Int?
     private var didLoad = PublishSubject<Void>()

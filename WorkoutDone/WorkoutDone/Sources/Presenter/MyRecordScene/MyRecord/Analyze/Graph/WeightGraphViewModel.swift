@@ -6,15 +6,15 @@
 //
 
 import SwiftUI
-import RealmSwift
+import SwiftData
 
 class WeightGraphViewModel : ObservableObject {
-    let realm = try! Realm()
     @Published var weightData : [WorkOutDoneData] = []
     
     func readWeightData() {
-        let objects = realm.objects(WorkOutDoneData.self)
-        weightData = Array(objects)
+        let descriptor = FetchDescriptor<WorkOutDoneData>()
+        let objects = (try? SwiftDataManager.shared.context.fetch(descriptor)) ?? []
+        weightData = objects
             .sorted(by: { $0.date.yyMMddToDate() ?? Date() < $1.date.yyMMddToDate() ?? Date() })
             .filter({
                 $0.bodyInfo?.weight != nil && $0.bodyInfo?.weight ?? 0 >= 0

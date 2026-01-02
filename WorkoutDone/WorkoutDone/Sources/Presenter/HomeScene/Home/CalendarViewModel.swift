@@ -6,13 +6,14 @@
 //
 
 import Foundation
-import RealmSwift
+import SwiftData
 
 struct CalendarViewModel {
     func loadStampImage(date: String) -> [String: String] {
-        let realm = try! Realm()
-        
-        let workOutDoneData : [WorkOutDoneData] = realm.objects(WorkOutDoneData.self).sorted(byKeyPath: "date", ascending: false).filter("date CONTAINS %@", date).compactMap{$0}
+        let predicate = #Predicate<WorkOutDoneData> { $0.date.contains(date) }
+        let sortByDate = [SortDescriptor(\WorkOutDoneData.date, order: .reverse)]
+        let descriptor = FetchDescriptor<WorkOutDoneData>(predicate: predicate, sortBy: sortByDate)
+        let workOutDoneData: [WorkOutDoneData] = (try? SwiftDataManager.shared.context.fetch(descriptor)) ?? []
         var dayStamp = [String: String]()
         
         for workOutDone in workOutDoneData {

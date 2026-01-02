@@ -4,14 +4,14 @@ import RxCocoa
 import RxSwift
 
 struct RegisterMyBodyInfoViewModel: ViewModelType {
-    let realmProvider: RealmProviderProtocol
+    let contextProvider: SwiftDataContextProviding
     let workoutdataManager: WorkoutDoneDataManager
     let bodyInfoDataManager: BodyInfoDataManager
-    init(realmProvider: RealmProviderProtocol) {
-        self.realmProvider = realmProvider
-        let realmManager = RealmManager(realm: try! realmProvider.makeRealm())
-        self.workoutdataManager = WorkoutDoneDataManager(realmManager: realmManager)
-        self.bodyInfoDataManager = BodyInfoDataManager(realmManager: realmManager)
+    init(contextProvider: SwiftDataContextProviding) {
+        self.contextProvider = contextProvider
+        let dataManager = SwiftDataManager(context: contextProvider.makeContext())
+        self.workoutdataManager = WorkoutDoneDataManager(dataManager: dataManager)
+        self.bodyInfoDataManager = BodyInfoDataManager(dataManager: dataManager)
     }
 
     struct Input {
