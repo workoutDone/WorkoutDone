@@ -9,15 +9,15 @@ import UIKit
 import SnapKit
 import Then
 
-class GalleryViewController : BaseViewController {
+class GalleryViewController: BaseViewController {
     var galleryViewModel = GalleryViewModel()
-    var monthImages = [String : [(date: String, image: UIImage)]]()
+    var monthImages = [String: [(date: String, image: UIImage)]]()
     var month = [String]()
     var frameImages = [(date: String, image: UIImage)]()
-    var sortFrame : Bool = false
+    var sortFrame: Bool = false
     var selectedFrameIndex = 0
     
-    private let imageCollectionView : UICollectionView = {
+    private let imageCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
@@ -136,32 +136,32 @@ extension GalleryViewController : UICollectionViewDelegate, UICollectionViewData
         return frameImages.count == 0 ? 1 : frameImages.count
     }
     
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let sortButtonCell = collectionView.dequeueReusableCell(withReuseIdentifier: "sortButtonCell", for: indexPath) as? SortButtonCell else { return UICollectionViewCell() }
-        guard let emptyImagecell = collectionView.dequeueReusableCell(withReuseIdentifier: "emptyImageCell", for: indexPath) as? EmptyImageCell else { return UICollectionViewCell() }
-        guard let imageCell = collectionView.dequeueReusableCell(withReuseIdentifier: "imageCell", for: indexPath) as? ImageCell else { return UICollectionViewCell() }
-        
         if indexPath.section == 0 {
+            guard let sortButtonCell = collectionView.dequeueReusableCell(withReuseIdentifier: "sortButtonCell", for: indexPath) as? SortButtonCell else { return UICollectionViewCell() }
             sortButtonCell.delegate = self
-            
             return sortButtonCell
         }
         if !sortFrame {
             if monthImages.count == 0 {
-                return emptyImagecell
+                guard let emptyImageCell = collectionView.dequeueReusableCell(withReuseIdentifier: "emptyImageCell", for: indexPath) as? EmptyImageCell else { return UICollectionViewCell() }
+                return emptyImageCell
             }
-            imageCell.image.image = monthImages[month[indexPath.section-1]]?[indexPath.row].image
-            
+            guard let imageCell = collectionView.dequeueReusableCell(withReuseIdentifier: "imageCell", for: indexPath) as? ImageCell else { return UICollectionViewCell() }
+            imageCell.image.image = monthImages[month[indexPath.section - 1]]?[indexPath.row].image
             return imageCell
         }
         
         if frameImages.count == 0 {
-            return emptyImagecell
+            guard let emptyImageCell = collectionView.dequeueReusableCell(withReuseIdentifier: "emptyImageCell", for: indexPath) as? EmptyImageCell else { return UICollectionViewCell() }
+            return emptyImageCell
         }
+        guard let imageCell = collectionView.dequeueReusableCell(withReuseIdentifier: "imageCell", for: indexPath) as? ImageCell else { return UICollectionViewCell() }
         imageCell.image.image = frameImages[indexPath.row].image
-    
         return imageCell
     }
+    
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         if section == 0 {
@@ -186,7 +186,7 @@ extension GalleryViewController : UICollectionViewDelegate, UICollectionViewData
             return CGSize(width: collectionView.frame.width, height: collectionView.frame.height - 177)
         }
         
-        let width : CGFloat = (view.frame.width - 42) / 3
+        let width: CGFloat = (view.frame.width - 42) / 3
         
         return CGSize(width: width, height: width)
     }
@@ -215,7 +215,7 @@ extension GalleryViewController : UICollectionViewDelegate, UICollectionViewData
     }
 }
 
-extension GalleryViewController : SortButtonTappedDelegate, FrameDelegate {
+extension GalleryViewController: SortButtonTappedDelegate, FrameDelegate {
     
     func sortButtonTapped(sortDelegate: Bool) {
         sortFrame = sortDelegate
@@ -231,5 +231,3 @@ extension GalleryViewController : SortButtonTappedDelegate, FrameDelegate {
     }
     
 }
-
-
