@@ -14,9 +14,6 @@
 		92005FDD29B1A49600586063 /* WorkoutDoneTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92005FDC29B1A49600586063 /* WorkoutDoneTests.swift */; };
 		92005FE729B1A49600586063 /* WorkoutDoneUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92005FE629B1A49600586063 /* WorkoutDoneUITests.swift */; };
 		92005FE929B1A49600586063 /* WorkoutDoneUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92005FE829B1A49600586063 /* WorkoutDoneUITestsLaunchTests.swift */; };
-		A5B905772F066E01002106A3 /* SwiftDataManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B905762F066E01002106A3 /* SwiftDataManagerTests.swift */; };
-		A5B9057A2F066E02002106A3 /* SwiftDataIdentifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B905782F066E02002106A3 /* SwiftDataIdentifiers.swift */; };
-		A5B9057B2F066E02002106A3 /* SwiftDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B905792F066E02002106A3 /* SwiftDataStack.swift */; };
 		92005FF729B1A4C700586063 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 92005FF629B1A4C700586063 /* SnapKit */; };
 		92005FFA29B1A4D800586063 /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = 92005FF929B1A4D800586063 /* Then */; };
 		92005FFD29B1A51F00586063 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 92005FFC29B1A51F00586063 /* RxCocoa */; };
@@ -181,6 +178,9 @@
 		A5A584212AC1975D001DEC8B /* BodyInfoDataManagerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5A584202AC1975D001DEC8B /* BodyInfoDataManagerTest.swift */; };
 		A5AB4CCE2A73A27D003F8997 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5AB4CCD2A73A27D003F8997 /* Config.swift */; };
 		A5B905742F066DD0009F00E7 /* HomeViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B905732F066DD0009F00E7 /* HomeViewModelTests.swift */; };
+		A5B905772F066E01002106A3 /* SwiftDataManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B905762F066E01002106A3 /* SwiftDataManagerTests.swift */; };
+		A5B9057A2F066E02002106A3 /* SwiftDataIdentifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B905782F066E02002106A3 /* SwiftDataIdentifiers.swift */; };
+		A5B9057B2F066E02002106A3 /* SwiftDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B905792F066E02002106A3 /* SwiftDataStack.swift */; };
 		A5C23DD32AB851B000800190 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C23DD22AB851B000800190 /* DataManager.swift */; };
 		A5C23DD72AB9691A00800190 /* WorkoutDoneDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C23DD62AB9691A00800190 /* WorkoutDoneDataManager.swift */; };
 		A5C23DD92AB96A0E00800190 /* BodyInfoDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C23DD82AB96A0E00800190 /* BodyInfoDataManager.swift */; };
