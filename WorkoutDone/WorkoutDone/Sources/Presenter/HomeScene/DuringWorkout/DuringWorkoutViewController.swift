@@ -11,9 +11,19 @@ import UserNotifications
 import NotificationCenter
 import RxSwift
 import RxCocoa
+import CoreDevice
 
 final class DuringWorkoutViewController : BaseViewController {
-    
+    private let deviceProvider: DeviceProvider
+
+     init(deviceProvider: DeviceProvider) {
+         self.deviceProvider = deviceProvider
+         super.init(nibName: nil, bundle: nil)
+     }
+
+     @MainActor required init?(coder: NSCoder) {
+         fatalError("init(coder:) has not been implemented")
+     }
     
     // MARK: - ViewModel
     private let viewModel = DuringWorkoutViewModel()
@@ -403,7 +413,7 @@ final class DuringWorkoutViewController : BaseViewController {
             $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(1)
         }
-        if DeviceManager.shared.isHomeButtonDevice() || DeviceManager.shared.isSimulatorIsHomeButtonDevice() {
+        if deviceProvider.isHomeButtonDevice() {
             workoutPlayView.snp.makeConstraints {
                 $0.height.equalTo(130 - 34)
                 $0.bottom.equalToSuperview()

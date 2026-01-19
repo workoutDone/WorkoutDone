@@ -4,7 +4,7 @@ let project = Project(
     name: "WorkoutDone",
     targets: [
         .target(
-            name: "WorkoutDone",
+            name: TargetName.app,
             destinations: .iOS,
             product: .app,
             bundleId: "WorkoutDone.WorkoutDone",
@@ -15,24 +15,24 @@ let project = Project(
                 "Utils"
             ],
             dependencies: [
-                .external(name: "DeviceKit"),
-//                .external(name: "RxSwift"),
-//                .external(name: "RxCocoa"),
                 .external(name: "SnapKit"),
-                .external(name: "Then")
+                .external(name: "Then"),
+                .target(name: TargetName.coreDevice)
             ],
             settings: .settings(
                 base: [
                     "CURRENT_PROJECT_VERSION": "1",
                     "DEVELOPMENT_TEAM": "JB8T59WMFR",
-                    "IPHONEOS_DEPLOYMENT_TARGET": "17.0",
+                    "IPHONEOS_DEPLOYMENT_TARGET": "26.0",
                     "MARKETING_VERSION": "1.0",
                     "PRODUCT_NAME": "WorkoutDone"
                 ]
             )
         ),
+        Targets.coreDevice,
+        Targets.coreDeviceTests,
         .target(
-            name: "WorkoutDoneTests",
+            name: TargetName.appTests,
             destinations: .iOS,
             product: .unitTests,
             bundleId: "dev.tuist.WorkoutDoneTests",
@@ -41,8 +41,46 @@ let project = Project(
                 "Tests"
             ],
             dependencies: [
-                .target(name: "WorkoutDone")
+                .target(name: TargetName.app)
             ]
         ),
     ]
 )
+
+
+
+enum TargetName {
+    static let app = "WorkoutDone"
+    static let appTests = "WorkoutDoneTests"
+    static let coreDevice = "CoreDevice"
+    static let coreDeviceTests = "CoreDeviceTests"
+}
+
+enum Targets {
+    static let coreDevice = Target.target(
+        name: TargetName.coreDevice,
+        destinations: .iOS,
+        product: .framework,
+        bundleId: "WorkoutDone.CoreDevice",
+        infoPlist: .default,
+        buildableFolders: [
+            "CoreDevice/Sources"
+        ],
+        dependencies: [
+            .external(name: "DeviceKit")
+        ]
+    )
+    static let coreDeviceTests = Target.target(
+        name: TargetName.coreDeviceTests,
+        destinations: .iOS,
+        product: .unitTests,
+        bundleId: "WorkoutDone.CoreDeviceTests",
+        infoPlist: .default,
+        buildableFolders: [
+            "CoreDevice/Tests"
+        ],
+        dependencies: [
+            .target(name: TargetName.coreDevice)
+        ]
+    )
+}

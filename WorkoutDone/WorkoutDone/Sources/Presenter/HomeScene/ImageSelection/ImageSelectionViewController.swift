@@ -8,11 +8,22 @@
 import UIKit
 import SnapKit
 import Then
-import DeviceKit
+import CoreDevice
 import RxSwift
 import RxCocoa
 
 class ImageSelectionViewController : BaseViewController {
+    private let deviceProvider: DeviceProvider
+
+     init(deviceProvider: DeviceProvider) {
+         self.deviceProvider = deviceProvider
+         super.init(nibName: nil, bundle: nil)
+     }
+
+     @MainActor required init?(coder: NSCoder) {
+         fatalError("init(coder:) has not been implemented")
+     }
+    
     private var viewModel = ImageSelectionViewModel()
     private var didLoad = PublishSubject<Void>()
     var selectedDate : Int?
@@ -134,9 +145,7 @@ class ImageSelectionViewController : BaseViewController {
         cancelButton.addTarget(self, action: #selector(cancelButtonTapped), for: .touchUpInside)
     }
     @objc func cameraButtonTapped() {
-        let device = Device.current
-        print(device)
-        if DeviceManager.shared.isHomeButtonDevice() || DeviceManager.shared.isSimulatorIsHomeButtonDevice() {
+        if deviceProvider.isHomeButtonDevice() {
             print("홈버튼이 있는 기종")
             let homeButtonCameraViewController = HomeButtonCameraViewController()
             homeButtonCameraViewController.hidesBottomBarWhenPushed = true
@@ -153,7 +162,7 @@ class ImageSelectionViewController : BaseViewController {
         }
     }
     @objc func galleryButtonTapped() {
-        let photoGalleryViewController = PhotoGalleryViewController()
+        let photoGalleryViewController = PhotoGalleryViewController(deviceProvider: DeviceKitAdapter())
         dismiss(animated: false) {
             self.rootView?.navigationController?.pushViewController(photoGalleryViewController, animated: true)
         }

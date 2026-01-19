@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import CoreDevice
 
 
 
@@ -71,7 +72,7 @@ extension SceneDelegate {
         if manager.hasOnboarded {
             ///운동 중일때
             if manager.isWorkout {
-                let duringWorkoutViewController = DuringWorkoutViewController()
+                let duringWorkoutViewController = DuringWorkoutViewController(deviceProvider: DeviceKitAdapter())
                 setRootViewController(scene, viewController: UINavigationController(rootViewController: duringWorkoutViewController))
             }
             else {

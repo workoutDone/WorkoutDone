@@ -12,11 +12,23 @@ import RxSwift
 import RxCocoa
 import Photos
 import PhotosUI
-import DeviceKit
+import CoreDevice
 
 class PhotoGalleryViewController : BaseViewController, CallPHPickerDelegate, PHPhotoLibraryChangeObserver {
     
     var selectedImage : PHAsset?
+    
+    private let deviceProvider: DeviceProvider
+
+    init(deviceProvider: DeviceProvider) {
+        self.deviceProvider = deviceProvider
+        super.init(nibName: nil, bundle: nil)
+        hidesBottomBarWhenPushed = true
+    }
+
+    @MainActor required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     //MARK: - ViewModel
     
@@ -41,15 +53,7 @@ class PhotoGalleryViewController : BaseViewController, CallPHPickerDelegate, PHP
     private let limitedPhotoGalleryView = LimitedPhotoGalleryView()
     
     
-    // MARK: - LIFECYCLE
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-            hidesBottomBarWhenPushed = true
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         requestAuth()
@@ -205,7 +209,7 @@ class PhotoGalleryViewController : BaseViewController, CallPHPickerDelegate, PHP
     }
     @objc func photoSelectionButtonTapped() {
         print("??????")
-        if DeviceManager.shared.isHomeButtonDevice() || DeviceManager.shared.isSimulatorIsHomeButtonDevice() {
+        if deviceProvider.isHomeButtonDevice() {
             ///홈버튼 있는 기종
             let homeButtonPhotoFrameTypeViewController = HomeButtonPhotoFrameTypeViewController()
             let manager = PHImageManager.default()
@@ -257,4 +261,3 @@ class PhotoGalleryViewController : BaseViewController, CallPHPickerDelegate, PHP
 
     }
 }
-

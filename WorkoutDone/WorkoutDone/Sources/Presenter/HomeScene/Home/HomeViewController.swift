@@ -8,6 +8,7 @@
 import UIKit
 import RxCocoa
 import RxSwift
+import CoreDevice
 
 class HomeViewController : BaseViewController {
     
@@ -182,7 +183,7 @@ class HomeViewController : BaseViewController {
         workoutResultBaseView.workoutResultButton.addTarget(self, action: #selector(workoutResultButtonTapped), for: .touchUpInside)
     }
     @objc func workoutDoneCameraButtonTapped() {
-        let imageSelectionViewController = ImageSelectionViewController()
+        let imageSelectionViewController = ImageSelectionViewController(deviceProvider: DeviceKitAdapter())
         imageSelectionViewController.rootView = self
         imageSelectionViewController.modalTransitionStyle = .crossDissolve
         imageSelectionViewController.modalPresentationStyle = .overFullScreen
@@ -207,7 +208,7 @@ class HomeViewController : BaseViewController {
     @objc func workoutRoutineChoiceButtonTapped() {
         let workoutViewController = WorkoutViewController()
         workoutViewController.completionHandler = {
-            let duringWorkoutViewController = DuringWorkoutViewController()
+            let duringWorkoutViewController = DuringWorkoutViewController(deviceProvider: DeviceKitAdapter())
             let navigationController = UINavigationController(rootViewController: duringWorkoutViewController)
             navigationController.modalTransitionStyle = .crossDissolve
             navigationController.modalPresentationStyle = .fullScreen
