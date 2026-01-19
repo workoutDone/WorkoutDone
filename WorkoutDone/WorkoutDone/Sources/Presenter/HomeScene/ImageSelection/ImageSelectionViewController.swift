@@ -145,7 +145,7 @@ class ImageSelectionViewController : BaseViewController {
         cancelButton.addTarget(self, action: #selector(cancelButtonTapped), for: .touchUpInside)
     }
     @objc func cameraButtonTapped() {
-        if deviceProvider.isHomeButtonDevice() {
+        if deviceProvider.hasHomeIndicator() {
             print("홈버튼이 있는 기종")
             let homeButtonCameraViewController = HomeButtonCameraViewController()
             homeButtonCameraViewController.hidesBottomBarWhenPushed = true

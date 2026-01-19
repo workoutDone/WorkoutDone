@@ -3,7 +3,7 @@ import DeviceKit
 public final class DeviceKitAdapter: DeviceProvider {
     public init() {}
     
-    public func isHomeButtonDevice() -> Bool {
+    public func hasHomeIndicator() -> Bool {
         Device.current.isOneOf(DeviceGroup.homeButtonDevice.devices + DeviceGroup.simulatorHomeButtonDevice.devices)
     }
 }

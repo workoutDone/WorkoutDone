@@ -209,7 +209,7 @@ class PhotoGalleryViewController : BaseViewController, CallPHPickerDelegate, PHP
     }
     @objc func photoSelectionButtonTapped() {
         print("??????")
-        if deviceProvider.isHomeButtonDevice() {
+        if deviceProvider.hasHomeIndicator() {
             ///홈버튼 있는 기종
             let homeButtonPhotoFrameTypeViewController = HomeButtonPhotoFrameTypeViewController()
             let manager = PHImageManager.default()

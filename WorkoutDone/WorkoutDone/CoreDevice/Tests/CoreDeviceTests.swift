@@ -22,7 +22,7 @@ final class CoreDeviceTests: XCTestCase {
 }
 
 private func isHomeButtonDevice(using provider: DeviceProvider) -> Bool {
-    provider.isHomeButtonDevice()
+    provider.hasHomeIndicator()
 }
 
 private final class MockDeviceProvider: DeviceProvider {
@@ -33,7 +33,7 @@ private final class MockDeviceProvider: DeviceProvider {
         self.isHomeButtonDeviceResult = isHomeButtonDeviceResult
     }
 
-    func isHomeButtonDevice() -> Bool {
+    func hasHomeIndicator() -> Bool {
         isHomeButtonDeviceCallCount += 1
         return isHomeButtonDeviceResult
     }

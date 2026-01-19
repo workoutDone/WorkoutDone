@@ -14,10 +14,10 @@ import RxCocoa
 import CoreDevice
 
 final class DuringWorkoutViewController : BaseViewController {
-    private let deviceProvider: DeviceProvider
+    private let device: DeviceProvider
 
      init(deviceProvider: DeviceProvider) {
-         self.deviceProvider = deviceProvider
+         self.device = deviceProvider
          super.init(nibName: nil, bundle: nil)
      }
 
@@ -413,7 +413,7 @@ final class DuringWorkoutViewController : BaseViewController {
             $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(1)
         }
-        if deviceProvider.isHomeButtonDevice() {
+        if device.hasHomeIndicator() {
             workoutPlayView.snp.makeConstraints {
                 $0.height.equalTo(130 - 34)
                 $0.bottom.equalToSuperview()
