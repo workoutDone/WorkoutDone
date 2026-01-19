@@ -31,19 +31,18 @@ let project = Project(
                 ]
             )
         ),
-//        .target(
-//            name: "WorkoutDoneTests",
-//            destinations: .iOS,
-//            product: .unitTests,
-//            bundleId: "dev.tuist.WorkoutDoneTests",
-//            infoPlist: .default,
-//            buildableFolders: [
-//                "Tests"
-//            ],
-//            dependencies: [
-//                .target(name: "WorkoutDone")
-//            ]
-//        ),
+        .target(
+            name: "WorkoutDoneTests",
+            destinations: .iOS,
+            product: .unitTests,
+            bundleId: "dev.tuist.WorkoutDoneTests",
+            infoPlist: .default,
+            buildableFolders: [
+                "Tests"
+            ],
+            dependencies: [
+                .target(name: "WorkoutDone")
+            ]
+        ),
     ]
 )
-

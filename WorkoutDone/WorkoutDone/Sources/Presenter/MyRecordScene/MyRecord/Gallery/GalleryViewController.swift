@@ -137,27 +137,28 @@ extension GalleryViewController : UICollectionViewDelegate, UICollectionViewData
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let sortButtonCell = collectionView.dequeueReusableCell(withReuseIdentifier: "sortButtonCell", for: indexPath) as? SortButtonCell else { return UICollectionViewCell() }
-        guard let emptyImagecell = collectionView.dequeueReusableCell(withReuseIdentifier: "emptyImageCell", for: indexPath) as? EmptyImageCell else { return UICollectionViewCell() }
-        guard let imageCell = collectionView.dequeueReusableCell(withReuseIdentifier: "imageCell", for: indexPath) as? ImageCell else { return UICollectionViewCell() }
-        
         if indexPath.section == 0 {
+            guard let sortButtonCell = collectionView.dequeueReusableCell(withReuseIdentifier: "sortButtonCell", for: indexPath) as? SortButtonCell else { return UICollectionViewCell() }
             sortButtonCell.delegate = self
             
             return sortButtonCell
         }
         if !sortFrame {
             if monthImages.count == 0 {
+                guard let emptyImagecell = collectionView.dequeueReusableCell(withReuseIdentifier: "emptyImageCell", for: indexPath) as? EmptyImageCell else { return UICollectionViewCell() }
                 return emptyImagecell
             }
+            guard let imageCell = collectionView.dequeueReusableCell(withReuseIdentifier: "imageCell", for: indexPath) as? ImageCell else { return UICollectionViewCell() }
             imageCell.image.image = monthImages[month[indexPath.section-1]]?[indexPath.row].image
             
             return imageCell
         }
         
         if frameImages.count == 0 {
+            guard let emptyImagecell = collectionView.dequeueReusableCell(withReuseIdentifier: "emptyImageCell", for: indexPath) as? EmptyImageCell else { return UICollectionViewCell() }
             return emptyImagecell
         }
+        guard let imageCell = collectionView.dequeueReusableCell(withReuseIdentifier: "imageCell", for: indexPath) as? ImageCell else { return UICollectionViewCell() }
         imageCell.image.image = frameImages[indexPath.row].image
     
         return imageCell
@@ -231,5 +232,4 @@ extension GalleryViewController : SortButtonTappedDelegate, FrameDelegate {
     }
     
 }
-
 
