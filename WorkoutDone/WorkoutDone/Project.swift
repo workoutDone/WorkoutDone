@@ -17,7 +17,8 @@ let project = Project(
             dependencies: [
                 .external(name: "SnapKit"),
                 .external(name: "Then"),
-                .target(name: TargetName.coreDevice)
+                .target(name: TargetName.coreDevice),
+                .target(name: TargetName.aiReviewInterface)
             ],
             settings: .settings(
                 base: [
@@ -31,6 +32,11 @@ let project = Project(
         ),
         Targets.coreDevice,
         Targets.coreDeviceTests,
+        Targets.aiReviewInterface,
+        Targets.aiReview,
+//        Targets.aiReviewTests,
+//        Targets.aiReviewDemo,
+//        Targets.aiReviewDemoTests,
         .target(
             name: TargetName.appTests,
             destinations: .iOS,
@@ -52,8 +58,16 @@ let project = Project(
 enum TargetName {
     static let app = "WorkoutDone"
     static let appTests = "WorkoutDoneTests"
+    
     static let coreDevice = "CoreDevice"
     static let coreDeviceTests = "CoreDeviceTests"
+    
+    static let aiReview = "AIReview"
+    static let aiReviewInterface = "AIReviewInterface"
+    static let aiReviewTests = "AIReviewTests"
+    
+    static let aiReviewDemo = "AIReviewDemo"
+    static let aiReviewDemoTests = "AIReviewDemoTests"
 }
 
 enum Targets {
@@ -64,7 +78,7 @@ enum Targets {
         bundleId: "WorkoutDone.CoreDevice",
         infoPlist: .default,
         buildableFolders: [
-            "CoreDevice/Sources"
+            "Core/CoreDevice/Sources"
         ],
         dependencies: [
             .external(name: "DeviceKit")
@@ -77,10 +91,91 @@ enum Targets {
         bundleId: "WorkoutDone.CoreDeviceTests",
         infoPlist: .default,
         buildableFolders: [
-            "CoreDevice/Tests"
+            "Core/CoreDevice/Tests"
         ],
         dependencies: [
             .target(name: TargetName.coreDevice)
         ]
     )
+    static let aiReviewInterface = Target.target(
+        name: TargetName.aiReviewInterface,
+        destinations: .iOS,
+        product: .framework,
+        bundleId: "WorkoutDone.AIReviewInterface",
+        infoPlist: .default,
+        buildableFolders: [
+            "Features/AIReview/Interface"
+        ]
+    )
+    static let aiReview = Target.target(
+        name: TargetName.aiReview,
+        destinations: .iOS,
+        product: .framework,
+        bundleId: "WorkoutDone.AIReview",
+        infoPlist: .default,
+        buildableFolders: [
+            "Features/AIReview/Sources"
+        ],
+        dependencies: [
+            .target(name: TargetName.aiReviewInterface)
+        ]
+    )
+    static let aiReviewTests = Target.target(
+        name: TargetName.aiReviewTests,
+        destinations: .iOS,
+        product: .unitTests,
+        bundleId: "WorkoutDone.AIReviewTests",
+        infoPlist: .default,
+        buildableFolders: [
+            "Features/AIReview/Tests"
+        ],
+        dependencies: [
+            .target(name: TargetName.aiReview),
+            .target(name: TargetName.aiReviewInterface)
+        ]
+    )
+    static let aiReviewDemo = Target.target(
+        name: TargetName.aiReviewDemo,
+        destinations: .iOS,
+        product: .app,
+        bundleId: "WorkoutDone.AIReviewDemo",
+        infoPlist: .extendingDefault(with: [
+            "UIApplicationSceneManifest": [
+                "UIApplicationSupportsMultipleScenes": false,
+                "UISceneConfigurations": [
+                    "UIWindowSceneSessionRoleApplication": [
+                        [
+                            "UISceneConfigurationName": "Default Configuration",
+                            "UISceneDelegateClassName": "$(PRODUCT_MODULE_NAME).SceneDelegate"
+                        ]
+                    ]
+                ]
+            ],
+            "UILaunchScreen": [
+                "UIColorName": "",
+                "UIImageName": ""
+            ]
+        ]),
+        buildableFolders: [
+            "Features/AIReview/DemoApp/Sources"
+        ],
+        dependencies: [
+            .target(name: TargetName.aiReview),
+            .target(name: TargetName.aiReviewInterface)
+        ]
+    )
+//    static let aiReviewDemoTests = Target.target(
+//        name: TargetName.aiReviewDemoTests,
+//        destinations: .iOS,
+//        product: .unitTests,
+//        bundleId: "WorkoutDone.AIReviewDemoTests",
+//        infoPlist: .default,
+//        buildableFolders: [
+//            "Features/AIReview/DemoApp/Tests"
+//        ],
+//        dependencies: [
+//            .target(name: TargetName.aiReviewDemo),
+//            .target(name: TargetName.aiReviewInterface)
+//        ]
+//    )
 }
