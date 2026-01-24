@@ -8,14 +8,14 @@
 import SwiftData
 
 @Model
-final class TemporaryRoutine: IntIdentifiable {
-    @Attribute(.unique) var id: Int
-    var name: String
-    var stamp: String
-    var intDate: Int
-    var weightTraining: [WeightTraining]
+public final class TemporaryRoutine: IntIdentifiable {
+    @Attribute(.unique) public var id: Int
+    public var name: String
+    public var stamp: String
+    public var intDate: Int
+    public var weightTraining: [WeightTraining]
 
-    init(
+    public init(
         id: Int = 0,
         name: String = "",
         stamp: String = "",

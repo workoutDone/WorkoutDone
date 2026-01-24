@@ -7,18 +7,18 @@
 
 import Foundation
 
-class WorkOut {
-    let bodyPart: String
-    let weightTraining: [String]
+public final class WorkOut {
+    public let bodyPart: String
+    public let weightTraining: [String]
     
-    init(bodyPart: String, weightTraining: [String]) {
+    public init(bodyPart: String, weightTraining: [String]) {
         self.bodyPart = bodyPart
         self.weightTraining = weightTraining
     }
 }
 
-class WorkOutData {
-    static let workOutData: [WorkOut] = [
+public final class WorkOutData {
+    public static let workOutData: [WorkOut] = [
         WorkOut(bodyPart: "등", weightTraining: [
             "굿모닝 (등)",
             "덤벨로우",

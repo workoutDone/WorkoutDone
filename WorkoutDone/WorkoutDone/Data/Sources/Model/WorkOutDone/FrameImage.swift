@@ -9,11 +9,11 @@ import Foundation
 import SwiftData
 
 @Model
-final class FrameImage {
-    var frameType: Int
-    var image: Data?
+public final class FrameImage {
+    public var frameType: Int
+    public var image: Data?
 
-    init(frameType: Int = 0, image: Data? = nil) {
+    public init(frameType: Int = 0, image: Data? = nil) {
         self.frameType = frameType
         self.image = image
     }

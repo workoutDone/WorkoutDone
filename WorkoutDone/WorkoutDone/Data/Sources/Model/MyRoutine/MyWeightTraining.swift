@@ -9,11 +9,11 @@ import Foundation
 import SwiftData
 
 @Model
-final class MyWeightTraining {
-    var myBodyPart: String
-    var myWeightTraining: String
+public final class MyWeightTraining {
+    public var myBodyPart: String
+    public var myWeightTraining: String
 
-    init(myBodyPart: String = "", myWeightTraining: String = "") {
+    public init(myBodyPart: String = "", myWeightTraining: String = "") {
         self.myBodyPart = myBodyPart
         self.myWeightTraining = myWeightTraining
     }

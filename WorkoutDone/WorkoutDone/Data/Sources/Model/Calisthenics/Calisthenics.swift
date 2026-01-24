@@ -7,8 +7,8 @@
 
 import Foundation
 
-struct Calisthenics {
-    static var calisthenicsArray : [String] = [
+public struct Calisthenics {
+    public static var calisthenicsArray : [String] = [
         "백 익스텐션",
         "슈퍼맨",
         "인버티드 로우",

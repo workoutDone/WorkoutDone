@@ -9,12 +9,12 @@ import Foundation
 import SwiftData
 
 @Model
-final class WeightTrainingInfo {
-    var setCount: Int
-    var weight: Double?
-    var trainingCount: Int?
+public final class WeightTrainingInfo {
+    public var setCount: Int
+    public var weight: Double?
+    public var trainingCount: Int?
 
-    init(setCount: Int, weight: Double? = nil, trainingCount: Int? = nil) {
+    public init(setCount: Int, weight: Double? = nil, trainingCount: Int? = nil) {
         self.setCount = setCount
         self.weight = weight
         self.trainingCount = trainingCount
