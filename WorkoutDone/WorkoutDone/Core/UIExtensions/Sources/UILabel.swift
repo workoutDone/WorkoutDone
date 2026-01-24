@@ -7,7 +7,7 @@
 
 import UIKit
 
-extension UILabel {
+public extension UILabel {
     /// 라벨 간격 메서드
     func setLineSpacing(lineHeightMultiple : CGFloat) {
         guard let labelText = self.text else { return }

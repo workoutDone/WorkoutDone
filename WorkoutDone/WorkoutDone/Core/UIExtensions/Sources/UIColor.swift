@@ -7,7 +7,7 @@
 
 import UIKit
 
-extension UIColor {
+public extension UIColor {
     static let colorDBDBDB = UIColor(hex: 0xDBDBDB)
     static let color000000 = UIColor(hex: 0x000000)
     static let colorD6C8FF = UIColor(hex: 0xD6C8FF)
@@ -43,7 +43,7 @@ extension UIColor {
     static let colorF6F4FF = UIColor(hex: 0xF6F4FF)
 }
 
-extension UIColor {
+public extension UIColor {
     /// hex code를 이용하여 정의
     convenience init(hex: UInt, alpha: CGFloat = 1.0) {
         self.init(
