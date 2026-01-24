@@ -5,9 +5,9 @@
 //  Created by 류창휘 on 2023/05/09.
 //
 
-import UIKit
+import Foundation
 
-extension Notification.Name {
+public extension Notification.Name {
     ///선택한 날짜
     static let selectedDateInt = Notification.Name("selectedDate")
 }

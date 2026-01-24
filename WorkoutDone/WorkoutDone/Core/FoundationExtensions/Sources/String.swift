@@ -5,9 +5,9 @@
 //  Created by 류창휘 on 2023/03/30.
 //
 
-import UIKit
+import Foundation
 
-extension String {
+public extension String {
     func yyMMddToDate() -> Date? {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yy.MM.dd"

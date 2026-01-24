@@ -5,9 +5,9 @@
 //  Created by 류창휘 on 2023/03/30.
 //
 
-import UIKit
+import Foundation
 
-extension Date {
+public extension Date {
     func dToString() -> String? {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "d"

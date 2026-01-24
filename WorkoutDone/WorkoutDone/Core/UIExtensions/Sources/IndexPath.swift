@@ -7,7 +7,7 @@
 
 import UIKit
 
-extension IndexPath {
+public extension IndexPath {
     var routineOrder : String {
         guard let order = UnicodeScalar(section + 65) else {
             return ""
