@@ -6,6 +6,9 @@
 //
 
 import UIKit
+import Data
+import UIExtensions
+import FoundationExtensions
 
 class WorkoutViewController : BaseViewController {
     let routineViewModel = RoutineViewModel()

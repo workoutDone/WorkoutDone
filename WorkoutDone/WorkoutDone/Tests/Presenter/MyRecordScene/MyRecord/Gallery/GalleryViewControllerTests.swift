@@ -1,5 +1,6 @@
 import XCTest
 import UIKit
+import UIExtensions
 @testable import WorkoutDone
 
 final class GalleryViewControllerTests: XCTestCase {

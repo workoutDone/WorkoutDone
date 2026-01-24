@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import UIExtensions
 
 class FrameCategoryCell : UICollectionViewCell {
     let frameImage = UIImageView().then {

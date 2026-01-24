@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import UIExtensions
 
 final class AuthorizedCameraView : BaseUIView {
     // MARK: - PROPERTIES

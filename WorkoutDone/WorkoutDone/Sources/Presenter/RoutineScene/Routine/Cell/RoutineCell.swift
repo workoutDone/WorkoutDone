@@ -8,6 +8,7 @@
 import UIKit
 import SnapKit
 import Then
+import UIExtensions
 
 protocol EditDelegate : AnyObject {
     func editButtonTapped()

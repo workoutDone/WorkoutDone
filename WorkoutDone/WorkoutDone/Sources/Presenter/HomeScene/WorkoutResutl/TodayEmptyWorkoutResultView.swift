@@ -8,6 +8,7 @@
 import UIKit
 import Then
 import SnapKit
+import UIExtensions
 
 final class TodayEmptyWorkoutResultView : BaseUIView {
     private let titleLabel = UILabel().then {

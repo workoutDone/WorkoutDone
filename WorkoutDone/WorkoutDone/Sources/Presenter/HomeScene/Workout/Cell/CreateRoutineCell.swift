@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import UIExtensions
 
 class CreateRoutineCell: UITableViewCell {
     private let borderImage = UIImageView().then {

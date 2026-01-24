@@ -5,8 +5,7 @@
 //  Created by 류창휘 on 2023/05/12.
 //
 
-import RxCocoa
-import RxSwift
+import Data
 
 class ImageSelectionViewModel {
     private let dataManager = SwiftDataManager.shared
@@ -44,6 +43,7 @@ class ImageSelectionViewModel {
         
         let deleteData = Driver<Void>.combineLatest(input.selectedDate, input.defaultImageButtonTapped, resultSelector: { [weak self] (id, _) in
             self?.deleteFrameImageData(id: id)
+            return ()
         })
         
         return Output(

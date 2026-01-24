@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import Data
+import UIExtensions
 
 class DuringSetTableViewCell : UITableViewCell {
     static let identifier = "DuringSetTableViewCell"

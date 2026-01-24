@@ -8,6 +8,7 @@
 import UIKit
 import SnapKit
 import Then
+import UIExtensions
 
 class ImageCell : UICollectionViewCell {
     var image = UIImageView().then {

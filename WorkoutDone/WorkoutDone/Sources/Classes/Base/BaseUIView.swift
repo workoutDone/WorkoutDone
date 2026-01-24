@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import UIExtensions
 
 class BaseUIView : UIView {
     override init(frame: CGRect) {

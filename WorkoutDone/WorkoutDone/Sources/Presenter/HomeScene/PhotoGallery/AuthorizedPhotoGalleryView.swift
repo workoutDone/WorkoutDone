@@ -9,6 +9,7 @@ import UIKit
 import SnapKit
 import Then
 import Photos
+import UIExtensions
 
 class AuthorizedPhotoGalleryView : BaseUIView {
     private let imageManager:PHCachingImageManager = PHCachingImageManager()
@@ -18,6 +19,7 @@ class AuthorizedPhotoGalleryView : BaseUIView {
     var selectedIndexPath : IndexPath?
     var selectedImage : PHAsset?
     private var images = [PHAsset]()
+    var selectionChanged: ((Bool) -> Void)?
     let photoCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -73,7 +75,7 @@ extension AuthorizedPhotoGalleryView : UICollectionViewDelegate, UICollectionVie
         else {
             selectedIndexPath = indexPath
         }
-        
+        selectionChanged?(selectedIndexPath != nil)
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return imageFetch?.count ?? 0

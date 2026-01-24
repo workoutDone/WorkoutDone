@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import UIExtensions
 
 class MyRoutineDetailCell: UITableViewCell {
     let outerView = UIView().then {

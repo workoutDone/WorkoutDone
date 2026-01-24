@@ -7,6 +7,7 @@
 
 import UIKit
 import AVFoundation
+import UIExtensions
 
 class PreviewView : UIView {
     override class var layerClass : AnyClass {

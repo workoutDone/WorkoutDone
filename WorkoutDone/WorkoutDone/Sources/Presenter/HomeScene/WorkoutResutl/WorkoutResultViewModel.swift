@@ -5,8 +5,7 @@
 //  Created by 류창휘 on 2023/05/13.
 //
 
-import RxSwift
-import RxCocoa
+import Data
 
 class WorkoutResultViewModel {
     private let dataManager = SwiftDataManager.shared

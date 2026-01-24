@@ -8,6 +8,7 @@
 import UIKit
 import SnapKit
 import Then
+import UIExtensions
 
 class EmptyImageCell: UICollectionViewCell {
     private let emptyImageLabel = UILabel().then {

@@ -1,6 +1,7 @@
 import XCTest
 import UIKit
 import AIReviewInterface
+import UIExtensions
 @testable import AIReviewDemo
 
 final class AIReviewDemoRootBuilderTests: XCTestCase {

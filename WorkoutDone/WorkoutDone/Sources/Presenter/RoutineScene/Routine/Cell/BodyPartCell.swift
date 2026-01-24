@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import UIExtensions
 
 class BodyPartCell: UICollectionViewCell {
     var bodyPartLabel = UILabel().then {

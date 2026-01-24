@@ -6,10 +6,11 @@
 //
 
 import UIKit
-import RxCocoa
-import RxSwift
+import Combine
 import SnapKit
 import Then
+import Data
+import UIExtensions
 
 class DuringEditRoutineViewController : BaseViewController {
     
@@ -18,10 +19,10 @@ class DuringEditRoutineViewController : BaseViewController {
     // MARK: - ViewModel
     private let viewModel = DuringEditRoutineViewModel()
     private var weightTrainingArray : [WeightTraining] = []
-    private let didLoad = PublishSubject<Void>()
+    private let didLoad = PassthroughSubject<Void, Never>()
     
     private lazy var input = DuringEditRoutineViewModel.Input(
-        loadView: didLoad.asDriver(onErrorJustReturn: ()))
+        loadView: didLoad.asDriver())
     private lazy var output = viewModel.transform(input: input)
     // MARK: - PROPERTIES
     private let tableView = UITableView(frame: .zero, style: .grouped).then {
@@ -43,7 +44,7 @@ class DuringEditRoutineViewController : BaseViewController {
         })
         .disposed(by: disposeBag)
         
-        didLoad.onNext(())
+        didLoad.send(())
     }
     
     override func setComponents() {
@@ -148,4 +149,3 @@ extension DuringEditRoutineViewController : UITableViewDelegate, UITableViewData
 
     
 }
-

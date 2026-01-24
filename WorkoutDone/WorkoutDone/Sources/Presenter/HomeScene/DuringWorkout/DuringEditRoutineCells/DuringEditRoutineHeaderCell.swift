@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import UIExtensions
 
 class DuringEditRoutineHeaderCell : UITableViewHeaderFooterView {
     static let headerViewID = "DuringEditRoutineHeaderCell"

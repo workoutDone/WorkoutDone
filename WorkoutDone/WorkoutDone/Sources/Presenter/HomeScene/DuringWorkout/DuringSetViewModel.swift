@@ -6,8 +6,8 @@
 //
 
 import UIKit
-import RxCocoa
-import RxSwift
+import Data
+import UIExtensions
 
 class DuringSetViewModel {
     private let dataManager = SwiftDataManager.shared
@@ -67,7 +67,7 @@ class DuringSetViewModel {
             let routine = self.readTemporaryRoutineData()
 
             guard let info = routine?.weightTraining[index].weightTrainingInfo else {
-                return []
+                return [WeightTrainingInfo]()
             }
             
             return Array(info)

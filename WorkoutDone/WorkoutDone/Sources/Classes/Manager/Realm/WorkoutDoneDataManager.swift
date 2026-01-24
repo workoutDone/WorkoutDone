@@ -1,4 +1,5 @@
 import Foundation
+import Data
 
 class WorkoutDoneDataManager {
     let dataManager: SwiftDataManager

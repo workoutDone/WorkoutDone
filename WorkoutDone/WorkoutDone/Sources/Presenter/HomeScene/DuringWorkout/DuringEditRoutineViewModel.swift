@@ -6,8 +6,8 @@
 //
 
 import UIKit
-import RxCocoa
-import RxSwift
+import Data
+import UIExtensions
 
 class DuringEditRoutineViewModel {
     private let dataManager = SwiftDataManager.shared

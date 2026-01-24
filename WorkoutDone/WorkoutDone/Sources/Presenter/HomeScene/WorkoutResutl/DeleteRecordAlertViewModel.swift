@@ -6,8 +6,8 @@
 //
 
 import UIKit
-import RxSwift
-import RxCocoa
+import Data
+import UIExtensions
 
 class DeleteRecordAlertViewModel {
     private let dataManager = SwiftDataManager.shared

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import UIExtensions
 
 protocol RemoveWorkoutDelegate : AnyObject {
     func removeButtonTapped(forCell cell: WorkoutSequenceCell)

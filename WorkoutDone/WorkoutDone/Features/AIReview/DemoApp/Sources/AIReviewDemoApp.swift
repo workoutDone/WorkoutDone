@@ -1,6 +1,7 @@
 import UIKit
 
 import UIKit
+import UIExtensions
 
 @main
 final class AppDelegate: UIResponder, UIApplicationDelegate {

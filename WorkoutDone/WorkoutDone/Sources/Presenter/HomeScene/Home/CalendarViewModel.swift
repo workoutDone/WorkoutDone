@@ -7,6 +7,8 @@
 
 import Foundation
 import SwiftData
+import Data
+import FoundationExtensions
 
 struct CalendarViewModel {
     func loadStampImage(date: String) -> [String: String] {

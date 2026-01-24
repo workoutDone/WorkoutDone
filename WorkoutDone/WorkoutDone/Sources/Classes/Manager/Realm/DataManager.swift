@@ -1,4 +1,5 @@
 import SwiftData
+import Data
 
 protocol DataManager {
     func createData<T: PersistentModel>(data: T)

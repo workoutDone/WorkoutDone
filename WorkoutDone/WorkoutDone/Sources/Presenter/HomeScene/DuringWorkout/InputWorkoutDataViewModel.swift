@@ -6,8 +6,8 @@
 //
 
 import UIKit
-import RxSwift
-import RxCocoa
+import Data
+import UIExtensions
 
 class InputWorkoutDataViewModel {
     let duringWorkoutRoutine = DuringWorkoutRoutine.shared

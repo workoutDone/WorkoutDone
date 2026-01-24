@@ -7,6 +7,9 @@
 
 import UIKit
 import SwiftData
+import Data
+import UIExtensions
+import FoundationExtensions
 
 class FrameImageViewModel {
     private let dataManager = SwiftDataManager.shared

@@ -6,22 +6,23 @@
 //
 
 import UIKit
-import RxCocoa
-import RxSwift
+import Combine
 import CoreDevice
+import UIExtensions
+import FoundationExtensions
 
-class HomeViewController : BaseViewController {
+class HomeViewController : BaseViewController, CalendarViewDelegate {
     
     
     //MARK: - ViewModel
     var homeViewModel = HomeViewModel()
     let frameImageViewModel = FrameImageViewModel()
     
-    private var didLoad = PublishSubject<Void>()
-    var selectedDate = BehaviorSubject(value: Date().dateToInt())
+    private var didLoad = PassthroughSubject<Void, Never>()
+    var selectedDate = CurrentValueSubject<Int, Never>(Date().dateToInt())
     private lazy var input = HomeViewModel.Input(
-        selectedDate: selectedDate.asDriver(onErrorJustReturn: Date().dateToInt()),
-        loadView: didLoad.asDriver(onErrorJustReturn: ()))
+        selectedDate: selectedDate.asDriver(),
+        loadView: didLoad.asDriver())
     
     private lazy var output = homeViewModel.transform(input: input)
     
@@ -62,7 +63,7 @@ class HomeViewController : BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.isNavigationBarHidden = true
-        didLoad.onNext(())
+        didLoad.send(())
         
     }
     override func viewWillDisappear(_ animated: Bool) {
@@ -127,19 +128,31 @@ class HomeViewController : BaseViewController {
     }
     override func setupBinding() {
         super.setupBinding()
-        output.weightData.drive(recordBaseView.weightInputLabel.rx.text)
+        output.weightData.drive(onNext: { [weak self] value in
+            self?.recordBaseView.weightInputLabel.text = value
+        })
             .disposed(by: disposeBag)
-        output.skeletalMusleMassData.drive(recordBaseView.skeletalMuscleMassInputLabel.rx.text)
+        output.skeletalMusleMassData.drive(onNext: { [weak self] value in
+            self?.recordBaseView.skeletalMuscleMassInputLabel.text = value
+        })
             .disposed(by: disposeBag)
-        output.fatPercentageData.drive(recordBaseView.fatPercentageInputLabel.rx.text)
+        output.fatPercentageData.drive(onNext: { [weak self] value in
+            self?.recordBaseView.fatPercentageInputLabel.text = value
+        })
             .disposed(by: disposeBag)
-        output.imageData.drive(recordBaseView.bodyImageView.rx.image)
+        output.imageData.drive(onNext: { [weak self] value in
+            self?.recordBaseView.bodyImageView.image = value
+        })
             .disposed(by: disposeBag)
         
-        output.workoutTimeData.drive(workoutResultBaseView.workoutTimeLabel.rx.text)
+        output.workoutTimeData.drive(onNext: { [weak self] value in
+            self?.workoutResultBaseView.workoutTimeLabel.text = value
+        })
             .disposed(by: disposeBag)
         
-        output.workoutRoutineTitleData.drive(workoutResultBaseView.workoutTypeLabel.rx.text)
+        output.workoutRoutineTitleData.drive(onNext: { [weak self] value in
+            self?.workoutResultBaseView.workoutTypeLabel.text = value
+        })
             .disposed(by: disposeBag)
         
         output.isWorkout.drive(onNext: { value in
@@ -165,14 +178,7 @@ class HomeViewController : BaseViewController {
         .disposed(by: disposeBag)
 
         
-        calendarView.collectionView.rx.itemSelected
-            .bind { _ in
-                guard let dateInt = self.calendarView.selectDate?.dateToInt() else { return }
-                self.selectedDate.onNext(dateInt)
-            }
-            .disposed(by: disposeBag)
-
-        selectedDate.onNext(Date().dateToInt())
+        selectedDate.send(Date().dateToInt())
     }
     
     override func actions() {
@@ -190,7 +196,7 @@ class HomeViewController : BaseViewController {
         imageSelectionViewController.selectedDate = calendarView.selectDate?.dateToInt()
         imageSelectionViewController.completionHandler = { [weak self] dateValue in
             guard let self else { return }
-            self.selectedDate.onNext(dateValue)
+            self.selectedDate.send(dateValue)
         }
         present(imageSelectionViewController, animated: true)
     }
@@ -202,7 +208,7 @@ class HomeViewController : BaseViewController {
         present(registerMyBodyInfoViewController, animated: true)
         registerMyBodyInfoViewController.completionHandler = { [weak self] dateValue in
             guard let self else { return }
-            self.selectedDate.onNext(dateValue)
+            self.selectedDate.send(dateValue)
         } 
     }
     @objc func workoutRoutineChoiceButtonTapped() {
@@ -224,9 +230,14 @@ class HomeViewController : BaseViewController {
         let dateId = dateValue.dateToInt()
         workoutResultViewController.selectedDate = dateId
         workoutResultViewController.completionHandler = { [weak self] dateValue in
-            self?.selectedDate.onNext(dateValue)
+            self?.selectedDate.send(dateValue)
         }
         navigationController?.pushViewController(workoutResultViewController, animated: true)
+    }
+
+    func didSelectedCalendarDate() {
+        guard let dateInt = calendarView.selectDate?.dateToInt() else { return }
+        selectedDate.send(dateInt)
     }
     
     private func bindBodyPart(_ firstBodyPart: String, _ secondBodyPart: String? = nil, _ thirdBodyPart: String? = nil) {
@@ -277,11 +288,5 @@ extension HomeViewController : UIScrollViewDelegate {
                 view.backgroundColor = .colorF6F4FF
             }
         }
-    }
-}
-
-extension HomeViewController : CalendarViewDelegate {
-    func didSelectedCalendarDate() {
-//        setWorkOutDoneImage()
     }
 }

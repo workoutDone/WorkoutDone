@@ -7,6 +7,9 @@
 
 import SwiftUI
 import SwiftData
+import Data
+import UIExtensions
+import FoundationExtensions
 
 class FatPercentageGraphViewModel : ObservableObject {
     @Published var fatPercentageData : [WorkOutDoneData] = []

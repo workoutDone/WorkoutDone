@@ -1,4 +1,5 @@
 import SwiftUI
+import UIExtensions
 
 struct AIReviewView: View {
     var body: some View {

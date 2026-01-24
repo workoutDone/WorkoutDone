@@ -8,8 +8,8 @@
 import UIKit
 import SnapKit
 import Then
-import RxSwift
-import RxCocoa
+import Combine
+import UIExtensions
 
 
 class WorkoutResultViewController : BaseViewController {
@@ -19,11 +19,11 @@ class WorkoutResultViewController : BaseViewController {
     var completionHandler : ((Int) -> Void)?
     // MARK: - ViewModel
     private var viewModel = WorkoutResultViewModel()
-    private var loadView = PublishSubject<Void>()
+    private var loadView = PassthroughSubject<Void, Never>()
     
     private lazy var input = WorkoutResultViewModel.Input(
-        loadView: loadView.asDriver(onErrorJustReturn: ()),
-        selectedData: Driver.just(selectedDate!).asDriver(onErrorJustReturn: 0))
+        loadView: loadView.asDriver(),
+        selectedData: Driver.just(selectedDate!))
     private lazy var output = viewModel.transform(input: input)
     
     // MARK: - PROPERTIES
@@ -83,7 +83,9 @@ class WorkoutResultViewController : BaseViewController {
         })
         .disposed(by: disposeBag)
         
-        output.routineTitleData.drive(todayWorkoutResultView.myRoutineLabel.rx.text)
+        output.routineTitleData.drive(onNext: { [weak self] value in
+            self?.todayWorkoutResultView.myRoutineLabel.text = value
+        })
             .disposed(by: disposeBag)
         
 
@@ -101,10 +103,12 @@ class WorkoutResultViewController : BaseViewController {
         })
         .disposed(by: disposeBag)
         
-        output.workoutTimeData.drive(todayWorkoutResultView.myTotalWorkoutTimeLabel.rx.text)
+        output.workoutTimeData.drive(onNext: { [weak self] value in
+            self?.todayWorkoutResultView.myTotalWorkoutTimeLabel.text = value
+        })
             .disposed(by: disposeBag)
         
-        loadView.onNext(())
+        loadView.send(())
     }
     override func setComponents() {
         view.backgroundColor = .colorFFFFFF
@@ -157,4 +161,3 @@ class WorkoutResultViewController : BaseViewController {
 extension WorkoutResultViewController {
     
 }
-

@@ -1,4 +1,5 @@
 import Foundation
+import Data
 
 class BodyInfoDataManager {
     let dataManager: SwiftDataManager

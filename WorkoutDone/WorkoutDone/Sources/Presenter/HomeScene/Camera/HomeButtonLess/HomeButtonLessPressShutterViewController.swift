@@ -9,8 +9,9 @@ import UIKit
 import SnapKit
 import Then
 import Photos
-import RxSwift
-import RxCocoa
+import Combine
+import UIExtensions
+import FoundationExtensions
 
 final class HomeButtonLessPressShutterViewController : BaseViewController {
     
@@ -20,15 +21,15 @@ final class HomeButtonLessPressShutterViewController : BaseViewController {
     var album: PHAssetCollection?
     
     private var viewModel = HomeButtonLessPressShutterViewModel()
-    private var selectedData = PublishSubject<Int>()
-    private var selectedFrameType = PublishSubject<Int>()
-    private var capturedImage = PublishSubject<UIImage>()
-    private var saveDataTrigger = PublishSubject<Void>()
+    private var selectedData = PassthroughSubject<Int, Never>()
+    private var selectedFrameType = PassthroughSubject<Int, Never>()
+    private var capturedImage = PassthroughSubject<UIImage, Never>()
+    private var saveDataTrigger = PassthroughSubject<Void, Never>()
     private lazy var input = HomeButtonLessPressShutterViewModel.Input(
-        selectedData: selectedData.asDriver(onErrorJustReturn: 0),
-        selectedFrameType: selectedFrameType.asDriver(onErrorJustReturn: 0),
-        capturedImage: capturedImage.asDriver(onErrorJustReturn: UIImage()),
-        saveButtonTapped: saveDataTrigger.asDriver(onErrorJustReturn: ()))
+        selectedData: selectedData.asDriver(),
+        selectedFrameType: selectedFrameType.asDriver(),
+        capturedImage: capturedImage.asDriver(),
+        saveButtonTapped: saveDataTrigger.asDriver())
     private lazy var output = viewModel.transform(input: input)
     
     
@@ -124,19 +125,19 @@ final class HomeButtonLessPressShutterViewController : BaseViewController {
         })
         .disposed(by: disposeBag)
         
-        saveButton.rx.tap
-            .bind { value in
-                self.saveDataTrigger.onNext(())
+        saveButton.tapPublisher
+            .sink { [weak self] in
+                self?.saveDataTrigger.send(())
             }
             .disposed(by: disposeBag)
         
         guard let image = captureImage else { return }
         let resizedImage = resizeImage(image: image, newSize: CGSize(width: view.frame.width, height: view.frame.width * (4 / 3)))
-        capturedImage.onNext(resizedImage)
+        capturedImage.send(resizedImage)
         guard let homeVC = self.navigationController?.viewControllers.first as? HomeViewController else { return }
         let homeVCDate = homeVC.calendarView.selectDate ?? Date()
-        selectedData.onNext(homeVCDate.dateToInt())
-        selectedFrameType.onNext(isSelectFrame)
+        selectedData.send(homeVCDate.dateToInt())
+        selectedFrameType.send(isSelectFrame)
     }
     
     
@@ -377,4 +378,3 @@ extension HomeButtonLessPressShutterViewController {
         })
     }
 }
-

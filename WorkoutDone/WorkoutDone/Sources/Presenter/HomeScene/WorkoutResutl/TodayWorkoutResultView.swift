@@ -8,6 +8,8 @@
 import UIKit
 import Then
 import SnapKit
+import Data
+import UIExtensions
 
 final class TodayWorkoutResultView : BaseUIView {
     

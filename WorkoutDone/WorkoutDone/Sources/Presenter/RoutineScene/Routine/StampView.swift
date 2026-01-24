@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import UIExtensions
 
 protocol StampDelegate : AnyObject {
     func stampTapped(image: String)

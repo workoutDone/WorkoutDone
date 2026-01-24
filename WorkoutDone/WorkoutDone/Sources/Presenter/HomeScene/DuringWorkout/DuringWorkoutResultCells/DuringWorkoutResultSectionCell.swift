@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import Data
+import UIExtensions
 
 final class DuringWorkoutResultSectionCell : UITableViewCell {
     static let identifier = "DuringSetTableViewCell"

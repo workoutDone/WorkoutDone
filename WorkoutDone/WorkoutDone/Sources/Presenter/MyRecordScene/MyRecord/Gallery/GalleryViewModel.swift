@@ -7,6 +7,9 @@
 
 import UIKit
 import SwiftData
+import Data
+import UIExtensions
+import FoundationExtensions
 
 struct GalleryViewModel {
     func loadImagesForMonth() -> [String: [(String, UIImage)]] {

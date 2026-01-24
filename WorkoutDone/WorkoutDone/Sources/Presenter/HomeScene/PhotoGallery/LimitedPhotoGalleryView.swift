@@ -7,6 +7,7 @@
 
 import UIKit
 import Photos
+import UIExtensions
 
 protocol CallPHPickerDelegate : AnyObject {
     func callPicker()
@@ -20,6 +21,7 @@ class LimitedPhotoGalleryView : BaseUIView, ImportedPhotosDelegate {
     var selectedImage : PHAsset?
     
     var delegate : CallPHPickerDelegate?
+    var selectionChanged: ((Bool) -> Void)?
     let photoCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -79,7 +81,7 @@ extension LimitedPhotoGalleryView : UICollectionViewDelegate, UICollectionViewDa
         else {
             selectedIndexPath = indexPath
         }
-        
+        selectionChanged?(selectedIndexPath != nil)
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {

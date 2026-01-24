@@ -6,6 +6,7 @@
 //
 
 import SwiftData
+import Data
 
 final class SwiftDataStack {
     static let shared = SwiftDataStack()

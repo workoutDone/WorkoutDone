@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import UIExtensions
 
 class GradientButton: UIButton {
     let gradient = CAGradientLayer()

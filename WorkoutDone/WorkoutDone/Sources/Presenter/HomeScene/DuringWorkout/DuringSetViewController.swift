@@ -6,8 +6,9 @@
 //
 
 import UIKit
-import RxCocoa
-import RxSwift
+import Combine
+import Data
+import UIExtensions
 
 final class DuringSetViewController : BaseViewController {
     lazy var weightTrainingArrayIndex = 0
@@ -19,21 +20,21 @@ final class DuringSetViewController : BaseViewController {
     
     // MARK: - ViewModel
     private let viewModel = DuringSetViewModel()
-    private let didLoad = PublishSubject<Void>()
-    let weightTrainingArrayIndexRx = PublishSubject<Int>()
-    private let addWeightTrainingInfoTrigger = PublishSubject<Void>()
-    private let addWeightTrainingInfoIndexTrigger = PublishSubject<Int>()
-    private let deleteSetTrigger = PublishSubject<Void>()
-    private let deleteSetIndex = PublishSubject<Int>()
-    private let deleteWeightTrainingArrayIndex = PublishSubject<Int>()
+    private let didLoad = PassthroughSubject<Void, Never>()
+    let weightTrainingArrayIndexRx = PassthroughSubject<Int, Never>()
+    private let addWeightTrainingInfoTrigger = PassthroughSubject<Void, Never>()
+    private let addWeightTrainingInfoIndexTrigger = PassthroughSubject<Int, Never>()
+    private let deleteSetTrigger = PassthroughSubject<Void, Never>()
+    private let deleteSetIndex = PassthroughSubject<Int, Never>()
+    private let deleteWeightTrainingArrayIndex = PassthroughSubject<Int, Never>()
     private lazy var input = DuringSetViewModel.Input(
-        loadView: didLoad.asDriver(onErrorJustReturn: ()),
-        weightTrainingArrayIndex: weightTrainingArrayIndexRx.asDriver(onErrorJustReturn: 0),
-        addWeightTrainingInfoTrigger: addWeightTrainingInfoTrigger.asDriver(onErrorJustReturn: ()),
-        addWeightTrainingInfoIndexTrigger: addWeightTrainingInfoIndexTrigger.asDriver(onErrorJustReturn: 0),
-        deleteSetTrigger: deleteSetTrigger.asDriver(onErrorJustReturn: ()),
-        deleteSetIndex: deleteSetIndex.asDriver(onErrorJustReturn: 0),
-        deleteWeightTrainingArrayIndex: deleteWeightTrainingArrayIndex.asDriver(onErrorJustReturn: 0))
+        loadView: didLoad.asDriver(),
+        weightTrainingArrayIndex: weightTrainingArrayIndexRx.asDriver(),
+        addWeightTrainingInfoTrigger: addWeightTrainingInfoTrigger.asDriver(),
+        addWeightTrainingInfoIndexTrigger: addWeightTrainingInfoIndexTrigger.asDriver(),
+        deleteSetTrigger: deleteSetTrigger.asDriver(),
+        deleteSetIndex: deleteSetIndex.asDriver(),
+        deleteWeightTrainingArrayIndex: deleteWeightTrainingArrayIndex.asDriver())
     private lazy var output = viewModel.transform(input: input)
     // MARK: - PROPERTIES
     
@@ -57,20 +58,19 @@ final class DuringSetViewController : BaseViewController {
     override func setupBinding() {
         super.setupBinding()
         
-        output.weightTrainingInfoCount.drive { value in
+        output.weightTrainingInfoCount.drive(onNext: { value in
             self.weightTrainingInfoCount = value
-        }
+        })
         .disposed(by: disposeBag)
         
-        output.weightTrainingInfo.drive { value in
+        output.weightTrainingInfo.drive(onNext: { value in
             self.weightTrainingInfoArray = value
-
-        }
+        })
         .disposed(by: disposeBag)
         
         output.addData.drive(onNext: { value in
             if value {
-                self.weightTrainingArrayIndexRx.onNext(self.weightTrainingArrayIndex)
+                self.weightTrainingArrayIndexRx.send(self.weightTrainingArrayIndex)
                 self.tableView.reloadData()
             }
         })
@@ -78,7 +78,7 @@ final class DuringSetViewController : BaseViewController {
         
         output.deleteSetData.drive(onNext: { value in
             if value {
-                self.weightTrainingArrayIndexRx.onNext(self.weightTrainingArrayIndex)
+                self.weightTrainingArrayIndexRx.send(self.weightTrainingArrayIndex)
                 self.tableView.reloadData()
             }
         })
@@ -90,8 +90,8 @@ final class DuringSetViewController : BaseViewController {
         .disposed(by: disposeBag)
         
 
-        didLoad.onNext(())
-        weightTrainingArrayIndexRx.onNext(0)
+        didLoad.send(())
+        weightTrainingArrayIndexRx.send(0)
     }
     override func setComponents() {
         super.setComponents()
@@ -124,9 +124,9 @@ extension DuringSetViewController : UITableViewDelegate, UITableViewDataSource, 
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            deleteSetTrigger.onNext(())
-            deleteSetIndex.onNext(indexPath.row)
-            deleteWeightTrainingArrayIndex.onNext(weightTrainingArrayIndex)
+            deleteSetTrigger.send(())
+            deleteSetIndex.send(indexPath.row)
+            deleteWeightTrainingArrayIndex.send(weightTrainingArrayIndex)
         }
     }
 
@@ -155,8 +155,8 @@ extension DuringSetViewController : UITableViewDelegate, UITableViewDataSource, 
         return UIView()
     }
     func addWorkoutButtonTapped() {
-        addWeightTrainingInfoTrigger.onNext(())
-        addWeightTrainingInfoIndexTrigger.onNext(weightTrainingArrayIndex)
+        addWeightTrainingInfoTrigger.send(())
+        addWeightTrainingInfoIndexTrigger.send(weightTrainingArrayIndex)
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let inputWorkoutDataViewController = InputWorkoutDataViewController()

@@ -8,8 +8,8 @@
 import UIKit
 import SnapKit
 import Then
-import RxSwift
-import RxCocoa
+import Combine
+import UIExtensions
 
 final class DeleteRecordAlertViewController : BaseViewController {
     var selectedDate : Int?
@@ -17,11 +17,11 @@ final class DeleteRecordAlertViewController : BaseViewController {
     var completionHandler : ((Int) -> Void)?
     // MARK: - ViewModel
     private let viewModel = DeleteRecordAlertViewModel()
-    private let deleteTrigger = PublishSubject<Void>()
+    private let deleteTrigger = PassthroughSubject<Void, Never>()
     
     private lazy var input = DeleteRecordAlertViewModel.Input(
-        deleteTrigger: deleteTrigger.asDriver(onErrorJustReturn: ()),
-        selectedDate: Driver.just(selectedDate!).asDriver(onErrorJustReturn: 0))
+        deleteTrigger: deleteTrigger.asDriver(),
+        selectedDate: Driver.just(selectedDate!))
     private lazy var output = viewModel.transform(input: input)
     
     
@@ -80,9 +80,9 @@ final class DeleteRecordAlertViewController : BaseViewController {
         })
         .disposed(by: disposeBag)
         
-        deleteButton.rx.tap
-            .bind {
-                self.deleteTrigger.onNext(())
+        deleteButton.tapPublisher
+            .sink { [weak self] in
+                self?.deleteTrigger.send(())
             }
             .disposed(by: disposeBag)
     }
@@ -135,4 +135,3 @@ final class DeleteRecordAlertViewController : BaseViewController {
 extension DeleteRecordAlertViewController {
     
 }
-

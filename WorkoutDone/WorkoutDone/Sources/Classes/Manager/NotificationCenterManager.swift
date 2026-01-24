@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import UIExtensions
 
 class NotificationCenterManager {
     static let shared = NotificationCenterManager()

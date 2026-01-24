@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import UIExtensions
 
 final class HomeButtonAuthorizedCameraView : BaseUIView {
     private let frameImages: [String] = ["unselectedDefaultImage", "frame1", "frame2", "frame3", "frame4", "frame5", "frame6"]

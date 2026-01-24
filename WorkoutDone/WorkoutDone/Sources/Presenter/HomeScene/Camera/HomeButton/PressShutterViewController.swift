@@ -7,6 +7,7 @@
 
 import UIKit
 import Photos
+import UIExtensions
 
 final class PressShutterViewController: BaseViewController {
     let frameImageViewModel = FrameImageViewModel()

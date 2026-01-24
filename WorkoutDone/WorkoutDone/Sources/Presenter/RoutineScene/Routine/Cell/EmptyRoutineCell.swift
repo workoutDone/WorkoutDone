@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import UIExtensions
 
 class EmptyRoutineCell : UITableViewCell {
     private let emptyRoutineLabel = UILabel().then {

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import UIExtensions
 
 protocol FrameDelegate: AnyObject {
     func didSelectFrame(frameIndex: Int)

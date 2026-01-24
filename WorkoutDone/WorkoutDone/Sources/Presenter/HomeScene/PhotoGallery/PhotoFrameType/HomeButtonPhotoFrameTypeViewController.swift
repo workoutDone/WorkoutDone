@@ -6,8 +6,9 @@
 //
 
 import UIKit
-import RxSwift
-import RxCocoa
+import Combine
+import UIExtensions
+import FoundationExtensions
 
 class HomeButtonPhotoFrameTypeViewController : BaseViewController {
     typealias frame = PhotoFrameType
@@ -17,18 +18,18 @@ class HomeButtonPhotoFrameTypeViewController : BaseViewController {
     private var viewModel = PhotoFrameTypeViewModel()
     
     
-    private var saveData = PublishSubject<Void>()
-    private var selectedFrameType = PublishSubject<Int>()
-    private var selectedFrameTypeButtonStatus = BehaviorSubject(value: false)
-    private var selectedPhoto = PublishSubject<UIImage>()
-    private var selectedDate = PublishSubject<Int>()
+    private var saveData = PassthroughSubject<Void, Never>()
+    private var selectedFrameType = PassthroughSubject<Int, Never>()
+    private var selectedFrameTypeButtonStatus = CurrentValueSubject<Bool, Never>(false)
+    private var selectedPhoto = PassthroughSubject<UIImage, Never>()
+    private var selectedDate = PassthroughSubject<Int, Never>()
     
     private lazy var input = PhotoFrameTypeViewModel.Input(
-        frameTypeButtonStatus: selectedFrameTypeButtonStatus.asDriver(onErrorJustReturn: false),
-        selectedFrameType: selectedFrameType.asDriver(onErrorJustReturn: 0),
-        selectedPhoto: selectedPhoto.asDriver(onErrorJustReturn: UIImage()),
-        selectedDate: selectedDate.asDriver(onErrorJustReturn: 0),
-        saveButtonTapped: saveData.asDriver(onErrorJustReturn: ()))
+        frameTypeButtonStatus: selectedFrameTypeButtonStatus.asDriver(),
+        selectedFrameType: selectedFrameType.asDriver(),
+        selectedPhoto: selectedPhoto.asDriver(),
+        selectedDate: selectedDate.asDriver(),
+        saveButtonTapped: saveData.asDriver())
     private lazy var output = viewModel.transform(input: input)
     
     
@@ -144,9 +145,9 @@ class HomeButtonPhotoFrameTypeViewController : BaseViewController {
         
         
         
-        saveButton.rx.tap
-            .bind { value in
-                self.saveData.onNext(())
+        saveButton.tapPublisher
+            .sink { [weak self] in
+                self?.saveData.send(())
                 print("눌려따")
             }
             .disposed(by: disposeBag)
@@ -155,10 +156,10 @@ class HomeButtonPhotoFrameTypeViewController : BaseViewController {
         
         guard let image = selectedImage else { return }
         let resizedImage = resizeImage(image: image, newSize: CGSize(width: view.frame.width, height: view.frame.width * 4 / 3))
-        selectedPhoto.onNext(resizedImage)
+        selectedPhoto.send(resizedImage)
         guard let homeVC = self.navigationController?.viewControllers.first as? HomeViewController else { return }
         let homeVCDate = homeVC.calendarView.selectDate ?? Date()
-        selectedDate.onNext(homeVCDate.dateToInt())
+        selectedDate.send(homeVCDate.dateToInt())
     }
     
     override func setComponents() {
@@ -273,14 +274,14 @@ class HomeButtonPhotoFrameTypeViewController : BaseViewController {
                     button.layer.borderColor = .none
                     button.layer.borderWidth = 0
                     doubleCheckButtonStatus = nil
-                    selectedFrameTypeButtonStatus.onNext(false)
+                    selectedFrameTypeButtonStatus.send(false)
                 }
                 else {
                     button.layer.borderColor = UIColor.color7442FF.cgColor
                     button.layer.borderWidth = 2
                     doubleCheckButtonStatus = sender.tag
-                    selectedFrameTypeButtonStatus.onNext(true)
-                    selectedFrameType.onNext(sender.tag)
+                    selectedFrameTypeButtonStatus.send(true)
+                    selectedFrameType.send(sender.tag)
                     print(sender.tag, "ddd")
                 }
             }
@@ -330,4 +331,3 @@ extension HomeButtonPhotoFrameTypeViewController {
         }
     }
 }
-

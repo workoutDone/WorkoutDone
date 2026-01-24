@@ -5,10 +5,11 @@
 //  Created by 류창휘 on 2023/04/08.
 //
 
-import RxSwift
-import RxCocoa
 import SwiftData
 import UIKit
+import Data
+import UIExtensions
+import FoundationExtensions
 
 protocol WorkOutDoneDataProviding {
     func workoutDoneData(for id: Int) -> WorkOutDoneData?

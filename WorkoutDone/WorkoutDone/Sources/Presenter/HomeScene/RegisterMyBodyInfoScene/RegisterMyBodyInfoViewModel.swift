@@ -1,8 +1,5 @@
 import Foundation
 
-import RxCocoa
-import RxSwift
-
 struct RegisterMyBodyInfoViewModel: ViewModelType {
     let contextProvider: SwiftDataContextProviding
     let workoutdataManager: WorkoutDoneDataManager

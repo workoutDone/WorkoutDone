@@ -9,9 +9,9 @@ import UIKit
 import AVFoundation
 import UserNotifications
 import NotificationCenter
-import RxSwift
-import RxCocoa
+import Combine
 import CoreDevice
+import UIExtensions
 
 final class DuringWorkoutViewController : BaseViewController {
     private let device: DeviceProvider
@@ -27,11 +27,11 @@ final class DuringWorkoutViewController : BaseViewController {
     
     // MARK: - ViewModel
     private let viewModel = DuringWorkoutViewModel()
-    private var didLoad = PublishSubject<Void>()
-    private var weightTrainingArrayIndexRx = PublishSubject<Int>()
+    private var didLoad = PassthroughSubject<Void, Never>()
+    private var weightTrainingArrayIndexRx = PassthroughSubject<Int, Never>()
     private lazy var input = DuringWorkoutViewModel.Input(
-        loadView: didLoad.asDriver(onErrorJustReturn: ()),
-        weightTrainingArrayIndex: weightTrainingArrayIndexRx.asDriver(onErrorJustReturn: 0))
+        loadView: didLoad.asDriver(),
+        weightTrainingArrayIndex: weightTrainingArrayIndexRx.asDriver())
     private lazy var output = viewModel.transtorm(input: input)
     private let userNotificationCenter = UNUserNotificationCenter.current()
     
@@ -277,44 +277,46 @@ final class DuringWorkoutViewController : BaseViewController {
             self.totalWorkoutCount = value
         })
         .disposed(by: disposeBag)
-        output.weightTrainingArrayCount.drive { value in
+        output.weightTrainingArrayCount.drive(onNext: { value in
             self.weightTrainingArrayCount = value
-            
-
-        }
+        })
         .disposed(by: disposeBag)
         
-        output.currentWorkoutBodyPart.drive(workoutCategoryTitleLabel.rx.text)
+        output.currentWorkoutBodyPart.drive(onNext: { [weak self] value in
+            self?.workoutCategoryTitleLabel.text = value
+        })
             .disposed(by: disposeBag)
-        output.currentWorkoutName.drive(currentWorkoutLabel.rx.text)
+        output.currentWorkoutName.drive(onNext: { [weak self] value in
+            self?.currentWorkoutLabel.text = value
+        })
             .disposed(by: disposeBag)
         
-        didLoad.onNext(())
-        weightTrainingArrayIndexRx.onNext(0)
+        didLoad.send(())
+        weightTrainingArrayIndexRx.send(0)
         
-        nextWorkoutButton.rx.tap
-            .bind { [weak self] value in
+        nextWorkoutButton.tapPublisher
+            .sink { [weak self] in
                 guard let self = self else { return }
                 self.weightTrainingArrayIndex += 1
                 self.currentWorkoutCount += 1
-                self.weightTrainingArrayIndexRx.onNext(self.weightTrainingArrayIndex)
+                self.weightTrainingArrayIndexRx.send(self.weightTrainingArrayIndex)
                 self.progressBarAnimation()
                 self.workoutTitleAnimation()
                 self.duringSetViewController.weightTrainingArrayIndex = self.weightTrainingArrayIndex
-                self.duringSetViewController.weightTrainingArrayIndexRx.onNext(self.weightTrainingArrayIndex)
+                self.duringSetViewController.weightTrainingArrayIndexRx.send(self.weightTrainingArrayIndex)
                 self.duringSetViewController.tableView.reloadData()
             }
             .disposed(by: disposeBag)
-        previousWorkoutButton.rx.tap
-            .bind { [weak self] value in
+        previousWorkoutButton.tapPublisher
+            .sink { [weak self] in
                 guard let self = self else { return }
                 self.weightTrainingArrayIndex -= 1
                 self.currentWorkoutCount -= 1
-                self.weightTrainingArrayIndexRx.onNext(self.weightTrainingArrayIndex)
+                self.weightTrainingArrayIndexRx.send(self.weightTrainingArrayIndex)
                 self.progressBarAnimation()
                 self.workoutTitleAnimation()
                 self.duringSetViewController.weightTrainingArrayIndex = self.weightTrainingArrayIndex
-                self.duringSetViewController.weightTrainingArrayIndexRx.onNext(self.weightTrainingArrayIndex)
+                self.duringSetViewController.weightTrainingArrayIndexRx.send(self.weightTrainingArrayIndex)
                 self.duringSetViewController.tableView.reloadData()
             }
             .disposed(by: disposeBag)

@@ -17,6 +17,9 @@ let project = Project(
             dependencies: [
                 .external(name: "SnapKit"),
                 .external(name: "Then"),
+                .target(name: TargetName.foundationExtensions),
+                .target(name: TargetName.uiExtensions),
+                .target(name: TargetName.data),
                 .target(name: TargetName.coreDevice),
                 .target(name: TargetName.aiReviewInterface)
             ],
@@ -30,12 +33,17 @@ let project = Project(
                 ]
             )
         ),
+        Targets.foundationExtensions,
+        Targets.foundationExtensionsTests,
+        Targets.uiExtensions,
+        Targets.uiExtensionsTests,
+        Targets.data,
         Targets.coreDevice,
         Targets.coreDeviceTests,
         Targets.aiReviewInterface,
         Targets.aiReview,
-//        Targets.aiReviewTests,
-//        Targets.aiReviewDemo,
+        Targets.aiReviewTests,
+        Targets.aiReviewDemo,
 //        Targets.aiReviewDemoTests,
         .target(
             name: TargetName.appTests,
@@ -61,6 +69,11 @@ enum TargetName {
     
     static let coreDevice = "CoreDevice"
     static let coreDeviceTests = "CoreDeviceTests"
+    static let data = "Data"
+    static let foundationExtensions = "FoundationExtensions"
+    static let foundationExtensionsTests = "FoundationExtensionsTests"
+    static let uiExtensions = "UIExtensions"
+    static let uiExtensionsTests = "UIExtensionsTests"
     
     static let aiReview = "AIReview"
     static let aiReviewInterface = "AIReviewInterface"
@@ -84,6 +97,62 @@ enum Targets {
             .external(name: "DeviceKit")
         ]
     )
+    static let foundationExtensions = Target.target(
+        name: TargetName.foundationExtensions,
+        destinations: .iOS,
+        product: .framework,
+        bundleId: "WorkoutDone.FoundationExtensions",
+        infoPlist: .default,
+        buildableFolders: [
+            "Core/FoundationExtensions/Sources"
+        ]
+    )
+    static let foundationExtensionsTests = Target.target(
+        name: TargetName.foundationExtensionsTests,
+        destinations: .iOS,
+        product: .unitTests,
+        bundleId: "WorkoutDone.FoundationExtensionsTests",
+        infoPlist: .default,
+        buildableFolders: [
+            "Core/FoundationExtensions/Tests"
+        ],
+        dependencies: [
+            .target(name: TargetName.foundationExtensions)
+        ]
+    )
+    static let uiExtensions = Target.target(
+        name: TargetName.uiExtensions,
+        destinations: .iOS,
+        product: .framework,
+        bundleId: "WorkoutDone.UIExtensions",
+        infoPlist: .default,
+        buildableFolders: [
+            "Core/UIExtensions/Sources"
+        ],
+    )
+    static let uiExtensionsTests = Target.target(
+        name: TargetName.uiExtensionsTests,
+        destinations: .iOS,
+        product: .unitTests,
+        bundleId: "WorkoutDone.UIExtensionsTests",
+        infoPlist: .default,
+        buildableFolders: [
+            "Core/UIExtensions/Tests"
+        ],
+        dependencies: [
+            .target(name: TargetName.uiExtensions)
+        ]
+    )
+    static let data = Target.target(
+        name: TargetName.data,
+        destinations: .iOS,
+        product: .framework,
+        bundleId: "WorkoutDone.Data",
+        infoPlist: .default,
+        buildableFolders: [
+            "Data/Sources"
+        ]
+    )
     static let coreDeviceTests = Target.target(
         name: TargetName.coreDeviceTests,
         destinations: .iOS,
@@ -105,6 +174,9 @@ enum Targets {
         infoPlist: .default,
         buildableFolders: [
             "Features/AIReview/Interface"
+        ],
+        dependencies: [
+            .target(name: TargetName.uiExtensions)
         ]
     )
     static let aiReview = Target.target(
@@ -117,7 +189,8 @@ enum Targets {
             "Features/AIReview/Sources"
         ],
         dependencies: [
-            .target(name: TargetName.aiReviewInterface)
+            .target(name: TargetName.aiReviewInterface),
+            .target(name: TargetName.uiExtensions)
         ]
     )
     static let aiReviewTests = Target.target(
@@ -161,7 +234,8 @@ enum Targets {
         ],
         dependencies: [
             .target(name: TargetName.aiReview),
-            .target(name: TargetName.aiReviewInterface)
+            .target(name: TargetName.aiReviewInterface),
+            .target(name: TargetName.uiExtensions)
         ]
     )
 //    static let aiReviewDemoTests = Target.target(

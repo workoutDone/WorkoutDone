@@ -1,5 +1,6 @@
 import SwiftData
 import Foundation
+import Data
 
 final class SwiftDataManager: DataManager {
     static let shared = SwiftDataManager(context: SwiftDataStack.shared.context)

@@ -7,6 +7,9 @@
 
 import SwiftUI
 import SwiftData
+import Data
+import UIExtensions
+import FoundationExtensions
 
 class WeightGraphViewModel : ObservableObject {
     @Published var weightData : [WorkOutDoneData] = []

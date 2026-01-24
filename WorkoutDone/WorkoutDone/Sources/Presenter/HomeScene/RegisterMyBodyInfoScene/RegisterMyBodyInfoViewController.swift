@@ -7,10 +7,10 @@
 
 import UIKit
 
-import RxCocoa
-import RxSwift
+import Combine
 import SnapKit
 import Then
+import UIExtensions
 
 struct BodyInputData {
     var weight: String?
@@ -21,15 +21,15 @@ struct BodyInputData {
 class RegisterMyBodyInfoViewController: BaseViewController {
     // MARK: - Property
     private var viewModel = RegisterMyBodyInfoViewModel(contextProvider: ProductionSwiftDataProvider())
-    private var bodyInputData = PublishSubject<BodyInputData>()
+    private var bodyInputData = PassthroughSubject<BodyInputData, Never>()
     var selectedDate: Int?
-    private var didLoad = PublishSubject<Void>()
+    private var didLoad = PassthroughSubject<Void, Never>()
     private lazy var input = RegisterMyBodyInfoViewModel.Input(
-        loadView: didLoad.asDriver(onErrorJustReturn: ()),
-        weightInputText: weightTextField.rx.text.orEmpty.asDriver(),
-        skeletalMusleMassInputText: skeletalMuscleMassTextField.rx.text.orEmpty.asDriver(),
-        fatPercentageInputText: fatPercentageTextField.rx.text.orEmpty.asDriver(),
-        saveButtonTapped: bodyInputData.asDriver(onErrorJustReturn: BodyInputData(weight: "", skeletalMusleMass: "", fatPercentage: "")),
+        loadView: didLoad.asDriver(),
+        weightInputText: weightTextField.textPublisher.asDriver(),
+        skeletalMusleMassInputText: skeletalMuscleMassTextField.textPublisher.asDriver(),
+        fatPercentageInputText: fatPercentageTextField.textPublisher.asDriver(),
+        saveButtonTapped: bodyInputData.asDriver(),
         selectedDate: Driver.just(selectedDate!)
     )
     private lazy var output = viewModel.transform(input: input)
@@ -256,11 +256,17 @@ class RegisterMyBodyInfoViewController: BaseViewController {
     }
     override func setupBinding() {
         super.setupBinding()
-        output.weightOutputText.drive(weightTextField.rx.text)
+        output.weightOutputText.drive(onNext: { [weak self] value in
+            self?.weightTextField.text = value
+        })
             .disposed(by: disposeBag)
-        output.skeletalMusleMassOutputText.drive(skeletalMuscleMassTextField.rx.text)
+        output.skeletalMusleMassOutputText.drive(onNext: { [weak self] value in
+            self?.skeletalMuscleMassTextField.text = value
+        })
             .disposed(by: disposeBag)
-        output.fatPercentageOutputText.drive(fatPercentageTextField.rx.text)
+        output.fatPercentageOutputText.drive(onNext: { [weak self] value in
+            self?.fatPercentageTextField.text = value
+        })
             .disposed(by: disposeBag)
         
         output.saveData.drive(onNext: { [weak self] value in
@@ -276,18 +282,24 @@ class RegisterMyBodyInfoViewController: BaseViewController {
         })
             .disposed(by: disposeBag)
         
-        output.readWeightData.drive(weightTextField.rx.text)
+        output.readWeightData.drive(onNext: { [weak self] value in
+            self?.weightTextField.text = value
+        })
             .disposed(by: disposeBag)
-        output.readSkeletalMusleMassData.drive(skeletalMuscleMassTextField.rx.text)
+        output.readSkeletalMusleMassData.drive(onNext: { [weak self] value in
+            self?.skeletalMuscleMassTextField.text = value
+        })
             .disposed(by: disposeBag)
-        output.readFatPercentageData.drive(fatPercentageTextField.rx.text)
+        output.readFatPercentageData.drive(onNext: { [weak self] value in
+            self?.fatPercentageTextField.text = value
+        })
             .disposed(by: disposeBag)
 
-        didLoad.onNext(())
-        saveButton.rx.tap
-            .bind { [weak self] _ in
+        didLoad.send(())
+        saveButton.tapPublisher
+            .sink { [weak self] in
                 guard let self = self else { return }
-                self.bodyInputData.onNext(BodyInputData(
+                self.bodyInputData.send(BodyInputData(
                     weight: self.weightTextField.text ?? "",
                     skeletalMusleMass: self.skeletalMuscleMassTextField.text ?? "",
                     fatPercentage: self.fatPercentageTextField.text ?? ""))

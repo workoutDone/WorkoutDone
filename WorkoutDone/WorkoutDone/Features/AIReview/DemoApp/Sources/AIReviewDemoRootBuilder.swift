@@ -1,6 +1,7 @@
 import UIKit
 import AIReview
 import AIReviewInterface
+import UIExtensions
 
 struct AIReviewDemoRootBuilder {
     private let feature: AIReviewFeatureProviding

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import UIExtensions
 
 class DuringWorkoutTimerViewController : BaseViewController {
     let timeArray = Array(0...59)

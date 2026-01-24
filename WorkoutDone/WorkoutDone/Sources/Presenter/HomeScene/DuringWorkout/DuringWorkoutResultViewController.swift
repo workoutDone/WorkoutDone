@@ -8,20 +8,21 @@
 import UIKit
 import SnapKit
 import Then
-import RxCocoa
-import RxSwift
+import Combine
+import Data
+import UIExtensions
 
 final class DuringWorkoutResultViewController : BaseViewController {
     
     private var routineData : Routine?
     
-    private let didLoad = PublishSubject<Void>()
-    private let homeButtonTrigger = PublishSubject<Void>()
+    private let didLoad = PassthroughSubject<Void, Never>()
+    private let homeButtonTrigger = PassthroughSubject<Void, Never>()
     
     private let viewModel = DuringWorkoutResultViewModel()
     private lazy var input = DuringWorkoutResultViewModel.Input(
-        loadView: didLoad.asDriver(onErrorJustReturn: ()),
-        homeButtonTrigger: homeButtonTrigger.asDriver(onErrorJustReturn: ()))
+        loadView: didLoad.asDriver(),
+        homeButtonTrigger: homeButtonTrigger.asDriver())
     private lazy var output = viewModel.transform(input: input)
     
     // MARK: - PROPERTIES
@@ -92,10 +93,14 @@ final class DuringWorkoutResultViewController : BaseViewController {
         })
         .disposed(by: disposeBag)
         
-        output.routineTitle.drive(myRoutineLabel.rx.text)
+        output.routineTitle.drive(onNext: { [weak self] value in
+            self?.myRoutineLabel.text = value
+        })
             .disposed(by: disposeBag)
         
-        output.workoutTimeData.drive(myTotalWorkoutTimeLabel.rx.text)
+        output.workoutTimeData.drive(onNext: { [weak self] value in
+            self?.myTotalWorkoutTimeLabel.text = value
+        })
             .disposed(by: disposeBag)
         
         output.deleteTemporaryRoutine.drive(onNext: { value in
@@ -128,14 +133,13 @@ final class DuringWorkoutResultViewController : BaseViewController {
         .disposed(by: disposeBag)
         
         
-        homeButton.rx.tap
-            .bind { [weak self] in
-                guard let self = self else { return }
-                self.homeButtonTrigger.onNext(())
+        homeButton.tapPublisher
+            .sink { [weak self] in
+                self?.homeButtonTrigger.send(())
             }
             .disposed(by: disposeBag)
         
-        didLoad.onNext(())
+        didLoad.send(())
     }
     
     override func setComponents() {

@@ -8,8 +8,8 @@
 import UIKit
 import SnapKit
 import Then
-import RxCocoa
-import RxSwift
+import Combine
+import UIExtensions
 
 final class InputWorkoutDataViewController : BaseViewController {
     var weightTrainingArrayIndex = 0
@@ -18,20 +18,20 @@ final class InputWorkoutDataViewController : BaseViewController {
     var isCalisthenics : Bool = false
     
     // MARK: - ViewModel
-    private var buttonTapped = PublishSubject<Void>()
-    private var weightTrainingArrayIndexRx = PublishSubject<Int>()
-    private var weightTrainingInfoArrayIndexRx = PublishSubject<Int>()
-    private var weightData = PublishSubject<String>()
-    private var countData = PublishSubject<String>()
-    private var calisthenicsCountData = PublishSubject<String>()
+    private var buttonTapped = PassthroughSubject<Void, Never>()
+    private var weightTrainingArrayIndexRx = PassthroughSubject<Int, Never>()
+    private var weightTrainingInfoArrayIndexRx = PassthroughSubject<Int, Never>()
+    private var weightData = PassthroughSubject<String, Never>()
+    private var countData = PassthroughSubject<String, Never>()
+    private var calisthenicsCountData = PassthroughSubject<String, Never>()
     private var viewModel = InputWorkoutDataViewModel()
     private lazy var input = InputWorkoutDataViewModel.Input(
-        countInputText: countData.asDriver(onErrorJustReturn: ""),
-        weightInputText: weightData.asDriver(onErrorJustReturn: ""),
-        buttonTapped: buttonTapped.asDriver(onErrorJustReturn: ()),
-        weightTrainingArrayIndex: weightTrainingArrayIndexRx.asDriver(onErrorJustReturn: 0),
-        weightTrainingInfoArrayIndex: weightTrainingInfoArrayIndexRx.asDriver(onErrorJustReturn: 0),
-        calisthenicsCountInputText: calisthenicsCountData.asDriver(onErrorJustReturn: ""))
+        countInputText: countData.asDriver(),
+        weightInputText: weightData.asDriver(),
+        buttonTapped: buttonTapped.asDriver(),
+        weightTrainingArrayIndex: weightTrainingArrayIndexRx.asDriver(),
+        weightTrainingInfoArrayIndex: weightTrainingInfoArrayIndexRx.asDriver(),
+        calisthenicsCountInputText: calisthenicsCountData.asDriver())
     private lazy var output = viewModel.transform(input: input)
     // MARK: - PROPERTIES
     
@@ -176,21 +176,21 @@ final class InputWorkoutDataViewController : BaseViewController {
         super.setupBinding()
         
         
-        okayButton.rx.tap
-            .bind { [weak self] value in
+        okayButton.tapPublisher
+            .sink { [weak self] in
                 guard let self else { return }
                 if self.isCalisthenics {
-                    self.buttonTapped.onNext(())
-                    self.weightTrainingArrayIndexRx.onNext(self.weightTrainingArrayIndex)
-                    self.weightTrainingInfoArrayIndexRx.onNext(self.weightTrainingInfoArrayIndex)
-                    self.calisthenicsCountData.onNext(self.calisthenicsCountTextField.text ?? "")
+                    self.buttonTapped.send(())
+                    self.weightTrainingArrayIndexRx.send(self.weightTrainingArrayIndex)
+                    self.weightTrainingInfoArrayIndexRx.send(self.weightTrainingInfoArrayIndex)
+                    self.calisthenicsCountData.send(self.calisthenicsCountTextField.text ?? "")
                 }
                 else {
-                    self.buttonTapped.onNext(())
-                    self.countData.onNext(self.countTextField.text ?? "")
-                    self.weightData.onNext(self.kgTextField.text ?? "")
-                    self.weightTrainingArrayIndexRx.onNext(self.weightTrainingArrayIndex)
-                    self.weightTrainingInfoArrayIndexRx.onNext(self.weightTrainingInfoArrayIndex)
+                    self.buttonTapped.send(())
+                    self.countData.send(self.countTextField.text ?? "")
+                    self.weightData.send(self.kgTextField.text ?? "")
+                    self.weightTrainingArrayIndexRx.send(self.weightTrainingArrayIndex)
+                    self.weightTrainingInfoArrayIndexRx.send(self.weightTrainingInfoArrayIndex)
                 }
             }
             .disposed(by: disposeBag)
@@ -342,4 +342,3 @@ extension InputWorkoutDataViewController : UITextFieldDelegate {
         return true
     }
 }
-

@@ -8,6 +8,7 @@
 import UIKit
 import SnapKit
 import Then
+import UIExtensions
 
 class DayCell: UICollectionViewCell {
     let dayLabel = UILabel().then {

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import UIExtensions
 
 class DeleteAlertViewController : BaseViewController {
     var date : String = ""

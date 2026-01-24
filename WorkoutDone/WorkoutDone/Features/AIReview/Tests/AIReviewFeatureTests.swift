@@ -2,6 +2,7 @@ import XCTest
 import UIKit
 import SwiftUI
 import AIReviewInterface
+import UIExtensions
 @testable import AIReview
 
 final class AIReviewFeatureTests: XCTestCase {

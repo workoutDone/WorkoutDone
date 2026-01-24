@@ -8,6 +8,7 @@
 import UIKit
 import SnapKit
 import Then
+import UIExtensions
 
 protocol RemoveWeightTrainingDelegate : AnyObject {
     func removeButtonTapped(forCell cell: RoutineEditorCell)

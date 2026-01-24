@@ -6,9 +6,8 @@
 //
 
 import UIKit
-import RxCocoa
-import RxSwift
 import Photos
+import UIExtensions
 
 
 class PhotoGalleryViewModel : ViewModelType {

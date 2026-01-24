@@ -8,6 +8,7 @@
 import UIKit
 import Then
 import SnapKit
+import UIExtensions
 
 class WorkoutView : BaseUIView {
     // MARK: - PROPERTIES

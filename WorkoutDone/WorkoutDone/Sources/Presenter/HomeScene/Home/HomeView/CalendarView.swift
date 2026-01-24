@@ -15,6 +15,7 @@
 import UIKit
 import SnapKit
 import Then
+import UIExtensions
 
 protocol CalendarViewDelegate: AnyObject {
     func didSelectedCalendarDate()
@@ -89,7 +90,7 @@ class CalendarView : BaseUIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        setCalendarView()
+//        setCalendarView()
         setDelegateDataSource()
         setAction()
         setCurrentDate()

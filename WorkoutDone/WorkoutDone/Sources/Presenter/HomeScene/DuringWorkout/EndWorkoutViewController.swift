@@ -6,8 +6,8 @@
 //
 
 import UIKit
-import RxSwift
-import RxCocoa
+import Combine
+import UIExtensions
 
 class EndWorkoutViewController : BaseViewController {
     var totalWorkoutTime : Int?
@@ -15,15 +15,15 @@ class EndWorkoutViewController : BaseViewController {
     
     
     // MARK: - ViewModel
-    private let saveTrigger = PublishSubject<Void>()
-    private let didLoad = PublishSubject<Void>()
-    private let totalTime = PublishSubject<Int>()
+    private let saveTrigger = PassthroughSubject<Void, Never>()
+    private let didLoad = PassthroughSubject<Void, Never>()
+    private let totalTime = PassthroughSubject<Int, Never>()
     private var viewModel = EndWorkoutViewModel()
     
     private lazy var input = EndWorkoutViewModel.Input(
-        saveTrigger: saveTrigger.asDriver(onErrorJustReturn: ()),
-        didLoad: didLoad.asDriver(onErrorJustReturn: ()),
-        totalWorkoutTime: totalTime.asDriver(onErrorJustReturn: 0))
+        saveTrigger: saveTrigger.asDriver(),
+        didLoad: didLoad.asDriver(),
+        totalWorkoutTime: totalTime.asDriver())
     
     private lazy var output = viewModel.transform(input: input)
     
@@ -84,16 +84,17 @@ class EndWorkoutViewController : BaseViewController {
         })
         .disposed(by: disposeBag)
         
-        saveButton.rx.tap
-            .bind {
-                self.saveTrigger.onNext(())
+        saveButton.tapPublisher
+            .sink { [weak self] in
+                guard let self = self else { return }
+                self.saveTrigger.send(())
                 guard let totalWorkoutTime = self.totalWorkoutTime else { return }
-                self.totalTime.onNext(totalWorkoutTime)
+                self.totalTime.send(totalWorkoutTime)
                 print("tap")
             }
             .disposed(by: disposeBag)
 
-        didLoad.onNext(())
+        didLoad.send(())
     }
     
     override func setComponents() {

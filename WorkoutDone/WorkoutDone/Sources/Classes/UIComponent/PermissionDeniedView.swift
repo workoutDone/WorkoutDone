@@ -8,6 +8,7 @@
 import UIKit
 import SnapKit
 import Then
+import UIExtensions
 
 class PermissionDeniedView : UIView {
     //MARK: - Properties

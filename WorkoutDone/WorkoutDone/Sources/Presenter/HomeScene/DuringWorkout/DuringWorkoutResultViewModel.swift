@@ -6,8 +6,8 @@
 //
 
 import UIKit
-import RxCocoa
-import RxSwift
+import Data
+import UIExtensions
 
 //제목이 있는지 없는지 확인하는 bool 타입 하나 만들기
 //false 인 경우 label hidden

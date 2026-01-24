@@ -1,4 +1,5 @@
 import SwiftData
+import Data
 
 final class MockSwiftDataProvider: SwiftDataContextProviding {
     private let container: ModelContainer

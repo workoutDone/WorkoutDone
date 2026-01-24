@@ -1,6 +1,7 @@
 import UIKit
 import SwiftUI
 import AIReviewInterface
+import UIExtensions
 
 public struct AIReviewFeature: AIReviewFeatureProviding {
     public init() {}

@@ -9,8 +9,8 @@ import UIKit
 import SnapKit
 import Then
 import CoreDevice
-import RxSwift
-import RxCocoa
+import Combine
+import UIExtensions
 
 class ImageSelectionViewController : BaseViewController {
     private let deviceProvider: DeviceProvider
@@ -25,14 +25,14 @@ class ImageSelectionViewController : BaseViewController {
      }
     
     private var viewModel = ImageSelectionViewModel()
-    private var didLoad = PublishSubject<Void>()
+    private var didLoad = PassthroughSubject<Void, Never>()
     var selectedDate : Int?
-    private var defaultImageButtonEvent = PublishSubject<Void>()
+    private var defaultImageButtonEvent = PassthroughSubject<Void, Never>()
     
     private lazy var input = ImageSelectionViewModel.Input(
-        loadView: didLoad.asDriver(onErrorJustReturn: ()),
-        selectedDate: Driver.just(selectedDate!).asDriver(onErrorJustReturn: 0),
-        defaultImageButtonTapped: defaultImageButtonEvent.asDriver(onErrorJustReturn: ()))
+        loadView: didLoad.asDriver(),
+        selectedDate: Driver.just(selectedDate!),
+        defaultImageButtonTapped: defaultImageButtonEvent.asDriver())
     private lazy var output = viewModel.transform(input: input)
     
     ///dismiss 시 사용될 CompletionHandler
@@ -131,12 +131,12 @@ class ImageSelectionViewController : BaseViewController {
         })
         .disposed(by: disposeBag)
         
-        defaultImageButton.rx.tap
-            .bind { _ in
-                self.defaultImageButtonEvent.onNext(())
+        defaultImageButton.tapPublisher
+            .sink { [weak self] in
+                self?.defaultImageButtonEvent.send(())
             }
             .disposed(by: disposeBag)
-        didLoad.onNext(())
+        didLoad.send(())
     }
     override func actions() {
         super.actions()

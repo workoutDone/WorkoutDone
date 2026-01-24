@@ -8,11 +8,11 @@
 import UIKit
 import SnapKit
 import Then
-import RxSwift
-import RxCocoa
+import Combine
 import Photos
 import PhotosUI
 import CoreDevice
+import UIExtensions
 
 class PhotoGalleryViewController : BaseViewController, CallPHPickerDelegate, PHPhotoLibraryChangeObserver {
     
@@ -33,9 +33,9 @@ class PhotoGalleryViewController : BaseViewController, CallPHPickerDelegate, PHP
     //MARK: - ViewModel
     
     private var viewModel = PhotoGalleryViewModel()
-    private var selectedPhoto = BehaviorSubject(value: false)
+    private var selectedPhoto = CurrentValueSubject<Bool, Never>(false)
     private lazy var input = PhotoGalleryViewModel.Input(
-        selectedPhotoStatus: selectedPhoto.asDriver(onErrorJustReturn: false))
+        selectedPhotoStatus: selectedPhoto.asDriver())
     private lazy var output = viewModel.transform(input: input)
     
     // MARK: - PROPERTIES
@@ -76,26 +76,12 @@ class PhotoGalleryViewController : BaseViewController, CallPHPickerDelegate, PHP
         })
         .disposed(by: disposeBag)
         
-        authorizedPhotoGalleryView.photoCollectionView.rx.itemSelected
-            .bind { _ in
-                if self.authorizedPhotoGalleryView.selectedIndexPath != nil {
-                    self.selectedPhoto.onNext(true)
-                }
-                else {
-                    self.selectedPhoto.onNext(false)
-                }
-            }
-            .disposed(by: disposeBag)
-        limitedPhotoGalleryView.photoCollectionView.rx.itemSelected
-            .bind { _ in
-                if self.limitedPhotoGalleryView.selectedIndexPath != nil {
-                    self.selectedPhoto.onNext(true)
-                }
-                else {
-                    self.selectedPhoto.onNext(false)
-                }
-            }
-            .disposed(by: disposeBag)
+        authorizedPhotoGalleryView.selectionChanged = { [weak self] hasSelection in
+            self?.selectedPhoto.send(hasSelection)
+        }
+        limitedPhotoGalleryView.selectionChanged = { [weak self] hasSelection in
+            self?.selectedPhoto.send(hasSelection)
+        }
     }
     
     

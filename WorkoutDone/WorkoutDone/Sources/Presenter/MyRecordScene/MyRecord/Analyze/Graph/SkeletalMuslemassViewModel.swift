@@ -7,6 +7,9 @@
 
 import SwiftUI
 import SwiftData
+import Data
+import UIExtensions
+import FoundationExtensions
 
 class SkeletalMuslemassGraphViewModel : ObservableObject {
     @Published var skeletalMusleMassData : [WorkOutDoneData] = []

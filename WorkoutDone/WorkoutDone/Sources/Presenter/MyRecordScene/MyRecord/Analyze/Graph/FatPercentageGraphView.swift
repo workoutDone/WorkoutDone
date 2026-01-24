@@ -7,6 +7,9 @@
 
 import SwiftUI
 import Charts
+import Data
+import UIExtensions
+import FoundationExtensions
 
 struct FatPercentageGraphView: View {
     ///VIewModel

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import UIExtensions
 
 protocol SortButtonTappedDelegate : AnyObject {
     func sortButtonTapped(sortDelegate: Bool)
